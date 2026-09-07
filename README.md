@@ -28,7 +28,7 @@ automaticamente no GitHub Pages a cada `push`.
 │   │   ├── 11-licoes-aprendidas.md
 │   │   └── 12-referencias.md
 │   └── entregas/
-│       └── unidade-1.md           Entrega da Unidade 1 (vídeo, slides, escopo)
+│       └── unidade-1.md           Entrega da Unidade 1 (vídeo e escopo)
 ├── layouts/                       Templates que substituem os do tema
 │   ├── _default/baseof.html       Estrutura da página (barra superior, tema claro/escuro)
 │   ├── partials/                  Sumário lateral, scripts e estilos enxutos
@@ -41,8 +41,7 @@ automaticamente no GitHub Pages a cada `push`.
 ├── assets/brand/                  Marca (vem da branch main): paleta, logos, Fraunces
 ├── assets/fonts/                  Fraunces SemiBold, subconjunto latino em WOFF2
 ├── static/
-│   ├── img/favicon.svg            Ícone da lua
-│   └── entregas/unidade-1/        Slides da Unidade 1 (a adicionar)
+│   └── img/favicon.svg            Ícone da lua
 ├── themes/hugo-theme-spectra/     Tema (cópia local, licença MIT)
 ├── i18n/pt-br.toml                Textos da interface em português
 ├── hugo.toml                      Configuração do site e menu de navegação
@@ -70,7 +69,6 @@ sem avisos, notas de rodapé editoriais ou subtítulos que o documento não tenh
 |---|---|
 | **Seções 2.2 e 2.3 desatualizadas** | A Seção 6 do documento passou a citar **OE1–OE6** e **CP1–CP9** com nomes novos; as Seções 2.2 e 2.3 ainda listam OE1–OE3 e CP1–CP6 com os nomes antigos. |
 | **Vídeo da Unidade 1** | `content/entregas/unidade-1.md` — instruções comentadas no arquivo. |
-| **Slides da Unidade 1** | Colocar os arquivos em `static/entregas/unidade-1/` e descomentar o bloco de links. |
 | **GitHub do Allan Kelvin** | `content/_index.md` — é o único integrante que não aparece na lista de colaboradores do repositório, então o cartão dele está sem `github=` e sem `foto=`. Baixe o avatar para `assets/img/equipe/` e preencha os dois parâmetros. |
 | **Como comprovar o objetivo geral** | Seção 2.1 tem uma pendência registrada pela equipe (indicadores de verificação). |
 

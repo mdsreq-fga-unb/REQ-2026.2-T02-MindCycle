@@ -77,34 +77,6 @@ disponível, substitua este aviso pelo player — as instruções estão comenta
 arquivo `content/entregas/unidade-1.md`.
 {{< /notice >}}
 
-## Slides
-
-<!-- ============================================================
-     ESPAÇO PARA OS SLIDES
-     1. Coloque os arquivos em static/entregas/unidade-1/
-        (por exemplo: slides-unidade-1.pdf e slides-unidade-1.pptx)
-     2. Apague o bloco `notice` abaixo e descomente o card-grid.
-
-<div class="card-grid">
-  <a class="card" href="../../entregas/unidade-1/slides-unidade-1.pdf">
-    <span class="card-icon">▤</span>
-    <span class="card-title">Slides (PDF)</span>
-    <span class="card-desc">Apresentação da Unidade 1 em formato PDF.</span>
-  </a>
-  <a class="card" href="../../entregas/unidade-1/slides-unidade-1.pptx">
-    <span class="card-icon">▦</span>
-    <span class="card-title">Slides (PPTX)</span>
-    <span class="card-desc">Apresentação da Unidade 1 em formato PowerPoint.</span>
-  </a>
-</div>
-     ============================================================ -->
-
-{{< notice type="warning" title="A publicar" >}}
-Os slides da apresentação da Unidade 1 ainda não foram adicionados ao repositório.
-Coloque os arquivos em `static/entregas/unidade-1/` e siga as instruções comentadas no
-arquivo `content/entregas/unidade-1.md`.
-{{< /notice >}}
-
 ## Documento entregue
 
 <div class="card-grid">

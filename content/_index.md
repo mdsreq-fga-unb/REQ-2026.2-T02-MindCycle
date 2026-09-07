@@ -35,7 +35,7 @@ exclusivo de quem os registra.
 {{< cartao href="visao/06-cronograma-e-entregas/" icone="calendario" titulo="Cronograma e entregas"
            desc="Releases, iterações, marcos de entrega e validação com o cliente." >}}
 {{< cartao href="entregas/unidade-1/" icone="entrega" titulo="Entrega da Unidade 1"
-           desc="Vídeo da apresentação, slides e escopo entregue na Release 1." >}}
+           desc="Vídeo da apresentação e escopo entregue na Release 1." >}}
 </div>
 
 <h2 class="home-section-title">Sobre o projeto</h2>
