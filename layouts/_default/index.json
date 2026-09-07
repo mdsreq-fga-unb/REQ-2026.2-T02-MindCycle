@@ -1,0 +1,16 @@
+{{- /* Índice de busca. Sobrescreve o do tema, que só indexa a seção "posts";
+       aqui todas as páginas da documentação entram no índice, com o texto
+       completo (o site tem poucas páginas, então o arquivo continua pequeno). */ -}}
+{{- $pages := where .Site.RegularPages "Kind" "page" -}}
+{{- $index := slice -}}
+{{- range $pages -}}
+  {{- $entry := dict
+    "title" (default "(Sem título)" .Title)
+    "permalink" .RelPermalink
+    "description" (default (default "" .Params.resumo) .Description)
+    "content" (.Plain | htmlUnescape | chomp)
+    "section" .CurrentSection.Title
+  -}}
+  {{- $index = $index | append $entry -}}
+{{- end -}}
+{{- $index | jsonify -}}

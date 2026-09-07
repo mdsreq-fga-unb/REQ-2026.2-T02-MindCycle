@@ -1,0 +1,46 @@
+{{/*
+  Scripts — versão enxuta.
+
+  O partial do tema carrega, em toda página, o anime.js (~50 KB) mais os
+  scripts de tela de carregamento, brilho do mouse, parallax do banner,
+  animação por scroll, barra de progresso de leitura, cópia de código,
+  compartilhamento e "voltar inteligente". Uma documentação não usa nada
+  disso, e era a maior fatia do tempo de carregamento.
+
+  Aqui ficam apenas os quatro comportamentos realmente usados:
+  sumário lateral, alternância de tema, índice da página e busca —
+  mais a lightbox das figuras e o botão de voltar ao topo.
+*/}}
+
+{{ $themeToggle := resources.Get "js/theme-toggle.js" | minify | fingerprint }}
+<script defer src="{{ $themeToggle.RelPermalink }}" integrity="{{ $themeToggle.Data.Integrity }}"></script>
+
+{{ $sidebar := resources.Get "js/sidebar.js" | minify | fingerprint }}
+<script defer src="{{ $sidebar.RelPermalink }}" integrity="{{ $sidebar.Data.Integrity }}"></script>
+
+{{ if ne site.Params.showScrollTop false }}
+{{ $scrollTop := resources.Get "js/scroll-top.js" | minify | fingerprint }}
+<script defer src="{{ $scrollTop.RelPermalink }}" integrity="{{ $scrollTop.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if ne site.Params.enableSearch false }}
+{{/* fuse.js e o índice de busca só são baixados quando a busca é aberta */}}
+{{ $fuse := resources.Get "js/vendor/fuse.min.js" | fingerprint }}
+<script defer src="{{ $fuse.RelPermalink }}" integrity="{{ $fuse.Data.Integrity }}"></script>
+{{ $search := resources.Get "js/search.js" | minify | fingerprint }}
+<script defer src="{{ $search.RelPermalink }}" integrity="{{ $search.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if and .IsPage (ne .Params.toc false) }}
+{{ $toc := resources.Get "js/toc.js" | minify | fingerprint }}
+<script defer src="{{ $toc.RelPermalink }}" integrity="{{ $toc.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if and .IsPage (ne site.Params.enableLightbox false) }}
+{{ $lightbox := resources.Get "js/lightbox.js" | minify | fingerprint }}
+<script defer src="{{ $lightbox.RelPermalink }}" integrity="{{ $lightbox.Data.Integrity }}"></script>
+{{ end }}
+
+{{ range site.Params.customJS }}
+<script src="{{ . | strings.TrimPrefix "/" | relURL }}" defer></script>
+{{ end }}

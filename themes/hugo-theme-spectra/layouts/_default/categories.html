@@ -1,0 +1,32 @@
+{{ define "main" }}
+
+{{ if ne site.Params.showBanner false }}{{- partial "banner.html" . -}}{{ end }}
+
+<main class="main-content">
+  <div class="section-label">{{ i18n "categories" }}</div>
+  <h2 class="section-title">{{ i18n "categories" }}</h2>
+
+  <div class="terms-view-toggle">
+    <button class="view-btn grid-btn active" data-view="grid" aria-label="{{ i18n "grid_view" }}">{{ i18n "grid_view" }}</button>
+    <button class="view-btn list-btn" data-view="list" aria-label="{{ i18n "list_view" }}">{{ i18n "list_view" }}</button>
+  </div>
+
+  {{ $posts := site.GetPage "/posts" }}
+  {{ with $posts.Sections }}
+  <div class="terms-grid" id="termsContainer">
+    {{ range . }}
+    <a href="{{ .RelPermalink }}" class="category-card">
+      <div class="category-card-deco"></div>
+      <span class="category-card-name">{{ .Title }}</span>
+      <span class="category-card-count">{{ len .RegularPagesRecursive }} {{ i18n "posts_count" (len .RegularPagesRecursive) }}</span>
+    </a>
+    {{ end }}
+  </div>
+  {{ else }}
+  <p>{{ i18n "no_posts" }}</p>
+  {{ end }}
+</main>
+
+{{- partial "footer.html" . -}}
+
+{{ end }}

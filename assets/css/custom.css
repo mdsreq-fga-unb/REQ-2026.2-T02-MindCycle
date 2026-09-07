@@ -1,0 +1,1192 @@
+/* =====================================================================
+   MindCycle — camada de documentação sobre o tema Spectra
+   ---------------------------------------------------------------------
+   O Spectra é um tema de blog com estética "sci-fi": grade de fundo,
+   brilhos, gradientes em texto, anéis tracejados girando e cantos
+   futuristas. Este arquivo redefine as variáveis do tema e neutraliza
+   esses efeitos, deixando um documento acadêmico legível: um acento só,
+   cinzas neutros, réguas finas e espaço em branco.
+
+   Carregado depois do CSS do tema, portanto sobrescreve.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. Design tokens
+   --------------------------------------------------------------------- */
+:root {
+  /* Tipografia — pilha do sistema: nada é baixado, texto no primeiro quadro */
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-display: var(--font-body);
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  /* Superfícies */
+  --bg-primary: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-sidebar: #fbfbfc;
+  --bg-subtle: #f6f6f8;
+  --bg-code: #f6f6f8;
+  --bg-code-header: #eeeef1;
+
+  /* Texto */
+  --text-primary: #17171a;
+  --text-secondary: #56565f;
+  --text-muted: #7d7d88;
+
+  /* Acento único, sóbrio */
+  --accent: #6a3f9c;
+  --accent-warm: #6a3f9c;
+  --accent-soft: #6a3f9c;
+  --accent-deep: #4b2a75;
+  --accent-weak: #f4f0fa;
+  --accent-line: #e0d3f2;
+  --accent-glow: #f4f0fa;
+  --accent-warm-glow: #f4f0fa;
+  --accent-contrast: #ffffff;
+
+  /* Linhas e sombras */
+  --border: #e5e5ea;
+  --border-strong: #d3d3db;
+  --card-shadow: none;
+  --sidebar-shadow: none;
+  --grid-color: transparent;
+  --corner-bracket: transparent;
+  --selection-bg: #e7dcf6;
+
+  /* Avisos */
+  --notice-info: #3f5ca8;
+  --notice-info-bg: #eef2fb;
+  --notice-tip: #1f7a4d;
+  --notice-tip-bg: #ecf7f1;
+  --notice-warning: #9a6206;
+  --notice-warning-bg: #fdf5e7;
+  --notice-caution: #a33a56;
+  --notice-caution-bg: #fbeef2;
+
+  /* Forma */
+  --radius: 8px;
+  --radius-sm: 6px;
+  --radius-xs: 4px;
+  --sidebar-width: 274px;
+  --sidebar-collapsed-width: 0px;
+  --topbar-height: 52px;
+  --transition: 0.15s ease;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #131316;
+  --bg-surface: #17171b;
+  --bg-sidebar: #0f0f12;
+  --bg-subtle: #1e1e24;
+  --bg-code: #1c1c22;
+  --bg-code-header: #23232a;
+
+  --text-primary: #eaeaee;
+  --text-secondary: #a6a6b2;
+  --text-muted: #7e7e8a;
+
+  --accent: #b795e8;
+  --accent-warm: #b795e8;
+  --accent-soft: #b795e8;
+  --accent-deep: #cdb2f2;
+  --accent-weak: #241d33;
+  --accent-line: #3a2f52;
+  --accent-glow: #241d33;
+  --accent-warm-glow: #241d33;
+  --accent-contrast: #17171b;
+
+  --border: #2b2b33;
+  --border-strong: #3b3b45;
+  --card-shadow: none;
+  --grid-color: transparent;
+  --selection-bg: #3b2f55;
+
+  --notice-info: #9db4e8;
+  --notice-info-bg: #1a1f2c;
+  --notice-tip: #6fd39d;
+  --notice-tip-bg: #14241c;
+  --notice-warning: #e5b567;
+  --notice-warning-bg: #2a2113;
+  --notice-caution: #e995ad;
+  --notice-caution-bg: #2b1a20;
+}
+
+/* A barra lateral do tema força um contraste próprio; anulado. */
+.sidebar {
+  --text-primary: inherit;
+  --text-secondary: inherit;
+}
+
+/* ---------------------------------------------------------------------
+   2. Neutraliza os efeitos decorativos do tema
+   --------------------------------------------------------------------- */
+body::before,
+.banner,
+.corner-brackets,
+.banner-particles,
+.scan-line,
+.welcome-screen,
+.loading-screen,
+.mouse-glow,
+.footer-deco {
+  display: none !important;
+}
+
+body {
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* âncoras não podem ficar escondidas sob a barra superior fixa */
+  scroll-padding-top: calc(var(--topbar-height) + 16px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+a:hover { color: var(--accent); text-decoration: underline; }
+
+::selection { background: var(--selection-bg); }
+
+/* ---------------------------------------------------------------------
+   3. Estrutura: barra lateral, barra superior, área de conteúdo
+   --------------------------------------------------------------------- */
+.site-wrapper {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left var(--transition);
+}
+
+.content-area {
+  margin-left: 0;
+  flex: 1;
+  background: var(--bg-primary);
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  padding: 0;
+  border-right: 1px solid var(--border);
+  background: var(--bg-sidebar);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* --- Marca --- */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 14px 18px;
+  min-height: var(--topbar-height);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.sidebar-brand:hover { text-decoration: none; color: var(--text-primary); }
+
+.sidebar-brand-mark {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.sidebar-brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.sidebar-brand-text { display: flex; flex-direction: column; min-width: 0; }
+
+.sidebar-brand-name {
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.sidebar-brand-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+/* --- Sumário --- */
+.sidebar-nav {
+  flex: 1;
+  padding: 14px 10px 20px;
+  margin: 0;
+}
+
+.sidebar-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  margin: 1px 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 550;
+  line-height: 1.35;
+  text-decoration: none;
+  opacity: 1;
+}
+
+.sidebar-nav-item .nav-icon {
+  flex: 0 0 auto;
+  width: 15px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.sidebar-nav-item:hover {
+  background: var(--bg-subtle);
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.sidebar-nav-item.active {
+  background: var(--accent-weak);
+  color: var(--accent);
+}
+
+.sidebar-nav-item.active .nav-icon { color: var(--accent); }
+.sidebar-nav-item.active::before { display: none; }
+
+.sidebar-subnav {
+  display: flex;
+  flex-direction: column;
+  margin: 2px 0 10px 20px;
+  padding-left: 12px;
+  border-left: 1px solid var(--border);
+}
+
+.sidebar-subnav-item {
+  padding: 6px 9px;
+  border-radius: var(--radius-xs);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.sidebar-subnav-item:hover {
+  color: var(--text-primary);
+  background: var(--bg-subtle);
+  text-decoration: none;
+}
+
+.sidebar-subnav-item.active {
+  color: var(--accent);
+  font-weight: 600;
+  background: var(--accent-weak);
+}
+
+/* --- Rodapé da barra lateral --- */
+.sidebar-footer {
+  padding: 14px 18px 18px;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+.sidebar-links { display: flex; flex-direction: column; gap: 6px; }
+
+.sidebar-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.sidebar-links a:hover { color: var(--accent); }
+.sidebar-links svg { width: 14px; height: 14px; }
+
+.sidebar-copyright {
+  margin-top: 10px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* --- Barra superior --- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  height: var(--topbar-height);
+  padding: 0 20px;
+  background: color-mix(in srgb, var(--bg-primary) 88%, transparent);
+  backdrop-filter: saturate(150%) blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+@supports not (backdrop-filter: blur(8px)) {
+  .topbar { background: var(--bg-primary); }
+}
+
+/* Coluna 1: menu (só no celular) + trilha. Coluna 2: botões, centrados. */
+.topbar-left {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.topbar-right { grid-column: 3; }
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb > :last-child {
+  color: var(--text-primary);
+  font-weight: 550;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.breadcrumb-sep { color: var(--border-strong); }
+
+/* Os botões ficam no centro da barra; a trilha fica à esquerda. */
+.topbar-actions {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.topbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--transition), border-color var(--transition),
+    background var(--transition);
+}
+
+.topbar-btn:hover {
+  color: var(--accent);
+  border-color: var(--border-strong);
+  background: var(--bg-subtle);
+}
+
+.topbar-btn svg { flex: 0 0 auto; }
+.topbar-btn-label { display: inline; }
+
+/* O botão de menu só existe quando a barra lateral vira gaveta (ver §13) */
+.topbar-btn.topbar-menu { display: none; }
+
+.topbar-btn.theme-toggle { color: var(--accent); border-color: var(--accent-line); }
+.topbar-btn.theme-toggle:hover { background: var(--accent-weak); border-color: var(--accent); }
+
+#themeIcon { font-size: 0.95rem; line-height: 1; }
+
+/* --- Recolher a barra lateral (telas largas) --- */
+.sidebar-collapse-btn {
+  position: fixed;
+  top: 13px;
+  left: calc(var(--sidebar-width) - 13px);
+  z-index: 101;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  box-shadow: none;
+  transition: left var(--transition), color var(--transition);
+}
+
+.sidebar-collapse-btn:hover { color: var(--accent); }
+
+html.sidebar-collapsed .sidebar { transform: translateX(-100%); }
+html.sidebar-collapsed .site-wrapper { margin-left: 0; }
+html.sidebar-collapsed .sidebar-collapse-btn { left: 13px; }
+html.sidebar-collapsed .collapse-icon-collapse { display: none; }
+html:not(.sidebar-collapsed) .collapse-icon-expand { display: none; }
+
+/* ---------------------------------------------------------------------
+   4. Conteúdo
+   --------------------------------------------------------------------- */
+.main-content {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 2.5rem 2.5rem 4rem;
+}
+
+/* O tema envolve o texto em um cartão com sombra; documentação lê melhor
+   direto sobre a página. */
+.article-content {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin-top: 0;
+  box-shadow: none;
+  overflow-x: visible;
+  overflow-wrap: break-word;
+}
+
+.article-header {
+  text-align: center;
+  padding-bottom: 1.6rem;
+  margin-bottom: 2.2rem;
+  border-bottom: 1px solid var(--accent-line);
+}
+
+.article-header h1 {
+  font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.25rem);
+  font-weight: 680;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--accent-deep);
+}
+
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.55rem;
+  background: none;
+  padding: 0;
+}
+
+.section-label a { color: inherit; text-decoration: none; }
+.section-label a:hover { color: var(--accent); }
+
+.doc-lead {
+  margin: 0.75rem auto 0;
+  max-width: 64ch;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* --- Texto --- */
+.article-content p {
+  font-size: 0.985rem;
+  line-height: 1.75;
+  margin-bottom: 1.1rem;
+  color: var(--text-primary);
+}
+
+.article-content ul,
+.article-content ol {
+  font-size: 0.985rem;
+  line-height: 1.72;
+  margin: 0 0 1.2rem 1.15rem;
+}
+
+.article-content li { margin-bottom: 0.4rem; }
+.article-content li > ul,
+.article-content li > ol { margin-top: 0.4rem; margin-bottom: 0.4rem; }
+
+.article-content h2 {
+  font-size: 1.32rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin: 2.6rem 0 1rem;
+  padding-bottom: 0.45rem;
+  color: var(--accent-deep);
+  border-bottom: 1px solid var(--accent-line);
+  scroll-margin-top: calc(var(--topbar-height) + 16px);
+}
+
+.article-content h3 {
+  font-size: 1.06rem;
+  font-weight: 650;
+  margin: 1.9rem 0 0.7rem;
+  border: 0;
+  scroll-margin-top: calc(var(--topbar-height) + 16px);
+}
+
+.article-content h4 {
+  font-size: 0.96rem;
+  font-weight: 650;
+  margin: 1.5rem 0 0.6rem;
+  color: var(--text-secondary);
+}
+
+.article-content strong { font-weight: 640; }
+
+.article-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.article-content a:hover { text-decoration-color: currentColor; }
+
+/* ---------------------------------------------------------------------
+   5. Quadros (tabelas)
+   --------------------------------------------------------------------- */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  margin: 1.4rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+}
+
+.table-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.table-scroll table {
+  margin: 0;
+  border: 0;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 0.845rem;
+  line-height: 1.55;
+}
+
+.table-scroll th,
+.table-scroll td {
+  padding: 9px 13px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  text-align: left;
+}
+
+.table-scroll thead th {
+  background: var(--accent-weak);
+  font-weight: 650;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  color: var(--accent-deep);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--accent-line);
+}
+
+/* Datas, identificadores e rótulos curtos não quebram no meio */
+.table-scroll td.td-curta { white-space: nowrap; }
+.table-plain td.td-curta { white-space: normal; }
+
+.table-scroll tbody tr:last-child td { border-bottom: 0; }
+.table-scroll tbody tr:hover { background: var(--bg-subtle); }
+.table-scroll td:first-child { font-weight: 600; }
+
+/* Tabelas de chave/valor (sem cabeçalho) */
+.table-plain tbody td:first-child {
+  width: 32%;
+  font-weight: 550;
+  color: var(--text-secondary);
+  background: var(--bg-subtle);
+}
+
+.quadro-fonte {
+  display: block;
+  margin: -0.9rem 0 1.8rem;
+  font-size: 0.775rem;
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------
+   6. Figuras
+   --------------------------------------------------------------------- */
+.figura {
+  margin: 1.8rem 0 2.2rem;
+  text-align: left;
+}
+
+.figura img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  box-shadow: none;
+  cursor: zoom-in;
+}
+
+.figura figcaption {
+  margin-top: 0.65rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+.figura-num { font-weight: 650; color: var(--text-primary); }
+.figura-num::after { content: " — "; font-weight: 400; color: var(--text-muted); }
+.figura-fonte { color: var(--text-muted); }
+
+/* ---------------------------------------------------------------------
+   7. Avisos
+   ---------------------------------------------------------------------
+   Sem faixas coloridas: uma caixa neutra com um filete no acento. Um
+   documento acadêmico não precisa de azul, amarelo e verde na mesma página.
+   --------------------------------------------------------------------- */
+.notice {
+  margin: 1.4rem 0;
+  padding: 0.9rem 1.1rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-xs);
+  box-shadow: none;
+}
+
+.notice-header { margin-bottom: 0.3rem; }
+
+.notice-title {
+  font-size: 0.82rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--accent-deep);
+}
+
+.notice-icon { display: none; }
+
+.notice-content p {
+  font-size: 0.9rem;
+  line-height: 1.62;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.notice-content p:last-child { margin-bottom: 0; }
+
+/* Todos os tipos usam a mesma caixa; só o filete muda de tom. */
+.notice-warning { border-left-color: var(--notice-warning); }
+.notice-tip     { border-left-color: var(--notice-tip); }
+.notice-caution { border-left-color: var(--notice-caution); }
+
+/* ---------------------------------------------------------------------
+   8. Índice de seções (páginas /visao e /entregas)
+   --------------------------------------------------------------------- */
+.doc-index {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 10px;
+  margin: 1.6rem 0;
+}
+
+.doc-index-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+a.doc-index-item:hover {
+  border-color: var(--accent);
+  background: var(--accent-weak);
+  text-decoration: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.doc-index-num {
+  flex: 0 0 auto;
+  min-width: 1.6rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  padding-top: 1px;
+}
+
+.doc-index-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+
+.doc-index-title { font-size: 0.925rem; font-weight: 620; line-height: 1.3; color: var(--accent-deep); }
+
+.doc-index-desc {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.doc-index-arrow { display: none; }
+
+.doc-index-item.is-pending {
+  border-style: dashed;
+  background: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+
+.doc-index-item.is-pending .doc-index-title,
+.doc-index-item.is-pending .doc-index-num { color: var(--text-muted); }
+
+/* ---------------------------------------------------------------------
+   9. Navegação entre seções
+   --------------------------------------------------------------------- */
+.doc-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 3rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border);
+}
+
+.doc-pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: none;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.doc-pager-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-weak);
+  box-shadow: none;
+  text-decoration: none;
+}
+
+.doc-pager-next { text-align: right; grid-column: 2; }
+
+.doc-pager-dir {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.doc-pager-title { font-size: 0.865rem; font-weight: 600; line-height: 1.35; }
+
+.doc-pager > span:empty { display: none; }
+
+/* ---------------------------------------------------------------------
+   10. Índice da página (à direita)
+   --------------------------------------------------------------------- */
+.single-layout { gap: 2.5rem; align-items: flex-start; }
+
+.toc-sidebar {
+  width: 208px;
+  margin-top: 0;
+  top: calc(var(--topbar-height) + 1.5rem);
+  max-height: calc(100vh - var(--topbar-height) - 3rem);
+}
+
+.toc-title { margin-bottom: 0.6rem; }
+
+.sidebar-nav-label {
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+
+.sidebar-nav-label::before { display: none; }
+
+.toc-nav { font-family: inherit; font-size: 0.8rem; }
+
+.toc-nav a {
+  display: block;
+  padding: 4px 0 4px 11px;
+  border-left: 2px solid var(--border);
+  color: var(--text-secondary);
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.toc-nav a:hover { color: var(--text-primary); border-left-color: var(--border-strong); }
+.toc-nav a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+.toc-nav ul ul a { padding-left: 22px; font-size: 0.765rem; }
+
+/* ---------------------------------------------------------------------
+   11. Página inicial
+   --------------------------------------------------------------------- */
+.home-content { max-width: none; }
+
+/* O bloco fica centrado na página, mas o texto corrido continua alinhado
+   à esquerda: parágrafo longo centralizado cansa a leitura. */
+.home-content > p {
+  max-width: 70ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.4rem;
+  padding-bottom: 2.2rem;
+  margin-bottom: 2.4rem;
+  border-bottom: 1px solid var(--accent-line);
+}
+
+.home-hero-body { max-width: 62ch; }
+
+.home-hero-title {
+  font-size: clamp(1.9rem, 1.2rem + 2.4vw, 2.7rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  margin: 0 0 0.7rem;
+  color: var(--accent-deep);
+}
+
+.home-hero-kicker {
+  font-size: 0.74rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+}
+
+.home-hero p {
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 0 auto;
+}
+
+/* >>> Espaço da logo <<< */
+.home-logo {
+  flex: 0 0 auto;
+  order: -1;
+  display: grid;
+  place-items: center;
+  width: 148px;
+  height: 148px;
+  margin: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-surface);
+}
+
+.home-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.home-section-title {
+  text-align: center;
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 2.8rem 0 1.2rem;
+  padding: 0;
+  border: 0;
+}
+
+/* filete curto sob o título de seção da home */
+.home-section-title::after {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 2px;
+  margin: 0.55rem auto 0;
+  background: var(--accent);
+  opacity: 0.55;
+}
+
+.article-content .home-section-title:first-child { margin-top: 0; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 10px;
+  margin: 0 0 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 15px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.card:hover {
+  border-color: var(--accent);
+  background: var(--accent-weak);
+  text-decoration: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.card-icon { display: none; }
+
+.card-title { font-size: 0.92rem; font-weight: 620; line-height: 1.3; margin: 0; color: var(--accent-deep); }
+
+.card-desc { font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary); }
+
+/* Equipe */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+  gap: 10px;
+  margin: 0 0 1.5rem;
+}
+
+.team-card {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+}
+
+.team-name { font-size: 0.9rem; font-weight: 620; line-height: 1.3; }
+
+.team-role {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.79rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.team-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.775rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.team-link:hover { text-decoration: underline; }
+.team-link.is-placeholder { color: var(--text-muted); }
+
+/* ---------------------------------------------------------------------
+   12. Busca, voltar ao topo, rodapé
+   --------------------------------------------------------------------- */
+.search-container { border-radius: var(--radius); box-shadow: 0 12px 40px rgba(0,0,0,0.14); }
+.search-input { font-family: inherit; }
+.search-result-title { font-family: inherit; }
+.search-result-meta { font-family: inherit; font-size: 0.72rem; color: var(--text-muted); }
+
+.scroll-top-btn {
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+.scroll-top-btn:hover { color: var(--accent); border-color: var(--accent); box-shadow: none; }
+
+.content-footer {
+  margin: 0;
+  padding: 1.4rem 2.5rem 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: left;
+}
+
+.footer-theme-credit { margin-top: 4px; font-size: 0.74rem; }
+.content-footer a { color: var(--text-secondary); }
+
+.noscript-notice {
+  margin-left: var(--sidebar-width);
+  padding: 8px 16px;
+  background: var(--notice-warning-bg);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------------
+   13. Responsivo
+   --------------------------------------------------------------------- */
+
+/* Telas médias: o índice da página à direita rouba espaço dos quadros */
+@media (max-width: 1180px) {
+  .toc-sidebar { display: none; }
+  .single-layout { display: block; }
+  .main-content { padding: 2.2rem 2rem 3.5rem; }
+}
+
+/* Tablet e celular: a barra lateral vira uma gaveta */
+@media (max-width: 900px) {
+  .site-wrapper { margin-left: 0; }
+  .noscript-notice { margin-left: 0; }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    width: min(300px, 84vw);
+    max-height: none;
+    height: 100%;
+    border-radius: 0;
+    border-right: 1px solid var(--border);
+    box-shadow: none;
+    transform: translateX(-100%);
+    opacity: 1;
+    pointer-events: none;
+    transition: transform 0.22s ease;
+    z-index: 150;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.22);
+  }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 140;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+
+  /* sidebar.js usa a classe `visible`; `active` fica por compatibilidade */
+  .sidebar-overlay.visible,
+  .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
+
+  .sidebar-collapse-btn { display: none; }
+
+  /* O botão de menu volta para a barra superior, e não flutuando na tela */
+  .sidebar-toggle { display: none !important; }
+  .topbar-btn.topbar-menu { display: inline-flex; padding: 0 8px; }
+
+  .topbar { padding: 0 14px; gap: 8px; }
+  .topbar-btn-label { display: none; }
+  .topbar-btn { padding: 0 9px; }
+
+  /* Sem espaço para a trilha inteira: fica só a página atual */
+  .breadcrumb > :not(:last-child) { display: none; }
+
+  .main-content { padding: 1.75rem 1.15rem 3rem; }
+  .content-footer { padding: 1.2rem 1.15rem 2rem; }
+
+  .home-hero {
+    gap: 1.15rem;
+    padding-bottom: 1.7rem;
+    margin-bottom: 1.9rem;
+  }
+
+  .home-logo { width: 112px; height: 112px; }
+
+  .card-grid,
+  .team-grid,
+  .doc-index { grid-template-columns: 1fr; }
+
+  .doc-pager { grid-template-columns: 1fr; }
+  .doc-pager-next { text-align: left; grid-column: 1; }
+
+  .table-scroll table { font-size: 0.8rem; }
+  .table-scroll th, .table-scroll td { padding: 8px 11px; }
+}
+
+@media (max-width: 480px) {
+  :root { --topbar-height: 48px; }
+  .main-content { padding: 1.4rem 0.9rem 2.5rem; }
+  .content-footer { padding: 1.1rem 0.9rem 1.6rem; }
+  .breadcrumb { font-size: 0.78rem; }
+  .home-logo { width: 96px; height: 96px; }
+  .article-content p,
+  .article-content ul,
+  .article-content ol { font-size: 0.95rem; }
+}
+
+/* ---------------------------------------------------------------------
+   14. Impressão
+   --------------------------------------------------------------------- */
+@media print {
+  .sidebar, .topbar, .sidebar-collapse-btn, .scroll-top-btn,
+  .search-overlay, .doc-pager, .toc-sidebar { display: none !important; }
+  .site-wrapper { margin-left: 0; }
+  .main-content { max-width: none; padding: 0; }
+  .table-scroll { overflow: visible; }
+  .table-scroll table { min-width: 0 !important; }
+}

@@ -1,0 +1,21 @@
+{{ define "main" }}
+
+{{ if ne site.Params.showBanner false }}{{- partial "banner.html" . -}}{{ end }}
+
+<main class="main-content">
+  <div class="section-label">{{ .Title }}</div>
+  <h2 class="section-title">{{ .Title }}</h2>
+
+  {{ if .Paginator.Pages }}
+    {{ range .Paginator.Pages }}
+      {{- partial "post-card.html" . -}}
+    {{ end }}
+    {{ template "_internal/pagination.html" . }}
+  {{ else }}
+    <p>{{ i18n "no_posts" }}</p>
+  {{ end }}
+</main>
+
+{{- partial "footer.html" . -}}
+
+{{ end }}

@@ -1,0 +1,22 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{{/* Prevent FOUC: apply saved theme + mark revisits before any rendering */}}
+<script>
+(function(){
+  var d=document.documentElement;
+  var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark');
+  d.setAttribute('data-theme',t);
+  {{- $loadingEnabled := ne site.Params.enableLoadingAnimation false -}}
+  {{ if not $loadingEnabled }}d.classList.add('spectra-revisit');{{ else }}if(sessionStorage.getItem('spectra-loaded'))d.classList.add('spectra-revisit');{{ end }}
+  if(localStorage.getItem('sidebar-collapsed')==='true')d.classList.add('sidebar-collapsed');
+  if(localStorage.getItem('termsView')==='list')d.classList.add('terms-view-list');
+  d.classList.add('js');
+  {{- if ne site.Params.enableScrollAnimation false }}
+  d.classList.add('scroll-animate');
+  {{- end }}
+})();
+</script>
+{{- partial "head/meta.html" . -}}
+{{- partial "head/opengraph.html" . -}}
+{{- partial "head/styles.html" . -}}
+{{- partial "head/katex.html" . -}}

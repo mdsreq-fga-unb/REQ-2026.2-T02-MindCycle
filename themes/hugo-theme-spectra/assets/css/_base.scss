@@ -1,0 +1,92 @@
+// ===== Base Styles =====
+
+// Global reset — unified box-sizing, clear default margin/padding
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// Root element — smooth scrolling, base font size 16px
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+// Body base styles — font, background, text color, line height with theme transition
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.8;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+// Subtle 60px grid background — fixed, does not scroll with content
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: $z-body-grid;
+}
+
+// Link styles — accent blue by default, warm pink on hover
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--accent-warm);
+}
+
+// Images — constrain to container width, auto height
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Skip to content link (accessibility)
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: $z-skip-link;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+
+  &:focus {
+    top: 1rem;
+    color: #fff;
+  }
+}
+
+// Global focus-visible for keyboard accessibility
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+// Suppress default outline for mouse clicks
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// Custom text selection highlight color
+::selection {
+  background: var(--selection-bg);
+  color: var(--text-primary);
+}

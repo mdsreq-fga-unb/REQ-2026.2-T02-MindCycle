@@ -1,0 +1,30 @@
+{{/*
+  Sumário lateral com dois níveis. Sobrescreve o partial do tema, que só
+  renderiza menus planos. O botão de busca foi movido para a barra superior.
+*/}}
+<nav class="sidebar-nav" aria-label="Sumário da documentação">
+  {{ range site.Menus.main }}
+    {{ $entry := . }}
+    {{ $href := "" }}
+    {{ with .Page }}{{ $href = .RelPermalink }}{{ else }}{{ $href = .URL | relURL }}{{ end }}
+    {{ $isCurrent := or ($.IsMenuCurrent "main" $entry) ($.HasMenuCurrent "main" $entry) }}
+
+    <a href="{{ $href }}" class="sidebar-nav-item{{ if $isCurrent }} active{{ end }}" data-tooltip="{{ .Name }}"{{ if $isCurrent }} aria-current="page"{{ end }}>
+      {{ with .Pre }}<span class="nav-icon" aria-hidden="true">{{ . }}</span>{{ end }}
+      <span class="nav-text">{{ .Name }}</span>
+    </a>
+
+    {{ with .Children }}
+    <div class="sidebar-subnav">
+      {{ range . }}
+        {{ $childHref := "" }}
+        {{ with .Page }}{{ $childHref = .RelPermalink }}{{ else }}{{ $childHref = .URL | relURL }}{{ end }}
+        {{ $childCurrent := $.IsMenuCurrent "main" . }}
+        <a href="{{ $childHref }}" class="sidebar-subnav-item{{ if $childCurrent }} active{{ end }}" data-tooltip="{{ .Name }}"{{ if $childCurrent }} aria-current="page"{{ end }}>
+          <span class="nav-text">{{ .Name }}</span>
+        </a>
+      {{ end }}
+    </div>
+    {{ end }}
+  {{ end }}
+</nav>

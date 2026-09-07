@@ -1,0 +1,28 @@
+<div class="sidebar-profile">
+  <div class="avatar">
+    <div class="avatar-inner">
+      {{ with .Site.Params.avatar }}
+        <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="{{ $.Site.Params.author }}">
+      {{ else }}
+        {{ substr (default "S" .Site.Params.author) 0 1 | upper }}
+      {{ end }}
+    </div>
+  </div>
+  <div class="sidebar-name">{{ default "Author" .Site.Params.author }}</div>
+  <div class="sidebar-tagline">{{ default "// Developer" .Site.Params.tagline }}</div>
+  {{ with .Site.Params.bio }}
+  <div class="sidebar-bio">{{ . }}</div>
+  {{ end }}
+  {{ with .Site.Params.social }}
+  <div class="profile-social">
+    {{ range . }}
+    {{ $href := .url }}
+    {{/* URLs without ":" are relative paths (e.g. /about); others are external links */}}
+    {{ if not (strings.Contains $href ":") }}{{ $href = ($href | strings.TrimPrefix "/" | relURL) }}{{ end }}
+    <a href="{{ $href }}" title="{{ .name }}" aria-label="{{ .name }}"{{ if strings.Contains .url ":" }} target="_blank" rel="noopener noreferrer"{{ end }}>
+      {{ partial "social-icon.html" (dict "name" (lower .name)) }}
+    </a>
+    {{ end }}
+  </div>
+  {{ end }}
+</div>

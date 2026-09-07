@@ -1,0 +1,13 @@
+name = "Spectra"
+license = "MIT"
+licenselink = "https://github.com/JoeYang1412/hugo-theme-spectra/blob/main/LICENSE"
+description = "A sci-fi fusion Hugo theme with smooth animations, dark/light mode, and parallax banner."
+homepage = "https://github.com/JoeYang1412/hugo-theme-spectra"
+demosite = "https://joeyang1412.github.io/hugo-theme-spectra/"
+tags = ["blog", "responsive", "dark", "light", "search", "animated", "sci-fi", "multilingual", "katex", "toc", "lightbox", "series"]
+features = ["dark-light-toggle", "parallax-banner", "scroll-animations", "code-copy", "katex", "multilingual", "toc", "mouse-glow", "full-text-search", "image-lightbox", "reading-progress", "scroll-to-top", "related-posts", "series-nav", "share-buttons", "loading-animation", "image-optimization"]
+min_version = "0.157.0"
+
+[author]
+  name = "JoeYang1412"
+  homepage = "https://github.com/JoeYang1412"

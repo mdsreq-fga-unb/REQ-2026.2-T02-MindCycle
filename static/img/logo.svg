@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320" role="img" aria-label="Espaço reservado para a logo do MindCycle">
+  <title>Espaço reservado para a logo do MindCycle</title>
+  <defs>
+    <linearGradient id="mc-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+
+  <!-- anel tracejado: marca visualmente que este arquivo é um espaço reservado -->
+  <circle cx="160" cy="160" r="140" fill="none" stroke="url(#mc-grad)" stroke-width="4"
+          stroke-dasharray="14 12" stroke-linecap="round" opacity="0.85"/>
+  <circle cx="160" cy="160" r="118" fill="none" stroke="url(#mc-grad)" stroke-width="2" opacity="0.28"/>
+
+  <!-- marcador de fase do ciclo -->
+  <circle cx="160" cy="20" r="11" fill="url(#mc-grad)"/>
+
+  <text x="160" y="150" text-anchor="middle"
+        font-family="'Outfit', 'Segoe UI', system-ui, sans-serif"
+        font-size="46" font-weight="700" letter-spacing="6" fill="url(#mc-grad)">LOGO</text>
+
+  <text x="160" y="188" text-anchor="middle"
+        font-family="'Outfit', 'Segoe UI', system-ui, sans-serif"
+        font-size="21" font-weight="600" letter-spacing="1.5" fill="#7c3aed" opacity="0.75">MindCycle</text>
+
+  <text x="160" y="222" text-anchor="middle"
+        font-family="'JetBrains Mono', monospace"
+        font-size="12.5" letter-spacing="1" fill="#8b8fa3">substituir este arquivo</text>
+</svg>

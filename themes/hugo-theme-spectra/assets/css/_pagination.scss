@@ -1,0 +1,31 @@
+// Pagination navigation: page number button row
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+
+  a, span {
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition), border-color var(--transition);
+  }
+
+  a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  // Current page highlight state
+  .active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+}

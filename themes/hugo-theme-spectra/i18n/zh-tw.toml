@@ -1,0 +1,169 @@
+# Sidebar navigation
+[nav_label]
+other = "導覽"
+
+# Sidebar sections
+[categories]
+other = "分類"
+
+[view_all]
+other = "查看全部"
+
+[tags]
+other = "標籤"
+
+[recent]
+other = "最新文章"
+
+# Theme toggle
+[light_mode]
+other = "淺色模式"
+
+[dark_mode]
+other = "深色模式"
+
+# Banner
+[banner_welcome]
+other = "歡迎來到"
+
+[banner_subtitle]
+other = "// 部落格 × 程式碼 × 靈感"
+
+[welcome_sub]
+other = "探索 · 創作 · 啟發"
+
+# Loading
+[loading]
+other = "載入中"
+
+# Post meta
+[min_read]
+other = "分鐘閱讀"
+
+# Posts single
+[go_back]
+other = "返回上一頁"
+
+[blog_section]
+other = "文章"
+
+[toc_title]
+other = "目錄"
+
+[prev_post]
+other = "上一篇"
+
+[next_post]
+other = "下一篇"
+
+# Index page
+[recent_posts]
+other = "最新文章"
+
+[latest_articles]
+other = "最新文章列表"
+
+[view_all_posts]
+other = "查看所有文章"
+
+# Footer
+[footer_text]
+other = "Powered by Hugo × Styled by Spectra"
+
+# Code copy (JS)
+[code_copy]
+other = "複製"
+
+[code_copied]
+other = "已複製！"
+
+[code_fallback]
+other = "程式碼"
+
+# Terms page
+[grid_view]
+other = "格狀"
+
+[list_view]
+other = "列表"
+
+[posts_count]
+one = "篇文章"
+other = "篇文章"
+
+# Posts list
+[all_posts]
+other = "所有文章"
+
+[no_posts]
+other = "尚無文章。"
+
+# Accessibility
+[skip_to_content]
+other = "跳至主要內容"
+
+[toggle_theme]
+other = "切換主題"
+
+# Copyright
+[copyright]
+other = "保留所有權利。"
+
+# 404 page
+[error_404_title]
+other = "找不到頁面"
+
+[error_404_message]
+other = "您尋找的頁面不存在或已被移動。"
+
+[error_404_back]
+other = "返回首頁"
+
+# Scroll to top
+[scroll_to_top]
+other = "回到頂部"
+
+# Code block enhancements
+[toggle_line_numbers]
+other = "切換行號"
+
+# Related posts
+[related_posts]
+other = "相關文章"
+
+# Series
+[series]
+other = "系列"
+
+[series_view_all]
+other = "查看本系列所有文章"
+
+# Share buttons
+[share]
+other = "分享"
+
+[share_copy_link]
+other = "複製連結"
+
+# Search
+[search]
+other = "搜尋"
+
+[search_placeholder]
+other = "搜尋文章..."
+
+[search_close]
+other = "關閉搜尋"
+
+[search_hint]
+other = "輸入關鍵字搜尋文章"
+
+[search_no_results]
+other = "找不到相關文章"
+
+[search_loading]
+other = "搜尋索引載入中..."
+
+# No-JS notice
+[noscript_notice]
+other = "部分功能（搜尋、主題切換、動畫效果）需要 JavaScript 才能運作。"

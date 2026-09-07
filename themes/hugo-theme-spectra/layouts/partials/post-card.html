@@ -1,0 +1,18 @@
+<article class="post-card">
+  {{- with .Params.cover -}}
+    {{- partial "cover-image.html" (dict "page" $ "src" . "alt" $.Title "class" "post-card-cover" "fill" "800x300") -}}
+  {{- end -}}
+  <div class="post-card-body">
+    <div class="post-card-meta">
+      {{ with .Date }}<span>{{ .Format "2006-01-02" }}</span>{{ end }}
+      <span>{{ .ReadingTime }} {{ i18n "min_read" }}</span>
+    </div>
+    <h3><a href="{{ .RelPermalink }}">{{ or .Title "(Untitled)" }}</a></h3>
+    {{ with .Description }}
+    <p>{{ . }}</p>
+    {{ else }}{{ with .Summary }}
+    <p>{{ . | plainify | truncate (site.Params.cardSummaryLength | default 150) }}</p>
+    {{ end }}{{ end }}
+    {{- partial "tag-list" (dict "page" .) -}}
+  </div>
+</article>

@@ -1,0 +1,40 @@
+{{/* Google Fonts — only allow URLs from fonts.googleapis.com */}}
+{{ $fontsURL := "https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700&family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" }}
+{{ with site.Params.googleFontsURL }}
+  {{ if hasPrefix . "https://fonts.googleapis.com/" }}{{ $fontsURL = . }}{{ end }}
+{{ end }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{{ $fontsURL }}" rel="stylesheet">
+
+{{/* Main SCSS via Hugo Pipes */}}
+{{ $style := resources.Get "css/main.scss" | toCSS (dict "targetPath" "css/main.css") | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+
+{{/* Style overrides from params.style */}}
+{{ with site.Params.style }}
+<style>
+  :root {
+    {{ with .colorAccent }}--accent: {{ . | safeCSS }};{{ end }}
+    {{ with .colorAccentWarm }}--accent-warm: {{ . | safeCSS }};{{ end }}
+    {{ with .colorAccentSoft }}--accent-soft: {{ . | safeCSS }};{{ end }}
+    {{ with .bgPrimary }}--bg-primary: {{ . | safeCSS }};{{ end }}
+    {{ with .bgSurface }}--bg-surface: {{ . | safeCSS }};{{ end }}
+    {{ with .textPrimary }}--text-primary: {{ . | safeCSS }};{{ end }}
+    {{ with .fontDisplay }}--font-display: {{ . | safeCSS }};{{ end }}
+    {{ with .fontBody }}--font-body: {{ . | safeCSS }};{{ end }}
+    {{ with .fontMono }}--font-mono: {{ . | safeCSS }};{{ end }}
+    {{ with .sidebarWidth }}--sidebar-width: {{ . | safeCSS }};{{ end }}
+    {{ with .borderRadius }}--radius: {{ . | safeCSS }};{{ end }}
+    {{ with .bannerImageText }}--banner-image-text: {{ . | safeCSS }};{{ end }}
+    {{ with .bannerImageSubtitle }}--banner-image-subtitle: {{ . | safeCSS }};{{ end }}
+    {{ with .bannerImageGradient }}--banner-image-gradient: {{ . | safeCSS }};{{ end }}
+    {{ with .bannerImageGradientFill }}--banner-image-gradient-fill: {{ . | safeCSS }};{{ end }}
+  }
+</style>
+{{ end }}
+
+{{/* Custom CSS files */}}
+{{ range site.Params.customCSS }}
+<link rel="stylesheet" href="{{ . | strings.TrimPrefix "/" | relURL }}">
+{{ end }}

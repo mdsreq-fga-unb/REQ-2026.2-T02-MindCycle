@@ -1,0 +1,71 @@
+// Article content container: card-style appearance + scroll animation initial state
+.article-content {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3rem;
+  margin-top: 1rem;
+  box-shadow: var(--card-shadow);
+  overflow-wrap: break-word;
+  word-break: break-word;
+  overflow-x: auto;
+
+  // Scroll animation initial state (only when scroll-animate is enabled)
+  .scroll-animate & {
+    opacity: 0;
+  }
+
+  // Article H2 heading: bottom separator line
+  h2 {
+    font-family: var(--font-display);
+    font-size: 1.65rem;
+    font-weight: 600;
+    margin: 2.5rem 0 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  // Article paragraphs
+  p {
+    margin-bottom: 1.4rem;
+    color: var(--text-primary);
+    line-height: 1.9;
+    font-size: 1.08rem;
+  }
+
+  // Article lists
+  ul, ol {
+    font-size: 1.05rem;
+    line-height: 1.85;
+  }
+
+  // Article images: rounded corners + shadow
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  // Article figure element: centered image + caption
+  figure {
+    margin: 2rem 0;
+    text-align: center;
+
+    img {
+      margin: 0 auto 0.8rem;
+      display: block;
+    }
+
+    figcaption {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+    }
+  }
+}

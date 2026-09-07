@@ -1,0 +1,17 @@
+{{/*
+  Rodapé do sumário. O botão de tema do tema original ficava aqui, no fim de
+  uma barra rolável; agora ele está fixo na barra superior (baseof.html).
+*/}}
+<div class="sidebar-footer">
+  {{ with site.Params.social }}
+  <div class="sidebar-links">
+    {{ range . }}
+    <a href="{{ .url }}"{{ if strings.Contains .url ":" }} target="_blank" rel="noopener noreferrer"{{ end }}>
+      {{ partial "social-icon.html" (dict "name" (lower .name)) }}
+      <span>{{ .name }}</span>
+    </a>
+    {{ end }}
+  </div>
+  {{ end }}
+  <div class="sidebar-copyright">&copy; {{ now.Year }} {{ site.Params.author }}</div>
+</div>

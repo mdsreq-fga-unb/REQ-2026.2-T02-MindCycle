@@ -1,0 +1,187 @@
+// Single post layout container: flex row (article + TOC side by side)
+.single-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+// Desktop TOC sidebar: sticky positioned, hidden scrollbar
+.toc-sidebar {
+  position: sticky;
+  top: 2rem;
+  flex-shrink: 0;
+  width: 200px;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  order: 2;
+  margin-top: 2.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+// Single post article content takes remaining space
+.single-layout .article-content {
+  flex: 1;
+  min-width: 0;
+}
+
+// TOC navigation: nested list + left border indicator
+.toc-nav {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 0;
+  }
+
+  a {
+    display: block;
+    padding: 4px 0 4px 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-left: 2px solid var(--border);
+    transition: color var(--transition), border-left-color var(--transition);
+    line-height: 1.5;
+
+    &:hover {
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+
+    // Current section highlight
+    &.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+    }
+  }
+
+  // Nested level indentation
+  ul ul {
+    padding-left: 0.8rem;
+
+    a {
+      font-size: var(--font-size-xs);
+    }
+  }
+}
+
+// ===== Floating TOC (mobile only) — hidden on desktop, enabled by _responsive.scss =====
+.toc-float-toggle {
+  display: none;
+}
+
+.toc-float-panel {
+  display: none;
+}
+
+.toc-float-overlay {
+  display: none;
+}
+
+// Single post cover image (full-size version)
+.article-cover {
+  margin: 1.5rem 0 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  max-height: 400px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Prev/next post navigation area
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+// Prev/next navigation link card
+.post-nav-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  max-width: 48%;
+
+  &:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+  }
+}
+
+// Prev/next label text ("Previous" / "Next")
+.post-nav-label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+// Prev/next post title
+.post-nav-title {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+// "Next" link right-aligned
+.post-nav-next {
+  text-align: right;
+  margin-left: auto;
+}
+
+// Tags page list container (simple flex wrap)
+.terms-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+// Tag page item: bordered pill + hover effect
+.term-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  transition: border-color var(--transition), background var(--transition), color var(--transition);
+
+  &:hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+    color: var(--accent);
+  }
+}
+
+// Tag page post count badge
+.term-count {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  background: var(--accent-glow);
+  padding: 2px 8px;
+  border-radius: 10px;
+}

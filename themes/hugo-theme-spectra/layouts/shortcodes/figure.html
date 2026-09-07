@@ -1,0 +1,18 @@
+{{- with .Get "src" -}}
+<figure class="figure-block">
+  <div class="figure-image">
+    <img
+      src="{{ . | strings.TrimPrefix "/" | relURL }}"
+      {{ with $.Get "alt" }}alt="{{ . }}"{{ else }}alt=""{{ end }}
+      {{ with $.Get "width" }}width="{{ . }}"{{ end }}
+      {{ with $.Get "height" }}height="{{ . }}"{{ end }}
+      loading="lazy"
+    >
+  </div>
+  {{ with $.Get "caption" }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{ end }}
+</figure>
+{{- else -}}
+  {{- errorf "figure shortcode requires a 'src' parameter: %s" .Position -}}
+{{- end -}}

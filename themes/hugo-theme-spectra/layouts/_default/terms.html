@@ -1,0 +1,32 @@
+{{ define "main" }}
+
+{{ if ne site.Params.showBanner false }}{{- partial "banner.html" . -}}{{ end }}
+
+<main class="main-content">
+  {{ $taxonomy := .Data.Plural }}
+
+  {{ $sectionTitle := .Title }}
+  {{ if eq $taxonomy "tags" }}
+    {{ $sectionTitle = i18n "tags" }}
+  {{ end }}
+
+  <div class="section-label">{{ $sectionTitle }}</div>
+  <h2 class="section-title">{{ $sectionTitle }}</h2>
+
+  {{ if .Data.Terms.Alphabetical }}
+  <div class="terms-list">
+    {{ range .Data.Terms.Alphabetical }}
+    <a href="{{ .Page.RelPermalink }}" class="term-item">
+      <span class="term-name">{{ .Page.Title }}</span>
+      <span class="term-count">{{ .Count }}</span>
+    </a>
+    {{ end }}
+  </div>
+  {{ else }}
+  <p>{{ i18n "no_posts" }}</p>
+  {{ end }}
+</main>
+
+{{- partial "footer.html" . -}}
+
+{{ end }}

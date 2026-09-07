@@ -1,0 +1,33 @@
+{{ define "main" }}
+
+<main class="main-content">
+  <div class="article-header">
+    <div class="section-label">{{ .Section }}</div>
+    <h1>{{ .Title }}</h1>
+    {{- partial "post-meta.html" . -}}
+    {{- with .Params.cover -}}
+      {{- partial "cover-image.html" (dict "page" $ "src" . "alt" $.Title "class" "article-cover") -}}
+    {{- end -}}
+  </div>
+
+  <div class="single-layout">
+    {{ if and (ne .Params.toc false) (.TableOfContents) }}
+    <aside class="toc-sidebar" aria-label="Table of Contents">
+      <div class="toc-title">
+        <div class="sidebar-nav-label">{{ i18n "toc_title" }}</div>
+      </div>
+      <nav class="toc-nav">
+        {{ .TableOfContents }}
+      </nav>
+    </aside>
+    {{ end }}
+
+    <article class="article-content">
+      {{ .Content }}
+    </article>
+  </div>
+</main>
+
+{{- partial "footer.html" . -}}
+
+{{ end }}

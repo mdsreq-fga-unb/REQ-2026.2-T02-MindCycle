@@ -1,0 +1,22 @@
+{{- $allRelated := .Site.RegularPages.Related . -}}
+{{- $postsOnly := where $allRelated "Section" "posts" -}}
+{{- $related := first (site.Params.relatedPostsLimit | default 3) $postsOnly -}}
+{{- with $related -}}
+<section class="related-posts" aria-label="{{ i18n "related_posts" }}">
+  <div class="section-label">{{ i18n "related_posts" }}</div>
+  <div class="related-grid">
+    {{- range . -}}
+    {{- $post := . -}}
+    <a href="{{ .RelPermalink }}" class="related-card">
+      {{- with .Params.cover -}}
+        {{- partial "cover-image.html" (dict "page" $post "src" . "alt" $post.Title "class" "related-card-cover" "fill" "400x200") -}}
+      {{- end -}}
+      <div class="related-card-body">
+        {{ with .Date }}<span class="related-card-date">{{ .Format "2006-01-02" }}</span>{{ end }}
+        <span class="related-card-title">{{ .Title }}</span>
+      </div>
+    </a>
+    {{- end -}}
+  </div>
+</section>
+{{- end -}}

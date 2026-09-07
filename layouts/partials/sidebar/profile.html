@@ -1,0 +1,16 @@
+{{/*
+  Cabeçalho do sumário. Substitui o "perfil de autor" do tema (avatar
+  redondo com anel tracejado girando) por um bloco de identidade sóbrio:
+  logo, nome do produto e a disciplina.
+*/}}
+<a class="sidebar-brand" href="{{ site.Home.RelPermalink }}">
+  {{ with site.Params.avatar }}
+  <span class="sidebar-brand-mark">
+    <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="" width="44" height="44" loading="eager" decoding="async">
+  </span>
+  {{ end }}
+  <span class="sidebar-brand-text">
+    <span class="sidebar-brand-name">{{ site.Title }}</span>
+    <span class="sidebar-brand-sub">{{ site.Params.tagline }}</span>
+  </span>
+</a>

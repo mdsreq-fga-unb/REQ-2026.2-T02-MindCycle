@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Lang }}">
+<head>
+  {{- partial "head.html" . -}}
+</head>
+<body
+  data-page-kind="{{ .Kind }}"
+  data-i18n-light="{{ i18n "light_mode" }}"
+  data-i18n-dark="{{ i18n "dark_mode" }}"
+  data-i18n-search-hint="{{ i18n "search_hint" }}"
+  data-i18n-search-no-results="{{ i18n "search_no_results" }}"
+  data-i18n-search-loading="{{ i18n "search_loading" }}"
+>
+  <a href="#main-content" class="skip-link">{{ i18n "skip_to_content" }}</a>
+
+  <noscript>
+    <div class="noscript-notice">{{ i18n "noscript_notice" }}</div>
+  </noscript>
+
+  {{- partial "sidebar.html" . -}}
+  <button class="sidebar-collapse-btn" id="sidebarCollapse" aria-label="Recolher ou expandir o sumário">
+    <svg class="collapse-icon-collapse" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L5 8l6 6"/></svg>
+    <svg class="collapse-icon-expand" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l6 6-6 6"/></svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="site-wrapper">
+
+    <header class="topbar">
+      <div class="topbar-left">
+      <button class="topbar-btn topbar-menu" id="sidebarToggle" aria-label="Abrir o sumário" aria-expanded="false">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13"/></svg>
+      </button>
+
+      <nav class="breadcrumb" aria-label="Trilha de navegação">
+        <a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+        {{- if not .IsHome }}
+          {{- with .CurrentSection }}{{ if ne .RelPermalink site.Home.RelPermalink }}
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{ end }}{{ end }}
+          {{- if .IsPage }}
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <span aria-current="page">{{ .Title }}</span>
+          {{- end }}
+        {{- end }}
+      </nav>
+      </div>
+
+      <div class="topbar-actions">
+        {{ if ne site.Params.enableSearch false }}
+        <button class="topbar-btn" id="searchTrigger" aria-label="{{ i18n "search" }}">
+          <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <span class="topbar-btn-label">{{ i18n "search" }}</span>
+        </button>
+        {{ end }}
+
+        {{/* Botão de alternância entre tema claro e escuro.
+             theme-toggle.js procura exatamente estes três ids. */}}
+        <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="{{ i18n "toggle_theme" }}" aria-pressed="false" title="{{ i18n "toggle_theme" }}">
+          <span id="themeIcon" aria-hidden="true">&#9790;</span>
+          <span class="topbar-btn-label" id="themeLabel">{{ i18n "dark_mode" }}</span>
+        </button>
+      </div>
+
+      {{/* coluna vazia à direita: mantém os botões no centro exato */}}
+      <div class="topbar-right" aria-hidden="true"></div>
+    </header>
+
+    <div class="content-area" id="main-content">
+      {{- block "main" . }}{{- end }}
+    </div>
+  </div>
+
+  {{ if ne site.Params.enableSearch false }}{{- partial "search.html" . -}}{{ end }}
+
+  {{ if ne site.Params.showScrollTop false }}
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="{{ i18n "scroll_to_top" }}">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 14V4"/><path d="M4 8l5-5 5 5"/>
+    </svg>
+  </button>
+  {{ end }}
+
+  {{- partial "scripts.html" . -}}
+</body>
+</html>

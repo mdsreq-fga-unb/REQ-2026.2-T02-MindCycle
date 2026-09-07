@@ -1,0 +1,220 @@
+// Post card: border, rounded corners, shadow, scroll animation initial state
+.post-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0;
+  margin-bottom: 1.8rem;
+  position: relative;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  box-shadow: var(--card-shadow);
+  cursor: pointer;
+  display: flex;
+  flex-direction: row-reverse;
+  overflow: hidden;
+
+  // Scroll animation initial state (only when scroll-animate is enabled)
+  .scroll-animate & {
+    opacity: 0;
+  }
+
+  // Post card hover effect: accent border + outer glow
+  // (same glow pattern in .category-card:hover — keep in sync)
+  &:hover {
+    border-color: var(--accent);
+    box-shadow: var(--card-shadow), 0 0 0 1px var(--accent), 0 0 24px var(--accent-glow);
+  }
+
+  // Post card keyboard focus accessibility style
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+// Post card body: text content area (left side)
+.post-card-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.2rem 2.4rem;
+  position: relative;
+  z-index: 1; // Local stacking context (post-card has overflow:hidden) — no global variable needed
+  background: var(--bg-surface);
+  margin-right: -1px;
+
+  // Decorative gradient dot at top-right corner
+  &::before {
+    content: '';
+    position: absolute;
+    top: 2.2rem;
+    right: 2.4rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-warm));
+    opacity: 0.6;
+  }
+
+  // Right edge fade into cover area: solid color + mask
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -30px;
+    width: 30px;
+    background: var(--bg-surface);
+    mask-image: linear-gradient(to right, black, transparent);
+    -webkit-mask-image: linear-gradient(to right, black, transparent);
+    pointer-events: none;
+    z-index: 2; // Local stacking context — fade overlay above card body
+  }
+}
+
+// Post card scroll animation completed state (handled by Anime.js V4)
+
+// Post card metadata row (date, reading time)
+.post-card-meta {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  color: var(--text-secondary);
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+// Post card title: link stretches to cover entire card (full-card click)
+.post-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color var(--transition);
+
+    // Stretch link to cover entire card for full-card click
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}
+
+// Post card excerpt text
+.post-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin-bottom: 1.2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Post card cover image container: fixed width on right side
+.post-card-cover {
+  position: relative;
+  width: 240px;
+  min-height: 180px;
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--bg-surface);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition:
+      opacity 0.4s ease,
+      transform 0.5s $ease-default;
+
+    .js & {
+      opacity: 0;
+
+      &.loaded {
+        opacity: 1;
+      }
+    }
+  }
+
+  // Left edge fade: solid color + mask creates the gradient shape.
+  // background-color transitions smoothly; mask-image is fixed (no CSS vars).
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    background: var(--bg-surface);
+    mask-image: linear-gradient(to right, black, transparent);
+    -webkit-mask-image: linear-gradient(to right, black, transparent);
+    z-index: 1; // Local stacking context — left fade above cover image
+    pointer-events: none;
+  }
+}
+
+// Cover image hover zoom effect (only for loaded images to prevent flicker)
+.post-card:hover .post-card-cover img.loaded {
+  transform: scale(1.04);
+}
+
+// Tag list (z-index ensures clickable above the stretched card link)
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-xxs);
+  position: relative;
+  z-index: 1; // Local stacking context — tags clickable above stretched card link
+  pointer-events: none;
+}
+
+// Tag pill style: blue default + pink `.warm` variant
+.tag {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--accent-glow);
+  color: var(--accent);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  pointer-events: auto;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+
+  &:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  // Pink warm variant
+  &.warm {
+    background: var(--accent-warm-glow);
+    color: var(--accent-warm);
+    border-color: var(--border-warm);
+
+    &:hover {
+      background: var(--accent-warm);
+      color: #fff;
+    }
+  }
+}

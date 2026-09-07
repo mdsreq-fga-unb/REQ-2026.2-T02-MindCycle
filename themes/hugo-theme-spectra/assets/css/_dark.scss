@@ -1,0 +1,71 @@
+// ===== Theme-specific Overrides =====
+
+// Most styles are handled via CSS custom properties in _variables.scss.
+// This file contains overrides requiring more specific selectors.
+
+// ---- Dark mode overrides ----
+// Changes here must be mirrored in the @media (prefers-color-scheme: dark) no-JS fallback below
+[data-theme="dark"] {
+  // Slightly reduce image brightness in dark mode (scoped to content images)
+  .article-content img,
+  .post-card-cover img,
+  .article-cover img {
+    opacity: 0.95;
+  }
+
+  // Sidebar subtle inner glow (right border shadow) in dark mode
+  .sidebar {
+    box-shadow: inset -1px 0 0 var(--grid-color);
+  }
+}
+
+// ---- Light mode overrides ----
+:root:not([data-theme="dark"]) {
+  // Sidebar — right shadow separator in light mode
+  .sidebar {
+    box-shadow: var(--sidebar-shadow);
+  }
+
+  // Banner particles — lower opacity for better visibility on light bg
+  .particle {
+    opacity: 0.5;
+  }
+
+  // Loading spinner — adjust ring colors for light bg visibility
+  .loading-icon {
+    &::before {
+      border-color: var(--border);
+      border-top-color: var(--accent);
+    }
+    &::after {
+      border-color: var(--accent-warm-glow);
+      border-bottom-color: var(--accent-warm);
+    }
+  }
+
+  // Scan line — adjust glow effect for light background
+  .scan-line {
+    box-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent-glow);
+  }
+}
+
+// ---- No-JS fallback: follow system dark mode preference ----
+// Mirrors [data-theme="dark"] component overrides for when theme-toggle.js hasn't run.
+// CSS custom properties are already handled in _variables.scss.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    // Sidebar text color (from _sidebar.scss)
+    .sidebar {
+      --text-primary: #f2f4f8;
+      --text-secondary: #cdd4e0;
+      box-shadow: inset -1px 0 0 var(--grid-color);
+    }
+
+    // Mirrors [data-theme="dark"] image brightness for no-JS fallback
+    .article-content img,
+    .post-card-cover img,
+    .article-cover img {
+      opacity: 0.95;
+    }
+  }
+}

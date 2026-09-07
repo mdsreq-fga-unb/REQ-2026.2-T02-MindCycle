@@ -1,0 +1,52 @@
+{{ $section := .CurrentSection }}
+{{ $siblings := $section.RegularPages.ByWeight }}
+{{ $idx := -1 }}
+{{ range $i, $p := $siblings }}{{ if eq $p.RelPermalink $.RelPermalink }}{{ $idx = $i }}{{ end }}{{ end }}
+
+<main class="main-content">
+  <div class="article-header">
+    <div class="section-label">
+      <a href="{{ $section.RelPermalink }}">{{ $section.Title }}</a>
+    </div>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.resumo }}<p class="doc-lead">{{ . }}</p>{{ end }}
+  </div>
+
+  <div class="single-layout">
+    {{ if and (ne .Params.toc false) (.TableOfContents) }}
+    <aside class="toc-sidebar" aria-label="{{ i18n "toc_title" }}">
+      <div class="toc-title">
+        <div class="sidebar-nav-label">{{ i18n "toc_title" }}</div>
+      </div>
+      <nav class="toc-nav">
+        {{ .TableOfContents }}
+      </nav>
+    </aside>
+    {{ end }}
+
+    <article class="article-content">
+      {{ .Content }}
+
+      {{ if ge $idx 0 }}
+      <nav class="doc-pager" aria-label="Navegação entre seções">
+        {{ if gt $idx 0 }}
+          {{ $prev := index $siblings (sub $idx 1) }}
+          <a class="doc-pager-link doc-pager-prev" href="{{ $prev.RelPermalink }}">
+            <span class="doc-pager-dir">&larr; {{ i18n "prev_post" }}</span>
+            <span class="doc-pager-title">{{ $prev.Title }}</span>
+          </a>
+        {{ else }}<span></span>{{ end }}
+        {{ if lt $idx (sub (len $siblings) 1) }}
+          {{ $next := index $siblings (add $idx 1) }}
+          <a class="doc-pager-link doc-pager-next" href="{{ $next.RelPermalink }}">
+            <span class="doc-pager-dir">{{ i18n "next_post" }} &rarr;</span>
+            <span class="doc-pager-title">{{ $next.Title }}</span>
+          </a>
+        {{ else }}<span></span>{{ end }}
+      </nav>
+      {{ end }}
+    </article>
+  </div>
+</main>
+
+{{- partial "footer.html" . -}}

@@ -1,0 +1,695 @@
+// ===== Sidebar Styles =====
+
+// Shared mixin: sidebar action button (theme toggle, language switch)
+@mixin sidebar-action-btn {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xs);
+  transition: color var(--transition), border-color var(--transition), box-shadow var(--transition);
+
+  &:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+  }
+}
+
+// Shared mixin: collapsed sidebar tooltip (::after pseudo-element)
+@mixin sidebar-tooltip {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: $z-sidebar-tooltip;
+}
+
+// Sidebar main container: fixed position, independent scrolling, hidden scrollbar
+.sidebar {
+  width: var(--sidebar-width);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  z-index: $z-sidebar;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+  padding: 2rem 1.5rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  transition: background var(--transition), border-color var(--transition), width var(--transition), padding var(--transition), transform var(--transition);
+
+  // Higher contrast text for sidebar (overrides global variables)
+  --text-primary: #111318;
+  --text-secondary: #2e3340;
+
+  [data-theme="dark"] & {
+    --text-primary: #f2f4f8;
+    --text-secondary: #cdd4e0;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Profile section: avatar + name + bio
+.sidebar-profile {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+// Avatar container: gradient border + rotating dashed ring animation
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  position: relative;
+  background: linear-gradient(135deg, var(--accent), var(--accent-warm));
+  padding: 3px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px dashed var(--border);
+    animation: spin 8s linear infinite;
+    will-change: transform;
+  }
+}
+
+// Avatar inner circle: displays image or text avatar
+.avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--bg-sidebar);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  transition: background var(--transition);
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+}
+
+// Sidebar display name
+.sidebar-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+// Sidebar tagline / subtitle
+.sidebar-tagline {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+// Sidebar bio text
+.sidebar-bio {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+// Profile section social links (circular icon buttons)
+.profile-social {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+
+  a {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition), border-color var(--transition), box-shadow var(--transition);
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    &:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+  }
+}
+
+// Navigation menu section
+.sidebar-nav {
+  margin-bottom: 2rem;
+}
+
+// Navigation menu label (uppercase monospace small text + left line)
+.sidebar-nav-label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xxs);
+
+  &::before {
+    content: '';
+    width: 12px;
+    height: 1px;
+    background: var(--accent);
+  }
+}
+
+// Navigation links + search button: icon + text, hover/active background highlight
+.sidebar-nav a,
+.sidebar-nav button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 4px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: color var(--transition), background var(--transition), opacity var(--transition);
+  position: relative;
+  opacity: var(--opacity-muted);
+
+  .nav-icon {
+    width: 18px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  &:hover,
+  &.active {
+    opacity: 1;
+    color: var(--text-primary);
+    background: var(--accent-glow);
+  }
+
+  // Current page gradient indicator bar on the left
+  &.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    border-radius: 0 2px 2px 0;
+    background: linear-gradient(180deg, var(--accent), var(--accent-warm));
+  }
+}
+
+// Tag cloud section
+.sidebar-tags {
+  margin-bottom: 2rem;
+}
+
+// Tag cloud container (flex wrap)
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+// Sidebar tag pill overrides (base styles inherited from .tag in _components)
+.sidebar-tags .tag {
+  font-weight: 500;
+  padding: 3px 9px;
+  cursor: pointer;
+}
+
+// Categories list section
+.sidebar-categories {
+  margin-bottom: 2rem;
+}
+
+// "View all" link
+.sidebar-view-all {
+  margin-left: auto;
+  font-size: 0.6rem;
+  color: var(--accent);
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity var(--transition);
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// Category item: name + post count
+.sidebar-category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 14px;
+  margin-bottom: 4px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  opacity: var(--opacity-muted);
+  transition: opacity var(--transition), background var(--transition);
+
+  &:hover,
+  &.active {
+    opacity: 1;
+    background: var(--accent-glow);
+  }
+
+  &.active {
+    color: var(--accent);
+  }
+}
+
+// Category post count badge
+.category-count {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  background: var(--accent-glow);
+  color: var(--accent);
+  padding: 1px 8px;
+  border-radius: 10px;
+  min-width: 24px;
+  text-align: center;
+}
+
+// Recent posts list section
+.sidebar-recent {
+  margin-bottom: 1rem;
+}
+
+// Recent post link item: bottom border separator
+.sidebar-recent-item {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--text-primary);
+  opacity: var(--opacity-muted);
+  text-decoration: none;
+  padding: 9px 0;
+  line-height: 1.4;
+  border-bottom: 1px solid var(--border);
+  transition: opacity var(--transition), color var(--transition);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    opacity: 1;
+    color: var(--accent);
+  }
+}
+
+// Sidebar bottom area: theme toggle, social links, copyright
+.sidebar-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+// Dark/light mode toggle button
+.theme-toggle {
+  @include sidebar-action-btn;
+  margin-bottom: 12px;
+}
+
+// Language switcher section
+.lang-switcher {
+  margin-bottom: 12px;
+}
+
+// Language switch button
+.lang-switch-btn {
+  @include sidebar-action-btn;
+  text-decoration: none;
+}
+
+// Social link row (GitHub, X, RSS, etc.)
+.social-links {
+  display: flex;
+  gap: var(--gap-xs);
+  margin-bottom: 12px;
+
+  a {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color var(--transition), border-color var(--transition), box-shadow var(--transition);
+
+    &:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+  }
+}
+
+// Copyright notice text
+.sidebar-copyright {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  opacity: var(--opacity-muted);
+}
+
+// Mobile sidebar floating toggle button (hidden by default)
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: $z-sidebar-tooltip;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
+  }
+}
+
+// Collapsed mode icon links (hidden by default, shown in collapsed state)
+.sidebar-collapsed-icon {
+  display: none;
+}
+
+// Desktop sidebar collapse/expand button: edge-hugging style
+.sidebar-collapse-btn {
+  display: none; // Only shown on desktop via media query below
+  position: fixed;
+  left: calc(var(--sidebar-width) - 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: $z-sidebar-collapse-btn;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, left var(--transition), color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+  .collapse-icon-expand {
+    display: none;
+  }
+
+  &:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-glow);
+  }
+}
+
+
+// ===== Desktop Collapsed State (icon-only mode) =====
+// ===== Applied via html.sidebar-collapsed .sidebar =====
+
+@media (min-width: 901px) {
+  html.sidebar-collapsed {
+    // Collapsed sidebar: reduced width + smaller padding
+    .sidebar {
+      width: var(--sidebar-collapsed-width);
+      padding: 1rem 0.5rem;
+      // visible (not auto/hidden): allows tooltip pseudo-elements to
+      // overflow outside the narrow collapsed sidebar
+      overflow: visible;
+    }
+
+    .content-area {
+      margin-left: var(--sidebar-collapsed-width);
+    }
+
+    // Collapsed profile: small avatar only
+    .sidebar-profile {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+
+      &::after {
+        inset: -3px;
+      }
+    }
+
+    .avatar-inner {
+      font-size: 1rem;
+    }
+
+    .sidebar-name,
+    .sidebar-tagline,
+    .sidebar-bio,
+    .profile-social {
+      display: none;
+    }
+
+    // Collapsed nav: icon only, centered + hover tooltip
+    .sidebar-nav {
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-nav-label {
+      display: none;
+    }
+
+    .sidebar-nav a,
+    .sidebar-nav button {
+      justify-content: center;
+      padding: 10px 0;
+
+      .nav-icon {
+        width: auto;
+      }
+
+      .nav-text {
+        display: none;
+      }
+
+      // Tooltip on hover
+      &::after {
+        @include sidebar-tooltip;
+      }
+
+      &:hover::after {
+        opacity: 1;
+      }
+
+      &.active::before {
+        left: 0;
+      }
+    }
+
+    // Collapsed categories/tags: hide content, show icon link instead
+    .sidebar-categories,
+    .sidebar-tags {
+      margin-bottom: 0.5rem;
+
+      .sidebar-nav-label,
+      .sidebar-category-item,
+      .tag-cloud,
+      .sidebar-view-all {
+        display: none;
+      }
+    }
+
+    // Collapsed: hide recent posts entirely (nav "Posts" already links to /posts/)
+    .sidebar-recent {
+      display: none;
+    }
+
+    // Collapsed icon links shown + hover tooltip
+    .sidebar-collapsed-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+      color: var(--text-primary);
+      text-decoration: none;
+      opacity: var(--opacity-muted);
+      border-radius: var(--radius-sm);
+      transition: opacity var(--transition), background var(--transition);
+      position: relative;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      &:hover {
+        opacity: 1;
+        background: var(--accent-glow);
+      }
+
+      // Tooltip on hover
+      &::after {
+        @include sidebar-tooltip;
+      }
+
+      &:hover::after {
+        opacity: 1;
+      }
+    }
+
+    // Collapsed footer: simplified (hide text, keep icons only)
+    .sidebar-footer {
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+
+    .theme-toggle {
+      padding: 8px 0;
+
+      #themeLabel {
+        display: none;
+      }
+    }
+
+    // Collapsed lang switcher: icon only
+    .lang-switcher .lang-switch-btn {
+      justify-content: center;
+      padding: 8px 0;
+
+      .lang-text {
+        display: none;
+      }
+    }
+
+    .sidebar-copyright {
+      display: none;
+    }
+
+    // Collapsed: reposition expand button
+    .sidebar-collapse-btn {
+      left: calc(var(--sidebar-collapsed-width) - 12px);
+
+      .collapse-icon-collapse {
+        display: none;
+      }
+
+      .collapse-icon-expand {
+        display: flex;
+      }
+    }
+  }
+
+  // Desktop: show collapse button on sidebar or button hover
+  .sidebar-collapse-btn {
+    display: flex;
+  }
+
+  .sidebar:hover ~ .sidebar-collapse-btn,
+  .sidebar-collapse-btn:hover {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+// Mobile sidebar backdrop overlay (semi-transparent black)
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: $z-sidebar-backdrop;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

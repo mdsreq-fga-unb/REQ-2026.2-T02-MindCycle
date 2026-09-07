@@ -1,0 +1,11 @@
+{{/* Feature toggle naming convention:
+     enable* = JS behaviour (enableSearch, enableMouseGlow, enableLoadingAnimation)
+     show*   = pure display toggle (showRecent, showTags, showCategories, showAllPosts) */}}
+<aside class="sidebar" id="sidebar">
+  {{- partial "sidebar/profile.html" . -}}
+  {{- partial "sidebar/nav.html" . -}}
+  {{- partial "sidebar/categories.html" . -}}
+  {{- partial "sidebar/tags.html" . -}}
+  {{- partial "sidebar/recent.html" . -}}
+  {{- partial "sidebar/footer.html" . -}}
+</aside>

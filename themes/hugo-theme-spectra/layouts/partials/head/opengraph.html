@@ -1,0 +1,66 @@
+{{- $ogImage := "" -}}
+{{- with .Params.cover -}}
+  {{- $img := "" -}}
+  {{- with $.Resources.GetMatch . -}}
+    {{- $img = . -}}
+  {{- else -}}
+    {{- with resources.Get (. | strings.TrimPrefix "/") -}}
+      {{- $img = . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $img -}}
+    {{- $q := site.Params.coverImageQuality | default 85 -}}
+    {{- $processed := $img.Process (printf "webp q%d" $q) -}}
+    {{- $ogImage = $processed.Permalink -}}
+  {{- else -}}
+    {{- $ogImage = (. | strings.TrimPrefix "/" | absURL) -}}
+  {{- end -}}
+{{- end -}}
+{{/* Open Graph */}}
+<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description | default .Site.Title }}{{ end }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+{{ with $ogImage }}<meta property="og:image" content="{{ . }}">{{ end }}
+<meta property="og:site_name" content="{{ .Site.Title }}">
+{{ if .IsPage }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+{{ with .Params.tags }}{{ range . }}<meta property="article:tag" content="{{ . }}">{{ end }}{{ end }}
+{{ end }}
+
+{{/* Twitter Card */}}
+<meta name="twitter:card" content="{{ if .Params.cover }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description | default .Site.Title }}{{ end }}">
+{{ with $ogImage }}<meta name="twitter:image" content="{{ . }}">{{ end }}
+{{ if .IsTranslated }}
+{{ range .Translations }}
+<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+{{ end }}
+<link rel="alternate" hreflang="{{ .Site.Language.Lang }}" href="{{ .Permalink }}">
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+{{ end }}
+
+{{/* Multilingual 404 redirect for GitHub Pages — must run in <head> to prevent English flash.
+     GitHub Pages only serves the root 404.html (default language), but Hugo generates
+     per-language 404 pages as real static files. Redirect before body renders. */}}
+{{ if eq .Kind "404" }}
+{{ $homes := dict }}
+{{ range hugo.Sites }}
+  {{ $homes = merge $homes (dict .Language.Lang .Home.RelPermalink) }}
+{{ end }}
+<script data-homes="{{ $homes | jsonify }}" data-dl="{{ .Site.Language.Lang }}">
+(function() {
+  var el = document.currentScript;
+  var homes = JSON.parse(el.getAttribute('data-homes'));
+  var dl = el.getAttribute('data-dl');
+  var p = window.location.pathname;
+  for (var l in homes) {
+    if (l !== dl && p.indexOf("/" + l + "/") !== -1 && p.indexOf("/404.html") === -1) {
+      window.location.replace(homes[l] + "404.html");
+      break;
+    }
+  }
+})();
+</script>
+{{ end }}

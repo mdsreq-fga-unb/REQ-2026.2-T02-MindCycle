@@ -1,0 +1,35 @@
+{{- range .GetTerms "series" -}}
+  {{- $seriesPage := . -}}
+  {{- $posts := $seriesPage.Pages.ByDate -}}
+  {{- if gt (len $posts) 1 -}}
+    {{- $currentIndex := -1 -}}
+    {{- range $i, $p := $posts -}}
+      {{- if eq $p.RelPermalink $.RelPermalink -}}
+        {{- $currentIndex = add $i 1 -}}
+      {{- end -}}
+    {{- end -}}
+    <aside class="series-nav" aria-label="{{ i18n "series" }}">
+      <div class="series-header">
+        <span class="series-label">{{ i18n "series" }}</span>
+        <span class="series-title">{{ $seriesPage.LinkTitle }}</span>
+        <span class="series-count">{{ $currentIndex }}/{{ len $posts }}</span>
+      </div>
+      <details class="series-list-toggle">
+        <summary>{{ i18n "series_view_all" }}</summary>
+        <div class="series-list-content">
+        <ol class="series-list">
+          {{- range $i, $p := $posts -}}
+          <li{{ if eq $p.RelPermalink $.RelPermalink }} class="series-current"{{ end }}>
+            {{ if eq $p.RelPermalink $.RelPermalink }}
+              <span>{{ $p.Title }}</span>
+            {{ else }}
+              <a href="{{ $p.RelPermalink }}">{{ $p.Title }}</a>
+            {{ end }}
+          </li>
+          {{- end -}}
+        </ol>
+        </div>
+      </details>
+    </aside>
+  {{- end -}}
+{{- end -}}

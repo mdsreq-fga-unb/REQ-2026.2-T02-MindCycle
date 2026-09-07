@@ -1,0 +1,30 @@
+<main class="main-content">
+  <div class="article-header">
+    <div class="section-label">{{ i18n "blog_section" }}</div>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.resumo }}<p class="doc-lead">{{ . }}</p>{{ end }}
+  </div>
+
+  <article class="article-content">
+    {{ .Content }}
+
+    {{ if ne .Params.autoindex false }}
+    {{ with .RegularPages.ByWeight }}
+    <div class="doc-index">
+      {{ range . }}
+      <a class="doc-index-item" href="{{ .RelPermalink }}">
+        <span class="doc-index-num">{{ with .Params.numero }}{{ . }}{{ end }}</span>
+        <span class="doc-index-body">
+          <span class="doc-index-title">{{ .Title }}</span>
+          {{ with .Params.resumo }}<span class="doc-index-desc">{{ . }}</span>{{ end }}
+        </span>
+        <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
+      </a>
+      {{ end }}
+    </div>
+    {{ end }}
+    {{ end }}
+  </article>
+</main>
+
+{{- partial "footer.html" . -}}

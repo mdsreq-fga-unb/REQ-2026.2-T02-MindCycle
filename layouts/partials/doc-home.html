@@ -1,0 +1,10 @@
+
+{{ if ne site.Params.showBanner false }}{{- partial "banner.html" . -}}{{ end }}
+
+<main class="main-content">
+  <article class="article-content home-content">
+    {{ .Content }}
+  </article>
+</main>
+
+{{- partial "footer.html" . -}}

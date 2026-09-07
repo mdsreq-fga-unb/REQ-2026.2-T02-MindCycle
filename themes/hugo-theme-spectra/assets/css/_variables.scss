@@ -1,0 +1,207 @@
+// ===== Variables & Theme Colors =====
+
+// SCSS breakpoint variables (compile-time, usable in @media queries)
+$bp-mobile: 900px;
+$bp-small: 600px;
+
+// Z-index scale — single source of truth for stacking order
+$z-lightbox: 10001;
+$z-search-overlay: 10000;
+$z-skip-link: 10000;
+$z-loading-screen: 9999;
+$z-reading-progress: 9999;
+$z-scan-line: 9998;
+$z-welcome-screen: 999;
+$z-sidebar-tooltip: 200;
+$z-mobile-toc-toggle: 200;
+$z-mobile-toc-panel: 160;
+$z-mobile-toc-overlay: 155;
+$z-mobile-sidebar: 150;
+$z-sidebar-backdrop: 140;
+$z-sidebar-collapse-btn: 101;
+$z-sidebar: 100;
+$z-scroll-top: 100;
+
+// Low-level layout z-index (within local stacking contexts)
+$z-body-grid: 0;
+$z-mouse-glow: 0;
+$z-site-wrapper: 1;
+$z-banner-image: 1;
+$z-main-content: 2;
+$z-banner-content: 2;
+$z-corner-brackets: 2;
+$z-main-content-overlap: 4;
+
+// Easing functions
+$ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+$ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+$ease-sweep: cubic-bezier(0.16, 1, 0.3, 1);
+
+// Timing
+$theme-transition-duration: 0.5s;
+
+// Layout
+$banner-overflow: -400px;
+
+:root {
+  // Colors — Light Mode
+  --bg-primary: #f0f2f8;
+  --bg-surface: #ffffff;
+  --bg-sidebar: #f8f9fc;
+  --bg-code: #f6f8fc;
+  --bg-code-header: #edf0f7;
+  --text-primary: #1c1e26;
+  --text-secondary: #3a4050;
+  --code-text: #2e3440;
+  --accent: #4a7de0;
+  --accent-soft: #a78bfa;
+  --accent-warm: #e8609e;
+  --accent-glow: rgba(74, 125, 224, 0.12);
+  --accent-warm-glow: rgba(232, 96, 158, 0.1);
+  --border: rgba(74, 125, 224, 0.18);
+  --border-warm: rgba(232, 96, 158, 0.15);
+  --card-shadow: 0 2px 16px rgba(30, 40, 80, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --sidebar-shadow: 2px 0 16px rgba(30, 40, 80, 0.06);
+  --grid-color: rgba(74, 125, 224, 0.05);
+  --corner-bracket: rgba(74, 125, 224, 0.4);
+  --selection-bg: rgba(74, 125, 224, 0.2);
+
+  // Code syntax — light theme
+  --code-keyword: #7c3aed;
+  --code-string: #16a34a;
+  --code-comment: #9ca3af;
+  --code-function: #2563eb;
+  --code-number: #ea580c;
+  --code-operator: #0891b2;
+  --code-class: #d97706;
+  --code-variable: #2e3440;
+  --code-punctuation: #6b7280;
+  --code-line-number: #c0c5d0;
+  --code-deleted: #dc2626;
+  --code-inserted: #16a34a;
+  --code-copy-border: rgba(74, 125, 224, 0.2);
+  --code-copy-text: #555b6e;
+  --code-copy-success: #34d399;
+
+  // Notice colors
+  --notice-tip: #16a34a;
+  --notice-tip-bg: rgba(22, 163, 74, 0.08);
+  --notice-warning: #d97706;
+  --notice-warning-bg: rgba(217, 119, 6, 0.08);
+  --notice-info: var(--accent);
+  --notice-info-bg: var(--accent-glow);
+  --notice-caution: var(--accent-warm);
+  --notice-caution-bg: var(--accent-warm-glow);
+
+  // Banner — light mode: bright sci-fi gradient
+  --banner-bg-1: #dce3f5;
+  --banner-bg-2: #c7d4f2;
+  --banner-bg-accent-1: rgba(74, 125, 224, 0.25);
+  --banner-bg-accent-2: rgba(167, 139, 250, 0.15);
+  --banner-overlay: linear-gradient(135deg, rgba(240, 242, 248, 0.3), rgba(74, 125, 224, 0.15));
+  --banner-text: #1c1e26;
+  --banner-subtitle: rgba(28, 30, 38, 0.55);
+  --banner-gradient-from: #4a7de0;
+  --banner-gradient-to: #e8609e;
+
+  // Typography
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Zen Maru Gothic', 'Noto Sans TC', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  // Spacing & Shape
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 60px;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-xs: 4px;
+  --transition: 0.35s #{$ease-default};
+
+  // Font sizes — semantic scale
+  --font-size-xs: 0.7rem;
+  --font-size-label: 0.75rem;
+  --font-size-sm: 0.8rem;
+
+  // Gap tokens
+  --gap-xxs: 6px;
+  --gap-xs: 8px;
+
+  // Opacity tokens
+  --opacity-muted: 0.88;
+
+  // Internal sync — JS reads these via getComputedStyle
+  --mobile-breakpoint: 900px;
+  --glow-size: 180px;
+}
+
+// Dark mode color definitions (shared between manual toggle and system preference)
+@mixin dark-colors {
+  --bg-primary: #0b0f19;
+  --bg-surface: #1a2338;
+  --bg-sidebar: #0f1320;
+  --bg-code: #1a1f2e;
+  --bg-code-header: #151b2b;
+  --text-primary: #e4e8f1;
+  --text-secondary: #b0b8c8;
+  --code-text: #e4e8f1;
+  --accent: #5b8dee;
+  --accent-warm: #f472b6;
+  --accent-glow: rgba(91, 141, 238, 0.2);
+  --accent-warm-glow: rgba(244, 114, 182, 0.15);
+  --border: rgba(91, 141, 238, 0.2);
+  --border-warm: rgba(244, 114, 182, 0.15);
+  --card-shadow: 0 2px 30px rgba(0, 0, 0, 0.3);
+  --grid-color: rgba(91, 141, 238, 0.04);
+  --corner-bracket: rgba(91, 141, 238, 0.4);
+  --selection-bg: rgba(91, 141, 238, 0.3);
+
+  // Code syntax — dark theme (Material-style)
+  --code-keyword: #c792ea;
+  --code-string: #c3e88d;
+  --code-comment: #546e7a;
+  --code-function: #82aaff;
+  --code-number: #f78c6c;
+  --code-operator: #89ddff;
+  --code-class: #ffcb6b;
+  --code-variable: #e4e8f1;
+  --code-punctuation: #89ddff;
+  --code-line-number: #546e7a;
+  --code-deleted: #f07178;
+  --code-inserted: #c3e88d;
+  --code-copy-border: rgba(255, 255, 255, 0.1);
+  --code-copy-text: #8b95a8;
+  --code-copy-success: #10b981;
+
+  // Notice colors
+  --notice-tip: #4ade80;
+  --notice-tip-bg: rgba(22, 163, 74, 0.12);
+  --notice-warning: #fbbf24;
+  --notice-warning-bg: rgba(217, 119, 6, 0.12);
+  --notice-info: #93bbfd;
+  --notice-info-bg: rgba(91, 141, 238, 0.12);
+  --notice-caution: #f9a8d4;
+  --notice-caution-bg: rgba(244, 114, 182, 0.12);
+
+  // Banner — dark mode
+  --banner-bg-1: #0b0f19;
+  --banner-bg-2: #111d35;
+  --banner-bg-accent-1: rgba(91, 141, 238, 0.3);
+  --banner-bg-accent-2: rgba(244, 114, 182, 0.15);
+  --banner-overlay: linear-gradient(135deg, rgba(11, 15, 25, 0.7), rgba(91, 141, 238, 0.15));
+  --banner-text: #ffffff;
+  --banner-subtitle: rgba(255, 255, 255, 0.6);
+  --banner-gradient-from: #5b8dee;
+  --banner-gradient-to: #f472b6;
+}
+
+// Colors — Dark Mode
+[data-theme="dark"] {
+  @include dark-colors;
+}
+
+// No-JS fallback: follow system dark mode preference when theme-toggle.js hasn't run
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include dark-colors;
+  }
+}

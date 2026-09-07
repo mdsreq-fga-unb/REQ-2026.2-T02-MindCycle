@@ -1,0 +1,24 @@
+{{/*
+  Estilos — versão enxuta.
+
+  O partial do tema baixa três famílias do Google Fonts em toda página, uma
+  delas a Zen Maru Gothic, que inclui os glifos japoneses e sozinha pesa
+  centenas de kilobytes. Esta documentação usa a pilha de fontes do próprio
+  sistema: nada é baixado, o texto aparece no primeiro quadro e não há
+  troca de fonte durante o carregamento.
+
+  As variáveis de cor e de tipografia ficam em assets/css/custom.css, que é
+  carregado depois do CSS do tema e o sobrescreve.
+*/}}
+
+{{ $style := resources.Get "css/main.scss" | toCSS (dict "targetPath" "css/main.css") | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+
+{{/* A camada de documentação: minificada e com hash no nome, para o
+     navegador poder guardá-la em cache para sempre. */}}
+{{ $custom := resources.Get "css/custom.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $custom.RelPermalink }}" integrity="{{ $custom.Data.Integrity }}">
+
+{{ range site.Params.customCSS }}
+<link rel="stylesheet" href="{{ . | strings.TrimPrefix "/" | relURL }}">
+{{ end }}

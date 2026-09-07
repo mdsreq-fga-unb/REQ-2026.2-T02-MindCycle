@@ -1,0 +1,16 @@
+// Single post metadata (date, category, reading time)
+.article-meta {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+// Single post tag list area
+.article-tags {
+  margin-bottom: 1.5rem;
+}

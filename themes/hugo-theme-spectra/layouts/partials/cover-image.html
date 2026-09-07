@@ -1,0 +1,15 @@
+{{/* cover-image.html — shared cover image resolution
+     Params: page, src, alt, class, fill (optional, e.g. "800x300") */}}
+{{- with .src -}}
+<div class="{{ $.class }}">
+  {{- if $.fill -}}
+    {{- $q := site.Params.cardImageQuality | default 80 -}}
+    {{- partial "image-optimize" (dict "page" $.page "src" . "alt" $.alt "fill" (printf "%s webp q%d" $.fill $q)) -}}
+  {{- else if site.Params.imageOptimize -}}
+    {{- $q := site.Params.coverImageQuality | default 85 -}}
+    {{- partial "image-optimize" (dict "page" $.page "src" . "alt" $.alt "process" (printf "webp q%d" $q)) -}}
+  {{- else -}}
+    {{- partial "image-optimize" (dict "page" $.page "src" . "alt" $.alt) -}}
+  {{- end -}}
+</div>
+{{- end -}}

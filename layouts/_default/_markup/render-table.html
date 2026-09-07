@@ -1,0 +1,52 @@
+{{- /*
+  Quadros do Documento de Visão.
+
+  Três problemas que o HTML de tabela padrão não resolve sozinho:
+
+  1. São quadros largos (até seis colunas de texto corrido). Ficam dentro de um
+     contêiner com rolagem horizontal própria, para nunca empurrarem a página.
+  2. Se a tabela apenas se ajustasse ao contêiner, as colunas de texto longo
+     espremeriam as demais. Por isso a largura mínima cresce com o número de
+     colunas, e a partir de três colunas a tabela rola em vez de comprimir.
+  3. Células curtas — datas, identificadores como CP1, rótulos como "Alto" —
+     não devem quebrar no meio. Recebem `white-space: nowrap`.
+
+  Cabeçalhos totalmente vazios (tabelas de chave/valor) são omitidos.
+*/ -}}
+
+{{- $cols := 0 -}}
+{{- with (index .THead 0) }}{{ $cols = len . }}{{ end -}}
+
+{{- $minWidth := 0 -}}
+{{- if ge $cols 5 }}{{ $minWidth = mul $cols 205 }}
+{{- else if ge $cols 3 }}{{ $minWidth = mul $cols 190 }}{{ end -}}
+
+{{- $hasHead := false -}}
+{{- range .THead }}{{ range . }}{{ if ne (trim (printf "%s" .Text) " ") "" }}{{ $hasHead = true }}{{ end }}{{ end }}{{ end -}}
+
+<div class="table-scroll{{ if not $hasHead }} table-plain{{ end }}" tabindex="0" role="region" aria-label="Tabela">
+<table{{ with $minWidth }} style="min-width:{{ . }}px"{{ end }}>
+  {{- if $hasHead }}
+  <thead>
+    {{- range .THead }}
+      <tr>
+        {{- range . }}
+          <th{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</th>
+        {{- end }}
+      </tr>
+    {{- end }}
+  </thead>
+  {{- end }}
+  <tbody>
+    {{- range .TBody }}
+      <tr>
+        {{- range . }}
+          {{- $plain := trim (printf "%s" .Text | plainify) " " -}}
+          {{- $short := le (len $plain) 16 -}}
+          <td{{ if $short }} class="td-curta"{{ end }}{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</td>
+        {{- end }}
+      </tr>
+    {{- end }}
+  </tbody>
+</table>
+</div>

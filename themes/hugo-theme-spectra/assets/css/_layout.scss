@@ -1,0 +1,54 @@
+
+// ===== Page Layout — site-wrapper, content-area, main =====
+
+
+// Site outermost wrapper: loading animation initial state (transparent + offset + blur)
+.site-wrapper {
+  min-height: 100vh;
+  position: relative;
+  z-index: $z-site-wrapper;
+  // Initial state for loading animation (only when JS is available)
+  .js & {
+    opacity: 0;
+    // 0.985: subtle shrink makes the reveal feel like content is "growing in"
+    transform: translateY(30px) scale(0.985);
+  }
+}
+
+// Revealed state after loading completes (fade in + slide up)
+.site-wrapper.revealed {
+  opacity: 1;
+  // Use transform:none so it doesn't create a containing block
+  // that would break position:fixed on sibling elements
+  transform: none;
+  transition:
+    opacity 0.8s $ease-default,
+    transform 0.8s $ease-default;
+}
+
+// Main content area: offset by sidebar width
+.content-area {
+  margin-left: var(--sidebar-width);
+  min-width: 0;
+  overflow-x: clip;
+  background: var(--bg-primary);
+  transition: margin-left var(--transition);
+}
+
+// Content following banner: negative top margin pulls content up into the
+// banner's bottom gradient fade, creating a seamless blend between banner
+// and page content. Value matches the banner gradient's fade-out height.
+.banner + .main-content {
+  margin-top: -120px;
+  position: relative;
+  z-index: $z-main-content-overlap;
+}
+
+// Main content container: max-width constraint + horizontal centering
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2.5rem;
+  position: relative;
+  z-index: $z-main-content;
+}

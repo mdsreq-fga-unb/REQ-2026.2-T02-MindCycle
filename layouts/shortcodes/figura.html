@@ -1,0 +1,48 @@
+{{- /*
+  Figura do Documento de Visão.
+
+  Os originais são PNGs de 1 a 2 MB. Este shortcode os converte para WebP em
+  três larguras e entrega um `srcset`, de modo que o navegador baixe dezenas
+  de kilobytes em vez de megabytes. Os arquivos originais ficam em assets/ e
+  nunca são publicados.
+
+  Uso:
+    {{< figura src="figura1-rich-picture.png" numero="1"
+               alt="texto alternativo"
+               legenda="Rich Picture do contexto atual." >}}
+*/ -}}
+
+{{- $src := .Get "src" -}}
+{{- $img := resources.Get (printf "img/%s" $src) -}}
+{{- if not $img }}{{ errorf "figura: imagem não encontrada em assets/img/%s (%s)" $src .Position }}{{ end -}}
+
+{{- $numero  := .Get "numero" -}}
+{{- $legenda := .Get "legenda" -}}
+{{- $alt     := .Get "alt" | default $legenda -}}
+{{- $fonte   := .Get "fonte" | default "elaborado pela equipe" -}}
+
+{{- $widths := slice 480 800 1280 -}}
+{{- $srcset := slice -}}
+{{- range $widths -}}
+  {{- if ge $img.Width . -}}
+    {{- $r := $img.Resize (printf "%dx webp q78 lanczos" .) -}}
+    {{- $srcset = $srcset | append (printf "%s %dw" $r.RelPermalink $r.Width) -}}
+  {{- end -}}
+{{- end -}}
+{{- $fallback := $img.Resize "1280x webp q78 lanczos" -}}
+
+<figure class="figura">
+  <img
+    src="{{ $fallback.RelPermalink }}"
+    {{ with $srcset }}srcset="{{ delimit . ", " }}"
+    sizes="(max-width: 900px) 100vw, 780px"{{ end }}
+    width="{{ $fallback.Width }}" height="{{ $fallback.Height }}"
+    alt="{{ $alt }}" loading="lazy" decoding="async">
+  {{- if $legenda }}
+  <figcaption>
+    {{- with $numero }}<span class="figura-num">Figura {{ . }}</span>{{ end }}
+    {{ $legenda | markdownify }}
+    {{- with $fonte }} <span class="figura-fonte">Fonte: {{ . }}.</span>{{ end }}
+  </figcaption>
+  {{- end }}
+</figure>

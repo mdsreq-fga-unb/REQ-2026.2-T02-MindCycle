@@ -1,0 +1,27 @@
+<section class="banner{{ with .Site.Params.banner }} has-image{{ end }}" aria-label="Site banner">
+  <div class="banner-bg" id="bannerBg"></div>
+  {{ with .Site.Params.banner }}
+  <div class="banner-image">
+    {{- $img := resources.Get (strings.TrimPrefix "/" .) -}}
+    {{- if $img -}}
+      {{- $q := site.Params.bannerImageQuality | default 85 -}}
+      {{- $img = $img.Process (printf "webp q%d" $q) -}}
+      <img src="{{ $img.RelPermalink }}" alt="" loading="eager" id="bannerImg">
+    {{- else -}}
+      <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="" loading="eager" id="bannerImg">
+    {{- end -}}
+  </div>
+  {{ end }}
+  <div class="banner-particles" aria-hidden="true">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+  <div class="corner-brackets" aria-hidden="true"><span></span></div>
+  <div class="banner-content">
+    <h1>{{ if or site.Params.bannerTitle site.Params.bannerHighlight }}{{ with site.Params.bannerTitle }}{{ . }}{{ end }} {{ with site.Params.bannerHighlight }}<span>{{ . }}</span>{{ end }}{{ else }}{{ i18n "banner_welcome" }} <span>{{ .Site.Title }}</span>{{ end }}</h1>
+    <p class="banner-subtitle">{{ with .Site.Params.bannerSubtitle }}{{ . }}{{ else }}{{ i18n "banner_subtitle" | default "// blog × code × ideas" }}{{ end }}</p>
+  </div>
+</section>

@@ -1,0 +1,14 @@
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}{{ end }}">
+<meta name="author" content="{{ .Site.Params.author }}">
+{{/* Favicon */}}
+{{ with .Site.Params.favicon }}
+<link rel="icon" href="{{ . | strings.TrimPrefix "/" | relURL }}" type="image/x-icon">
+{{ else }}
+<link rel="icon" href="data:," type="image/x-icon">
+{{ end }}
+<link rel="canonical" href="{{ .Permalink }}">
+{{/* RSS auto-discovery */}}
+{{ with .OutputFormats.Get "RSS" }}
+<link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{ end }}

@@ -1,0 +1,115 @@
+# ============================================
+# Spectra Theme — Default Configuration
+# Merged with site-level hugo.toml by Hugo
+# ============================================
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.157.0"
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+
+[pagination]
+  pagerSize = 10
+
+[taxonomies]
+  tag = 'tags'
+  series = 'series'
+
+[markup]
+  [markup.highlight]
+    guessSyntax = true
+    noClasses = false
+    lineNos = false
+    lineNumbersInTable = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.goldmark.extensions.passthrough]
+    enable = true
+    [markup.goldmark.extensions.passthrough.delimiters]
+      block = [['$$', '$$']]
+      inline = [['$', '$']]
+
+[params]
+  math = false
+  share = true
+  imageOptimize = true
+  bannerSubtitle = '// blog × code × ideas'
+
+  # === Content Limits ===
+  # homepagePostsLimit = 10
+  # cardSummaryLength = 150
+  # relatedPostsLimit = 3
+  # cardImageQuality = 80
+  # coverImageQuality = 85
+  # contentImageQuality = 90
+
+  # === Banner Text ===
+  # bannerTitle = ''
+  # bannerHighlight = ''
+
+  # === Feature Toggles (default: true, set false to disable) ===
+  # enableLoadingAnimation = true
+  # enableMouseGlow = true
+  # showBanner = true
+  # showReadingProgress = true
+  # enableLightbox = true
+  # showScrollTop = true
+  # enableSearch = true
+  # showRelatedPosts = true
+  # showSeriesNav = true
+  # enableCodeCopy = true
+  # enableScrollAnimation = true
+
+  # === Share ===
+  # sharePlatforms = ['twitter', 'facebook', 'linkedin']
+
+  # === Advanced: Custom CSS/JS ===
+  # customCSS = []
+  # customJS = []
+  # googleFontsURL = ''
+
+  # === Style Overrides ===
+  # [params.style]
+  #   colorAccent = '#4a7de0'
+  #   colorAccentWarm = '#e8609e'
+  #   colorAccentSoft = '#a78bfa'
+  #   fontDisplay = "'Outfit', sans-serif"
+  #   fontBody = "'Zen Maru Gothic', 'Noto Sans TC', sans-serif"
+  #   fontMono = "'JetBrains Mono', monospace"
+  #   bannerImageText = '#fff'
+  #   bannerImageSubtitle = 'rgba(255, 255, 255, 0.8)'
+  #   bannerImageGradient = 'linear-gradient(135deg, #4a7de0, #e8609e)'
+  #   bannerImageGradientFill = 'transparent'
+
+  # === Sidebar ===
+  # [params.sidebar]
+  #   showAllPosts = true
+  #   showCategories = true
+  #   showTags = true
+  #   showRecent = true
+  #   categoryLimit = 999
+  #   tagsLimit = 20
+  #   recentLimit = 5
+  #   tagWarmThreshold = 3
+
+[related]
+  includeNewer = true
+  threshold = 50
+  toLower = true
+  [[related.indices]]
+    name = "tags"
+    weight = 80
+  [[related.indices]]
+    name = "date"
+    weight = 10
+    pattern = "2006"
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'

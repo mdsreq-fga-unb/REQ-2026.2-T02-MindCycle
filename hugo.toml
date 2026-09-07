@@ -1,0 +1,179 @@
+# =====================================================================
+#  MindCycle — Documentação do Produto e do Projeto
+#  Disciplina: Requisitos de Software (REQ) — 2026.2 — Turma 02
+#  Tema: Spectra (https://github.com/JoeYang1412/hugo-theme-spectra)
+# =====================================================================
+
+baseURL              = 'https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-MindCycle/'
+locale               = 'pt-BR'
+defaultContentLanguage = 'pt-br'
+title                = 'MindCycle'
+theme                = 'hugo-theme-spectra'
+enableGitInfo        = false
+enableRobotsTXT      = true
+
+# Documentação não é blog: sem taxonomias, sem feed de posts.
+disableKinds = ['taxonomy', 'term', 'rss']
+
+[outputs]
+  home = ['HTML', 'JSON']
+
+[params]
+  # ---------------------------------------------------------------
+  #  Identidade
+  # ---------------------------------------------------------------
+  author      = 'Equipe MindCycle'
+  tagline     = '// REQ 2026.2 · T02'
+  description = 'Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido para o LabLivre/FCTE-UnB.'
+  bio         = 'Documento de Visão do Produto e Projeto e entregas da disciplina de Requisitos de Software.'
+
+  # >>> ESPAÇO PARA A LOGO <<<
+  # Substitua static/img/logo.svg pelo arquivo definitivo da logo
+  # (SVG, PNG ou WEBP, preferencialmente quadrado, mínimo 320x320).
+  # Se trocar a extensão, atualize o caminho abaixo.
+  avatar = '/img/logo.svg'
+
+  # ---------------------------------------------------------------
+  #  Recursos do tema
+  #
+  #  O Spectra é um tema de blog com estética "sci-fi": tela de
+  #  carregamento, brilho que segue o mouse, partículas, banner com
+  #  parallax e animações de entrada por scroll. Nada disso serve a uma
+  #  documentação acadêmica e tudo isso custa JavaScript. Está desligado.
+  #  A paleta, a tipografia e o enquadramento visual estão em
+  #  static/css/custom.css.
+  # ---------------------------------------------------------------
+  math                   = false
+  share                  = false
+  imageOptimize          = true
+  enableLoadingAnimation = false
+  enableMouseGlow        = false
+  showBanner             = false
+  showReadingProgress    = false
+  enableScrollAnimation  = false
+  enableCodeCopy         = false
+  showRelatedPosts       = false
+  showSeriesNav          = false
+  enableLightbox         = true
+  showScrollTop          = true
+  enableSearch           = true
+
+
+  # A barra lateral é um sumário de documentação: sem blog, tags ou recentes.
+  [params.sidebar]
+    showAllPosts  = false
+    showCategories = false
+    showTags      = false
+    showRecent    = false
+
+  # ---------------------------------------------------------------
+  #  Links do rodapé da barra lateral
+  # ---------------------------------------------------------------
+  [[params.social]]
+    name = 'GitHub'
+    url  = 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle'
+
+# =====================================================================
+#  Menu de navegação (sumário da documentação)
+# =====================================================================
+
+[[menus.main]]
+  identifier = 'inicio'
+  name       = 'Início'
+  pageRef    = '/'
+  weight     = 1
+  pre        = '⌂'
+
+# --- Visão do Produto e Projeto -------------------------------------
+[[menus.main]]
+  identifier = 'visao'
+  name       = 'Visão do Produto e Projeto'
+  pageRef    = '/visao'
+  weight     = 2
+  pre        = '◈'
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '1. Cenário Atual do Cliente e do Negócio'
+  pageRef = '/visao/01-cenario-atual'
+  weight  = 1
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '2. Solução Proposta'
+  pageRef = '/visao/02-solucao-proposta'
+  weight  = 2
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '3. Intervenção Social'
+  pageRef = '/visao/03-intervencao-social'
+  weight  = 3
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '4. Estratégias de Engenharia de Software'
+  pageRef = '/visao/04-estrategias-engenharia-software'
+  weight  = 4
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '5. Engenharia de Requisitos'
+  pageRef = '/visao/05-engenharia-de-requisitos'
+  weight  = 5
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '6. Cronograma e Entregas'
+  pageRef = '/visao/06-cronograma-e-entregas'
+  weight  = 6
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '7. Interação entre Equipe e Cliente'
+  pageRef = '/visao/07-interacao-equipe-cliente'
+  weight  = 7
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '11. Lições Aprendidas'
+  pageRef = '/visao/11-licoes-aprendidas'
+  weight  = 11
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '12. Referências Bibliográficas'
+  pageRef = '/visao/12-referencias'
+  weight  = 12
+
+# --- Entregas --------------------------------------------------------
+[[menus.main]]
+  identifier = 'entregas'
+  name       = 'Entregas'
+  pageRef    = '/entregas'
+  weight     = 3
+  pre        = '▣'
+
+[[menus.main]]
+  parent  = 'entregas'
+  name    = 'Unidade 1'
+  pageRef = '/entregas/unidade-1'
+  weight  = 1
+
+# =====================================================================
+#  Markdown / render
+# =====================================================================
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel   = 3
+  [markup.highlight]
+    guessSyntax = true
+    noClasses   = false
+    lineNos     = false
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'

@@ -1,0 +1,10 @@
+<div class="article-meta">
+  {{ with .Date }}<span>{{ .Format "2006-01-02" }}</span>{{ end }}
+  <span>{{ .ReadingTime }} {{ i18n "min_read" }}</span>
+  {{- $section := .CurrentSection -}}
+  {{- $postsRoot := site.GetPage "/posts" -}}
+  {{- if and $section $postsRoot (ne $section.RelPermalink $postsRoot.RelPermalink) }}
+  <a href="{{ $section.RelPermalink }}">{{ $section.Title }}</a>
+  {{- end }}
+</div>
+{{- partial "tag-list" (dict "page" . "class" "article-tags") -}}

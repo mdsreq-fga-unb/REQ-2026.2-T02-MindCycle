@@ -1,0 +1,34 @@
+{{- $src := .Destination -}}
+{{- $alt := .Text -}}
+{{- $title := .Title -}}
+{{- $img := "" -}}
+
+{{/* 1. Try page resource (page bundle) */}}
+{{- with .Page.Resources.GetMatch $src -}}
+  {{- $img = . -}}
+{{- end -}}
+
+{{/* 2. Try global resource (/assets/) */}}
+{{- if not $img -}}
+  {{- with resources.Get ($src | strings.TrimPrefix "/") -}}
+    {{- $img = . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if $img -}}
+  {{- if site.Params.imageOptimize -}}
+    {{- $q := site.Params.contentImageQuality | default 90 -}}
+    {{- $processed := $img.Process (printf "webp q%d" $q) -}}
+    <img src="{{ $processed.RelPermalink }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+  {{- else -}}
+    <img src="{{ $img.RelPermalink }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+  {{- end -}}
+{{- else -}}
+  {{- /* relURL does not include baseURL path in render hooks */ -}}
+  {{- $basePath := (urls.Parse .Page.Site.BaseURL).Path -}}
+  {{- if or (hasPrefix $src "http://") (hasPrefix $src "https://") (hasPrefix $src "//") -}}
+    <img src="{{ $src }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+  {{- else -}}
+    <img src="{{ path.Join $basePath $src }}" alt="{{ $alt }}"{{ with $title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+  {{- end -}}
+{{- end -}}

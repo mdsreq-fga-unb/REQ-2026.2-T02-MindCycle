@@ -1,0 +1,30 @@
+// ===== Components — Post Cards, Tags, Sections, Footer =====
+// Padding convention: rem for content blocks (scales with font), px for buttons/controls (fixed touch targets)
+
+// Section label: uppercase monospace small text with left line decoration
+.section-label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+
+  &::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+  }
+}
+
+// Section heading
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+}

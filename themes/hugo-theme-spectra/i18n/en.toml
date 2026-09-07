@@ -1,0 +1,169 @@
+# Sidebar navigation
+[nav_label]
+other = "Navigation"
+
+# Sidebar sections
+[categories]
+other = "Categories"
+
+[view_all]
+other = "View All"
+
+[tags]
+other = "Tags"
+
+[recent]
+other = "Recent"
+
+# Theme toggle
+[light_mode]
+other = "Light Mode"
+
+[dark_mode]
+other = "Dark Mode"
+
+# Banner
+[banner_welcome]
+other = "Welcome to"
+
+[banner_subtitle]
+other = "// blog × code × ideas"
+
+[welcome_sub]
+other = "explore · create · inspire"
+
+# Loading
+[loading]
+other = "LOADING"
+
+# Post meta
+[min_read]
+other = "min read"
+
+# Posts single
+[go_back]
+other = "Go back"
+
+[blog_section]
+other = "Blog"
+
+[toc_title]
+other = "Contents"
+
+[prev_post]
+other = "Previous"
+
+[next_post]
+other = "Next"
+
+# Index page
+[recent_posts]
+other = "Recent Posts"
+
+[latest_articles]
+other = "Latest Articles"
+
+[view_all_posts]
+other = "View all posts"
+
+# Footer
+[footer_text]
+other = "Powered by Hugo × Styled by Spectra"
+
+# Code copy (JS)
+[code_copy]
+other = "Copy"
+
+[code_copied]
+other = "Copied!"
+
+[code_fallback]
+other = "CODE"
+
+# Terms page
+[grid_view]
+other = "Grid"
+
+[list_view]
+other = "List"
+
+[posts_count]
+one = "post"
+other = "posts"
+
+# Posts list
+[all_posts]
+other = "All Posts"
+
+[no_posts]
+other = "No posts yet."
+
+# Accessibility
+[skip_to_content]
+other = "Skip to content"
+
+[toggle_theme]
+other = "Toggle theme"
+
+# Copyright
+[copyright]
+other = "All Rights Reserved."
+
+# 404 page
+[error_404_title]
+other = "Page Not Found"
+
+[error_404_message]
+other = "The page you are looking for does not exist or has been moved."
+
+[error_404_back]
+other = "Back to Home"
+
+# Scroll to top
+[scroll_to_top]
+other = "Scroll to top"
+
+# Code block enhancements
+[toggle_line_numbers]
+other = "Toggle line numbers"
+
+# Related posts
+[related_posts]
+other = "Related Posts"
+
+# Series
+[series]
+other = "Series"
+
+[series_view_all]
+other = "View all posts in this series"
+
+# Share buttons
+[share]
+other = "Share"
+
+[share_copy_link]
+other = "Copy link"
+
+# Search
+[search]
+other = "Search"
+
+[search_placeholder]
+other = "Search posts..."
+
+[search_close]
+other = "Close search"
+
+[search_hint]
+other = "Type to search posts"
+
+[search_no_results]
+other = "No results found"
+
+[search_loading]
+other = "Loading search index..."
+
+# No-JS notice
+[noscript_notice]
+other = "Some features (search, theme toggle, animations) require JavaScript to work."

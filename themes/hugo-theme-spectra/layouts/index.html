@@ -1,0 +1,26 @@
+{{ define "main" }}
+
+{{ if ne site.Params.showBanner false }}{{- partial "banner.html" . -}}{{ end }}
+
+<main class="main-content">
+  <div class="section-label">{{ i18n "recent_posts" }}</div>
+  <h2 class="section-title">{{ i18n "latest_articles" }}</h2>
+
+  {{ with site.GetPage "/posts" }}
+  {{ $posts := .RegularPagesRecursive }}
+  {{ $limit := site.Params.homepagePostsLimit | default 10 }}
+  {{ range first $limit $posts.ByDate.Reverse }}
+    {{- partial "post-card.html" . -}}
+  {{ end }}
+
+  {{ if gt (len $posts) $limit }}
+  <div class="pagination">
+    <a href="{{ .RelPermalink }}">{{ i18n "view_all_posts" }} &rarr;</a>
+  </div>
+  {{ end }}
+  {{ end }}
+</main>
+
+{{- partial "footer.html" . -}}
+
+{{ end }}

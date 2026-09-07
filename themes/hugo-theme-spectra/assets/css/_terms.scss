@@ -1,0 +1,149 @@
+// ===== Categories page — Grid / List toggle =====
+
+// View toggle button row (grid / list)
+.terms-view-toggle {
+  display: flex;
+  gap: var(--gap-xxs);
+  margin-bottom: 2rem;
+}
+
+// View toggle button
+.view-btn {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+
+  &:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  &.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+}
+
+// Categories page grid view container
+.terms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+  transition: opacity 0.4s $ease-default, transform 0.4s $ease-default;
+}
+
+// Category card: shadow, border, hover float-up effect
+.category-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xs);
+  padding: 1.8rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  box-shadow: var(--card-shadow);
+
+  // Category card hover glow (same pattern as .post-card:hover — keep in sync)
+  &:hover {
+    border-color: var(--accent);
+    box-shadow: var(--card-shadow), 0 0 0 1px var(--accent), 0 0 20px var(--accent-glow);
+    transform: translateY(-2px);
+  }
+}
+
+// Category card name
+.category-card-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+// Category card post count
+.category-card-count {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+  color: var(--text-secondary);
+}
+
+// Category card decorative gradient triangle at top-right corner
+.category-card-deco {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--accent-glow), var(--accent-warm-glow));
+  border-radius: 0 var(--radius) 0 40px;
+  opacity: 0.6;
+}
+
+// Shared list-view card layout (used by JS toggle and FOUC prevention)
+@mixin terms-list-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .category-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .category-card-name {
+    font-size: 1rem;
+  }
+
+  .category-card-count {
+    flex-shrink: 0;
+  }
+
+  .category-card-deco {
+    display: none;
+  }
+}
+
+// Categories page list view: cards become horizontal rows
+.terms-list-view {
+  @include terms-list-layout;
+  transition: opacity 0.4s $ease-default, transform 0.4s $ease-default;
+
+  .category-card {
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+// FOUC prevention: when head inline script detects localStorage termsView=list,
+// override .terms-grid to display as list before terms-view.js loads.
+html.terms-view-list {
+  .terms-grid {
+    @include terms-list-layout;
+  }
+
+  // Swap active button state
+  .grid-btn.active {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border);
+  }
+  .list-btn {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+}

@@ -1,0 +1,31 @@
+// ===== Spectra Theme — Main SCSS Entry Point =====
+
+// Import all sub-modules. The order is important for cascading and overrides.
+
+@import 'variables';
+@import 'base';
+@import 'typography';
+@import 'layout';
+@import 'sidebar';
+@import 'animations';
+@import 'section-labels';
+@import 'post-card';
+@import 'article';
+@import 'back-link';
+@import 'post-meta';
+@import 'footer-content';
+@import 'pagination';
+@import 'toc';
+@import 'terms';
+@import 'error-page';
+@import 'shortcodes';
+@import 'reading-progress';
+@import 'scroll-top';
+@import 'related-posts';
+@import 'series-nav';
+@import 'share';
+@import 'code';
+@import 'lightbox';
+@import 'search';
+@import 'dark';
+@import 'responsive';

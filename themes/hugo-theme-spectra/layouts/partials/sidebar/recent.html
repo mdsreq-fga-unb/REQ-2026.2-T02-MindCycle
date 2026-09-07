@@ -1,0 +1,8 @@
+{{ if ne site.Params.sidebar.showRecent false }}
+<div class="sidebar-recent">
+  <div class="sidebar-nav-label">{{ i18n "recent" }}</div>
+  {{ range first (site.Params.sidebar.recentLimit | default 5) (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+  <a href="{{ .RelPermalink }}" class="sidebar-recent-item">{{ .Title }}</a>
+  {{ end }}
+</div>
+{{ end }}

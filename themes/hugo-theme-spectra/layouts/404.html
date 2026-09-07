@@ -1,0 +1,24 @@
+{{ define "main" }}
+
+<main class="main-content">
+  <div class="error-page">
+    <div class="error-code">
+      <span class="error-digit">4</span>
+      <span class="error-digit accent">0</span>
+      <span class="error-digit">4</span>
+    </div>
+    <div class="error-decoration">
+      <div class="corner-brackets"><span></span></div>
+    </div>
+    <h1 class="error-title">{{ i18n "error_404_title" }}</h1>
+    <p class="error-message">{{ i18n "error_404_message" }}</p>
+    <a href="{{ .Site.Home.RelPermalink }}" class="error-home-link">
+      <svg class="back-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3L1 8l5 5"/><line x1="1.5" y1="8" x2="15" y2="8"/></svg>
+      {{ i18n "error_404_back" }}
+    </a>
+  </div>
+</main>
+
+{{- partial "footer.html" . -}}
+
+{{ end }}

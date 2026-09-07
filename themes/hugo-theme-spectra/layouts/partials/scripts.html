@@ -1,0 +1,93 @@
+{{/* JS files via Hugo Pipes with fingerprint for cache busting */}}
+{{ if ne site.Params.enableLoadingAnimation false }}
+{{ $loading := resources.Get "js/loading.js" | minify | fingerprint }}
+<script defer src="{{ $loading.RelPermalink }}" integrity="{{ $loading.Data.Integrity }}"></script>
+{{ end }}
+
+{{ $themeToggle := resources.Get "js/theme-toggle.js" | minify | fingerprint }}
+<script defer src="{{ $themeToggle.RelPermalink }}" integrity="{{ $themeToggle.Data.Integrity }}"></script>
+
+{{ $sidebar := resources.Get "js/sidebar.js" | minify | fingerprint }}
+<script defer src="{{ $sidebar.RelPermalink }}" integrity="{{ $sidebar.Data.Integrity }}"></script>
+
+{{/* Anime.js loaded unconditionally: used by loading.js, scroll-animate.js,
+     and details-animate.js. Guard in each script handles missing global. */}}
+{{ $anime := resources.Get "js/vendor/anime.umd.min.js" | fingerprint }}
+<script defer src="{{ $anime.RelPermalink }}" integrity="{{ $anime.Data.Integrity }}"></script>
+
+{{ if ne site.Params.enableScrollAnimation false }}
+{{ $scrollAnimate := resources.Get "js/scroll-animate.js" | minify | fingerprint }}
+<script defer src="{{ $scrollAnimate.RelPermalink }}" integrity="{{ $scrollAnimate.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if ne site.Params.enableCodeCopy false }}
+{{ $codeCopy := resources.Get "js/code-copy.js" | minify | fingerprint }}
+<script defer src="{{ $codeCopy.RelPermalink }}" integrity="{{ $codeCopy.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if ne site.Params.showScrollTop false }}
+{{ $scrollTop := resources.Get "js/scroll-top.js" | minify | fingerprint }}
+<script defer src="{{ $scrollTop.RelPermalink }}" integrity="{{ $scrollTop.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if ne site.Params.enableSearch false }}
+{{ $fuse := resources.Get "js/vendor/fuse.min.js" | fingerprint }}
+<script defer src="{{ $fuse.RelPermalink }}" integrity="{{ $fuse.Data.Integrity }}"></script>
+
+{{ $search := resources.Get "js/search.js" | minify | fingerprint }}
+<script defer src="{{ $search.RelPermalink }}" integrity="{{ $search.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if ne site.Params.enableMouseGlow false }}
+{{ $mouseGlow := resources.Get "js/mouse-glow.js" | minify | fingerprint }}
+<script defer src="{{ $mouseGlow.RelPermalink }}" integrity="{{ $mouseGlow.Data.Integrity }}"></script>
+{{ end }}
+
+{{ $smartBack := resources.Get "js/smart-back.js" | minify | fingerprint }}
+<script defer src="{{ $smartBack.RelPermalink }}" integrity="{{ $smartBack.Data.Integrity }}"></script>
+
+{{ $bannerFallback := resources.Get "js/banner-fallback.js" | minify | fingerprint }}
+<script defer src="{{ $bannerFallback.RelPermalink }}" integrity="{{ $bannerFallback.Data.Integrity }}"></script>
+
+{{ $coverFade := resources.Get "js/cover-fade.js" | minify | fingerprint }}
+<script defer src="{{ $coverFade.RelPermalink }}" integrity="{{ $coverFade.Data.Integrity }}"></script>
+
+{{ if ne site.Params.showBanner false }}
+{{ $bannerParallax := resources.Get "js/banner-parallax.js" | minify | fingerprint }}
+<script defer src="{{ $bannerParallax.RelPermalink }}" integrity="{{ $bannerParallax.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if and (.IsPage) (ne .Params.toc false) }}
+{{ $toc := resources.Get "js/toc.js" | minify | fingerprint }}
+<script defer src="{{ $toc.RelPermalink }}" integrity="{{ $toc.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if and (.IsPage) (eq .Section "posts") }}
+{{ $detailsAnimate := resources.Get "js/details-animate.js" | minify | fingerprint }}
+<script defer src="{{ $detailsAnimate.RelPermalink }}" integrity="{{ $detailsAnimate.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if and (.IsPage) (eq .Section "posts") (ne site.Params.showReadingProgress false) }}
+{{ $readingProgress := resources.Get "js/reading-progress.js" | minify | fingerprint }}
+<script defer src="{{ $readingProgress.RelPermalink }}" integrity="{{ $readingProgress.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if and (.IsPage) (ne site.Params.enableLightbox false) }}
+{{ $lightbox := resources.Get "js/lightbox.js" | minify | fingerprint }}
+<script defer src="{{ $lightbox.RelPermalink }}" integrity="{{ $lightbox.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if and (.IsPage) (eq .Section "posts") (site.Params.share) }}
+{{ $shareCopy := resources.Get "js/share-copy.js" | minify | fingerprint }}
+<script defer src="{{ $shareCopy.RelPermalink }}" integrity="{{ $shareCopy.Data.Integrity }}"></script>
+{{ end }}
+
+{{ if or .Data.Plural (eq .Layout "categories") }}
+{{ $termsView := resources.Get "js/terms-view.js" | minify | fingerprint }}
+<script defer src="{{ $termsView.RelPermalink }}" integrity="{{ $termsView.Data.Integrity }}"></script>
+{{ end }}
+
+{{/* Custom JS files */}}
+{{ range site.Params.customJS }}
+<script src="{{ . | strings.TrimPrefix "/" | relURL }}" defer></script>
+{{ end }}

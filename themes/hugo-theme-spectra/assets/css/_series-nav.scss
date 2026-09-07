@@ -1,0 +1,102 @@
+// ===== Series Navigation =====
+
+.series-nav {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin: 1.5rem 0;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.series-header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  padding: 0.8rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+}
+
+.series-label {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: var(--font-size-xs);
+  flex-shrink: 0;
+}
+
+.series-title {
+  color: var(--text-primary);
+  font-weight: 600;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.series-count {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.series-list-toggle {
+  summary {
+    padding: 0.6rem 1.2rem;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-label);
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+    transition: color var(--transition);
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}
+
+// Smooth expand/collapse animation for series post list
+.series-list-content {
+  overflow: hidden;
+  transition: height 0.35s $ease-default;
+}
+
+.series-list {
+  padding: 0 1.2rem 0.8rem 2.4rem;
+  margin: 0;
+  font-size: 0.85rem;
+
+  li {
+    padding: 4px 0;
+    line-height: 1.5;
+  }
+
+  a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition);
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}
+
+.series-current {
+  color: var(--accent);
+  font-weight: 600;
+
+  span {
+    position: relative;
+    padding-left: 4px;
+
+    &::before {
+      content: '\25B8';
+      position: absolute;
+      left: -12px;
+      color: var(--accent);
+    }
+  }
+}

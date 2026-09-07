@@ -1,0 +1,14 @@
+{{/* tag-list: render tag pills with alternating warm class.
+     Params (dict):
+       page  — page context (for .GetTerms)
+       class — (optional) extra CSS class on wrapper div
+*/}}
+{{- with .page.GetTerms "tags" -}}
+<div class="tag-list{{ with $.class }} {{ . }}{{ end }}">
+  {{- range $i, $tag := . }}
+    {{ $class := "tag" }}
+    {{ if (modBool $i 2) }}{{ $class = "tag warm" }}{{ end }}
+    <a href="{{ $tag.RelPermalink }}" class="{{ $class }}">{{ $tag.LinkTitle }}</a>
+  {{- end }}
+</div>
+{{- end -}}

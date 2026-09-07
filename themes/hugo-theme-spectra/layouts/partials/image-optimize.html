@@ -1,0 +1,34 @@
+{{/* image-optimize: resolve image resource and output <img> tag.
+     Params (dict):
+       page    — page context for .Resources.GetMatch
+       src     — image source path string
+       alt     — alt text
+       fill    — (optional) Fill spec, e.g. "800x300 webp q80"
+       process — (optional) Process spec, e.g. "webp q85"
+       If neither fill nor process is given, outputs the raw image.
+*/}}
+{{- $page := .page -}}
+{{- $src := .src -}}
+{{- $alt := .alt | default "" -}}
+{{- $img := "" -}}
+{{- with $page.Resources.GetMatch $src -}}
+  {{- $img = . -}}
+{{- end -}}
+{{- if not $img -}}
+  {{- with resources.Get ($src | strings.TrimPrefix "/") -}}
+    {{- $img = . -}}
+  {{- end -}}
+{{- end -}}
+{{- if $img -}}
+  {{- if .fill -}}
+    {{- $processed := $img.Fill .fill -}}
+    <img src="{{ $processed.RelPermalink }}" alt="{{ $alt }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" loading="lazy" decoding="async">
+  {{- else if .process -}}
+    {{- $processed := $img.Process .process -}}
+    <img src="{{ $processed.RelPermalink }}" alt="{{ $alt }}" width="{{ $processed.Width }}" height="{{ $processed.Height }}" loading="lazy" decoding="async">
+  {{- else -}}
+    <img src="{{ $img.RelPermalink }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+  {{- end -}}
+{{- else -}}
+  <img src="{{ $src | strings.TrimPrefix "/" | relURL }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+{{- end -}}

@@ -1,0 +1,177 @@
+// ===== Code Block Styles =====
+
+// Code block outer wrapper (dynamically wrapped by code-copy.js)
+.code-block-wrapper {
+  position: relative;
+  margin: 1.5rem 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+// Code block top bar: language label + copy button
+.code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--bg-code-header);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-label);
+}
+
+// Code language label (uppercase monospace)
+.code-lang {
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+// Copy button styles and interaction states
+.code-copy {
+  background: transparent;
+  border: 1px solid var(--code-copy-border);
+  color: var(--code-copy-text);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  padding: 3px 10px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  // Copy success state (green border and text)
+  &.copied {
+    border-color: var(--code-copy-success);
+    color: var(--code-copy-success);
+  }
+}
+
+// Hugo Chroma syntax highlight outer wrapper
+.highlight {
+  margin: 1.5rem 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+
+  pre {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+  }
+}
+
+// When wrapped by code-copy.js, strip .highlight's own spacing/border
+.code-block-wrapper .highlight {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+}
+
+// Preformatted code block: background and padding
+pre {
+  background: var(--bg-code);
+  padding: 1.2rem 1.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-radius: var(--radius-sm);
+
+  // Code element inside pre: reset background
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--code-text);
+    background: none;
+    padding: 0;
+    border-radius: 0;
+  }
+}
+
+// Chroma syntax highlighting token color map — all controlled via CSS variables
+.highlight {
+  // Keywords
+  .k, .kc, .kd, .kn, .kp, .kr, .kt { color: var(--code-keyword); }
+  // Strings
+  .s, .sa, .sb, .sc, .dl, .sd, .s2, .se, .sh, .si, .sx, .sr, .s1, .ss { color: var(--code-string); }
+  // Comments
+  .c, .ch, .cm, .c1, .cs, .cp, .cpf { color: var(--code-comment); font-style: italic; }
+  // Functions
+  .nf, .fm, .nb { color: var(--code-function); }
+  // Numbers
+  .m, .mb, .mf, .mh, .mi, .mo, .il { color: var(--code-number); }
+  // Operators
+  .o, .ow { color: var(--code-operator); }
+  // Classes / Types
+  .nc, .nn, .ne { color: var(--code-class); }
+  // Variables / Names
+  .n, .na, .no, .nd, .ni, .nv, .bp, .vc, .vg, .vi, .vm { color: var(--code-variable); }
+  // Punctuation
+  .p { color: var(--code-punctuation); }
+  // Line numbers (non-table and table mode)
+  .ln, .lnt { color: var(--code-line-number); }
+  // Generic
+  .gd { color: var(--code-deleted); }
+  .gi { color: var(--code-inserted); }
+  .ge { font-style: italic; }
+  .gs { font-weight: bold; }
+}
+
+// Code header actions group (line toggle + copy button)
+.code-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xxs);
+}
+
+// Line number toggle button
+.code-line-toggle {
+  background: transparent;
+  border: 1px solid var(--code-copy-border);
+  border-radius: var(--radius-xs);
+  color: var(--code-copy-text);
+  cursor: pointer;
+  padding: 2px 6px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  transition: color var(--transition), border-color var(--transition);
+
+  &:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+}
+
+// Hide line numbers when toggled
+.code-block-wrapper.hide-line-numbers {
+  // Table mode: hide entire first column
+  .lntable td:first-child {
+    display: none;
+  }
+  // Non-table mode
+  .ln {
+    display: none;
+  }
+}
+
+// Filename display in code header
+.code-filename {
+  font-weight: 500;
+  color: var(--text-primary);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+// Highlighted lines (Hugo hl_lines)
+.highlight .hl {
+  display: block;
+  background: var(--accent-glow);
+  border-left: 3px solid var(--accent);
+  margin: 0 -1rem;
+  // Left padding reduced by border-left width (3px) to keep text aligned
+  padding: 0 1rem 0 calc(1rem - 3px);
+}

@@ -1,0 +1,150 @@
+# Traduções pt-BR para o tema Spectra
+# (mantém as mesmas chaves de themes/hugo-theme-spectra/i18n/en.toml)
+
+[nav_label]
+other = "Sumário"
+
+[categories]
+other = "Categorias"
+
+[view_all]
+other = "Ver tudo"
+
+[tags]
+other = "Tags"
+
+[recent]
+other = "Recentes"
+
+[light_mode]
+other = "Tema claro"
+
+[dark_mode]
+other = "Tema escuro"
+
+[banner_welcome]
+other = "Bem-vinda ao"
+
+[banner_subtitle]
+other = "// produtividade que acompanha o seu ciclo"
+
+[welcome_sub]
+other = "organizar · adaptar · cuidar"
+
+[loading]
+other = "CARREGANDO"
+
+[min_read]
+other = "min de leitura"
+
+[go_back]
+other = "Voltar"
+
+[blog_section]
+other = "Documentação"
+
+[toc_title]
+other = "Nesta página"
+
+[prev_post]
+other = "Anterior"
+
+[next_post]
+other = "Próxima"
+
+[recent_posts]
+other = "Documentação"
+
+[latest_articles]
+other = "Seções"
+
+[view_all_posts]
+other = "Ver todas as seções"
+
+[footer_text]
+other = "MindCycle · Requisitos de Software 2026.2 · FCTE/UnB"
+
+[code_copy]
+other = "Copiar"
+
+[code_copied]
+other = "Copiado!"
+
+[code_fallback]
+other = "CÓDIGO"
+
+[grid_view]
+other = "Grade"
+
+[list_view]
+other = "Lista"
+
+[posts_count]
+one = "página"
+other = "páginas"
+
+[all_posts]
+other = "Todas as seções"
+
+[no_posts]
+other = "Nenhuma página publicada ainda."
+
+[skip_to_content]
+other = "Ir para o conteúdo"
+
+[toggle_theme]
+other = "Alternar tema"
+
+[copyright]
+other = "Todos os direitos reservados."
+
+[error_404_title]
+other = "Página não encontrada"
+
+[error_404_message]
+other = "A página que você procura não existe ou foi movida."
+
+[error_404_back]
+other = "Voltar ao início"
+
+[scroll_to_top]
+other = "Voltar ao topo"
+
+[toggle_line_numbers]
+other = "Alternar numeração de linhas"
+
+[related_posts]
+other = "Páginas relacionadas"
+
+[series]
+other = "Série"
+
+[series_view_all]
+other = "Ver todas as páginas desta série"
+
+[share]
+other = "Compartilhar"
+
+[share_copy_link]
+other = "Copiar link"
+
+[search]
+other = "Buscar"
+
+[search_placeholder]
+other = "Buscar na documentação..."
+
+[search_close]
+other = "Fechar busca"
+
+[search_hint]
+other = "Digite para buscar na documentação"
+
+[search_no_results]
+other = "Nenhum resultado encontrado"
+
+[search_loading]
+other = "Carregando índice de busca..."
+
+[noscript_notice]
+other = "Alguns recursos (busca, alternância de tema e animações) precisam de JavaScript."
