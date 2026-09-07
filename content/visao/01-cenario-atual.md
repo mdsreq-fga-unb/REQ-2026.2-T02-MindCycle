@@ -128,8 +128,6 @@ pessoas.
 | Equipe de desenvolvimento | Responsável pela construção | Entregar uma aplicação que atenda às necessidades reais do cliente | Alto |
 | Profissionais de Saúde | Consultores e potenciais colaboradores na validação das informações relacionadas ao ciclo menstrual | Garantir que as informações sobre o ciclo e seus impactos sejam apresentadas de forma adequada e responsável | Baixo |
 
-<span class="quadro-fonte">**Quadro 1** – Mapa de stakeholders. Fonte: elaborado pela equipe.</span>
-
 {{< figura src="figura3-mapa-stakeholders.png" numero="3"
           alt="Mapa de stakeholders posicionados por poder decisório e interesse, com os vínculos de colaboração, dependência e conflito potencial entre eles."
           legenda="Mapa de stakeholders." >}}

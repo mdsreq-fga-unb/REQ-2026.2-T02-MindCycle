@@ -32,10 +32,11 @@ automaticamente no GitHub Pages a cada `push`.
 ├── layouts/                       Templates que substituem os do tema
 │   ├── _default/baseof.html       Estrutura da página (barra superior, tema claro/escuro)
 │   ├── partials/                  Sumário lateral, scripts e estilos enxutos
-│   └── shortcodes/figura.html     Figuras convertidas para WebP responsivo
+│   └── shortcodes/                figura, cartao e membro (WebP responsivo)
 ├── assets/
 │   ├── css/custom.css             Camada visual da documentação
 │   ├── img/                       Figuras do Documento de Visão (originais, não publicados)
+│   │   └── equipe/                Avatares do GitHub da equipe
 │   └── js/search.js               Busca ajustada para documentação (ver comentários)
 ├── static/
 │   ├── img/logo.svg               Logo (espaço reservado)
@@ -53,10 +54,11 @@ Seções **1 a 7**, **11.1** e **12**.
 
 As Seções **8 (Requisitos de Software)**, **9 (DoR e DoD)** e **10 (Backlog de Produto)** —
 e a Seção **11.2** — estão marcadas no documento original como *"a ser entregue na Unidade
-2"* e, por isso, ainda não têm páginas. Elas aparecem sem link no índice de
-`content/visao/_index.md`, apenas para preservar a numeração; quando forem escritas, basta
-criar os arquivos, remover os blocos `is-pending` e acrescentar as entradas no menu em
-`hugo.toml`.
+2"* e, por isso, não aparecem no site. Quando forem escritas, basta criar os arquivos em
+`content/visao/` e acrescentar as entradas no menu em `hugo.toml`.
+
+As páginas da seção *Visão do Produto e Projeto* reproduzem o documento e nada além dele:
+sem avisos, notas de rodapé editoriais ou subtítulos que o documento não tenha.
 
 ---
 
@@ -68,7 +70,7 @@ criar os arquivos, remover os blocos `is-pending` e acrescentar as entradas no m
 | **Seções 2.2 e 2.3 desatualizadas** | A Seção 6 do documento passou a citar **OE1–OE6** e **CP1–CP9** com nomes novos; as Seções 2.2 e 2.3 ainda listam OE1–OE3 e CP1–CP6 com os nomes antigos. |
 | **Vídeo da Unidade 1** | `content/entregas/unidade-1.md` — instruções comentadas no arquivo. |
 | **Slides da Unidade 1** | Colocar os arquivos em `static/entregas/unidade-1/` e descomentar o bloco de links. |
-| **Usuários do GitHub** | `content/_index.md` — trocar cada `@usuario-github` pelo perfil real. |
+| **GitHub do Allan Kelvin** | `content/_index.md` — é o único integrante que não aparece na lista de colaboradores do repositório, então o cartão dele está sem `github=` e sem `foto=`. Baixe o avatar para `assets/img/equipe/` e preencha os dois parâmetros. |
 | **Como comprovar o objetivo geral** | Seção 2.1 tem uma pendência registrada pela equipe (indicadores de verificação). |
 
 ---

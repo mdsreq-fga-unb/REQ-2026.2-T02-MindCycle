@@ -11,12 +11,6 @@ O objetivo do produto é reduzir a sobrecarga associada à disfunção executiva
 flutuações do ciclo menstrual na produtividade da mulher, por meio de um aplicativo de
 organização de tarefas que se adapta ao ciclo menstrual.
 
-{{< notice type="warning" title="Pendência registrada pela equipe" >}}
-Falta declarar **como a redução da sobrecarga será comprovada** — isto é, quais
-indicadores e formas de medição sustentarão a verificação do objetivo geral. A definição
-desses indicadores está prevista para a elaboração dos requisitos, na Unidade 2.
-{{< /notice >}}
-
 ## 2.2 Objetivos Específicos (OE) do Produto
 
 Para alcançar o objetivo geral do produto, foram definidos os seguintes objetivos

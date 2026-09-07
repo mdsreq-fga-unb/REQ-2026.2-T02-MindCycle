@@ -18,6 +18,10 @@
 {{ $sidebar := resources.Get "js/sidebar.js" | minify | fingerprint }}
 <script defer src="{{ $sidebar.RelPermalink }}" integrity="{{ $sidebar.Data.Integrity }}"></script>
 
+{{/* Recolher/expandir os grupos do sumário (arquivo do projeto, não do tema) */}}
+{{ $navCollapse := resources.Get "js/nav-collapse.js" | minify | fingerprint }}
+<script defer src="{{ $navCollapse.RelPermalink }}" integrity="{{ $navCollapse.Data.Integrity }}"></script>
+
 {{ if ne site.Params.showScrollTop false }}
 {{ $scrollTop := resources.Get "js/scroll-top.js" | minify | fingerprint }}
 <script defer src="{{ $scrollTop.RelPermalink }}" integrity="{{ $scrollTop.Data.Integrity }}"></script>

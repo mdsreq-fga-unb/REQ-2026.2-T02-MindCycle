@@ -29,8 +29,6 @@ A equipe de desenvolvimento será composta por:
 | Analista de QA<br>Analista de Dados | Executa os testes de funcionalidade, desempenho e usabilidade e verifica o cumprimento dos critérios de aceitação e do Definition of Done. Como analista de dados, valida a consistência dos dados que sustentam as recomendações apresentadas à usuária. | Pedro Ian Guedes de Carvalho |
 | Desenvolvedor Frontend<br>Analista de Requisitos | Implementa componentes de interface e o fluxo de decomposição de tarefas (CP1). Como analista de requisitos, apoia a declaração das histórias e revisa a linguagem do produto para garantir a ausência de termos de cobrança no reagendamento de tarefas não concluídas. | Arthur Palhares |
 
-<span class="quadro-fonte">**Quadro 8** – Composição da equipe e papéis. Fonte: elaborado pela equipe.</span>
-
 ## 7.2 Comunicação
 
 ### Ferramentas de Comunicação
@@ -55,7 +53,7 @@ trabalho dentro e entre as iterações por meio do quadro visual e dos limites d
 progresso (WIP). Cada iteração começa com uma reunião de planejamento e termina com uma
 revisão e uma retrospectiva, permitindo inspeção e adaptação contínuas. A única exceção é a
 Iteração 7, de uma semana, cuja duração e justificativa constam do
-[Quadro 7 e das considerações da Seção 6](../06-cronograma-e-entregas/#63-considerações-importantes).
+[Quadro 7 e das considerações da Seção 6](../06-cronograma-e-entregas/#considerações-importantes).
 
 - **Planejamento da Iteração:** no primeiro dia de cada iteração, com toda a equipe.
   Seleciona os itens do backlog do produto que comporão o backlog da iteração, com base na
@@ -113,7 +111,3 @@ O processo de validação da solução será realizado em três etapas principai
    estabelecidos. Cada funcionalidade será validada com base nos critérios de aceitação
    definidos durante o DoR.
 
-{{< notice type="info" title="DoR e DoD detalhados" >}}
-Os critérios que compõem o DoR e o DoD serão declarados na **Seção 9**, entregue na
-**Unidade 2**.
-{{< /notice >}}

@@ -12,8 +12,6 @@ menstrual e as dificuldades de função executiva. A proposta busca reduzir a so
 executiva e a autocobrança geradas por ferramentas de produtividade que tratam todos os
 dias como iguais.
 
-## Impactos pretendidos
-
 Entre os impactos pretendidos, destacam-se:
 
 - apoiar mulheres em tecnologia na organização de tarefas profissionais e acadêmicas de
@@ -28,8 +26,6 @@ Entre os impactos pretendidos, destacam-se:
   mesmo em dias de dor, baixa energia ou sobrecarga;
 - ampliar a autonomia da usuária para negociar prazos e demandas com base em seu próprio
   histórico de execução.
-
-## Efeitos emergentes a observar
 
 Ao mesmo tempo, a solução pode gerar efeitos emergentes, não totalmente previstos, que
 precisam ser observados, como:
@@ -46,8 +42,6 @@ precisam ser observados, como:
   visibilidade da equipe;
 - risco de deslocar para a usuária a responsabilidade individual por problemas que também
   são estruturais no ambiente de trabalho.
-
-## Conclusão
 
 Assim, a intervenção social do MindCycle não é apenas "organizar tarefas". Ela consiste
 em alterar a forma como a produtividade é medida, vivida e negociada no cotidiano

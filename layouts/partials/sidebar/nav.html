@@ -1,30 +1,54 @@
 {{/*
-  Sumário lateral com dois níveis. Sobrescreve o partial do tema, que só
-  renderiza menus planos. O botão de busca foi movido para a barra superior.
+  Sumário lateral com dois níveis e grupos recolhíveis.
+
+  Cada item de primeiro nível que tem filhos vira um grupo: o título continua
+  sendo um link normal e um botão ao lado recolhe ou expande a lista. O estado
+  fica no localStorage e é aplicado antes da primeira pintura (ver baseof.html).
 */}}
 <nav class="sidebar-nav" aria-label="Sumário da documentação">
   {{ range site.Menus.main }}
     {{ $entry := . }}
+    {{ $id := .Identifier | default (urlize .Name) }}
     {{ $href := "" }}
     {{ with .Page }}{{ $href = .RelPermalink }}{{ else }}{{ $href = .URL | relURL }}{{ end }}
     {{ $isCurrent := or ($.IsMenuCurrent "main" $entry) ($.HasMenuCurrent "main" $entry) }}
 
-    <a href="{{ $href }}" class="sidebar-nav-item{{ if $isCurrent }} active{{ end }}" data-tooltip="{{ .Name }}"{{ if $isCurrent }} aria-current="page"{{ end }}>
+    {{ if .Children }}
+    <div class="sidebar-group" data-grupo="{{ $id }}">
+      <div class="sidebar-group-cabeca">
+        <a href="{{ $href }}" class="sidebar-nav-item{{ if $isCurrent }} active{{ end }}"{{ if $isCurrent }} aria-current="page"{{ end }}>
+          {{ with .Pre }}<span class="nav-icon" aria-hidden="true">{{ . }}</span>{{ end }}
+          <span class="nav-text">{{ .Name }}</span>
+        </a>
+        <button class="sidebar-group-btn" type="button"
+                data-grupo="{{ $id }}"
+                aria-expanded="true"
+                aria-label="Recolher ou expandir {{ .Name }}">
+          <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 6l4 4 4-4"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="sidebar-subnav">
+        <div class="sidebar-subnav-inner">
+        {{ range .Children }}
+          {{ $childHref := "" }}
+          {{ with .Page }}{{ $childHref = .RelPermalink }}{{ else }}{{ $childHref = .URL | relURL }}{{ end }}
+          {{ $childCurrent := $.IsMenuCurrent "main" . }}
+          <a href="{{ $childHref }}" class="sidebar-subnav-item{{ if $childCurrent }} active{{ end }}"{{ if $childCurrent }} aria-current="page"{{ end }}>
+            <span class="nav-text">{{ .Name }}</span>
+          </a>
+        {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ else }}
+    <a href="{{ $href }}" class="sidebar-nav-item{{ if $isCurrent }} active{{ end }}"{{ if $isCurrent }} aria-current="page"{{ end }}>
       {{ with .Pre }}<span class="nav-icon" aria-hidden="true">{{ . }}</span>{{ end }}
       <span class="nav-text">{{ .Name }}</span>
     </a>
-
-    {{ with .Children }}
-    <div class="sidebar-subnav">
-      {{ range . }}
-        {{ $childHref := "" }}
-        {{ with .Page }}{{ $childHref = .RelPermalink }}{{ else }}{{ $childHref = .URL | relURL }}{{ end }}
-        {{ $childCurrent := $.IsMenuCurrent "main" . }}
-        <a href="{{ $childHref }}" class="sidebar-subnav-item{{ if $childCurrent }} active{{ end }}" data-tooltip="{{ .Name }}"{{ if $childCurrent }} aria-current="page"{{ end }}>
-          <span class="nav-text">{{ .Name }}</span>
-        </a>
-      {{ end }}
-    </div>
     {{ end }}
   {{ end }}
 </nav>

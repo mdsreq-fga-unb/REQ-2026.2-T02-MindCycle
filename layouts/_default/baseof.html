@@ -11,6 +11,13 @@
   data-i18n-search-no-results="{{ i18n "search_no_results" }}"
   data-i18n-search-loading="{{ i18n "search_loading" }}"
 >
+  {{/* Antes de qualquer pintura: aplica os grupos do sumário que o leitor
+       deixou recolhidos, para não haver piscada na abertura da página. */}}
+  <script>
+  (function(){try{JSON.parse(localStorage.getItem('navFechados')||'[]')
+    .forEach(function(id){document.documentElement.classList.add('nav-fechado-'+id)})}catch(e){}})();
+  </script>
+
   <a href="#main-content" class="skip-link">{{ i18n "skip_to_content" }}</a>
 
   <noscript>
@@ -47,24 +54,24 @@
       </nav>
       </div>
 
-      <div class="topbar-actions">
+      {{/* Centro da barra: a busca, com forma de campo. */}}
+      <div class="topbar-centro">
         {{ if ne site.Params.enableSearch false }}
-        <button class="topbar-btn" id="searchTrigger" aria-label="{{ i18n "search" }}">
-          <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
-          <span class="topbar-btn-label">{{ i18n "search" }}</span>
+        <button class="busca-btn" id="searchTrigger" aria-label="{{ i18n "search" }}">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <span class="busca-btn-texto">{{ i18n "search_placeholder" }}</span>
         </button>
         {{ end }}
+      </div>
 
-        {{/* Botão de alternância entre tema claro e escuro.
-             theme-toggle.js procura exatamente estes três ids. */}}
+      {{/* Direita: alternância entre tema claro e escuro.
+           theme-toggle.js procura exatamente estes três ids. */}}
+      <div class="topbar-direita">
         <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="{{ i18n "toggle_theme" }}" aria-pressed="false" title="{{ i18n "toggle_theme" }}">
           <span id="themeIcon" aria-hidden="true">&#9790;</span>
           <span class="topbar-btn-label" id="themeLabel">{{ i18n "dark_mode" }}</span>
         </button>
       </div>
-
-      {{/* coluna vazia à direita: mantém os botões no centro exato */}}
-      <div class="topbar-right" aria-hidden="true"></div>
     </header>
 
     <div class="content-area" id="main-content">

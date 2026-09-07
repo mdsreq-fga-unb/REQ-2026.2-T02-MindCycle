@@ -44,8 +44,6 @@ Quadro 7 detalha as iterações e os fechamentos de release, com datas de iníci
 objetivo principal, entregas esperadas e validação a ser realizada pelo cliente, na forma
 definida na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-validação).
 
-## 6.1 Releases e marcos de entrega
-
 | Release | Unidade | Período | Entrega | Data da entrega |
 |---|---|---|---|---|
 | Release 1 | Unidade 1 | 11/08/2026 a 14/09/2026 | Documento de Visão do Produto e Projeto, versão 1.0, com as Seções 1 a 7, publicado no GitPages | 08/09/2026 |
@@ -54,8 +52,6 @@ definida na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-valida�
 | Release 4 | Unidade 4 | 24/11/2026 a 10/12/2026 | MVP integrado e homologado pelo cliente e Documento de Visão consolidado no GitPages | 01/12/2026 |
 
 <span class="quadro-fonte">**Quadro 6** – Releases, unidades da disciplina e marcos de entrega. Fonte: elaborado pela equipe.</span>
-
-## 6.2 Iterações e fechamentos de release
 
 | Ciclo | Início | Fim | Objetivo Principal | Entregas Esperadas | Validação do Cliente |
 |---|---|---|---|---|---|
@@ -73,7 +69,7 @@ definida na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-valida�
 
 <span class="quadro-fonte">**Quadro 7** – Cronograma de iterações e fechamentos de release. Fonte: elaborado pela equipe.</span>
 
-## 6.3 Considerações importantes
+## Considerações importantes
 
 1. **Duração dos ciclos.** As iterações têm cadência fixa de duas semanas, de terça-feira a
    segunda-feira, à exceção da Iteração 7, de uma semana. A redução é decisão deliberada, e

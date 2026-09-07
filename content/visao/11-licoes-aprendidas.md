@@ -15,8 +15,3 @@ rodada de revisão.
 repassadas pelo professor e pela monitora da disciplina, de modo a alinhar o conteúdo ao
 padrão esperado antes da entrega da Release 1.
 
-{{< notice type="info" title="Unidades 2, 3 e 4" >}}
-As lições aprendidas das **Unidades 2, 3 e 4** serão registradas nas Seções 11.2, 11.3 e
-11.4, ao final das respectivas retrospectivas — conforme o
-[cronograma](../06-cronograma-e-entregas/#62-iterações-e-fechamentos-de-release).
-{{< /notice >}}
