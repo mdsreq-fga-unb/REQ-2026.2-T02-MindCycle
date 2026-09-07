@@ -1,0 +1,17 @@
+{{- /*
+  Logotipo "MindCycle" (assets/brand/logo/wordmark).
+
+  São duas versões: a de tinta escura para fundo claro e a creme para fundo
+  escuro. As duas são servidas e o CSS mostra a certa conforme o tema —
+  `<picture>` sozinho só reagiria à preferência do sistema, e aqui o leitor
+  também escolhe o tema no botão da barra superior.
+*/ -}}
+{{- $claro  := resources.Get site.Params.logoWordmark -}}
+{{- $escuro := resources.Get site.Params.logoWordmarkEscuro -}}
+
+<div class="wordmark">
+  {{ with $claro }}<img class="wordmark-claro" src="{{ .RelPermalink }}" width="320" height="104"
+    alt="MindCycle" loading="eager" decoding="async">{{ end }}
+  {{ with $escuro }}<img class="wordmark-escuro" src="{{ .RelPermalink }}" width="320" height="104"
+    alt="" aria-hidden="true" loading="eager" decoding="async">{{ end }}
+</div>

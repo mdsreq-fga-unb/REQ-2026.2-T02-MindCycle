@@ -1,12 +1,12 @@
 {{/*
-  Cabeçalho do sumário. Substitui o "perfil de autor" do tema (avatar
-  redondo com anel tracejado girando) por um bloco de identidade sóbrio:
-  logo, nome do produto e a disciplina.
+  Cabeçalho do sumário: ícone da lua (assets/brand/logo/icon-lua) e o nome do
+  produto. Substitui o "perfil de autor" do tema.
 */}}
+{{- $icone := resources.Get site.Params.logoIcone -}}
 <a class="sidebar-brand" href="{{ site.Home.RelPermalink }}">
-  {{ with site.Params.avatar }}
+  {{ with $icone }}
   <span class="sidebar-brand-mark">
-    <img src="{{ . | strings.TrimPrefix "/" | relURL }}" alt="" width="44" height="44" loading="eager" decoding="async">
+    <img src="{{ .RelPermalink }}" alt="" width="34" height="34" loading="eager" decoding="async">
   </span>
   {{ end }}
   <span class="sidebar-brand-text">

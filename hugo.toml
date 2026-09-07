@@ -27,11 +27,14 @@ disableKinds = ['taxonomy', 'term', 'rss']
   description = 'Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido para o LabLivre/FCTE-UnB.'
   bio         = 'Documento de Visão do Produto e Projeto e entregas da disciplina de Requisitos de Software.'
 
-  # >>> ESPAÇO PARA A LOGO <<<
-  # Substitua static/img/logo.svg pelo arquivo definitivo da logo
-  # (SVG, PNG ou WEBP, preferencialmente quadrado, mínimo 320x320).
-  # Se trocar a extensão, atualize o caminho abaixo.
-  avatar = '/img/logo.svg'
+  # ---------------------------------------------------------------
+  #  Marca — arquivos vindos de assets/brand/ (branch main)
+  #  Caminhos relativos a assets/. Trocar aqui troca em todo o site.
+  # ---------------------------------------------------------------
+  logoIcone           = 'brand/logo/icon-lua/lua-original_transparente.svg'
+  logoWordmark        = 'brand/logo/wordmark/mindcycle-wordmark_transparente.svg'
+  logoWordmarkEscuro  = 'img/marca/wordmark-escuro-sem-fundo.svg'
+  favicon             = '/img/favicon.svg'
 
   # ---------------------------------------------------------------
   #  Recursos do tema

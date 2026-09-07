@@ -38,8 +38,10 @@ automaticamente no GitHub Pages a cada `push`.
 │   ├── img/                       Figuras do Documento de Visão (originais, não publicados)
 │   │   └── equipe/                Avatares do GitHub da equipe
 │   └── js/search.js               Busca ajustada para documentação (ver comentários)
+├── assets/brand/                  Marca (vem da branch main): paleta, logos, Fraunces
+├── assets/fonts/                  Fraunces SemiBold, subconjunto latino em WOFF2
 ├── static/
-│   ├── img/logo.svg               Logo (espaço reservado)
+│   ├── img/favicon.svg            Ícone da lua
 │   └── entregas/unidade-1/        Slides da Unidade 1 (a adicionar)
 ├── themes/hugo-theme-spectra/     Tema (cópia local, licença MIT)
 ├── i18n/pt-br.toml                Textos da interface em português
@@ -66,7 +68,6 @@ sem avisos, notas de rodapé editoriais ou subtítulos que o documento não tenh
 
 | O que | Onde |
 |---|---|
-| **Logo definitiva** | Substituir `static/img/logo.svg` (arquivo quadrado, mín. 320×320). Se mudar a extensão, atualizar `params.avatar` em `hugo.toml` e o `<img>` em `content/_index.md`. |
 | **Seções 2.2 e 2.3 desatualizadas** | A Seção 6 do documento passou a citar **OE1–OE6** e **CP1–CP9** com nomes novos; as Seções 2.2 e 2.3 ainda listam OE1–OE3 e CP1–CP6 com os nomes antigos. |
 | **Vídeo da Unidade 1** | `content/entregas/unidade-1.md` — instruções comentadas no arquivo. |
 | **Slides da Unidade 1** | Colocar os arquivos em `static/entregas/unidade-1/` e descomentar o bloco de links. |
@@ -112,6 +113,16 @@ O workflow `.github/workflows/gh-pages.yml` constrói o site e publica no GitHub
 | Luana Carvalho de Almeida | Analista de Dados · Analista de Requisitos |
 | Pedro Ian Guedes de Carvalho | Analista de QA · Analista de Dados |
 | Arthur Palhares | Desenvolvedor Frontend · Analista de Requisitos |
+
+## Marca
+
+Os logos, a paleta e a tipografia vêm de `assets/brand/`, mantido na branch `main`.
+O site usa o ícone da lua no sumário, o wordmark na página inicial (versão de tinta
+no tema claro, versão creme no escuro) e a **Fraunces SemiBold** nos títulos —
+subconjunto latino em WOFF2, 24 KB. As cores da marca que não alcançavam 4,5:1 de
+contraste em texto foram escurecidas: Rose `#EC6F9C` → `#B84371`, Plum `#8A5C77` →
+`#6E4A5F`. Para trocar qualquer logo, basta apontar `logoIcone`, `logoWordmark` e
+`logoWordmarkEscuro` em `hugo.toml` para outro arquivo de `assets/`.
 
 ## Créditos
 

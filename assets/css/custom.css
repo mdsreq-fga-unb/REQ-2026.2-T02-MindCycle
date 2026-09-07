@@ -14,59 +14,68 @@
    1. Design tokens
    --------------------------------------------------------------------- */
 :root {
-  /* Tipografia — pilha do sistema: nada é baixado, texto no primeiro quadro */
+  /* Tipografia
+     Fraunces (a fonte do logotipo) nos títulos; corpo na pilha do sistema,
+     que não custa download nenhum. */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  --font-display: var(--font-body);
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", monospace;
+
+  /* Cores — assets/brand/colors/palette.md
+     Rose #EC6F9C · Rose Deep #D6558A · Lilac #A98BD1 · Coral #FF9E86
+     Plum #8A5C77 · Cream #FFF4EC · Ink #3E2338 · Ink Soft #7A5E71
+     Onde a cor da marca não alcançava 4.5:1 em texto, foi escurecida: a
+     Rose vira #B84371 (4.7:1) e a Plum vira #6E4A5F (6.8:1). */
 
   /* Superfícies */
   --bg-primary: #ffffff;
   --bg-surface: #ffffff;
-  --bg-sidebar: #fbfbfc;
-  --bg-subtle: #f6f6f8;
-  --bg-code: #f6f6f8;
-  --bg-code-header: #eeeef1;
+  --bg-sidebar: #fbf1f5;   /* Ground Light */
+  --bg-subtle:  #f6e7ef;   /* Blush */
+  --bg-code:    #f6e7ef;
+  --bg-code-header: #f0dae5;
 
   /* Texto */
-  --text-primary: #17171a;
-  --text-secondary: #56565f;
-  --text-muted: #7d7d88;
+  --text-primary:   #3e2338;  /* Ink */
+  --text-secondary: #7a5e71;  /* Ink Soft */
+  --text-muted:     #9b8291;
 
-  /* Acento único, sóbrio */
-  --accent: #6a3f9c;
-  --accent-warm: #6a3f9c;
-  --accent-soft: #6a3f9c;
-  --accent-deep: #4b2a75;
-  --accent-weak: #f4f0fa;
-  --accent-line: #e0d3f2;
-  --accent-glow: #f4f0fa;
-  --accent-warm-glow: #f4f0fa;
+  /* Acento */
+  --accent:        #b84371;   /* Rose, escurecida para texto */
+  --accent-deep:   #6e4a5f;   /* Plum, escurecida para títulos */
+  --accent-warm:   #b84371;
+  --accent-soft:   #a98bd1;   /* Lilac */
+  --accent-weak:   #fbecf2;
+  --accent-line:   #f0d6e2;
+  --accent-glow:   #fbecf2;
+  --accent-warm-glow: #fbecf2;
   --accent-contrast: #ffffff;
+  --coral:         #ff9e86;
 
   /* Linhas e sombras */
-  --border: #e5e5ea;
-  --border-strong: #d3d3db;
+  --border: #ebdde5;
+  --border-strong: #dcc5d2;
   --card-shadow: none;
   --sidebar-shadow: none;
   --grid-color: transparent;
   --corner-bracket: transparent;
-  --selection-bg: #e7dcf6;
+  --selection-bg: #f8d9e6;
 
   /* Avisos */
-  --notice-info: #3f5ca8;
-  --notice-info-bg: #eef2fb;
+  --notice-info: var(--accent);
+  --notice-info-bg: var(--bg-subtle);
   --notice-tip: #1f7a4d;
-  --notice-tip-bg: #ecf7f1;
+  --notice-tip-bg: var(--bg-subtle);
   --notice-warning: #9a6206;
-  --notice-warning-bg: #fdf5e7;
-  --notice-caution: #a33a56;
-  --notice-caution-bg: #fbeef2;
+  --notice-warning-bg: var(--bg-subtle);
+  --notice-caution: #b84371;
+  --notice-caution-bg: var(--bg-subtle);
 
   /* Forma */
-  --radius: 8px;
-  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-sm: 7px;
   --radius-xs: 4px;
   --sidebar-width: 274px;
   --sidebar-collapsed-width: 0px;
@@ -75,44 +84,38 @@
 }
 
 [data-theme="dark"] {
-  --bg-primary: #131316;
-  --bg-surface: #17171b;
-  --bg-sidebar: #0f0f12;
-  --bg-subtle: #1e1e24;
-  --bg-code: #1c1c22;
-  --bg-code-header: #23232a;
+  --bg-primary: #1e1019;
+  --bg-surface: #241320;   /* Ground Dark */
+  --bg-sidebar: #180c14;
+  --bg-subtle:  #2e1a28;
+  --bg-code:    #2e1a28;
+  --bg-code-header: #38212f;
 
-  --text-primary: #eaeaee;
-  --text-secondary: #a6a6b2;
-  --text-muted: #7e7e8a;
+  --text-primary:   #f6e7ef;
+  --text-secondary: #c2a8b7;
+  --text-muted:     #9a8290;
 
-  --accent: #b795e8;
-  --accent-warm: #b795e8;
-  --accent-soft: #b795e8;
-  --accent-deep: #cdb2f2;
-  --accent-weak: #241d33;
-  --accent-line: #3a2f52;
-  --accent-glow: #241d33;
-  --accent-warm-glow: #241d33;
-  --accent-contrast: #17171b;
+  --accent:      #ec6f9c;   /* Rose */
+  --accent-deep: #f49cbc;
+  --accent-warm: #ec6f9c;
+  --accent-soft: #c9b2e4;
+  --accent-weak: #33202c;
+  --accent-line: #472c3c;
+  --accent-glow: #33202c;
+  --accent-warm-glow: #33202c;
+  --accent-contrast: #241320;
 
-  --border: #2b2b33;
-  --border-strong: #3b3b45;
+  --border: #38222f;
+  --border-strong: #4c3242;
   --card-shadow: none;
   --grid-color: transparent;
-  --selection-bg: #3b2f55;
+  --selection-bg: #503043;
 
-  --notice-info: #9db4e8;
-  --notice-info-bg: #1a1f2c;
   --notice-tip: #6fd39d;
-  --notice-tip-bg: #14241c;
   --notice-warning: #e5b567;
-  --notice-warning-bg: #2a2113;
-  --notice-caution: #e995ad;
-  --notice-caution-bg: #2b1a20;
+  --notice-caution: #ec6f9c;
 }
 
-/* A barra lateral do tema força um contraste próprio; anulado. */
 .sidebar {
   --text-primary: inherit;
   --text-secondary: inherit;
@@ -204,9 +207,8 @@ a:hover { color: var(--accent); text-decoration: underline; }
   height: 34px;
   display: grid;
   place-items: center;
-  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: var(--bg-surface);
+  background: transparent;
   overflow: hidden;
 }
 
@@ -222,8 +224,9 @@ a:hover { color: var(--accent); text-decoration: underline; }
 .sidebar-brand-text { display: flex; flex-direction: column; min-width: 0; }
 
 .sidebar-brand-name {
-  font-size: 0.95rem;
-  font-weight: 650;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.2;
 }
@@ -598,8 +601,9 @@ html:not(.sidebar-collapsed) .collapse-icon-expand { display: none; }
 }
 
 .article-header h1 {
+  font-family: var(--font-display);
   font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.25rem);
-  font-weight: 680;
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.2;
   margin: 0;
@@ -648,8 +652,9 @@ html:not(.sidebar-collapsed) .collapse-icon-expand { display: none; }
 .article-content li > ol { margin-top: 0.4rem; margin-bottom: 0.4rem; }
 
 .article-content h2 {
-  font-size: 1.32rem;
-  font-weight: 650;
+  font-family: var(--font-display);
+  font-size: 1.36rem;
+  font-weight: 600;
   letter-spacing: -0.01em;
   margin: 2.6rem 0 1rem;
   padding-bottom: 0.45rem;
@@ -1040,33 +1045,38 @@ a.doc-index-item:hover {
   margin: 0 auto;
 }
 
-/* >>> Espaço da logo <<< */
-.home-logo {
-  flex: 0 0 auto;
-  order: -1;
-  display: grid;
-  place-items: center;
-  width: 148px;
-  height: 148px;
+/* Logotipo da marca (assets/brand/logo/wordmark) */
+.wordmark {
+  display: flex;
+  justify-content: center;
   margin: 0;
-  padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--bg-surface);
 }
 
-.home-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.wordmark img {
+  width: min(330px, 74vw);
+  height: auto;
   margin: 0;
   border: 0;
   border-radius: 0;
   box-shadow: none;
 }
 
+.wordmark-escuro { display: none; }
+
+[data-theme="dark"] .wordmark-claro  { display: none; }
+[data-theme="dark"] .wordmark-escuro { display: block; }
+
+.home-hero-slogan {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 0.8rem;
+}
+
 .home-section-title {
   text-align: center;
+  font-family: var(--font-body);
   font-size: 0.76rem;
   font-weight: 650;
   letter-spacing: 0.1em;
@@ -1333,7 +1343,7 @@ a.doc-index-item:hover {
     margin-bottom: 1.9rem;
   }
 
-  .home-logo { width: 112px; height: 112px; }
+  .wordmark img { width: min(300px, 82vw); }
 
   .card-grid,
   .equipe-grid,
@@ -1351,7 +1361,7 @@ a.doc-index-item:hover {
   .main-content { padding: 1.4rem 0.9rem 2.5rem; }
   .content-footer { padding: 1.1rem 0.9rem 1.6rem; }
   .breadcrumb { font-size: 0.78rem; }
-  .home-logo { width: 96px; height: 96px; }
+  .wordmark img { width: min(250px, 86vw); }
   .article-content p,
   .article-content ul,
   .article-content ol { font-size: 0.95rem; }

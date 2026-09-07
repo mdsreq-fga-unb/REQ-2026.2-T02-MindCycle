@@ -11,6 +11,21 @@
   carregado depois do CSS do tema e o sobrescreve.
 */}}
 
+{{/* Fraunces SemiBold — a fonte do logotipo, usada só nos títulos.
+     Subconjunto latino em WOFF2 (24 KB); o corpo do texto continua na
+     pilha do sistema. `swap` garante texto visível desde o primeiro quadro. */}}
+{{ $fraunces := resources.Get "fonts/fraunces-semibold-latin.woff2" | fingerprint }}
+<link rel="preload" as="font" type="font/woff2" href="{{ $fraunces.RelPermalink }}" crossorigin>
+<style>
+@font-face {
+  font-family: 'Fraunces';
+  src: url('{{ $fraunces.RelPermalink }}') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+</style>
+
 {{ $style := resources.Get "css/main.scss" | toCSS (dict "targetPath" "css/main.css") | minify | fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
 

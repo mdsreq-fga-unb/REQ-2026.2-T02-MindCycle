@@ -4,9 +4,12 @@ description: "Documentação do produto e do projeto MindCycle — Requisitos de
 ---
 
 <div class="home-hero">
+
+{{< wordmark >}}
+
   <div class="home-hero-body">
     <p class="home-hero-kicker">Requisitos de Software · 2026.2 · Turma 02</p>
-    <h1 class="home-hero-title">MindCycle</h1>
+    <p class="home-hero-slogan">Produtividade no ritmo do seu ciclo.</p>
     <p>
       Aplicativo de organização de tarefas que adapta o planejamento diário às
       variações de energia, foco e disposição ao longo do ciclo menstrual,
@@ -14,12 +17,6 @@ description: "Documentação do produto e do projeto MindCycle — Requisitos de
       (LabLivre)</strong> da FCTE/UnB.
     </p>
   </div>
-
-  <!-- ESPAÇO PARA A LOGO — troque static/img/logo.svg pelo arquivo definitivo.
-       Se mudar a extensão, atualize também `params.avatar` em hugo.toml. -->
-  <figure class="home-logo">
-    <img src="img/logo.svg" alt="Logo do MindCycle (espaço reservado)" width="148" height="148">
-  </figure>
 </div>
 
 O produto endereça um problema concreto: ferramentas de produtividade tratam todos os dias
