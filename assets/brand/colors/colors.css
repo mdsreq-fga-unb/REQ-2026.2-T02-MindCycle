@@ -1,0 +1,27 @@
+/* MindCycle — paleta de cores (CSS custom properties)
+   Importe este arquivo e use as variáveis via var(--mc-...). */
+
+:root {
+  /* Marca */
+  --mc-rose:        #EC6F9C; /* Primária */
+  --mc-rose-deep:   #D6558A; /* Primária escura (hover, ênfase) */
+  --mc-lilac:       #A98BD1; /* Secundária */
+  --mc-coral:       #FF9E86; /* Acento */
+  --mc-plum:        #8A5C77; /* Tinta do wordmark ("Mind") */
+  --mc-cream:       #FFF4EC; /* Marca sobre fundos escuros/cor */
+
+  /* Superfícies e neutros */
+  --mc-ground-light: #FBF1F5; /* Fundo claro padrão */
+  --mc-blush:        #F6E7EF; /* Superfície suave */
+  --mc-ground-dark:  #241320; /* Fundo escuro */
+  --mc-ink:          #3E2338; /* Texto principal sobre claro */
+  --mc-ink-soft:     #7A5E71; /* Texto secundário */
+
+  /* Papéis semânticos */
+  --mc-primary:    var(--mc-rose);
+  --mc-secondary:  var(--mc-lilac);
+  --mc-accent:     var(--mc-coral);
+  --mc-bg:         var(--mc-ground-light);
+  --mc-surface:    #FFFFFF;
+  --mc-text:       var(--mc-ink);
+}

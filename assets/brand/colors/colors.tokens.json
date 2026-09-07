@@ -1,0 +1,30 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "color": {
+    "brand": {
+      "rose":      { "$type": "color", "$value": "#EC6F9C", "$description": "Primária" },
+      "rose-deep": { "$type": "color", "$value": "#D6558A", "$description": "Primária escura (hover, ênfase)" },
+      "lilac":     { "$type": "color", "$value": "#A98BD1", "$description": "Secundária" },
+      "coral":     { "$type": "color", "$value": "#FF9E86", "$description": "Acento" },
+      "plum":      { "$type": "color", "$value": "#8A5C77", "$description": "Tinta do wordmark (Mind)" },
+      "cream":     { "$type": "color", "$value": "#FFF4EC", "$description": "Marca sobre fundos escuros/cor" }
+    },
+    "surface": {
+      "ground-light": { "$type": "color", "$value": "#FBF1F5", "$description": "Fundo claro padrão" },
+      "blush":        { "$type": "color", "$value": "#F6E7EF", "$description": "Superfície suave" },
+      "ground-dark":  { "$type": "color", "$value": "#241320", "$description": "Fundo escuro" },
+      "white":        { "$type": "color", "$value": "#FFFFFF" }
+    },
+    "text": {
+      "ink":      { "$type": "color", "$value": "#3E2338", "$description": "Texto principal" },
+      "ink-soft": { "$type": "color", "$value": "#7A5E71", "$description": "Texto secundário" }
+    },
+    "semantic": {
+      "primary":   { "$type": "color", "$value": "{color.brand.rose}" },
+      "secondary": { "$type": "color", "$value": "{color.brand.lilac}" },
+      "accent":    { "$type": "color", "$value": "{color.brand.coral}" },
+      "bg":        { "$type": "color", "$value": "{color.surface.ground-light}" },
+      "text":      { "$type": "color", "$value": "{color.text.ink}" }
+    }
+  }
+}
