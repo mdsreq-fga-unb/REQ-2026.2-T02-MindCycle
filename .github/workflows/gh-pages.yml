@@ -2,7 +2,7 @@ name: Publicar no GitHub Pages
 
 on:
   push:
-    branches: [gh-pages, main]
+    branches: [gh-pages]
   workflow_dispatch:
 
 permissions:
@@ -38,9 +38,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      # `enablement: true` liga o GitHub Pages na primeira execução, usando o
+      # GITHUB_TOKEN (permissão `pages: write` acima). Sem isso a ação falha
+      # com "Get Pages site failed" enquanto ninguém tiver ido em
+      # Settings > Pages > Source: GitHub Actions.
       - name: Configurar GitHub Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - name: Construir o site
         env:
