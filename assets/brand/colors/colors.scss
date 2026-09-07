@@ -1,0 +1,25 @@
+// MindCycle — paleta de cores (SCSS)
+// Use com @use 'colors' as mc;  →  color: mc.$rose;
+
+// Marca
+$rose:       #EC6F9C; // Primária
+$rose-deep:  #D6558A; // Primária escura
+$lilac:      #A98BD1; // Secundária
+$coral:      #FF9E86; // Acento
+$plum:       #8A5C77; // Tinta do wordmark ("Mind")
+$cream:      #FFF4EC; // Marca sobre fundos escuros/cor
+
+// Superfícies e neutros
+$ground-light: #FBF1F5;
+$blush:        #F6E7EF;
+$ground-dark:  #241320;
+$ink:          #3E2338;
+$ink-soft:     #7A5E71;
+
+// Papéis semânticos
+$primary:   $rose;
+$secondary: $lilac;
+$accent:    $coral;
+$bg:        $ground-light;
+$surface:   #FFFFFF;
+$text:      $ink;
