@@ -124,9 +124,6 @@ traz cada iteração, as entregas esperadas e o que o cliente valida em cada cic
   </tr>
 </table>
 
-> O usuário do GitHub do Allan Kelvin ainda não está preenchido — ele não consta na lista de
-> colaboradores deste repositório. Para completar, troque a imagem e o nome pelo bloco
-> `<a href="https://github.com/USUARIO">` no mesmo formato dos demais.
 
 ## Organização do repositório
 
