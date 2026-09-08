@@ -48,6 +48,15 @@ automaticamente no GitHub Pages a cada `push`.
 └── .github/workflows/gh-pages.yml Publicação automática
 ```
 
+## Sobre os identificadores CP e OE
+
+O conjunto válido é o declarado na **Seção 2.3**: `CP1` a `CP6`, com `OE1` a `OE3`.
+A versão corrigida da Seção 6 do documento chegou citando `CP1`–`CP9` e `OE1`–`OE6`,
+um conjunto antigo cujos nomes não existem em nenhuma outra seção; as citações da
+Seção 6 no site foram remapeadas para o conjunto vigente. Se os identificadores
+mudarem de novo, o lugar a conferir é `content/visao/06-cronograma-e-entregas.md`,
+no Quadro 6, no Quadro 7 e nas considerações 5 e 6.
+
 ## Escopo publicado
 
 O site cobre o Documento de Visão **versão 1.0**, entregue na **Release 1 (Unidade 1)**:
@@ -67,7 +76,6 @@ sem avisos, notas de rodapé editoriais ou subtítulos que o documento não tenh
 
 | O que | Onde |
 |---|---|
-| **Seções 2.2 e 2.3 desatualizadas** | A Seção 6 do documento passou a citar **OE1–OE6** e **CP1–CP9** com nomes novos; as Seções 2.2 e 2.3 ainda listam OE1–OE3 e CP1–CP6 com os nomes antigos. |
 | **Vídeo da Unidade 1** | `content/entregas/unidade-1.md` — instruções comentadas no arquivo. |
 | **GitHub do Allan Kelvin** | `content/_index.md` — é o único integrante que não aparece na lista de colaboradores do repositório, então o cartão dele está sem `github=` e sem `foto=`. Baixe o avatar para `assets/img/equipe/` e preencha os dois parâmetros. |
 | **Como comprovar o objetivo geral** | Seção 2.1 tem uma pendência registrada pela equipe (indicadores de verificação). |

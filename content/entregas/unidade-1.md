@@ -31,7 +31,7 @@ com as Seções 1 a 7 publicadas no GitPages. A data da entrega é **08/09/2026*
 
 **Iteração 2 — Declarar a solução e as estratégias de engenharia de software e de requisitos**
 
-- [Seções 2 a 7](../../visao/): objetivo geral, OE1 a OE6, características CP1 a CP9 e sua
+- [Seções 2 a 7](../../visao/): objetivo geral, OE1 a OE3, características CP1 a CP6 e sua
   rastreabilidade (Quadro 2), tecnologias, análise competitiva, viabilidade, intervenção
   social, estratégia híbrida OpenUP + Kanban, atividades e técnicas de ER e composição da
   equipe;
@@ -56,26 +56,17 @@ e conduzir o Planejamento da Próxima Release**
 
 ## Vídeo da unidade
 
-<!-- ============================================================
-     ESPAÇO PARA O VÍDEO DA APRESENTAÇÃO
-     Quando o vídeo estiver publicado (YouTube, Drive ou similar),
-     apague o bloco `notice` abaixo e descomente o iframe,
-     trocando VIDEO_ID pelo identificador do vídeo.
+Apresentação da Unidade 1, com a caracterização do problema, a solução proposta e as
+estratégias de engenharia de software e de requisitos.
 
-<div style="position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden;">
-  <iframe src="https://www.youtube.com/embed/VIDEO_ID"
-          title="Apresentação da Unidade 1 — MindCycle"
-          style="position:absolute;inset:0;width:100%;height:100%;border:0;"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen></iframe>
+<div class="video-embed">
+{{< youtube id="NW8RUETjsws" title="Apresentação da Unidade 1 — MindCycle" >}}
 </div>
-     ============================================================ -->
 
-{{< notice type="warning" title="A publicar" >}}
-O vídeo da apresentação da Unidade 1 ainda não foi publicado. Assim que estiver
-disponível, substitua este aviso pelo player — as instruções estão comentadas no
-arquivo `content/entregas/unidade-1.md`.
-{{< /notice >}}
+<p class="video-link">
+  Prefere assistir no YouTube?
+  <a href="https://youtu.be/NW8RUETjsws" target="_blank" rel="noopener">youtu.be/NW8RUETjsws</a>
+</p>
 
 ## Documento entregue
 

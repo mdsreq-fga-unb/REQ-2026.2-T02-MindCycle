@@ -65,8 +65,8 @@ características cujo comportamento correto não pode ser deduzido antecipadamen
 
 As características do MindCycle são, em boa medida, hipóteses sobre o que reduz a
 sobrecarga sem gerar nova cobrança. É preciso verificar se o reagendamento sem penalização
-de fato preserva a continuidade de uso, e se a *Adaptabilidade da carga diária visível*
-(CP5) é percebida como apoio e não como mais uma métrica de cobrança. As revisões ao final
+de fato preserva a continuidade de uso, e se o *Adaptar a carga diária visível*
+(CP5) é percebido como apoio e não como mais uma métrica de cobrança. As revisões ao final
 de cada iteração permitem testar essas hipóteses em ciclos curtos, evitando que a equipe
 invista um semestre inteiro em uma solução distante da realidade das usuárias.
 

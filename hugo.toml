@@ -177,6 +177,12 @@ disableKinds = ['taxonomy', 'term', 'rss']
     noClasses   = false
     lineNos     = false
 
+# O embed do YouTube usa youtube-nocookie.com: nenhum cookie de
+# rastreamento antes de a leitora dar play.
+[privacy]
+  [privacy.youtube]
+    privacyEnhanced = true
+
 [caches]
   [caches.images]
     dir = ':cacheDir/images'
