@@ -25,14 +25,14 @@ expressa o estado ou resultado desejado; as características de produto (CP), na
 
 ## 2.3 Características do Produto (CP)
 
-| ID (CP) | Característica (CP) | Descrição resumida | ID (VN) | Valor de Negócio (VN) principal | Contribuição Principal |
-|---|---|---|---|---|---|
-| CP1 | Decompor Tarefas | A solução deverá permitir que a usuária divida uma tarefa em passos menores e registre o primeiro passo executável de cada tarefa criada. | VN1 | Redução da barreira de iniciação, transformando tarefas amplas e difusas em ações concretas passíveis de começo imediato. | OE1 |
-| CP2 | Registrar e acompanhar o ciclo menstrual | A solução deverá permitir o registro das datas do ciclo pela usuária e identificar a fase corrente a partir desses dados. | VN2 | Precisão da adaptação do planejamento à condição real da usuária, permitindo que a carga sugerida reflita a fase do ciclo em vez de padrões genéricos de produtividade. | OE3 |
-| CP3 | Adaptar planejamento por fase de ciclo | A solução deverá sugerir a distribuição e a redistribuição das tarefas ao longo do ciclo, ajustando a carga planejada de cada dia à fase corrente. | VN3 | Alinhamento entre o que é planejado e a capacidade real da usuária no período, reduzindo o acúmulo de tarefas não cumpridas. | OE2 |
-| CP4 | Registrar nível de energia | A solução deverá permitir o registro diário do nível de energia percebido pela usuária e utilizar esse histórico para calibrar as sugestões de planejamento. | VN4 | Personalização baseada no padrão real de cada usuária, evitando que a adaptação se apoie apenas em médias genéricas de ciclo. | OE3 |
-| CP5 | Adaptar a carga diária visível | A solução deverá exibir apenas o conjunto de tarefas compatível com a capacidade planejada para o dia, mantendo as demais fora da visão principal. | VN5 | Redução do custo cognitivo de leitura da lista, atacando a sensação de sobrecarga provocada pelo excesso de itens simultâneos. | OE2 |
-| CP6 | Sugerir atividades de Bem-Estar | A solução deverá indicar atividades de Bem-Estar durante a fase de baixa disposição, com objetivo de ajudar na regulação emocional. | VN6 | Redução do risco de esgotamento emocional nos períodos de baixa disposição, oferecendo um direcionamento de cuidado no lugar da cobrança por produtividade constante. | OE2 |
+| ID (CP) | Característica (CP) | Descrição resumida | ID (VN) | Valor de Negócio (VN) principal | Contribuição principal | Contribuições secundárias |
+|---|---|---|---|---|---|---|
+| CP1 | Decomposição Assistida de Tarefas | Apoio à transformação de tarefas complexas em ações menores, claras e iniciáveis. | VN1 | Redução da barreira de iniciação e do abandono de tarefas amplas ou pouco definidas. | OE1 | OE2 |
+| CP2 | Acompanhamento do Ciclo Menstrual | Compreensão do contexto do ciclo menstrual e de suas variações ao longo do tempo. | VN2 | Contextualização do planejamento a partir da experiência cíclica individual, em vez de padrões genéricos de produtividade. | OE3 | — |
+| CP3 | Planejamento Adaptativo à Capacidade | Organização dinâmica das tarefas conforme o ciclo menstrual e o estado percebido pela usuária. | VN3 | Alinhamento entre o planejamento e a capacidade real da usuária, reduzindo acúmulo e esforço de reorganização. | OE3 | OE2 |
+| CP4 | Acompanhamento do Estado Percebido | Construção de um histórico pessoal de energia, foco e sintomas que sustente a personalização da experiência. | VN4 | Personalização baseada na experiência real de cada usuária, sem depender apenas de médias do ciclo menstrual. | OE3 | OE2 |
+| CP5 | Gestão Acolhedora da Carga Diária | Adequação da carga apresentada no dia, com atenção a prazos e continuidade das tarefas sem penalização. | VN5 | Redução do custo cognitivo e da culpa ao lidar com excesso de tarefas, prazos e retomadas. | OE2 | OE1 |
+| CP6 | Bem-Estar e Autoconhecimento | Apoio ao cuidado e à compreensão dos padrões pessoais relacionados a ciclo, estado e execução de tarefas. | VN6 | Promoção da regulação emocional e do autoconhecimento sem transformar o acompanhamento em cobrança por desempenho. | OE2 | — |
 
 <span class="quadro-fonte">**Quadro 2** – Características de produto, valores de negócio e rastreabilidade com os objetivos específicos. Fonte: elaborado pela equipe.</span>
 
@@ -40,15 +40,15 @@ expressa o estado ou resultado desejado; as características de produto (CP), na
 
 | Tecnologia | Descrição | Área de Aplicação |
 |---|---|---|
-| React Native | Framework livre para desenvolvimento de aplicações móveis multiplataforma a partir de uma única base de código | Interface da aplicação, registro rápido de estado (CP1) e visualização do planejamento diário |
-| TypeScript | Superconjunto tipado do JavaScript, reduzindo defeitos em tempo de desenvolvimento | Frontend e backend, apoiando as práticas de qualidade técnica do XP |
-| Node.js com NestJS | Ambiente de execução e framework para construção de serviços web modulares e testáveis | Regras de replanejamento por capacidade (CP3), controle de carga (CP6) e alertas de prazo (CP5) |
-| PostgreSQL | Sistema gerenciador de banco de dados relacional livre, com suporte a criptografia em repouso | Persistência do histórico de estado, tarefas e fases do ciclo, base do Painel de Padrões Pessoais |
+| React Native | Framework livre para desenvolvimento de aplicações móveis multiplataforma a partir de uma única base de código | Interfaces de decomposição de tarefas (CP1), acompanhamento do ciclo (CP2), planejamento e carga diária (CP3 e CP5), estado percebido (CP4) e bem-estar e autoconhecimento (CP6) |
+| TypeScript | Superconjunto tipado do JavaScript, reduzindo defeitos em tempo de desenvolvimento | Frontend e backend, favorecendo o refinamento iterativo e a evolução incremental do código por meio da verificação estática a cada alteração |
+| Node.js com NestJS | Ambiente de execução e framework para construção de serviços web modulares e testáveis | Regras de acompanhamento do ciclo (CP2), planejamento adaptativo (CP3), gestão da carga e alertas de prazo (CP5) e consolidação de padrões pessoais (CP6) |
+| PostgreSQL | Sistema gerenciador de banco de dados relacional livre, com suporte a criptografia em repouso | Persistência protegida de tarefas, ciclo menstrual, estado percebido e histórico pessoal, apoiando CP1 a CP6 |
 | Docker | Containerização dos serviços, garantindo paridade entre ambientes de desenvolvimento e produção | Ambiente de desenvolvimento e implantação |
 | Git e GitHub | Controle de versão distribuído e hospedagem do repositório | Versionamento de código e dos artefatos de requisitos |
-| GitHub Actions | Automação de builds, testes e verificações a cada integração | Integração contínua, prática central do XP |
+| GitHub Actions | Automação de builds, testes e verificações a cada integração | Builds, testes e verificações automatizadas de cada incremento, apoiando a entrega de versões testadas e integradas ao final das iterações do OpenUP |
 | Figma | Ferramenta de prototipação e design de interfaces | Wireframes e protótipos usados na atividade de Representação de Requisitos |
-| GitHub Pages | Geração e publicação da documentação do projeto | Documento de Visão, backlog e rastreabilidade públicos |
+| GitHub Pages | Geração e publicação da documentação do projeto | Publicação evolutiva da documentação do projeto ao longo das iterações |
 
 <span class="quadro-fonte">**Quadro 3** – Tecnologias a serem utilizadas. Fonte: elaborado pela equipe.</span>
 

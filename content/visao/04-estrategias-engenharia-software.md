@@ -7,12 +7,12 @@ resumo: "Abordagem, ciclo de vida, processo e framework de gerenciamento escolhi
 
 ## 4.1 Estratégia Priorizada
 
-| Dimensão | Escolha |
-|---|---|
-| **Abordagem** | Híbrida |
-| **Ciclo de Vida** | Iterativo e Incremental |
-| **Processo** | OpenUP |
-| **Framework de Gerenciamento** | Kanban |
+| Dimensão                       | Escolha                 |
+| ------------------------------ | ----------------------- |
+| **Abordagem**                  | Híbrida                 |
+| **Ciclo de Vida**              | Iterativo e Incremental |
+| **Processo**                   | OpenUP                  |
+| **Framework de Gerenciamento** | Kanban                  |
 
 ## 4.2 Quadro Comparativo
 
@@ -22,19 +22,19 @@ justificativa da escolha mais adequada ao caso do MindCycle. Como ambas as opç�
 combinam processos de desenvolvimento com frameworks de gerenciamento, a comparação
 avalia o ecossistema sinérgico de cada conjunto integrado.
 
-| Características | OpenUP + Kanban | Scrum + XP |
-|---|---|---|
-| Ciclo de Vida | Ciclo de vida iterativo e incremental herdado do Unified Process, em versão simplificada e leve, no qual cada iteração produz uma versão incrementada do software, combinado a uma dinâmica de fluxo contínuo em que entregas e passagem de tarefas não dependem estritamente do término de iterações com tempo fixo. | Ciclo de vida ágil, que inclui e supõe o iterativo e incremental e acrescenta comunicação e colaboração constantes com os stakeholders, entrega contínua de partes funcionais e feedback rápido do cliente. |
-| Foco em Arquitetura | Mantém os princípios do Unified Process, priorizando nas iterações iniciais os requisitos de maior risco ou prioridade, porém em versão enxuta. O Kanban apoia isso ao dar visibilidade explícita a essas tarefas de infraestrutura. | A arquitetura evolui ao longo das sprints, conforme funcionalidades e riscos são validados com usuárias e stakeholders. |
-| Estrutura de Processos | Organizado nas quatro fases sequenciais do UP (Concepção, Elaboração, Construção e Transição) para fins de governança de marcos. Internamente, o trabalho operacional diário é gerido pelo fluxo visual e contínuo. | Focado em sprints curtas de 1 a 4 semanas, com planejamento, revisão e retrospectiva, entregas incrementais e adaptação contínua. |
-| Flexibilidade de Requisitos | Os requisitos são detalhados progressivamente à medida que os cartões de trabalho se movem no fluxo, evitando especificações exaustivas de forma prematura. | Alta flexibilidade para mudanças no backlog a cada sprint, permitindo incorporar aprendizados sobre ciclo, sobrecarga, privacidade e bem-estar. |
-| Colaboração com Cliente | Enfatiza a colaboração direta com stakeholders em vez de documentação extensiva, com validação contínua por revisões, demonstrações, testes e por quadro visual (priorização no topo e validação individual de itens concluídos). | Envolvimento constante do cliente e das usuárias, com feedback ao final de cada sprint e refinamento contínuo dos requisitos. |
-| Complexidade do Processo | Combina a governança estruturada das fases do OpenUP com a simplicidade operacional do Kanban (gerido por colunas visuais e políticas explícitas, sem cerimônias obrigatórias). | Organiza o trabalho por sprints de duração fixa, com papéis, cerimônias e artefatos definidos pelo Scrum e documentação reduzida ao essencial. |
-| Qualidade Técnica | Qualidade apoiada em validação contínua com stakeholders e em ciclos de feedback rápidos ao longo das iterações. O Kanban adiciona limites de trabalho em progresso (limite de WIP) para evitar sobrecarga. | Alta ênfase em qualidade técnica por meio das práticas do XP, relevantes para dados sensíveis e funcionalidades de apoio à decisão da usuária. |
-| Práticas de Desenvolvimento | Não prescreve práticas técnicas específicas de engenharia; concentra-se no equilíbrio entre disciplina de governança e agilidade no fluxo. | Inclui práticas como TDD, refatoração contínua, integração contínua e programação em pares, apoiando confiabilidade e manutenção. |
-| Adaptação ao Projeto MindCycle | Adequado, pois há mitigação de riscos críticos (segurança de dados e motor de replanejamento) nas fases iniciais e o fluxo contínuo absorve descobertas de pesquisa e evita metas rígidas, mas a combinação depende de políticas explícitas para suprir a ausência de práticas técnicas de qualidade. | Permite investigar progressivamente experiências sensíveis de uso e ajustar as características do produto a cada ciclo de validação. |
-| Documentação | Adota conjunto mínimo de artefatos (Visão, Casos de Uso ou Histórias de Usuário, Requisitos Técnicos e Requisitos Não Funcionais), criados apenas quando agregam valor tangível. | Minimiza a documentação formal, mantendo registros essenciais para rastreabilidade, backlog, critérios de aceite e validação. |
-| Suporte a Equipes de Desenvolvimento | Indicado para equipes pequenas e co-localizadas, tipicamente de 3 a 10 pessoas, com comunicação direta preferível à documentação extensa e autonomia por meio do fluxo e limitação WIP. | Mais indicado para equipes pequenas e colaborativas, com papéis flexíveis e forte comunicação ao longo das sprints. |
+| Características                      | OpenUP + Kanban                                                                                                                                                                                                                                                                                                       | Scrum + XP                                                                                                                                                                                                  |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ciclo de Vida                        | Ciclo de vida iterativo e incremental herdado do Unified Process, em versão simplificada e leve, no qual cada iteração produz uma versão incrementada do software, combinado a uma dinâmica de fluxo contínuo em que entregas e passagem de tarefas não dependem estritamente do término de iterações com tempo fixo. | Ciclo de vida ágil, que inclui e supõe o iterativo e incremental e acrescenta comunicação e colaboração constantes com os stakeholders, entrega contínua de partes funcionais e feedback rápido do cliente. |
+| Foco em Arquitetura                  | Mantém os princípios do Unified Process, priorizando nas iterações iniciais os requisitos de maior risco ou prioridade, porém em versão enxuta. O Kanban apoia isso ao dar visibilidade explícita a essas tarefas de infraestrutura.                                                                                  | A arquitetura evolui ao longo das sprints, conforme funcionalidades e riscos são validados com usuárias e stakeholders.                                                                                     |
+| Estrutura de Processos               | Organizado nas quatro fases sequenciais do UP (Concepção, Elaboração, Construção e Transição) para fins de governança de marcos. Internamente, o trabalho operacional diário é gerido pelo fluxo visual e contínuo.                                                                                                   | Focado em sprints curtas de 1 a 4 semanas, com planejamento, revisão e retrospectiva, entregas incrementais e adaptação contínua.                                                                           |
+| Flexibilidade de Requisitos          | Os requisitos são detalhados progressivamente à medida que os cartões de trabalho se movem no fluxo, evitando especificações exaustivas de forma prematura.                                                                                                                                                           | Alta flexibilidade para mudanças no backlog a cada sprint, permitindo incorporar aprendizados sobre ciclo, sobrecarga, privacidade e bem-estar.                                                             |
+| Colaboração com Cliente              | Enfatiza a colaboração direta com stakeholders em vez de documentação extensiva, com validação contínua por revisões, demonstrações, testes e por quadro visual (priorização no topo e validação individual de itens concluídos).                                                                                     | Envolvimento constante do cliente e das usuárias, com feedback ao final de cada sprint e refinamento contínuo dos requisitos.                                                                               |
+| Complexidade do Processo             | Combina a governança estruturada das fases do OpenUP com a simplicidade operacional do Kanban (gerido por colunas visuais e políticas explícitas, sem cerimônias obrigatórias).                                                                                                                                       | Organiza o trabalho por sprints de duração fixa, com papéis, cerimônias e artefatos definidos pelo Scrum e documentação reduzida ao essencial.                                                              |
+| Qualidade Técnica                    | Qualidade apoiada em validação contínua com stakeholders e em ciclos de feedback rápidos ao longo das iterações. O Kanban adiciona limites de trabalho em progresso (limite de WIP) para evitar sobrecarga.                                                                                                           | Alta ênfase em qualidade técnica por meio das práticas do XP, relevantes para dados sensíveis e funcionalidades de apoio à decisão da usuária.                                                              |
+| Práticas de Desenvolvimento          | Não prescreve práticas técnicas específicas de engenharia; concentra-se no equilíbrio entre disciplina de governança e agilidade no fluxo.                                                                                                                                                                            | Inclui práticas como TDD, refatoração contínua, integração contínua e programação em pares, apoiando confiabilidade e manutenção.                                                                           |
+| Adaptação ao Projeto MindCycle       | Adequado, pois há mitigação de riscos críticos (segurança de dados e motor de replanejamento) nas fases iniciais e o fluxo contínuo absorve descobertas de pesquisa e evita metas rígidas, mas a combinação depende de políticas explícitas para suprir a ausência de práticas técnicas de qualidade.                 | Permite investigar progressivamente experiências sensíveis de uso e ajustar as características do produto a cada ciclo de validação.                                                                        |
+| Documentação                         | Adota conjunto mínimo de artefatos (Visão, Casos de Uso ou Histórias de Usuário, Requisitos Técnicos e Requisitos Não Funcionais), criados apenas quando agregam valor tangível.                                                                                                                                      | Minimiza a documentação formal, mantendo registros essenciais para rastreabilidade, backlog, critérios de aceite e validação.                                                                               |
+| Suporte a Equipes de Desenvolvimento | Indicado para equipes pequenas e co-localizadas, tipicamente de 3 a 10 pessoas, com comunicação direta preferível à documentação extensa e autonomia por meio do fluxo e limitação WIP.                                                                                                                               | Mais indicado para equipes pequenas e colaborativas, com papéis flexíveis e forte comunicação ao longo das sprints.                                                                                         |
 
 <span class="quadro-fonte">**Quadro 4** – Comparativo entre OpenUP + Kanban e Scrum + XP. Fonte: elaborado pela equipe.</span>
 
@@ -59,14 +59,15 @@ cada iteração, incorporando o feedback dos pesquisadores do LabLivre e das usu
 representativas dos segmentos definidos na
 [Seção 1.7](../01-cenario-atual/#17-segmentação-de-clientes). Isso é decisivo em
 características cujo comportamento correto não pode ser deduzido antecipadamente, como o
-*Adaptar planejamento por fase de ciclo* (CP3) e o *Registrar nível de energia* (CP4).
+_Planejamento Adaptativo à Capacidade_ (CP3) e o _Acompanhamento do Estado Percebido_
+(CP4).
 
 ### 2. Validação frequente de hipóteses de valor
 
 As características do MindCycle são, em boa medida, hipóteses sobre o que reduz a
 sobrecarga sem gerar nova cobrança. É preciso verificar se o reagendamento sem penalização
-de fato preserva a continuidade de uso, e se o *Adaptar a carga diária visível*
-(CP5) é percebido como apoio e não como mais uma métrica de cobrança. As revisões ao final
+de fato preserva a continuidade de uso, e se a _Gestão Acolhedora da Carga Diária_
+(CP5) é percebida como apoio e não como mais uma métrica de cobrança. As revisões ao final
 de cada iteração permitem testar essas hipóteses em ciclos curtos, evitando que a equipe
 invista um semestre inteiro em uma solução distante da realidade das usuárias.
 
