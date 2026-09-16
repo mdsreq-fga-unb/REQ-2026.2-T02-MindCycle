@@ -31,7 +31,9 @@ de sincronização, de quinze minutos, às terças-feiras, às 11h50, presencial
 Refinamento do Product Backlog, uma por iteração, na quarta-feira que antecede o início de
 cada iteração, às 15h, por Google Meet, com a representante do cliente. O backlog e o
 andamento das iterações são mantidos no Notion, e o canal assíncrono de WhatsApp registra
-as decisões de detalhe, que são incorporadas ao backlog.
+as decisões de detalhe, que são incorporadas ao backlog. O acesso às usuárias
+representativas é intermediado pela representante do LabLivre, conforme a
+[Seção 7.2](../07-interacao-equipe-cliente/#72-comunicação).
 
 Até o encerramento da Release 2, em 13/10/2026, o trabalho restringe-se às atividades de
 Engenharia de Requisitos — Elicitação e Descoberta, Análise e Consenso e Declaração —,

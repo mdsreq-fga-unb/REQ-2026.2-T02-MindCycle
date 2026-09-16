@@ -106,6 +106,10 @@ essa presença é substituída por pontos de contato fixos somados a canais cont
   sensíveis, com a representante do cliente, conforme os testes de aceitação adotados pela
   equipe.
 
+O acesso às usuárias representativas previstas nas Revisões de Iteração e nos workshops de
+release é intermediado pela representante do LabLivre, que convida participantes da rede do
+laboratório; a equipe não as recruta diretamente.
+
 ## 7.3 Processo de Validação
 
 O processo de validação da solução será realizado em três etapas principais:
