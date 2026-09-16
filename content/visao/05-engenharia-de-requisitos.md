@@ -98,9 +98,10 @@ resumo: "Quais atividades e técnicas de ER a equipe aplica em cada fase do proc
 **Organização e Atualização:**
 
 - **Refinamento do Product Backlog:** O refinamento do Product Backlog é uma atividade
-  contínua na qual os itens são detalhados, estimados e priorizados com a equipe e com o
-  cliente antes do início da iteração, considerando as limitações de tempo do semestre
-  letivo e a disponibilidade dos pesquisadores do LabLivre para validação.
+  recorrente, formalizada em uma sessão por iteração, na qual os itens são detalhados,
+  estimados e priorizados com a equipe e com o cliente antes do início da iteração,
+  considerando as limitações de tempo do semestre letivo e a disponibilidade dos
+  pesquisadores do LabLivre para validação.
 
 ### Execução da Iteração
 

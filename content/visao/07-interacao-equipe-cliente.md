@@ -50,30 +50,38 @@ A equipe de desenvolvimento será composta por:
 O trabalho é organizado em iterações de duas semanas, cadência fixa alinhada ao calendário
 da disciplina e compatível com as iterações curtas do OpenUP. O Kanban gerencia o fluxo de
 trabalho dentro e entre as iterações por meio do quadro visual e dos limites de trabalho em
-progresso (WIP). Cada iteração começa com uma reunião de planejamento e termina com uma
-revisão e uma retrospectiva, permitindo inspeção e adaptação contínuas. A única exceção é a
-Iteração 7, de uma semana, cuja duração e justificativa constam do
+progresso (WIP). As iterações começam em uma terça-feira e terminam na segunda-feira da
+segunda semana seguinte. A virada de um ciclo para o outro concentra-se na terça-feira
+seguinte, em um bloco único de três cerimônias consecutivas por Google Meet — Revisão,
+Retrospectiva e Planejamento, nessa ordem —, de modo que o feedback do cliente e os ajustes
+de processo entrem ainda na mesma noite no plano da iteração que se inicia. A única exceção
+é a Iteração 7, de uma semana, cuja duração e justificativa constam do
 [Quadro 7 e das considerações da Seção 6](../06-cronograma-e-entregas/#considerações-importantes).
 
-- **Planejamento da Iteração:** no primeiro dia de cada iteração, com toda a equipe.
-  Seleciona os itens do backlog do produto que comporão o backlog da iteração, com base na
-  capacidade da equipe e na prioridade por valor de negócio.
-  *(Terça-feira, de 15 em 15 dias, online pela plataforma Google Meet.)*
-- **Reunião semanal de sincronização:** quinze minutos, por videoconferência ou mensagem,
-  para alinhar o andamento das tarefas e expor impedimentos, sustentando a comunicação
-  constante exigida pela abordagem híbrida.
-  *(Toda terça-feira, presencial, às 11h50.)*
-- **Refinamento do Product Backlog:** uma sessão por iteração, com a equipe e a
-  representante do cliente. Os itens são detalhados, estimados e priorizados antes de
-  entrarem em uma iteração.
-  *(Toda quarta-feira, às 15h, online na plataforma Google Meet.)*
-- **Revisão da Iteração:** no último dia da iteração, com a representante do cliente e
+- **Revisão da Iteração:** abre o bloco de virada de ciclo, com a representante do cliente e
   usuárias representativas. Demonstra o incremento produzido e coleta o feedback, que é
   incorporado ao backlog do produto.
-  *(Segunda-feira, de 15 em 15 dias, online pela plataforma Google Meet.)*
-- **Retrospectiva da Iteração:** logo após a revisão, apenas com a equipe. Analisa as causas
-  do que funcionou e do que falhou e ajusta o fluxo de trabalho de engenharia de requisitos.
-  *(Terça-feira, de 15 em 15 dias, online pela plataforma Google Meet.)*
+  *(Terça-feira, de 15 em 15 dias, às 20h, online pela plataforma Google Meet.)*
+- **Retrospectiva da Iteração:** imediatamente após a revisão, no mesmo bloco, apenas com a
+  equipe. Analisa as causas do que funcionou e do que falhou e ajusta o fluxo de trabalho de
+  engenharia de requisitos.
+  *(Terça-feira, de 15 em 15 dias, às 21h, online pela plataforma Google Meet.)*
+- **Planejamento da Iteração:** encerra o bloco e abre a iteração, com toda a equipe.
+  Seleciona os itens do backlog do produto que comporão o backlog da iteração, com base na
+  capacidade da equipe e na prioridade por valor de negócio, já incorporando o feedback da
+  revisão e os ajustes acordados na retrospectiva.
+  *(Terça-feira, de 15 em 15 dias, às 22h, online pela plataforma Google Meet.)*
+- **Reunião semanal de sincronização:** quinze minutos, presencial, para alinhar o andamento
+  das tarefas e expor impedimentos, sustentando a comunicação constante exigida pela
+  abordagem híbrida. Quem não puder comparecer registra andamento e impedimentos no Notion
+  ou no WhatsApp até o horário da reunião; nas semanas sem encontro presencial, ela é
+  realizada por Google Meet.
+  *(Toda terça-feira, às 11h50, presencial.)*
+- **Refinamento do Product Backlog:** uma sessão por iteração, com a equipe e a
+  representante do cliente. Os itens são detalhados, estimados e priorizados antes de
+  entrarem em uma iteração; por isso a sessão ocorre na quarta-feira que antecede o início
+  da iteração seguinte.
+  *(Quarta-feira anterior ao início de cada iteração, às 15h, online na plataforma Google Meet.)*
 
 ### Frequência de Interações com o Cliente
 
@@ -81,10 +89,12 @@ A abordagem híbrida exige colaboração constante com os stakeholders, princíp
 tanto do OpenUP quanto do Kanban. Como a representante do LabLivre não está co-localizada,
 essa presença é substituída por pontos de contato fixos somados a canais contínuos:
 
-- **A cada duas semanas:** Revisão da Iteração com a representante do cliente, para validar
-  o incremento entregue e verificar se a solução reduz a sobrecarga sem gerar nova cobrança.
-- **A cada duas semanas:** participação da representante do cliente na sessão de refinamento
-  do backlog do produto, definindo a prioridade por valor de negócio.
+- **A cada iteração (duas semanas):** Revisão da Iteração com a representante do cliente,
+  para validar o incremento entregue e verificar se a solução reduz a sobrecarga sem gerar
+  nova cobrança.
+- **A cada iteração (duas semanas):** participação da representante do cliente na sessão de
+  refinamento do backlog do produto, na quarta-feira que antecede a iteração, definindo a
+  prioridade por valor de negócio.
 - **A cada release:** workshop com o LabLivre e com usuárias representativas dos segmentos
   definidos na [Seção 1.7](../01-cenario-atual/#17-segmentação-de-clientes), para elicitar os
   requisitos da próxima release e observar os efeitos emergentes previstos na

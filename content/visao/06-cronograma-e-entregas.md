@@ -21,17 +21,17 @@ Planejamento da Próxima Release, fases já previstas no Quadro 5.
 
 As iterações começam sempre em uma terça-feira e terminam na segunda-feira da segunda
 semana seguinte, o que ancora no calendário as cerimônias descritas na
-[Seção 7.2](../07-interacao-equipe-cliente/#72-comunicação): o Planejamento da Iteração
-ocorre no primeiro dia do ciclo, às terças-feiras, em cadência quinzenal, por Google Meet;
-a Revisão da Iteração ocorre no último dia do ciclo, às segundas-feiras, também quinzenal,
-por Google Meet, com a representante do LabLivre e usuárias representativas; e a
-Retrospectiva da Iteração ocorre logo após a revisão, na terça-feira que abre o ciclo
-seguinte, antes do Planejamento da Iteração e apenas com a equipe. Ao longo de cada ciclo
-mantêm-se a reunião semanal de sincronização, de quinze minutos, às terças-feiras, às
-11h50, presencial, e a sessão de Refinamento do Product Backlog, às quartas-feiras, às
-15h, por Google Meet, com participação da representante do cliente na sessão que antecede
-cada iteração. O backlog e o andamento das iterações são mantidos no Notion, e o canal
-assíncrono de WhatsApp registra as decisões de detalhe, que são incorporadas ao backlog.
+[Seção 7.2](../07-interacao-equipe-cliente/#72-comunicação). A virada de um ciclo para o
+outro ocorre na terça-feira seguinte, em um bloco único por Google Meet e em cadência
+quinzenal: a Revisão da Iteração, às 20h, com a representante do LabLivre e usuárias
+representativas; a Retrospectiva da Iteração, às 21h, imediatamente após a revisão e apenas
+com a equipe; e o Planejamento da Iteração, às 22h, que abre o ciclo seguinte já com o
+feedback coletado e os ajustes acordados. Ao longo de cada ciclo mantêm-se a reunião semanal
+de sincronização, de quinze minutos, às terças-feiras, às 11h50, presencial, e a sessão de
+Refinamento do Product Backlog, uma por iteração, na quarta-feira que antecede o início de
+cada iteração, às 15h, por Google Meet, com a representante do cliente. O backlog e o
+andamento das iterações são mantidos no Notion, e o canal assíncrono de WhatsApp registra
+as decisões de detalhe, que são incorporadas ao backlog.
 
 Até o encerramento da Release 2, em 13/10/2026, o trabalho restringe-se às atividades de
 Engenharia de Requisitos — Elicitação e Descoberta, Análise e Consenso e Declaração —,
@@ -80,21 +80,24 @@ definida na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-valida�
 2. **Semana Universitária.** O período de 22 a 24/09/2026 está compreendido na Iteração 3 e
    não tem aulas. No Planejamento da Iteração, o backlog da iteração é dimensionado sobre a
    capacidade efetiva da equipe nesse período, e não sobre a capacidade nominal de duas
-   semanas cheias. A reunião semanal de sincronização dessa semana, normalmente presencial,
-   e a sessão de Refinamento do Product Backlog são realizadas por Google Meet, conforme a
-   [Seção 7.2](../07-interacao-equipe-cliente/#72-comunicação).
-3. **Cerimônias que estruturam cada ciclo.** Cada ciclo é aberto pelo Planejamento da
-   Iteração, na terça-feira, e encerrado pela Revisão da Iteração, na segunda-feira, ambos
-   por Google Meet e em cadência quinzenal; a Retrospectiva da Iteração ocorre logo após a
-   revisão, na terça-feira que abre o ciclo seguinte, apenas com a equipe. Dentro do ciclo,
-   a reunião semanal de sincronização, presencial, às terças-feiras, às 11h50, expõe o
-   andamento das tarefas e os impedimentos, e a sessão de Refinamento do Product Backlog,
-   às quartas-feiras, às 15h, detalha, estima e prioriza os itens antes de entrarem em uma
+   semanas cheias. A reunião semanal de sincronização de 22/09/2026, normalmente presencial,
+   é realizada por Google Meet, conforme a
+   [Seção 7.2](../07-interacao-equipe-cliente/#72-comunicação); a sessão de Refinamento do
+   Product Backlog de 23/09/2026 já é online e mantém-se inalterada.
+3. **Cerimônias que estruturam cada ciclo.** As três cerimônias de cadência concentram-se na
+   terça-feira de virada de ciclo, por Google Meet e em cadência quinzenal, nesta ordem:
+   Revisão da Iteração às 20h, que encerra o ciclo anterior com a representante do LabLivre e
+   usuárias representativas; Retrospectiva da Iteração às 21h, imediatamente após a revisão e
+   apenas com a equipe; e Planejamento da Iteração às 22h, que abre o ciclo seguinte. Dentro
+   do ciclo, a reunião semanal de sincronização, presencial, às terças-feiras, às 11h50, expõe
+   o andamento das tarefas e os impedimentos, e a sessão de Refinamento do Product Backlog,
+   uma por iteração, na quarta-feira que antecede o início da iteração, às 15h, detalha,
+   estima e prioriza com a representante do cliente os itens antes de entrarem em uma
    iteração. Nos períodos de fechamento de release acrescentam-se a entrega e a apresentação
    dos trabalhos em equipe e o Planejamento da Próxima Release, previstos no Quadro 5.
-4. **Validação ao final de cada ciclo.** Cada iteração termina com a Revisão da Iteração,
-   com demonstração ao LabLivre e a usuárias representativas, e é seguida pela Retrospectiva
-   da Iteração, conforme o Quadro 5 e a
+4. **Validação ao final de cada ciclo.** Cada iteração é encerrada pela Revisão da Iteração,
+   com demonstração ao LabLivre e a usuárias representativas, seguida imediatamente pela
+   Retrospectiva da Iteração, conforme o Quadro 5 e a
    [Seção 7.2](../07-interacao-equipe-cliente/#72-comunicação). A validação obedece às três
    etapas da [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-validação): o
    Definition of Ready (DoR) condiciona a entrada de uma história na iteração, verificando
@@ -102,9 +105,9 @@ definida na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-valida�
    estabelecidos; o Definition of Done (DoD) condiciona a conclusão da funcionalidade, que
    só é considerada pronta após os testes unitários e de integração e a aprovação visual e
    funcional pela equipe e pelo cliente; e os testes de aceitação conduzidos pelo cliente,
-   sobre os critérios definidos no DoR, encerram a validação. O feedback obtido é
-   incorporado às histórias de usuário e ao backlog, no Notion, antes do Planejamento da
-   Iteração seguinte.
+   sobre os critérios definidos no DoR, encerram a validação. O feedback obtido é registrado
+   no Notion durante a própria revisão e incorporado às histórias de usuário e ao backlog no
+   Planejamento da Iteração que encerra o mesmo bloco, às 22h.
 5. **Ordem das entregas parciais.** A ordem de implementação decorre das dependências entre
    as características declaradas na
    [Seção 2.3](../02-solucao-proposta/#23-características-do-produto-cp): a CP2 (Registrar e
