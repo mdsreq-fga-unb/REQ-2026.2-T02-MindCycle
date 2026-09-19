@@ -44,3 +44,21 @@ JAISWAL, Aman. **Lunar: ADHD Planner for Women App.** Versão 1.19. [S.l.]: Appl
 Store, 2026. Aplicativo móvel. Disponível em:
 <https://apps.apple.com/us/app/lunar-adhd-planner-for-women/id6773340318>. Acesso em: 31
 ago. 2026.
+
+## Referências da Seção 4
+
+ECLIPSE FOUNDATION. **OpenUP.** Versão 1.5.1.5. [S.l.]: Eclipse Process Framework
+Project, 2012. Disponível em:
+<https://archive.eclipse.org/epf/downloads/OpenUP/published/openup_published_1.5.1.5_20121212/openup/>.
+Acesso em: 19 set. 2026.
+
+ANDERSON, David J. **Kanban: Successful Evolutionary Change for Your Technology
+Business.** [S.l.]: Blue Hole Press, 2010.
+
+SCHWABER, Ken; SUTHERLAND, Jeff. **The Scrum Guide: The Definitive Guide to Scrum: The
+Rules of the Game.** [S.l.]: Scrum.org, 2020. Disponível em:
+<https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-US.pdf>. Acesso em: 19
+set. 2026.
+
+BECK, Kent; ANDRES, Cynthia. **Extreme Programming Explained: Embrace Change.** 2. ed.
+Boston: Addison-Wesley, 2004.
