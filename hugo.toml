@@ -139,6 +139,12 @@ disableKinds = ['taxonomy', 'term', 'rss']
 
 [[menus.main]]
   parent  = 'visao'
+  name    = '8. Requisitos de Software'
+  pageRef = '/visao/08-requisitos-de-software'
+  weight  = 8
+
+[[menus.main]]
+  parent  = 'visao'
   name    = '11. Lições Aprendidas'
   pageRef = '/visao/11-licoes-aprendidas'
   weight  = 11
