@@ -19,31 +19,48 @@ entre objetivos, características de produto e, posteriormente, requisitos. Cada
 expressa o estado ou resultado desejado; as características de produto (CP), na Seção
 2.3, detalham como esse resultado será viabilizado:
 
-- **(OE1)** Reduzir o abandono de tarefas planejadas pela usuária
-- **(OE2)** Reduzir a sobrecarga percebida na organização da rotina
-- **(OE3)** Adequar o planejamento de tarefas à fase do ciclo menstrual
+- **(OE1)** Melhorar a percepção dos sintomas durante todo o ciclo menstrual
+- **(OE2)** Reduzir a sobrecarga executiva causada pelo planejamento de tarefas que
+  desconsidera a fase do ciclo menstrual
+- **(OE3)** Reduzir a sobrecarga executiva na execução das tarefas diárias, ajustando-as à
+  disposição real da usuária
 
 ## 2.3 Características do Produto (CP)
 
 | ID (CP) | Característica (CP) | Descrição resumida | ID (VN) | Valor de Negócio (VN) principal | Contribuição Principal |
 |---|---|---|---|---|---|
-| CP1 | Decompor Tarefas | A solução deverá permitir que a usuária divida uma tarefa em passos menores e registre o primeiro passo executável de cada tarefa criada. | VN1 | Redução da barreira de iniciação, transformando tarefas amplas e difusas em ações concretas passíveis de começo imediato. | OE1 |
-| CP2 | Registrar e acompanhar o ciclo menstrual | A solução deverá permitir o registro das datas do ciclo pela usuária e identificar a fase corrente a partir desses dados. | VN2 | Precisão da adaptação do planejamento à condição real da usuária, permitindo que a carga sugerida reflita a fase do ciclo em vez de padrões genéricos de produtividade. | OE3 |
-| CP3 | Adaptar planejamento por fase de ciclo | A solução deverá sugerir a distribuição e a redistribuição das tarefas ao longo do ciclo, ajustando a carga planejada de cada dia à fase corrente. | VN3 | Alinhamento entre o que é planejado e a capacidade real da usuária no período, reduzindo o acúmulo de tarefas não cumpridas. | OE2 |
-| CP4 | Registrar nível de energia | A solução deverá permitir o registro diário do nível de energia percebido pela usuária e utilizar esse histórico para calibrar as sugestões de planejamento. | VN4 | Personalização baseada no padrão real de cada usuária, evitando que a adaptação se apoie apenas em médias genéricas de ciclo. | OE3 |
-| CP5 | Adaptar a carga diária visível | A solução deverá exibir apenas o conjunto de tarefas compatível com a capacidade planejada para o dia, mantendo as demais fora da visão principal. | VN5 | Redução do custo cognitivo de leitura da lista, atacando a sensação de sobrecarga provocada pelo excesso de itens simultâneos. | OE2 |
-| CP6 | Sugerir atividades de Bem-Estar | A solução deverá indicar atividades de Bem-Estar durante a fase de baixa disposição, com objetivo de ajudar na regulação emocional. | VN6 | Redução do risco de esgotamento emocional nos períodos de baixa disposição, oferecendo um direcionamento de cuidado no lugar da cobrança por produtividade constante. | OE2 |
+| CP1 | Registro e análise de sintomas e disposição | A solução deverá permitir que a usuária registre os sintomas sentidos e o seu nível de disposição, consulte os sintomas comuns da fase atual e sinalize sobrecarga a qualquer momento do dia. | VN1 | Percepção do próprio estado ao longo do ciclo e possibilidade de resposta imediata à sobrecarga, em vez de registro passivo para consulta posterior. | OE1 |
+| CP2 | Acompanhamento do ciclo menstrual | A solução deverá permitir o registro do início da menstruação e das características do ciclo, estimar a fase atual e recomendar conteúdos informativos relacionados a ela. | VN2 | Precisão da adaptação do planejamento à condição real da usuária, permitindo que a recomendação reflita a fase do ciclo em vez de padrões genéricos de produtividade. | OE1 |
+| CP3 | Privacidade dos dados da usuária | A solução deverá tratar os dados de ciclo, sintomas e disposição como dados pessoais sensíveis, protegendo o acesso à conta e condicionando qualquer coleta ao aceite dos termos de uso. | VN3 | Confiança para registrar dado de saúde sem risco de exposição a gestores ou terceiros, condição sem a qual o produto não é utilizável no contexto profissional. | OE1 |
+| CP4 | Planejamento adaptativo das tarefas | A solução deverá recomendar diariamente as tarefas a realizar em ordem de precedência, com base no registro de energia, no prazo e na prioridade, e apresentar um resumo do que está previsto para o dia. | VN4 | Alinhamento entre o que é planejado e a capacidade real da usuária no dia, reduzindo o acúmulo de tarefas não cumpridas. | OE2 |
+| CP5 | Gestão acolhedora da carga diária | A solução deverá permitir cadastrar, editar, concluir, adiar e excluir tarefas, reajustar a recomendação do dia conforme a disposição registrada e oferecer sugestões e mensagens de acolhimento. | VN5 | Reorganização da rotina sem culpa: o adiamento é tratado como estado legítimo, sem contadores de falha nem linguagem de cobrança. | OE3 |
+| CP6 | Reconhecimento de ritmo sustentável | A solução deverá permitir o registro das atividades de acolhimento realizadas e gerar, ao final de cada mês, uma retrospectiva das tarefas concluídas e dessas atividades. | VN6 | Reconhecimento do descanso como parte legítima do trabalho, devolvendo à usuária evidência do próprio ritmo em lugar de escore de desempenho. | OE3 |
+| CP7 | Conta e preferências da usuária | A solução deverá permitir que a usuária crie sua conta, recupere o acesso a ela e conheça o objetivo do sistema ao iniciar o uso. | VN7 | Acesso contínuo e exclusivo ao próprio histórico, com contexto suficiente para adesão a um produto que trata de tema sensível. | OE3 |
 
-<span class="quadro-fonte">**Quadro 2** – Características de produto, valores de negócio e rastreabilidade com os objetivos específicos. Fonte: elaborado pela equipe.</span>
+<span class="quadro-fonte">**Quadro 2** – Características de produto, valores de negócio e rastreabilidade com os objetivos específicos. Fonte: elaborado pela equipe a partir da Matriz de Rastreabilidade de Requisitos v1.0.</span>
+
+> **Origem e status deste quadro.** Os objetivos específicos e as características de produto
+> acima são os consolidados na **Matriz de Rastreabilidade de Requisitos v1.0** (quadro
+> *MindCycle – Figma*, 28/09/2026), adotada como fonte oficial do projeto — ver
+> [Seção 11](../11-rastreabilidade/). Substituem o conjunto de OE1–OE3 e CP1–CP6 publicado na
+> versão 1.0 do Documento de Visão, cujos nomes não correspondiam a nenhum requisito
+> elicitado. As **descrições resumidas** foram derivadas dos requisitos funcionais que cada
+> característica agrega ([Seção 8](../08-requisitos-de-software/)); os **valores de negócio
+> (VN1–VN7)** foram redigidos pela equipe a partir dos critérios de valor da
+> [Seção 9.2](../09-priorizacao-de-requisitos/#criterios-valor-negocio) e **aguardam validação
+> com a cliente**, pendência registrada na
+> [Seção 10.4](../10-mvp/#104-evidência-da-validação-do-mvp-com-a-cliente). A CP3 e a CP7 são
+> características habilitadoras, conforme observado na
+> [Seção 8](../08-requisitos-de-software/#arvore-de-derivacao).
 
 ## 2.4 Tecnologias a Serem Utilizadas
 
 | Tecnologia | Descrição | Área de Aplicação |
 |---|---|---|
-| React Native | Framework livre para desenvolvimento de aplicações móveis multiplataforma a partir de uma única base de código | Interface da aplicação, registro rápido de estado (CP1) e visualização do planejamento diário |
+| React Native | Framework livre para desenvolvimento de aplicações móveis multiplataforma a partir de uma única base de código | Interface da aplicação, registro rápido de sintomas e disposição (CP1) e visualização da recomendação do dia (CP4) |
 | TypeScript | Superconjunto tipado do JavaScript, reduzindo defeitos em tempo de desenvolvimento | Frontend e backend, apoiando as práticas de qualidade técnica do XP |
-| Node.js com NestJS | Ambiente de execução e framework para construção de serviços web modulares e testáveis | Regras de replanejamento por capacidade (CP3), controle de carga (CP6) e alertas de prazo (CP5) |
-| PostgreSQL | Sistema gerenciador de banco de dados relacional livre, com suporte a criptografia em repouso | Persistência do histórico de estado, tarefas e fases do ciclo, base do Painel de Padrões Pessoais |
+| Node.js com NestJS | Ambiente de execução e framework para construção de serviços web modulares e testáveis | Motor de recomendação do dia (CP4), reajuste da carga diária por disposição (CP5) e controle de acesso aos dados sensíveis (CP3) |
+| PostgreSQL | Sistema gerenciador de banco de dados relacional livre, com suporte a criptografia em repouso | Persistência do histórico de sintomas, disposição, tarefas e fases do ciclo, base da retrospectiva mensal (CP6) |
 | Docker | Containerização dos serviços, garantindo paridade entre ambientes de desenvolvimento e produção | Ambiente de desenvolvimento e implantação |
 | Git e GitHub | Controle de versão distribuído e hospedagem do repositório | Versionamento de código e dos artefatos de requisitos |
 | GitHub Actions | Automação de builds, testes e verificações a cada integração | Integração contínua, prática central do XP |
