@@ -10,9 +10,8 @@ resumo: "Critérios e escalas de valor de negócio e de esforço técnico, avali
 > (extração de 28/09/2026), adotada pela equipe como fonte oficial de requisitos do
 > projeto — conforme as recomendações 07 e 08 registradas na
 > [Seção 11.8](../11-rastreabilidade/#achados-consistencia).
-> A numeração **RF01–RF27** e **RNF01–RNF11** desta seção segue esse quadro e **ainda
-> diverge** da numeração publicada na [Seção 8](../08-requisitos-de-software/), cujo
-> alinhamento é uma pendência formal do projeto.
+> A numeração **RF01–RF27** e **RNF01–RNF11** desta seção é a mesma do catálogo da
+> [Seção 8](../08-requisitos-de-software/).
 >
 > **Versão:** 0.2 · **Data:** 28/09/2026 · **Status:** critérios definidos e revisados com
 > a monitoria; avaliação de valor de negócio registrada em **hipótese da equipe**, pendente

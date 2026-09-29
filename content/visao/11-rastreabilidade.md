@@ -7,9 +7,10 @@ resumo: "Matriz de rastreabilidade do MindCycle: do problema raiz aos objetivos,
 
 > **Fonte desta seção.** **Matriz de Rastreabilidade de Requisitos v1.0**, extraída do quadro
 > *MindCycle – Figma* em **28/09/2026**. Cliente: **LabLivre · FCTE/UnB**. Este documento é a
-> fonte oficial de requisitos do projeto, e sua numeração **RF01–RF27** / **RNF01–RNF11**
-> ainda diverge da publicada na [Seção 8](../08-requisitos-de-software/) — pendência
-> registrada nos achados 07 e 08 da Seção 11.6.
+> fonte oficial de requisitos do projeto, e sua numeração **RF01–RF27** / **RNF01–RNF11** é a
+> adotada no catálogo da [Seção 8](../08-requisitos-de-software/). Permanece em aberto o
+> alinhamento das Seções 2.2 e 2.3 (objetivos específicos e características de produto),
+> registrado no achado 07 da Seção 11.8.
 
 ## 11.1 Introdução
 

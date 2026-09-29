@@ -291,7 +291,7 @@ escopo permanecessem auditáveis e reversíveis:
 | 2 | Atualizar as Seções 9.4, 9.8.2 e 10.4.1 com as notas efetivamente validadas, registrando as divergências em relação à hipótese | Analistas de Requisitos | Imediatamente após a entrevista |
 | 3 | Submeter o **RNF-novo** (criptografia, minimização e transparência) à validação conjunta da equipe e da cliente, para incorporação formal ao catálogo | Analistas de Requisitos | Junto à ação 1 |
 | 4 | Sinalizar formalmente a pendência ao professor e à monitoria da disciplina | Gerência de Projeto | Na entrega desta *release* |
-| 5 | Alinhar a numeração de requisitos da [Seção 8](../08-requisitos-de-software/) à da Matriz de Rastreabilidade v1.0, encerrando os achados 07 e 08 da [Seção 11.8](../11-rastreabilidade/#achados-consistencia) | Analistas de Requisitos | Antes do fechamento da Release 2 |
+| 5 | Alinhar os objetivos específicos e as características de produto das Seções 2.2 e 2.3 à Matriz de Rastreabilidade v1.0, encerrando o achado 07 da [Seção 11.8](../11-rastreabilidade/#achados-consistencia) — o catálogo da [Seção 8](../08-requisitos-de-software/) já foi alinhado | Analistas de Requisitos | Antes do fechamento da Release 2 |
 
 Esta seção somente será considerada **fechada** quando a ação 1 for concluída e a
 Seção 10.4.1 deixar de conter registros de não ocorrência.
