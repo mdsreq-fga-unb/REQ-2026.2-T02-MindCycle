@@ -1,7 +1,7 @@
 ---
-title: "13. Referências Bibliográficas"
-numero: "13"
-weight: 13
+title: "15. Referências Bibliográficas"
+numero: "15"
+weight: 15
 resumo: "Fontes citadas ao longo do Documento de Visão, organizadas pela seção em que aparecem."
 toc: false
 ---

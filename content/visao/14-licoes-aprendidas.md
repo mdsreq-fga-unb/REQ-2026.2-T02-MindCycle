@@ -1,11 +1,11 @@
 ---
-title: "12. Lições Aprendidas"
-numero: "12"
-weight: 12
+title: "14. Lições Aprendidas"
+numero: "14"
+weight: 14
 resumo: "Dificuldades enfrentadas pela equipe em cada unidade e as ações de melhoria adotadas."
 ---
 
-## 12.1 Unidade 1
+## 14.1 Unidade 1
 
 **Desafio:** A equipe teve dificuldade em redigir o Documento de Visão de forma que
 atendesse integralmente à estrutura apresentada pelo professor, o que exigiu mais de uma
