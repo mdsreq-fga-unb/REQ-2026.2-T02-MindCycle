@@ -59,14 +59,15 @@ cada iteração, incorporando o feedback dos pesquisadores do LabLivre e das usu
 representativas dos segmentos definidos na
 [Seção 1.7](../01-cenario-atual/#17-segmentação-de-clientes). Isso é decisivo em
 características cujo comportamento correto não pode ser deduzido antecipadamente, como o
-*Adaptar planejamento por fase de ciclo* (CP3) e o *Registrar nível de energia* (CP4).
+*Planejamento adaptativo das tarefas* (CP4) e o *Registro e análise de sintomas e
+disposição* (CP1).
 
 ### 2. Validação frequente de hipóteses de valor
 
 As características do MindCycle são, em boa medida, hipóteses sobre o que reduz a
 sobrecarga sem gerar nova cobrança. É preciso verificar se o reagendamento sem penalização
-de fato preserva a continuidade de uso, e se o *Adaptar a carga diária visível*
-(CP5) é percebido como apoio e não como mais uma métrica de cobrança. As revisões ao final
+de fato preserva a continuidade de uso, e se a *Gestão acolhedora da carga diária*
+(CP5) é percebida como apoio e não como mais uma métrica de cobrança. As revisões ao final
 de cada iteração permitem testar essas hipóteses em ciclos curtos, evitando que a equipe
 invista um semestre inteiro em uma solução distante da realidade das usuárias.
 

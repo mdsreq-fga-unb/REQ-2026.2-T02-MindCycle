@@ -22,8 +22,8 @@ resumo: "Quais atividades e técnicas de ER a equipe aplica em cada fase do proc
 - **Brainstorming:** Sessões de brainstorming permitem que a equipe e os stakeholders
   discutam alternativas para mecanismos não punitivos de acompanhamento, incluindo formas
   de sinalizar sobrecarga sem reproduzir a lógica de cobrança identificada no problema,
-  sustentando a característica *Decompor Tarefas* (CP1) e a definição de mecanismos de
-  retomada sem penalização.
+  sustentando a característica *Gestão acolhedora da carga diária* (CP5) e a definição de
+  mecanismos de retomada sem penalização.
 - **Análise de Domínio de Negócio:** A análise do domínio de saúde menstrual, função
   executiva e produtividade ajuda a equipe a construir vocabulário compartilhado e a
   evitar o tratamento determinístico do ciclo, risco explicitamente mapeado como efeito
@@ -39,8 +39,9 @@ resumo: "Quais atividades e técnicas de ER a equipe aplica em cada fase do proc
 **Análise e Consenso:**
 
 - **Priorização MoSCoW:** Utilizar a técnica MoSCoW ajuda a priorizar as características
-  mais críticas para a primeira release do MindCycle, como o *Registrar nível de energia*
-  (CP4) e o *Adaptar planejamento por fase de ciclo* (CP3), classificando-as em Must have,
+  mais críticas para a primeira release do MindCycle, como o *Registro e análise de sintomas
+  e disposição* (CP1) e o *Planejamento adaptativo das tarefas* (CP4), classificando-as em
+  Must have,
   Should have, Could have e Won't have e delimitando o escopo do MVP entregável no
   semestre.
 - **Matriz Valor de Negócio × Esforço Técnico:** Avaliar cada característica quanto ao
@@ -53,7 +54,7 @@ resumo: "Quais atividades e técnicas de ER a equipe aplica em cada fase do proc
 - **Épicos, Histórias de Usuário e Tarefas:** A Visão do Produto, registrada neste
   documento, dá origem ao backlog do produto, que se decompõe em épicos, histórias de
   usuário e tarefas, organizados e priorizados no quadro Kanban. Cada épico é derivado de
-  uma característica de produto (CP1 a CP6) e cada característica está vinculada a um
+  uma característica de produto (CP1 a CP7) e cada característica está vinculada a um
   objetivo específico (OE1 a OE3), preservando a rastreabilidade bidirecional estabelecida
   na [Seção 2.3](../02-solucao-proposta/#23-características-do-produto-cp) e evitando que
   funcionalidades entrem no backlog sem origem justificada.
@@ -75,7 +76,8 @@ resumo: "Quais atividades e técnicas de ER a equipe aplica em cada fase do proc
   reelicitar o que já está documentado.
 - **Análise de Tarefas:** Decompor em etapas menores as atividades reais da usuária em um
   dia de trabalho, identificando objetivos, decisões e pontos de erro, apoia a descoberta
-  dos requisitos de usabilidade e desempenho da característica *Decompor Tarefas* (CP1) e
+  dos requisitos de usabilidade e desempenho das características *Planejamento adaptativo das
+  tarefas* (CP4) e *Gestão acolhedora da carga diária* (CP5), e
   evidencia a diferença entre o trabalho prescrito pelo plano do dia e o trabalho realmente
   executado.
 
@@ -215,7 +217,7 @@ resumo: "Quais atividades e técnicas de ER a equipe aplica em cada fase do proc
 |---|---|---|---|---|
 | Planejamento da Release | Elicitação e Descoberta | Levantamento de requisitos | Entrevistas, Brainstorming, Análise de Domínio de Negócio, Personas e Jornadas de Usuário | Requisitos de alto nível identificados, necessidades latentes reveladas e objetivos da release claramente definidos |
 | | Análise e Consenso | Priorização de requisitos | Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico | Escopo do MVP priorizado e acordado com o LabLivre, com critérios de decisão explícitos |
-| | Declaração | Registro dos requisitos | Épicos, Histórias de Usuário e Tarefas | Épicos derivados das características de produto (CP1 a CP6) e vinculados aos objetivos específicos (OE1 a OE3), preservando a rastreabilidade bidirecional |
+| | Declaração | Registro dos requisitos | Épicos, Histórias de Usuário e Tarefas | Épicos derivados das características de produto (CP1 a CP7) e vinculados aos objetivos específicos (OE1 a OE3), preservando a rastreabilidade bidirecional |
 | Planejamento da Iteração | Elicitação e Descoberta | Refinamento de requisitos | Entrevistas, Análise Documental, Análise de Tarefas | Requisitos refinados e específicos para o desenvolvimento da iteração |
 | | Análise e Consenso | Análise de dependências | Discussões em Equipe | Consenso sobre a viabilidade técnica e a ordem de implementação dos requisitos |
 | | Declaração | Definição de critérios de aceitação | Critérios de Aceitação Detalhados, Definition of Ready (DoR) | Histórias de usuário com critérios claros, incluindo condições de privacidade e ausência de linguagem punitiva |
