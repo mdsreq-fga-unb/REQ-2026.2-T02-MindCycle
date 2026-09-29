@@ -31,7 +31,7 @@ com as Seções 1 a 7 publicadas no GitPages. A data da entrega é **08/09/2026*
 
 **Iteração 2 — Declarar a solução e as estratégias de engenharia de software e de requisitos**
 
-- [Seções 2 a 7](../../visao/): objetivo geral, OE1 a OE3, características CP1 a CP6 e sua
+- [Seções 2 a 7](../../visao/): objetivo geral, OE1 a OE3, características CP1 a CP7 e sua
   rastreabilidade (Quadro 2), tecnologias, análise competitiva, viabilidade, intervenção
   social, estratégia híbrida OpenUP + Kanban, atividades e técnicas de ER e composição da
   equipe;
@@ -41,7 +41,7 @@ com as Seções 1 a 7 publicadas no GitPages. A data da entrega é **08/09/2026*
 e conduzir o Planejamento da Próxima Release**
 
 - Entrega da Unidade 1 e apresentação em equipe;
-- [Lições aprendidas](../../visao/11-licoes-aprendidas/#111-unidade-1) registradas na Seção 11.1;
+- [Lições aprendidas](../../visao/14-licoes-aprendidas/#141-unidade-1) registradas na Seção 14.1;
 - Backlog da Release 2 definido e priorizado no Notion.
 
 ### Validação do cliente
