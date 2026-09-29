@@ -145,15 +145,33 @@ disableKinds = ['taxonomy', 'term', 'rss']
 
 [[menus.main]]
   parent  = 'visao'
-  name    = '11. Lições Aprendidas'
-  pageRef = '/visao/11-licoes-aprendidas'
+  name    = '9. Priorização de Requisitos'
+  pageRef = '/visao/09-priorizacao-de-requisitos'
+  weight  = 9
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '10. Definição e Composição do MVP'
+  pageRef = '/visao/10-mvp'
+  weight  = 10
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '11. Rastreabilidade dos Requisitos'
+  pageRef = '/visao/11-rastreabilidade'
   weight  = 11
 
 [[menus.main]]
   parent  = 'visao'
-  name    = '12. Referências Bibliográficas'
-  pageRef = '/visao/12-referencias'
+  name    = '12. Lições Aprendidas'
+  pageRef = '/visao/12-licoes-aprendidas'
   weight  = 12
+
+[[menus.main]]
+  parent  = 'visao'
+  name    = '13. Referências Bibliográficas'
+  pageRef = '/visao/13-referencias'
+  weight  = 13
 
 # --- Entregas --------------------------------------------------------
 [[menus.main]]
