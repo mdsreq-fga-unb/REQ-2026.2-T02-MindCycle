@@ -41,7 +41,7 @@ com as Seções 1 a 7 publicadas no GitPages. A data da entrega é **08/09/2026*
 e conduzir o Planejamento da Próxima Release**
 
 - Entrega da Unidade 1 e apresentação em equipe;
-- [Lições aprendidas](../../visao/11-licoes-aprendidas/#111-unidade-1) registradas na Seção 11.1;
+- [Lições aprendidas](../../visao/12-licoes-aprendidas/#121-unidade-1) registradas na Seção 12.1;
 - Backlog da Release 2 definido e priorizado no Notion.
 
 ### Validação do cliente
