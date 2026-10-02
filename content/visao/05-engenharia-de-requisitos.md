@@ -21,9 +21,10 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 
 **Elicitação e Descoberta:**
 
-- **Entrevistas:** Entrevistas realizadas com os pesquisadores do LabLivre permitem
-  compreender os objetivos institucionais do laboratório em relação à permanência de
-  mulheres na tecnologia, enquanto entrevistas com mulheres representativas dos segmentos
+- **Entrevistas:** Entrevistas com a cliente profissional de saúde permitem compreender
+  como sintomas, fases do ciclo e disposição podem ser tratados pelo produto sem
+  recomendações clínicas indevidas, enquanto entrevistas com Daniela Soares, como usuária
+  representativa, e com mulheres representativas dos segmentos
   definidos na [Seção 1.7](../01-cenario-atual/#17-segmentação-de-clientes) ajudam a
   entender como organizam hoje suas tarefas e como percebem as variações de energia, foco
   e disposição ao longo do mês. Por envolverem relatos sobre saúde e sofrimento no
@@ -32,13 +33,13 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 - **Brainstorming:** Sessões de brainstorming permitem que a equipe e os stakeholders
   discutam alternativas para mecanismos não punitivos de acompanhamento, incluindo formas
   de sinalizar sobrecarga sem reproduzir a lógica de cobrança identificada no problema,
-  sustentando a característica *Decompor Tarefas* (CP1) e a definição de mecanismos de
-  retomada sem penalização.
+  sustentando a característica *Gestão acolhedora da carga diária* (CP5) e a definição de
+  mecanismos de retomada sem penalização.
 - **Análise de Domínio de Negócio:** A análise do domínio de saúde menstrual, função
   executiva e produtividade ajuda a equipe a construir vocabulário compartilhado e a
   evitar o tratamento determinístico do ciclo, risco explicitamente mapeado como efeito
-  emergente na [Seção 3](../03-intervencao-social/), garantindo que os requisitos estejam
-  alinhados aos princípios de inclusão do LabLivre.
+  emergente na [Seção 3](../03-intervencao-social/), e prepara os requisitos relacionados
+  à saúde para a revisão da cliente profissional de saúde.
 - **Personas e Jornadas de Usuário:** A construção de personas a partir dos três segmentos
   de clientes e do recorte transversal definidos na
   [Seção 1.7](../01-cenario-atual/#17-segmentação-de-clientes), somada ao mapeamento da
@@ -49,12 +50,12 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 **Análise e Consenso:**
 
 - **Priorização MoSCoW:** No Planejamento da Release, a técnica MoSCoW é aplicada às
-  características de produto (CP1 a CP6), classificando-as em Must have, Should have,
-  Could have e Won't have for now, para indicar quais delas, como *Registrar nível de
-  energia* (CP4) e *Adaptar planejamento por fase de ciclo* (CP3), são essenciais ao
-  produto. O escopo do MVP entregável no semestre é delimitado depois, quando a técnica é
-  reaplicada às histórias de usuário no Planejamento da Iteração e o resultado é negociado
-  com o LabLivre na Revisão da Iteração.
+  características de produto (CP1 a CP7), classificando-as em Must have, Should have,
+  Could have e Won't have for now, para indicar quais delas, como *Registro e análise de
+  sintomas e disposição* (CP1) e *Planejamento adaptativo das tarefas* (CP4), são
+  essenciais ao produto. O escopo do MVP entregável no semestre é delimitado depois, quando
+  a técnica é reaplicada aos requisitos funcionais no Planejamento da Iteração e o
+  resultado é levado à cliente profissional de saúde, a quem cabe a priorização final.
 - **Matriz Valor de Negócio × Esforço Técnico:** Avaliar cada característica quanto ao
   valor percebido pela usuária e à complexidade de implementação permite identificar quais
   entregas produzem maior impacto com menor custo, decisão necessária diante do prazo
@@ -62,14 +63,13 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 
 **Declaração:**
 
-- **Épicos, Histórias de Usuário e Critérios de Aceitação em nível alto:** Os objetivos
-  específicos e as características de produto são declarados na Visão do Produto,
-  registrada neste documento, e dão origem ao backlog do produto, mantido no Notion. A
-  partir de cada característica, a equipe declara épicos e histórias de usuário iniciais,
-  acompanhados de critérios de aceitação em nível alto, que serão detalhados nas
-  iterações seguintes. Cada épico é derivado de uma característica de produto (CP1 a CP6)
-  e cada característica está vinculada a um
-  objetivo específico (OE1 a OE3), preservando a rastreabilidade bidirecional estabelecida
+- **Épicos, Critérios de Aceitação em nível alto:** Os objetivos específicos e as
+  características de produto são declarados na Visão do Produto, registrada neste
+  documento, e dão origem ao backlog do produto, mantido no Notion e acompanhado no quadro
+  Kanban. A partir de cada
+  característica, a equipe declara os épicos iniciais, acompanhados de critérios de
+  aceitação em nível alto, que serão detalhados nas iterações seguintes. Cada épico é derivado de uma característica de produto (CP1 a CP7)
+  e cada característica está vinculada a um objetivo específico (OE1 a OE3), preservando a rastreabilidade bidirecional estabelecida
   na [Seção 2.3](../02-solucao-proposta/#23-características-do-produto-cp) e evitando que
   funcionalidades entrem no backlog sem origem justificada.
 
@@ -79,8 +79,8 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 
 - **Entrevistas:** Realizar entrevistas complementares com usuárias representativas
   permite refinar detalhes dos requisitos da iteração, como quais sintomas devem estar
-  disponíveis no registro rápido ou qual granularidade de decomposição de tarefas é útil
-  em períodos de baixa capacidade, garantindo que não haja lacunas antes do
+  disponíveis no registro de sintomas e disposição ou como a recomendação do dia deve se
+  comportar em períodos de baixa capacidade, garantindo que não haja lacunas antes do
   desenvolvimento.
 - **Análise Documental:** Revisar documentos existentes, como a análise das soluções
   concorrentes descrita na
@@ -90,7 +90,8 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
   reelicitar o que já está documentado.
 - **Análise de Tarefas:** Decompor em etapas menores as atividades reais da usuária em um
   dia de trabalho, identificando objetivos, decisões e pontos de erro, apoia a descoberta
-  dos requisitos de usabilidade e desempenho da característica *Decompor Tarefas* (CP1) e
+  dos requisitos de usabilidade e desempenho das características *Planejamento adaptativo das
+  tarefas* (CP4) e *Gestão acolhedora da carga diária* (CP5), e
   evidencia a diferença entre o trabalho prescrito pelo plano do dia e o trabalho realmente
   executado.
 
@@ -99,22 +100,29 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 - **Facilitação Round Robin com Registro de Decisões:** No planejamento, a equipe analisa
   a ordem e as dependências entre os itens da iteração, como as partes da visão que
   dependem da caracterização do problema ou as dependências técnicas entre
-  funcionalidades, a exemplo da relação entre o registro do ciclo e do nível de energia
-  (CP2 e CP4) e a adaptação do planejamento por fase (CP3), ou dos mecanismos de
-  criptografia dos dados sensíveis. A análise é conduzida em round robin: cada integrante
+  funcionalidades, a exemplo da relação entre o registro de sintomas e disposição e o
+  acompanhamento do ciclo (CP1 e CP2) e o planejamento adaptativo das tarefas (CP4), ou dos
+  mecanismos de proteção dos dados sensíveis (CP3). A análise é conduzida em round robin: cada integrante
   expõe, com o mesmo tempo de fala, sua avaliação sobre viabilidade, dependências e ordem
   de execução, o que evita que a decisão se concentre em quem fala mais. As divergências,
   os critérios usados e as decisões tomadas são registrados no card de cada item no
   Notion, o que torna o consenso rastreável.
-- **Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico:** Quando o backlog já
-  contém histórias de usuário, as técnicas descritas no Planejamento da Release são
-  reaplicadas a elas. A proposta de escopo do MVP resultante é levada à Revisão da
-  Iteração para negociação com o LabLivre.
+- **Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico:** Quando os requisitos
+  funcionais já estão declarados, as técnicas descritas no Planejamento da Release são
+  reaplicadas a eles. A proposta de escopo do MVP resultante é levada à cliente
+  profissional de saúde, que confirma a priorização final em sua reunião mensal.
 
 **Declaração:**
 
+- **Declarações Textuais Estruturadas (Templates), Texto Estruturado/Tabular:** Quando a
+  iteração tem como objetivo declarar os requisitos, os requisitos funcionais e não
+  funcionais são escritos a partir de cada característica de produto, no padrão "Deve ser
+  possível à usuária" seguido da ação esperada, e organizados em tabelas com código, nome,
+  descrição, requisitos não funcionais associados e vínculo com a característica e o
+  objetivo específico. O padrão único reduz a variação de estilo entre os integrantes,
+  facilita a revisão coletiva e mantém a rastreabilidade de cada requisito.
 - **Critérios de Aceitação:** Definir critérios de aceitação claros e verificáveis para
-  cada história de usuário facilita a validação pelas partes interessadas e assegura que
+  cada história de usuário derivada dos requisitos funcionais facilita a validação pelas partes interessadas e assegura que
   os desenvolvedores tenham informação suficiente antes de iniciar. No caso do MindCycle,
   os critérios devem incluir condições de privacidade e ausência de linguagem punitiva,
   pois esses atributos são parte do valor do produto e não detalhes de interface.
@@ -127,16 +135,17 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
   documentados e com critérios de aceitação estabelecidos, conforme a
   [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-validação). O DoR é o conjunto
   de critérios de prontidão, e o checklist é a técnica que verifica o seu cumprimento:
-  apenas as histórias que atendem a todos os itens são liberadas para desenvolvimento.
+  apenas as histórias que atendem a todos os itens entram na coluna *A Fazer* do quadro
+  Kanban e são liberadas para desenvolvimento.
 
 **Organização e Atualização:**
 
-- **Estruturação Hierárquica do Backlog:** No refinamento do backlog, realizado de forma
-  contínua com a equipe e com o cliente antes do início da iteração, os itens são
-  organizados na hierarquia épico, história de usuário e tarefa. Essa estrutura permite
-  detalhar, estimar e priorizar cada item sem perder o vínculo com a característica de
-  produto que o origina, considerando as limitações de tempo do semestre letivo e a
-  disponibilidade dos pesquisadores do LabLivre para validação.
+- **Estruturação Hierárquica do Backlog:** No refinamento do backlog, feito em uma sessão
+  por iteração conduzida pela equipe antes do início da iteração, os itens são organizados
+  na hierarquia épico, história de usuário e tarefa. Essa estrutura permite detalhar,
+  estimar e priorizar cada item sem perder o vínculo com a característica de produto que o
+  origina, considerando as limitações de tempo do semestre letivo. A prioridade final é
+  confirmada pela cliente profissional de saúde em sua reunião mensal.
 
 ### Execução da Iteração
 
@@ -145,13 +154,13 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 - **Storyboards Descritivos:** Representar narrativamente a jornada da usuária em um dia
   de baixa capacidade, combinando texto e sequência de quadros, torna tangível o
   comportamento esperado do sistema em situações de exceção e serve de insumo para novos
-  critérios de aceitação.
+  requisitos e critérios de aceitação.
 
 **Representação:**
 
 - **Prototipação de Baixa Fidelidade:** Criar wireframes conceituais e protótipos de baixa
-  fidelidade em Figma para as telas de registro de estado, planejamento diário e painel de
-  padrões pessoais ajuda a equipe a representar as interações esperadas e permite discutir
+  fidelidade em Figma para as telas de registro de sintomas e disposição, de recomendação
+  do dia e de retrospectiva mensal ajuda a equipe a representar as interações esperadas e permite discutir
   com as usuárias se a interface comunica apoio em vez de cobrança, antes que qualquer
   código seja escrito. Protótipos de alta fidelidade, por detalharem aparência e layout,
   pertencem ao design da solução e não à Engenharia de Requisitos.
@@ -160,7 +169,9 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 
 - **Checklist Estruturado de Critérios de Qualidade, Revisão de Critérios de Aceitação:**
   Durante a execução, a equipe percorre um checklist estruturado de critérios de qualidade
-  e revisa os critérios de aceitação de cada história, verificando se cada requisito é
+  sobre os requisitos declarados na iteração, sejam requisitos funcionais e não funcionais
+  ou histórias de usuário, e revisa os critérios de aceitação de cada história, verificando
+  se cada requisito é
   claro, consistente, necessário, verificável e rastreável a um objetivo específico, e se
   o tratamento dos dados sensíveis corresponde ao que foi declarado.
 
@@ -176,20 +187,26 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 
 **Verificação e Validação:**
 
-- **Workshop de Requisitos com Validação por Cenários de Uso:** Na Revisão da Iteração, a
-  equipe conduz um workshop com os pesquisadores do LabLivre e com usuárias
-  representativas, no qual percorre cenários de uso concretos sobre o que foi produzido e
-  coleta o feedback dessas partes interessadas. Com isso, valida se os requisitos e as
-  funcionalidades entregues correspondem às suas necessidades e, sobretudo, se a hipótese
-  central do produto se confirma, ou seja, se a solução reduz a sobrecarga percebida sem
-  gerar uma nova forma de cobrança.
+- **Coleta de Feedback com Validação por Cenários de Uso:** Na Revisão da Iteração, a
+  equipe demonstra o que foi produzido e percorre cenários de uso concretos com a
+  participante externa daquela revisão, já que as revisões se alternam entre a cliente
+  profissional de saúde e Daniela Soares, sem reunião conjunta. A cliente avalia os
+  conteúdos relacionados à saúde e realiza a aceitação formal, e Daniela avalia
+  usabilidade, linguagem, privacidade e experiência de uso. O feedback de cada uma é
+  registrado no Notion, e os itens avaliados ficam na coluna *Em Validação* do quadro
+  Kanban até a aceitação. Com isso, a equipe valida se os requisitos e as funcionalidades
+  entregues correspondem às necessidades dessas partes interessadas e, sobretudo, se a
+  hipótese central do produto se confirma, ou seja, se a solução reduz a sobrecarga
+  percebida sem gerar uma nova forma de cobrança.
 
 **Análise e Consenso:**
 
-- **Negociação:** A negociação com o LabLivre e com as usuárias define quais ajustes
-  apontados na revisão são prioritários, respeitando o escopo e o prazo do semestre e
-  mediando a tensão entre o interesse de pesquisa do laboratório e a exigência de
-  privacidade da usuária.
+- **Negociação:** A negociação com a cliente profissional de saúde e com Daniela Soares
+  define quais ajustes apontados na revisão são prioritários, respeitando o escopo e o
+  prazo do semestre. Questões de saúde seguem a decisão da cliente, questões de experiência
+  de uso seguem a avaliação da usuária representativa, e um ajuste que envolva os dois
+  domínios volta ao backlog até que a decisão seja registrada, conforme a
+  [Seção 7.2](../07-interacao-equipe-cliente/#72-comunicação).
 
 **Organização e Atualização:**
 
@@ -225,9 +242,9 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 
 **Elicitação e Descoberta:**
 
-- **Workshop de Requisitos, Análise de Domínio de Negócio:** Workshops com o LabLivre e com
-  usuárias, somados à análise continuada do domínio, ajudam a identificar novos requisitos
-  para a próxima release. Este evento é também o momento de observar os efeitos emergentes
+- **Entrevistas, Análise de Domínio de Negócio:** Entrevistas com a cliente profissional de
+  saúde e com Daniela Soares, feitas separadamente, somadas à análise continuada do
+  domínio, ajudam a identificar novos requisitos para a próxima release. Este evento é também o momento de observar os efeitos emergentes
   previstos na [Seção 3](../03-intervencao-social/), como sinais de dependência excessiva da
   ferramenta ou descolamento entre as recomendações automáticas e a experiência real da
   usuária.
@@ -242,7 +259,8 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 **Declaração:**
 
 - **Épicos, Histórias de Usuário e Critérios de Aceitação:** Criar épicos e
-  histórias de usuário acompanhados de critérios de aceitação garante que cada requisito da
+  histórias de usuário a partir dos requisitos funcionais, acompanhados de critérios de
+  aceitação, garante que cada requisito da
   próxima release seja mensurável, isto é, passível de verificação objetiva, orientado pela
   perspectiva de quem usará o sistema e livre da imposição de uma solução técnica
   específica, mantendo o vínculo de cada história com a característica de produto que a
@@ -262,27 +280,27 @@ correspondência entre fases, atividades de ER e técnicas é apresentada no Qua
 | Fase do OpenUP | Atividade de ER | Prática | Técnica | Resultado Esperado |
 |---|---|---|---|---|
 | **Concepção**<br>Release 1: Iterações 1 e 2 (quinzenais) e fechamento.<br>Eventos: Planejamento da Release, eventos de iteração e Planejamento da Próxima Release | Elicitação e Descoberta | Levantamento do problema e das necessidades no Planejamento da Release e da Iteração | Entrevistas, Brainstorming, Análise de Domínio de Negócio, Análise Documental, Personas e Jornadas de Usuário | Problema, necessidades de alto nível e necessidades latentes identificados |
-|  | Análise e Consenso | Priorização das características, acordo sobre a ordem de trabalho, negociação da visão e revisão do processo na retrospectiva | Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico, Facilitação Round Robin com Registro de Decisões, Negociação, Análise de Causas, Resolução de Conflito | Características de produto (CP1 a CP6) priorizadas e ajustes da visão acordados com o LabLivre, com as decisões registradas no Notion |
-|  | Declaração | Declaração da visão e do backlog inicial | Épicos, Histórias de Usuário e Critérios de Aceitação em nível alto | Visão do Produto com OE1 a OE3 e CP1 a CP6 declarados e backlog inicial com épicos derivados das características |
+|  | Análise e Consenso | Priorização das características, acordo sobre a ordem de trabalho, negociação da visão e revisão do processo na retrospectiva | Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico, Facilitação Round Robin com Registro de Decisões, Negociação, Análise de Causas, Resolução de Conflito | Características de produto (CP1 a CP7) priorizadas e ajustes da visão acordados com a cliente profissional de saúde, com as decisões registradas no Notion |
+|  | Declaração | Declaração da visão e do backlog inicial | Épicos, Critérios de Aceitação em nível alto | Visão do Produto com OE1 a OE3 e CP1 a CP7 declarados e backlog inicial com épicos derivados das características |
 |  | Verificação e Validação (verificação) | Verificação dos objetivos e das características na Execução da Iteração | Checklist Estruturado de Critérios de Qualidade | Objetivos específicos e características de produto claros, consistentes, verificáveis e rastreáveis |
-|  | Verificação e Validação (validação) | Validação da visão na Revisão da Iteração | Workshop de Requisitos com Validação por Cenários de Uso | Visão validada com o LabLivre e com usuárias representativas |
+|  | Verificação e Validação (validação) | Validação da visão na Revisão da Iteração | Coleta de Feedback com Validação por Cenários de Uso | Visão validada com a cliente profissional de saúde e com a usuária representativa, em revisões separadas |
 |  | Organização e Atualização | Atualização da visão após a revisão, ajuste do fluxo de requisitos após a retrospectiva e organização do backlog no Planejamento da Próxima Release | Estruturação Hierárquica do Backlog, Matriz de Rastreabilidade | Backlog da Release 2 organizado e priorizado, com todo objetivo específico coberto por ao menos uma característica e toda história vinculada a um objetivo |
-| **Elaboração**<br>Release 2: Iterações 3 e 4 (quinzenais) e fechamento.<br>Eventos: eventos de iteração e Planejamento da Próxima Release | Elicitação e Descoberta | Detalhamento dos requisitos no Planejamento da Iteração e identificação de novas necessidades no Planejamento da Próxima Release | Entrevistas, Análise Documental, Análise de Tarefas, Workshop de Requisitos, Análise de Domínio de Negócio | Requisitos detalhados a partir das usuárias, dos documentos existentes e das atividades reais de trabalho |
-|  | Análise e Consenso | Análise de dependências, priorização do backlog, negociação do MVP e revisão do processo na retrospectiva | Facilitação Round Robin com Registro de Decisões, Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico, Negociação, Análise de Causas, Resolução de Conflito | Backlog priorizado e escopo do MVP acordados com o LabLivre, com as decisões registradas no Notion |
-|  | Declaração | Detalhamento das histórias de usuário e das situações de exceção | Épicos, Histórias de Usuário, Critérios de Aceitação, Storyboards Descritivos | Histórias de usuário com critérios de aceitação verificáveis, incluindo condições de privacidade e ausência de linguagem punitiva |
+| **Elaboração**<br>Release 2: Iterações 3 e 4 (quinzenais) e fechamento.<br>Eventos: eventos de iteração e Planejamento da Próxima Release | Elicitação e Descoberta | Detalhamento dos requisitos no Planejamento da Iteração e identificação de novas necessidades no Planejamento da Próxima Release | Entrevistas, Análise Documental, Análise de Tarefas, Análise de Domínio de Negócio | Requisitos detalhados a partir das usuárias, dos documentos existentes e das atividades reais de trabalho |
+|  | Análise e Consenso | Análise de dependências, priorização do backlog, negociação do MVP e revisão do processo na retrospectiva | Facilitação Round Robin com Registro de Decisões, Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico, Negociação, Análise de Causas, Resolução de Conflito | Backlog priorizado e escopo do MVP confirmados pela cliente profissional de saúde, com as decisões registradas no Notion |
+|  | Declaração | Declaração dos requisitos funcionais e não funcionais a partir das características, com as situações de exceção, e, no Planejamento da Próxima Release, dos épicos e das histórias de usuário da Release 3 derivados deles | Declarações Textuais Estruturadas (Templates), Texto Estruturado/Tabular, Storyboards Descritivos, Épicos, Histórias de Usuário e Critérios de Aceitação | Requisitos funcionais e não funcionais declarados por característica de produto e rastreáveis aos objetivos específicos, e histórias da Release 3 derivadas dos requisitos funcionais |
 |  | Representação | Representação das interações para discussão com as usuárias, na Execução da Iteração | Prototipação de Baixa Fidelidade | Wireframes conceituais em Figma que permitem validar os fluxos antes da codificação |
-|  | Verificação e Validação (verificação) | Verificação das histórias na Execução da Iteração | Checklist Estruturado de Critérios de Qualidade, Revisão de Critérios de Aceitação | Histórias de usuário e critérios de aceitação claros, consistentes, verificáveis e rastreáveis |
-|  | Verificação e Validação (validação) | Validação dos requisitos na Revisão da Iteração | Workshop de Requisitos com Validação por Cenários de Uso | Requisitos e wireframes validados com o LabLivre e com usuárias representativas |
+|  | Verificação e Validação (verificação) | Verificação dos requisitos funcionais e não funcionais na Execução da Iteração | Checklist Estruturado de Critérios de Qualidade | Requisitos funcionais e não funcionais claros, consistentes, verificáveis e rastreáveis |
+|  | Verificação e Validação (validação) | Validação dos requisitos na Revisão da Iteração | Coleta de Feedback com Validação por Cenários de Uso | Requisitos e wireframes validados com a cliente profissional de saúde e com a usuária representativa, em revisões separadas |
 |  | Organização e Atualização | Refinamento do backlog, atualização dos requisitos acordados e ajuste do fluxo de requisitos | Estruturação Hierárquica do Backlog, Matriz de Rastreabilidade | Backlog da Release 3 organizado, com a matriz de rastreabilidade atualizada |
-| **Construção**<br>Release 3: Iterações 5 e 6 (quinzenais) e fechamento; Release 4: Iteração 7 (semanal).<br>Eventos: eventos de iteração e Planejamento da Próxima Release no fechamento da Release 3 | Elicitação e Descoberta | Esclarecimento pontual de dúvidas das histórias do incremento no Planejamento da Iteração e revisão dos requisitos a partir do uso no fechamento da Release 3 | Entrevistas, Análise de Tarefas, Workshop de Requisitos, Análise de Domínio de Negócio | Dúvidas das histórias esclarecidas antes do desenvolvimento e efeitos emergentes do uso observados |
-|  | Análise e Consenso | Ordem de implementação, negociação de ajustes, repriorização do restante do MVP e revisão do processo na retrospectiva | Facilitação Round Robin com Registro de Decisões, Negociação, Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico, Análise de Causas, Resolução de Conflito | Ordem de implementação acordada, considerando que a CP3 depende dos dados da CP2 e da CP4, e escopo restante do MVP repriorizado |
-|  | Declaração | Complemento das histórias e dos critérios do incremento | Histórias de Usuário, Critérios de Aceitação, Storyboards Descritivos | Histórias do incremento completas, com critérios de aceitação verificáveis e situações de exceção descritas |
+| **Construção**<br>Release 3: Iterações 5 e 6 (quinzenais) e fechamento; Release 4: Iteração 7 (semanal).<br>Eventos: eventos de iteração e Planejamento da Próxima Release no fechamento da Release 3 | Elicitação e Descoberta | Esclarecimento pontual de dúvidas das histórias do incremento no Planejamento da Iteração e revisão dos requisitos a partir do uso no fechamento da Release 3 | Entrevistas, Análise de Tarefas, Análise de Domínio de Negócio | Dúvidas das histórias esclarecidas antes do desenvolvimento e efeitos emergentes do uso observados |
+|  | Análise e Consenso | Ordem de implementação, negociação de ajustes, repriorização do restante do MVP e revisão do processo na retrospectiva | Facilitação Round Robin com Registro de Decisões, Negociação, Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico, Análise de Causas, Resolução de Conflito | Ordem de implementação acordada, considerando que a CP4 depende dos dados da CP1 e da CP2 e que o reajuste da CP5 depende da CP4, e escopo restante do MVP repriorizado |
+|  | Declaração | Detalhamento das histórias de usuário do incremento a partir dos requisitos funcionais | Histórias de Usuário, Critérios de Aceitação, Storyboards Descritivos | Histórias do incremento derivadas dos requisitos funcionais, com critérios de aceitação verificáveis, condições de privacidade, ausência de linguagem punitiva e situações de exceção descritas |
 |  | Representação | Ajuste das representações a partir do feedback, na Execução da Iteração | Prototipação de Baixa Fidelidade | Fluxos ajustados e validados antes da implementação |
 |  | Verificação e Validação (verificação) | Verificação de prontidão no Planejamento da Iteração e verificação das histórias na Execução da Iteração | Checklist Estruturado com os Itens do DoR, Checklist Estruturado de Critérios de Qualidade, Revisão de Critérios de Aceitação | Somente histórias que atendem ao DoR entram no incremento, e os requisitos do incremento são verificados antes da entrega |
-|  | Verificação e Validação (validação) | Demonstração do incremento na Revisão da Iteração | Workshop de Requisitos com Validação por Cenários de Uso | Incremento validado com o LabLivre e com usuárias representativas, confirmando se reduz a sobrecarga sem gerar nova cobrança |
+|  | Verificação e Validação (validação) | Demonstração do incremento na Revisão da Iteração | Coleta de Feedback com Validação por Cenários de Uso | Incremento validado com a cliente profissional de saúde e com a usuária representativa, em revisões separadas, confirmando se reduz a sobrecarga sem gerar nova cobrança |
 |  | Organização e Atualização | Refinamento do backlog, atualização dos requisitos acordados e ajuste do fluxo de requisitos | Estruturação Hierárquica do Backlog, Matriz de Rastreabilidade | Backlog e matriz de rastreabilidade atualizados para o fechamento do MVP |
-| **Transição**<br>Release 4: fechamento.<br>Eventos: revisão de homologação do MVP e retrospectiva final | Análise e Consenso | Negociação dos ajustes finais e retrospectiva final | Negociação, Facilitação Round Robin com Registro de Decisões, Análise de Causas | Ajustes finais acordados com o LabLivre e lições aprendidas registradas |
-|  | Verificação e Validação (validação) | Homologação do MVP na revisão final | Workshop de Requisitos com Validação por Cenários de Uso | MVP validado e homologado pela representante do LabLivre |
+| **Transição**<br>Release 4: fechamento.<br>Eventos: revisão de homologação do MVP e retrospectiva final | Análise e Consenso | Negociação dos ajustes finais e retrospectiva final | Negociação, Facilitação Round Robin com Registro de Decisões, Análise de Causas | Ajustes finais acordados com a cliente profissional de saúde e lições aprendidas registradas |
+|  | Verificação e Validação (validação) | Homologação do MVP na revisão final | Coleta de Feedback com Validação por Cenários de Uso | MVP validado pela usuária representativa e homologado pela cliente profissional de saúde |
 |  | Organização e Atualização | Consolidação do conjunto de requisitos | Matriz de Rastreabilidade | Requisitos atualizados com os ajustes da homologação e backlog remanescente registrado para evolução futura |
 
 <span class="quadro-fonte">**Quadro 5** – Atividades de Engenharia de Requisitos nas fases do OpenUP. Fonte: elaborado pela equipe.</span>
