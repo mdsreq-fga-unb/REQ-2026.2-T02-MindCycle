@@ -19,15 +19,15 @@ que preserva a continuidade do trabalho ao longo do semestre letivo.
 
 A equipe de desenvolvimento será composta por:
 
-| Papel | Descrição | Responsável |
-|---|---|---|
-| Gerente de Projeto<br>Analista de Requisitos<br>(Gestor do Fluxo Kanban) | Coordena o planejamento e o acompanhamento das iterações, controla prazos e entregas e mantém a comunicação com a representante do cliente. Como analista de requisitos, conduz entrevistas e workshops, redige as histórias de usuário e mantém a matriz de rastreabilidade entre objetivos específicos, características de produto e histórias. | Ana Luisa Vieira Nunes |
-| Analista de Requisitos<br>Analista de Dados | Participa da elicitação e da declaração dos requisitos, escrevendo histórias de usuário e seus critérios de aceitação. Como analista de dados, modela o histórico de energia, foco, sintomas e fases do ciclo que compõe o Acompanhamento do Estado Percebido (CP4) e sustenta o Planejamento Adaptativo à Capacidade (CP3). | Allan Kelvin Dias Gomes Monteiro |
-| Gerente de Projeto<br>Desenvolvedor Backend<br>(Responsável pelo Backlog) | Divide a coordenação do projeto, facilitando as reuniões de cadência e a gestão do fluxo no quadro Kanban, e removendo impedimentos. Como desenvolvedor backend, implementa as regras de Planejamento Adaptativo à Capacidade (CP3), a Gestão Acolhedora da Carga Diária (CP5), incluindo os alertas de prazo, e os mecanismos de cifragem e controle de acesso dos dados sensíveis. | Tiago Santos Bittencourt |
-| Desenvolvedor Frontend<br>Analista de QA | Implementa as telas de acompanhamento do estado (CP4), de planejamento e carga diária (CP3 e CP5) e do painel de padrões pessoais (CP6). Como analista de QA, escreve e mantém os testes de aceitação automatizados que a equipe adota para definir formalmente quando uma história está concluída. | Gustavo Silva Rodrigues |
-| Analista de Dados<br>Analista de Requisitos | Trata e analisa os dados de estado, sintomas e execução que alimentam o Planejamento Adaptativo à Capacidade (CP3) e o painel de padrões de Bem-Estar e Autoconhecimento (CP6). Como analista de requisitos, participa da construção das personas e das jornadas de usuário e da revisão dos critérios de aceitação. | Luana Carvalho de Almeida |
-| Analista de QA<br>Analista de Dados | Executa os testes de funcionalidade, desempenho e usabilidade e verifica o cumprimento dos critérios de aceitação e do Definition of Done. Como analista de dados, valida a consistência dos dados que sustentam as recomendações apresentadas à usuária. | Pedro Ian Guedes de Carvalho |
-| Desenvolvedor Frontend<br>Analista de Requisitos | Implementa componentes de interface e o fluxo de Decomposição Assistida de Tarefas (CP1). Como analista de requisitos, apoia a declaração das histórias e revisa a linguagem da Gestão Acolhedora da Carga Diária (CP5) para garantir a ausência de termos de cobrança no reagendamento de tarefas não concluídas. | Arthur Palhares |
+| Papel                                                                     | Descrição                                                                                                                                                                                                                                                                                                                                                                      | Responsável                      |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------- |
+| Gerente de Projeto<br>Analista de Requisitos<br>(Gestor do Fluxo Kanban)  | Coordena o planejamento e o acompanhamento das iterações, controla prazos e entregas e mantém a comunicação com a representante do cliente. Como analista de requisitos, conduz entrevistas e workshops, redige as histórias de usuário e mantém a matriz de rastreabilidade entre objetivos específicos, características de produto e histórias.                              | Ana Luisa Vieira Nunes           |
+| Analista de Requisitos<br>Analista de Dados                               | Participa da elicitação e da declaração dos requisitos, escrevendo histórias de usuário e seus critérios de aceitação. Como analista de dados, modela o histórico de estado, sintomas e fases do ciclo que sustenta o planejamento adaptativo das tarefas (CP4) e as recomendações personalizadas apresentadas à usuária.                                                      | Allan Kelvin Dias Gomes Monteiro |
+| Gerente de Projeto<br>Desenvolvedor Backend<br>(Responsável pelo Backlog) | Divide a coordenação do projeto, facilitando as reuniões de cadência e a gestão do fluxo no quadro Kanban, e removendo impedimentos. Como desenvolvedor backend, implementa as regras do planejamento adaptativo das tarefas (CP4), o reajuste da carga diária por disposição (CP5), os alertas de prazo e os mecanismos de cifragem e controle de acesso dos dados sensíveis. | Tiago Santos Bittencourt         |
+| Desenvolvedor Frontend<br>Analista de QA                                  | Implementa as telas de registro de estado, de planejamento diário e do painel de padrões pessoais. Como analista de QA, escreve e mantém os testes de aceitação automatizados que a equipe adota para definir formalmente quando uma história está concluída.                                                                                                                  | Gustavo Silva Rodrigues          |
+| Analista de Dados<br>Analista de Requisitos                               | Trata e analisa os dados de estado, sintomas e execução que alimentam as janelas de capacidade e o painel de padrões. Como analista de requisitos, participa da construção das personas e das jornadas de usuário e da revisão dos critérios de aceitação.                                                                                                                     | Luana Carvalho de Almeida        |
+| Analista de QA<br>Analista de Dados                                       | Executa os testes de funcionalidade, desempenho e usabilidade e verifica o cumprimento dos critérios de aceitação e do Definition of Done. Como analista de dados, valida a consistência dos dados que sustentam as recomendações apresentadas à usuária.                                                                                                                      | Pedro Ian Guedes de Carvalho     |
+| Desenvolvedor Frontend<br>Analista de Requisitos                          | Implementa componentes de interface e o fluxo de registro de sintomas e disposição (CP1). Como analista de requisitos, apoia a declaração das histórias e revisa a linguagem do produto para garantir a ausência de termos de cobrança no reagendamento de tarefas não concluídas.                                                                                             | Arthur Palhares                  |
 
 ## 7.2 Comunicação
 
@@ -58,22 +58,22 @@ Iteração 7, de uma semana, cuja duração e justificativa constam do
 - **Planejamento da Iteração:** no primeiro dia de cada iteração, com toda a equipe.
   Seleciona os itens do backlog do produto que comporão o backlog da iteração, com base na
   capacidade da equipe e na prioridade por valor de negócio.
-  *(Terça-feira, de 15 em 15 dias, online pela plataforma Google Meet.)*
+  _(Terça-feira, de 15 em 15 dias, online pela plataforma Google Meet.)_
 - **Reunião semanal de sincronização:** quinze minutos, por videoconferência ou mensagem,
   para alinhar o andamento das tarefas e expor impedimentos, sustentando a comunicação
   constante exigida pela abordagem híbrida.
-  *(Toda terça-feira, presencial, às 11h50.)*
+  _(Toda terça-feira, presencial, às 11h50.)_
 - **Refinamento do Product Backlog:** uma sessão por iteração, com a equipe e a
   representante do cliente. Os itens são detalhados, estimados e priorizados antes de
   entrarem em uma iteração.
-  *(Toda quarta-feira, às 15h, online na plataforma Google Meet.)*
+  _(Toda quarta-feira, às 15h, online na plataforma Google Meet.)_
 - **Revisão da Iteração:** no último dia da iteração, com a representante do cliente e
   usuárias representativas. Demonstra o incremento produzido e coleta o feedback, que é
   incorporado ao backlog do produto.
-  *(Segunda-feira, de 15 em 15 dias, online pela plataforma Google Meet.)*
+  _(Segunda-feira, de 15 em 15 dias, online pela plataforma Google Meet.)_
 - **Retrospectiva da Iteração:** logo após a revisão, apenas com a equipe. Analisa as causas
   do que funcionou e do que falhou e ajusta o fluxo de trabalho de engenharia de requisitos.
-  *(Terça-feira, de 15 em 15 dias, online pela plataforma Google Meet.)*
+  _(Terça-feira, de 15 em 15 dias, online pela plataforma Google Meet.)_
 
 ### Frequência de Interações com o Cliente
 

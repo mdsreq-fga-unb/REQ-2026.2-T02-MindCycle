@@ -31,7 +31,7 @@ exclusivo de quem os registra.
 {{< cartao href="visao/" icone="documento" titulo="Visão do Produto e Projeto"
            desc="Documento completo: cenário, solução, estratégias, engenharia de requisitos, cronograma e equipe." >}}
 {{< cartao href="visao/02-solucao-proposta/" icone="lista" titulo="Características do produto"
-           desc="CP1 a CP6, valores de negócio e rastreabilidade com os objetivos específicos." >}}
+           desc="CP1 a CP7, valores de negócio e rastreabilidade com os objetivos específicos." >}}
 {{< cartao href="visao/06-cronograma-e-entregas/" icone="calendario" titulo="Cronograma e entregas"
            desc="Releases, iterações, marcos de entrega e validação com o cliente." >}}
 {{< cartao href="entregas/unidade-1/" icone="entrega" titulo="Entrega da Unidade 1"
