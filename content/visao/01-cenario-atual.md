@@ -126,7 +126,7 @@ pessoas.
 | Daniela Soares (representante do LabLivre) | Representante do cliente; valida decisões e aprova as entregas | Assegurar que a solução esteja alinhada aos princípios institucionais de inclusão e permanência de mulheres na tecnologia | Alto |
 | Gestor de equipe | Não é usuário do sistema, mas define as demandas e os prazos sobre os quais a usuária atua | Manter previsibilidade de entrega da equipe | Alto |
 | Equipe de desenvolvimento | Responsável pela construção | Entregar uma aplicação que atenda às necessidades reais do cliente | Alto |
-| Profissionais de Saúde | Consultores e potenciais colaboradores na validação das informações relacionadas ao ciclo menstrual | Garantir que as informações sobre o ciclo e seus impactos sejam apresentadas de forma adequada e responsável | Baixo |
+| Profissional de Saúde (cliente) | Cliente da área de saúde; valida a correção clínica das informações sobre ciclo, sintomas e fases e das recomendações e participa da aceitação das entregas de conteúdo sensível (Seção 7) | Garantir que as informações sobre o ciclo e as recomendações sejam apresentadas de forma clinicamente correta e responsável | Alto |
 
 {{< figura src="figura3-mapa-stakeholders.png" numero="3"
           alt="Mapa de stakeholders posicionados por poder decisório e interesse, com os vínculos de colaboração, dependência e conflito potencial entre eles."
