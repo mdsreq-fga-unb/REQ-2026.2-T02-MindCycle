@@ -62,14 +62,14 @@ Iteração 7, de uma semana, cuja duração e justificativa constam do
   Seleciona os itens do backlog do produto que comporão o backlog da iteração, com base na
   capacidade da equipe e na prioridade por valor de negócio.
   *(Terça-feira, de 15 em 15 dias, online pela plataforma Google Meet.)*
-- **Reunião semanal de sincronização:** quinze minutos, por videoconferência ou mensagem,
-  para alinhar o andamento das tarefas e expor impedimentos, sustentando a comunicação
-  constante exigida pela abordagem híbrida.
+- **Reunião semanal de sincronização:** quinze minutos, presencial, para alinhar o
+  andamento das tarefas e expor impedimentos, sustentando a comunicação constante exigida
+  pela abordagem híbrida.
   *(Toda terça-feira, presencial, às 11h50.)*
 - **Refinamento do Product Backlog:** uma sessão por iteração, conduzida pela equipe. Os
   itens são detalhados e estimados antes de entrarem em uma iteração, e a prioridade final
   é confirmada pela cliente profissional de saúde em sua reunião mensal.
-  *(Toda quarta-feira, às 15h, online na plataforma Google Meet.)*
+  *(Quarta-feira, de 15 em 15 dias, às 20h, online pela plataforma Google Meet.)*
 - **Revisão da Iteração:** no último dia da iteração, demonstra o incremento produzido e
   coleta o feedback, que é incorporado ao backlog do produto. A participação externa é
   alternada: em uma revisão participa a cliente profissional de saúde e, na seguinte,
@@ -77,7 +77,7 @@ Iteração 7, de uma semana, cuja duração e justificativa constam do
   *(Segunda-feira, de 15 em 15 dias, online pela plataforma Google Meet.)*
 - **Retrospectiva da Iteração:** logo após a revisão, apenas com a equipe. Analisa as causas
   do que funcionou e do que falhou e ajusta o fluxo de trabalho de engenharia de requisitos.
-  *(Terça-feira, de 15 em 15 dias, online pela plataforma Google Meet.)*
+  *(Segunda-feira, de 15 em 15 dias, logo após a Revisão da Iteração, online pela plataforma Google Meet.)*
 
 ### Participação da Cliente e da Usuária Representativa
 
@@ -92,6 +92,13 @@ separada da reunião com a cliente. Sua participação fornecerá a perspectiva 
 usabilidade, linguagem, privacidade e experiência com a solução. Assim, haverá duas
 reuniões externas por mês: uma com a cliente profissional de saúde e outra com a usuária
 representativa.
+
+As usuárias representativas são recrutadas por meio da rede do LabLivre e da comunidade
+acadêmica da universidade, que reúne mulheres em cursos e projetos de tecnologia, público
+alinhado aos segmentos definidos na
+[Seção 1.7](../01-cenario-atual/#17-segmentação-de-clientes). Daniela Soares é a usuária
+representativa fixa nas revisões, e participantes adicionais para entrevistas e validações
+pontuais são convidadas nessa mesma rede, conforme a disponibilidade ao longo do semestre.
 
 Quando uma das participantes não puder comparecer, a equipe disponibilizará a demonstração
 e um roteiro de verificação de forma assíncrona. O retorno e as decisões serão registrados
