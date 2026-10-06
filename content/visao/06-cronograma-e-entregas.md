@@ -25,12 +25,12 @@ semana seguinte, o que ancora no calendário as cerimônias descritas na
 ocorre no primeiro dia do ciclo, às terças-feiras, em cadência quinzenal, por Google Meet;
 a Revisão da Iteração ocorre no último dia do ciclo, às segundas-feiras, também quinzenal,
 por Google Meet, com a representante do LabLivre e usuárias representativas; e a
-Retrospectiva da Iteração ocorre logo após a revisão, na terça-feira que abre o ciclo
-seguinte, antes do Planejamento da Iteração e apenas com a equipe. Ao longo de cada ciclo
-mantêm-se a reunião semanal de sincronização, de quinze minutos, às terças-feiras, às
-11h50, presencial, e a sessão de Refinamento do Product Backlog, às quartas-feiras, às
-15h, por Google Meet, com participação da representante do cliente na sessão que antecede
-cada iteração. O backlog e o andamento das iterações são mantidos no Notion, e o canal
+Retrospectiva da Iteração ocorre logo após a revisão, na própria segunda-feira, apenas
+com a equipe. Ao longo de cada ciclo mantêm-se a reunião semanal de sincronização, de
+quinze minutos, às terças-feiras, às 11h50, presencial, e a sessão de Refinamento do
+Product Backlog, conduzida pela equipe, quinzenalmente às quartas-feiras, às 20h, por
+Google Meet; a prioridade final é confirmada pela cliente profissional de saúde em sua
+reunião mensal. O backlog e o andamento das iterações são mantidos no Notion, e o canal
 assíncrono de WhatsApp registra as decisões de detalhe, que são incorporadas ao backlog.
 
 Até o encerramento da Release 2, em 13/10/2026, o trabalho restringe-se às atividades de
@@ -47,8 +47,8 @@ definida na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-valida�
 | Release | Unidade | Período | Entrega | Data da entrega |
 |---|---|---|---|---|
 | Release 1 | Unidade 1 | 11/08/2026 a 14/09/2026 | Documento de Visão do Produto e Projeto, versão 1.0, com as Seções 1 a 7, publicado no GitPages | 08/09/2026 |
-| Release 2 | Unidade 2 | 15/09/2026 a 19/10/2026 | Requisitos funcionais e não funcionais, matriz-síntese de rastreabilidade, DoR e DoD, e Backlog do Produto priorizado com o MVP delimitado (Seções 8 a 10) | 13/10/2026 |
-| Release 3 | Unidade 3 | 20/10/2026 a 23/11/2026 | Incrementos funcionais correspondentes a CP1, CP2 e CP3, com os requisitos representados, verificados e validados | 17/11/2026 |
+| Release 2 | Unidade 2 | 15/09/2026 a 19/10/2026 | Requisitos funcionais e não funcionais, matriz-síntese de rastreabilidade, DoR e DoD, e Backlog do Produto priorizado com o MVP delimitado (Seções 8 a 13) | 13/10/2026 |
+| Release 3 | Unidade 3 | 20/10/2026 a 23/11/2026 | Incrementos funcionais correspondentes a CP7, CP3, CP2, CP1 e CP4, e ao CRUD de tarefas da CP5, com os requisitos representados, verificados e validados | 17/11/2026 |
 | Release 4 | Unidade 4 | 24/11/2026 a 10/12/2026 | MVP integrado e homologado pelo cliente e Documento de Visão consolidado no GitPages | 01/12/2026 |
 
 <span class="quadro-fonte">**Quadro 6** – Releases, unidades da disciplina e marcos de entrega. Fonte: elaborado pela equipe.</span>
@@ -56,16 +56,16 @@ definida na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-valida�
 | Ciclo | Início | Fim | Objetivo Principal | Entregas Esperadas | Validação do Cliente |
 |---|---|---|---|---|---|
 | Iteração 1 | 11/08/2026 | 24/08/2026 | Compreender o negócio do LabLivre e caracterizar o problema | • Seções 1.1 a 1.7: identificação do cliente, contexto do negócio, Rich Picture, diagrama de Ishikawa, desafios, mapa de stakeholders e segmentação de clientes;<br>• Repositório no GitHub e GitPages criados. | Revisão da Iteração, por Google Meet, com a representante do LabLivre, para confirmar a caracterização do problema, o mapa de stakeholders e os segmentos de clientes. |
-| Iteração 2 | 25/08/2026 | 07/09/2026 | Declarar a solução e as estratégias de engenharia de software e de requisitos | • Seções 2 a 7: objetivo geral, OE1 a OE3, características CP1 a CP6 e sua rastreabilidade (Quadro 2), tecnologias, análise competitiva, viabilidade, intervenção social, estratégia híbrida OpenUP + Kanban, atividades e técnicas de ER e composição da equipe;<br>• Documento de Visão v1.0 publicado no GitPages. | Revisão da Iteração com a representante do LabLivre, para aprovação do objetivo geral, dos objetivos específicos e das características de produto. |
-| Fechamento da Release 1 | 08/09/2026 | 14/09/2026 | Retrospectivar a Iteração 2, entregar e apresentar a Unidade 1 e conduzir o Planejamento da Próxima Release | • Entrega da Unidade 1 em 08/09/2026 e apresentação em equipe em 08 ou 10/09/2026;<br>• Lições aprendidas registradas na Seção 11.1;<br>• Backlog da Release 2 definido e priorizado no Notion. | Sessão de Refinamento do Product Backlog com a representante do LabLivre, para revisar o Documento de Visão v1.0 e priorizar os requisitos de alto nível da Release 2. |
-| Iteração 3 | 15/09/2026 | 28/09/2026 | Elicitar, descobrir e declarar os requisitos | • Personas e jornadas de usuário dos segmentos da Seção 1.7;<br>• Épicos derivados de CP1 a CP6, histórias de usuário e critérios de aceitação;<br>• Seções 8.1 e 8.2, com os requisitos não funcionais classificados em URPS+;<br>• Arquitetura, ambiente de desenvolvimento em Docker e integração contínua em GitHub Actions configurados. | Revisão da Iteração com a representante do LabLivre e com usuárias representativas dos segmentos, para revisar a lista preliminar de requisitos funcionais e não funcionais. |
-| Iteração 4 | 29/09/2026 | 12/10/2026 | Analisar, priorizar e acordar o backlog e o escopo do MVP | • Seção 8.3, com a matriz-síntese de rastreabilidade entre OE, CP, VN, RF e RNF;<br>• Seção 9, com o DoR e o DoD;<br>• Seções 10.1 e 10.2, com o backlog geral, a priorização MoSCoW e o MVP delimitado;<br>• Wireframes das telas de registro de estado e de plano do dia, em Figma. | Revisão da Iteração e sessão de refinamento com a representante do LabLivre, para acordar o backlog priorizado, o escopo do MVP entregável no semestre e o DoR e o DoD que regem a validação (Seção 7.3). |
-| Fechamento da Release 2 | 13/10/2026 | 19/10/2026 | Retrospectivar a Iteração 4, entregar e apresentar a Unidade 2 e conduzir o Planejamento da Próxima Release | • Entrega da Unidade 2 em 13/10/2026 e apresentação em equipe em 13 ou 15/10/2026;<br>• Lições aprendidas registradas na Seção 11.2;<br>• Backlog da Release 3 revisado, com todo objetivo específico coberto por ao menos uma característica e toda história vinculada a um objetivo. | Confirmação do backlog do produto e da ordem de implementação das características que compõem o MVP, com verificação do DoR das histórias que entram na Release 3. |
-| Iteração 5 | 20/10/2026 | 02/11/2026 | Entregar o primeiro incremento: Registrar e acompanhar o ciclo menstrual (CP2) e Registrar nível de energia (CP4) sobre base de dados protegida | • Entrega Parcial 1: registro de energia, foco e sintomas em fluxo único, com armazenamento cifrado e acesso exclusivo da usuária;<br>• Protótipo de alta fidelidade e demais artefatos da atividade de Representação;<br>• Testes de aceitação automatizados das histórias entregues. | Revisão da Iteração, com demonstração do registro de estado ao LabLivre e a usuárias representativas, verificação de que nenhum dado de ciclo, sintoma ou estado é exposto a terceiros, e aprovação das histórias pelo DoD (Seção 7.3). |
-| Iteração 6 | 03/11/2026 | 16/11/2026 | Entregar o segundo incremento: Adaptar planejamento por fase de ciclo (CP3) | • Entrega Parcial 2: projeção de períodos de maior e de menor capacidade e redistribuição das tarefas do dia quando o estado registrado diverge do previsto;<br>• Requisitos verificados e validados por checklist de critérios de qualidade e revisão dos critérios de aceitação. | Revisão da Iteração, com usuárias representativas, para validar que o replanejamento reduz o esforço de reorganização das demandas e não introduz linguagem de cobrança, e aprovação das histórias pelo DoD. |
-| Fechamento da Release 3 | 17/11/2026 | 23/11/2026 | Retrospectivar a Iteração 6, entregar e apresentar a Unidade 3 e conduzir o Planejamento da Próxima Release | • Entrega da Unidade 3 em 17/11/2026 e apresentação em equipe em 17 ou 19/11/2026;<br>• Backlog e matriz de rastreabilidade atualizados;<br>• Lições aprendidas registradas na Seção 11.3. | Revisão dos incrementos entregues e repriorização do escopo restante do MVP, na sessão de Refinamento do Product Backlog com a representante do LabLivre. |
-| Iteração 7 | 24/11/2026 | 30/11/2026 | Fechar o MVP: Decompor Tarefas (CP1) | • Entrega Parcial 3: fragmentação de tarefas em passos executáveis isoladamente, com indicação de um único próximo passo, e reagendamento de tarefas não concluídas sem contadores de falha nem linguagem de cobrança;<br>• MVP integrado, com todas as histórias aprovadas pelo DoD. | Testes de aceitação conduzidos pela representante do LabLivre e por usuárias representativas sobre o MVP integrado, com base nos critérios de aceitação definidos no DoR (Seção 7.3). |
-| Fechamento da Release 4 | 01/12/2026 | 10/12/2026 | Homologar, entregar e apresentar o produto | • MVP homologado pelo cliente;<br>• Documento de Visão consolidado e publicado no GitPages, com as Seções 11.4 e 12 completas;<br>• Apresentação final em equipe entre 01 e 08/12/2026. | Homologação do MVP e aprovação final pela representante do LabLivre, com base nos critérios de aceitação definidos no DoR e verificados pelo DoD (Seção 7.3). |
+| Iteração 2 | 25/08/2026 | 07/09/2026 | Declarar a solução e as estratégias de engenharia de software e de requisitos | • Seções 2 a 7: objetivo geral, OE1 a OE3, características CP1 a CP7 e sua rastreabilidade (Quadro 2), tecnologias, análise competitiva, viabilidade, intervenção social, estratégia híbrida OpenUP + Kanban, atividades e técnicas de ER e composição da equipe;<br>• Documento de Visão v1.0 publicado no GitPages. | Revisão da Iteração com a representante do LabLivre, para aprovação do objetivo geral, dos objetivos específicos e das características de produto. |
+| Fechamento da Release 1 | 08/09/2026 | 14/09/2026 | Retrospectivar a Iteração 2, entregar e apresentar a Unidade 1 e conduzir o Planejamento da Próxima Release | • Entrega da Unidade 1 em 08/09/2026 e apresentação em equipe em 08 ou 10/09/2026;<br>• Lições aprendidas registradas na Seção 14.1;<br>• Backlog da Release 2 definido e priorizado no Notion. | Sessão de Refinamento do Product Backlog com a representante do LabLivre, para revisar o Documento de Visão v1.0 e priorizar os requisitos de alto nível da Release 2. |
+| Iteração 3 | 15/09/2026 | 28/09/2026 | Elicitar, descobrir e declarar os requisitos | • Personas e jornadas de usuário dos segmentos da Seção 1.7;<br>• Épicos derivados de CP1 a CP7, histórias de usuário e critérios de aceitação;<br>• Seção 8, com os requisitos funcionais e os requisitos não funcionais classificados em URPS+;<br>• Arquitetura, ambiente de desenvolvimento em Docker e integração contínua em GitHub Actions configurados. | Revisão da Iteração com a representante do LabLivre e com usuárias representativas dos segmentos, para revisar a lista preliminar de requisitos funcionais e não funcionais. |
+| Iteração 4 | 29/09/2026 | 12/10/2026 | Analisar, priorizar e acordar o backlog e o escopo do MVP | • Seção 11, com a matriz de rastreabilidade entre Problema, OE, CP, RF e RNF;<br>• Seção 9, com a priorização por valor de negócio × esforço técnico e a matriz 4 × 4;<br>• Seção 10, com o MVP delimitado e o tratamento dos RNFs;<br>• Seção 12, com o DoR e o DoD, e Seção 13, com o Backlog do Produto;<br>• Wireframes das telas de registro de sintomas e disposição e de recomendação do dia, em Figma. | Revisão da Iteração e sessão de refinamento com a representante do LabLivre, para acordar o backlog priorizado, o escopo do MVP entregável no semestre e o DoR e o DoD que regem a validação (Seção 7.3). |
+| Fechamento da Release 2 | 13/10/2026 | 19/10/2026 | Retrospectivar a Iteração 4, entregar e apresentar a Unidade 2 e conduzir o Planejamento da Próxima Release | • Entrega da Unidade 2 em 13/10/2026 e apresentação em equipe em 13 ou 15/10/2026;<br>• Lições aprendidas registradas na Seção 14.2;<br>• Backlog da Release 3 revisado, com todo objetivo específico coberto por ao menos uma característica e toda história vinculada a um objetivo. | Confirmação do backlog do produto e da ordem de implementação das características que compõem o MVP, com verificação do DoR das histórias que entram na Release 3. |
+| Iteração 5 | 20/10/2026 | 02/11/2026 | Entregar o primeiro incremento: conta e consentimento (CP7, CP3), acompanhamento do ciclo (CP2) e registro de sintomas e disposição (CP1) sobre base de dados protegida | • Entrega Parcial 1: criação de conta, aceite dos termos e PIN de acesso; registro do início da menstruação; registro de sintomas e disposição em fluxo único, com armazenamento cifrado e acesso exclusivo da usuária;<br>• Protótipo de alta fidelidade e demais artefatos da atividade de Representação;<br>• Testes de aceitação automatizados das histórias entregues. | Revisão da Iteração, com demonstração do registro de estado ao LabLivre e a usuárias representativas, verificação de que nenhum dado de ciclo, sintoma ou estado é exposto a terceiros, e aprovação das histórias pelo DoD (Seção 7.3). |
+| Iteração 6 | 03/11/2026 | 16/11/2026 | Entregar o segundo incremento: planejamento adaptativo das tarefas (CP4) e CRUD de tarefas da gestão da carga diária (CP5) | • Entrega Parcial 2: cadastro, edição, conclusão, adiamento e exclusão de tarefas, e recomendação diária em ordem de precedência a partir do registro de energia, prazo e prioridade;<br>• Requisitos verificados e validados por checklist de critérios de qualidade e revisão dos critérios de aceitação. | Revisão da Iteração, com usuárias representativas, para validar que o replanejamento reduz o esforço de reorganização das demandas e não introduz linguagem de cobrança, e aprovação das histórias pelo DoD. |
+| Fechamento da Release 3 | 17/11/2026 | 23/11/2026 | Retrospectivar a Iteração 6, entregar e apresentar a Unidade 3 e conduzir o Planejamento da Próxima Release | • Entrega da Unidade 3 em 17/11/2026 e apresentação em equipe em 17 ou 19/11/2026;<br>• Backlog e matriz de rastreabilidade atualizados;<br>• Lições aprendidas registradas na Seção 14.3. | Revisão dos incrementos entregues e repriorização do escopo restante do MVP, na sessão de Refinamento do Product Backlog com a representante do LabLivre. |
+| Iteração 7 | 24/11/2026 | 30/11/2026 | Fechar o MVP: reajuste da recomendação por disposição e acolhimento (CP5) | • Entrega Parcial 3: reajuste da recomendação do dia quando a usuária registra disposição baixa ou sinaliza sobrecarga, e mensagens de acolhimento, sem contadores de falha nem linguagem de cobrança;<br>• MVP integrado, com todas as histórias aprovadas pelo DoD. | Testes de aceitação conduzidos pela representante do LabLivre e por usuárias representativas sobre o MVP integrado, com base nos critérios de aceitação definidos no DoR (Seção 7.3). |
+| Fechamento da Release 4 | 01/12/2026 | 10/12/2026 | Homologar, entregar e apresentar o produto | • MVP homologado pelo cliente;<br>• Documento de Visão consolidado e publicado no GitPages, com as Seções 14.4 e 15 completas;<br>• Apresentação final em equipe entre 01 e 08/12/2026. | Homologação do MVP e aprovação final pela representante do LabLivre, com base nos critérios de aceitação definidos no DoR e verificados pelo DoD (Seção 7.3). |
 
 <span class="quadro-fonte">**Quadro 7** – Cronograma de iterações e fechamentos de release. Fonte: elaborado pela equipe.</span>
 
@@ -86,11 +86,12 @@ definida na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-valida�
 3. **Cerimônias que estruturam cada ciclo.** Cada ciclo é aberto pelo Planejamento da
    Iteração, na terça-feira, e encerrado pela Revisão da Iteração, na segunda-feira, ambos
    por Google Meet e em cadência quinzenal; a Retrospectiva da Iteração ocorre logo após a
-   revisão, na terça-feira que abre o ciclo seguinte, apenas com a equipe. Dentro do ciclo,
+   revisão, na própria segunda-feira, apenas com a equipe. Dentro do ciclo,
    a reunião semanal de sincronização, presencial, às terças-feiras, às 11h50, expõe o
    andamento das tarefas e os impedimentos, e a sessão de Refinamento do Product Backlog,
-   às quartas-feiras, às 15h, detalha, estima e prioriza os itens antes de entrarem em uma
-   iteração. Nos períodos de fechamento de release acrescentam-se a entrega e a apresentação
+   quinzenal, às quartas-feiras, às 20h, detalha e estima os itens antes de entrarem em uma
+   iteração, com a prioridade final confirmada pela cliente profissional de saúde em sua
+   reunião mensal. Nos períodos de fechamento de release acrescentam-se a entrega e a apresentação
    dos trabalhos em equipe e o Planejamento da Próxima Release, previstos no Quadro 5.
 4. **Validação ao final de cada ciclo.** Cada iteração termina com a Revisão da Iteração,
    com demonstração ao LabLivre e a usuárias representativas, e é seguida pela Retrospectiva
@@ -105,20 +106,26 @@ definida na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-valida�
    sobre os critérios definidos no DoR, encerram a validação. O feedback obtido é
    incorporado às histórias de usuário e ao backlog, no Notion, antes do Planejamento da
    Iteração seguinte.
-5. **Ordem das entregas parciais.** A ordem de implementação decorre das dependências entre
-   as características declaradas na
-   [Seção 2.3](../02-solucao-proposta/#23-características-do-produto-cp): a CP2 (Registrar e
-   acompanhar o ciclo menstrual) e a CP4 (Registrar nível de energia) precedem as demais,
-   porque sem esse histórico o planejamento por fase não se sustenta; a CP2 e a CP4 precedem
-   a CP3 (Adaptar planejamento por fase de ciclo), que depende desses dados; a CP1 (Decompor
-   Tarefas) é desenvolvida em paralelo e, com a CP3, fecha o núcleo do MVP. A
-   confidencialidade dos dados de ciclo, sintomas e energia é tratada como requisito
-   transversal desde o primeiro incremento, com armazenamento cifrado e acesso exclusivo da
-   usuária.
-6. **Características fora deste cronograma.** A CP5 (Adaptar a carga diária visível)
-   e a CP6 (Sugerir atividades de Bem-Estar) permanecem no backlog do produto e não estão
-   alocadas a nenhum ciclo, por não serem pré-requisito das demais e por excederem a
-   capacidade da equipe no semestre.
+5. **Ordem das entregas parciais.** A ordem de implementação reproduz o fluxo de uso do MVP
+   delimitado na [Seção 10.3.2](../10-mvp/#justificativas-mvp) e decorre das dependências
+   entre as características declaradas na
+   [Seção 2.3](../02-solucao-proposta/#23-características-do-produto-cp): a CP7 (Conta e
+   preferências da usuária) e a CP3 (Privacidade dos dados da usuária) precedem tudo, porque
+   nada funciona sem conta e nenhum dado pode ser coletado antes do aceite dos termos; a CP2
+   (Acompanhamento do ciclo menstrual) e a CP1 (Registro e análise de sintomas e disposição)
+   vêm em seguida, porque sem a fase do ciclo e sem o registro de disposição a recomendação
+   não tem insumo; a CP4 (Planejamento adaptativo das tarefas) depende desses dados e do CRUD
+   de tarefas da CP5 (Gestão acolhedora da carga diária); o reajuste da recomendação por
+   disposição, também na CP5, fecha o núcleo do MVP. A confidencialidade dos dados de ciclo,
+   sintomas e disposição é tratada como requisito transversal desde o primeiro incremento,
+   com armazenamento cifrado e acesso exclusivo da usuária.
+6. **Características fora deste cronograma.** A CP6 (Reconhecimento de ritmo sustentável)
+   permanece no backlog do produto e não está alocada a nenhum ciclo: a retrospectiva mensal
+   só produz valor quando há histórico acumulado, o que não ocorre na primeira versão, como
+   justificado na [Seção 10.3.4](../10-mvp/#justificativas-mvp). Dentro das características
+   alocadas, os requisitos fora do MVP — listados na
+   [Seção 10.1.2](../10-mvp/#1012-requisitos-excluídos-do-mvp) — também permanecem no
+   backlog.
 7. **Atualização do planejamento.** Este planejamento é preliminar. Será atualizado ao final
    de cada iteração, na Revisão da Iteração, nos períodos de fechamento de release e sempre
    que a Retrospectiva da Iteração indicar necessidade de ajuste, e cada versão será
