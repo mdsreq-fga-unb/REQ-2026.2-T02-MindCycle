@@ -25,12 +25,12 @@ semana seguinte, o que ancora no calendário as cerimônias descritas na
 ocorre no primeiro dia do ciclo, às terças-feiras, em cadência quinzenal, por Google Meet;
 a Revisão da Iteração ocorre no último dia do ciclo, às segundas-feiras, também quinzenal,
 por Google Meet, com a representante do LabLivre e usuárias representativas; e a
-Retrospectiva da Iteração ocorre logo após a revisão, na terça-feira que abre o ciclo
-seguinte, antes do Planejamento da Iteração e apenas com a equipe. Ao longo de cada ciclo
-mantêm-se a reunião semanal de sincronização, de quinze minutos, às terças-feiras, às
-11h50, presencial, e a sessão de Refinamento do Product Backlog, às quartas-feiras, às
-15h, por Google Meet, com participação da representante do cliente na sessão que antecede
-cada iteração. O backlog e o andamento das iterações são mantidos no Notion, e o canal
+Retrospectiva da Iteração ocorre logo após a revisão, na própria segunda-feira, apenas
+com a equipe. Ao longo de cada ciclo mantêm-se a reunião semanal de sincronização, de
+quinze minutos, às terças-feiras, às 11h50, presencial, e a sessão de Refinamento do
+Product Backlog, conduzida pela equipe, quinzenalmente às quartas-feiras, às 20h, por
+Google Meet; a prioridade final é confirmada pela cliente profissional de saúde em sua
+reunião mensal. O backlog e o andamento das iterações são mantidos no Notion, e o canal
 assíncrono de WhatsApp registra as decisões de detalhe, que são incorporadas ao backlog.
 
 Até o encerramento da Release 2, em 13/10/2026, o trabalho restringe-se às atividades de
@@ -86,11 +86,12 @@ definida na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-valida�
 3. **Cerimônias que estruturam cada ciclo.** Cada ciclo é aberto pelo Planejamento da
    Iteração, na terça-feira, e encerrado pela Revisão da Iteração, na segunda-feira, ambos
    por Google Meet e em cadência quinzenal; a Retrospectiva da Iteração ocorre logo após a
-   revisão, na terça-feira que abre o ciclo seguinte, apenas com a equipe. Dentro do ciclo,
+   revisão, na própria segunda-feira, apenas com a equipe. Dentro do ciclo,
    a reunião semanal de sincronização, presencial, às terças-feiras, às 11h50, expõe o
    andamento das tarefas e os impedimentos, e a sessão de Refinamento do Product Backlog,
-   às quartas-feiras, às 15h, detalha, estima e prioriza os itens antes de entrarem em uma
-   iteração. Nos períodos de fechamento de release acrescentam-se a entrega e a apresentação
+   quinzenal, às quartas-feiras, às 20h, detalha e estima os itens antes de entrarem em uma
+   iteração, com a prioridade final confirmada pela cliente profissional de saúde em sua
+   reunião mensal. Nos períodos de fechamento de release acrescentam-se a entrega e a apresentação
    dos trabalhos em equipe e o Planejamento da Próxima Release, previstos no Quadro 5.
 4. **Validação ao final de cada ciclo.** Cada iteração termina com a Revisão da Iteração,
    com demonstração ao LabLivre e a usuárias representativas, e é seguida pela Retrospectiva
