@@ -4,8 +4,8 @@
     {
       "name": "hugo",
       "runtimeExecutable": "hugo",
-      "runtimeArgs": ["server", "--disableKinds", "taxonomy,term,rss,404"],
-      "port": 1313
+      "runtimeArgs": ["server", "--port", "1314", "--noHTTPCache", "--disableFastRender", "--disableKinds", "taxonomy,term,rss,404"],
+      "port": 1314
     }
   ]
 }
