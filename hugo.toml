@@ -161,6 +161,12 @@ disableKinds = ['taxonomy', 'term', 'rss']
   pageRef = '/visao/11-rastreabilidade'
   weight  = 11
 
+[[menus.main]]
+  parent  = 'visao'
+  name    = '12. DoR e DoD'
+  pageRef = '/visao/12-dor-e-dod'
+  weight  = 12
+
 # As Seções 12 (DoR e DoD) e 13 (Backlog do Produto) são entregas da Release 2 e
 # ainda não foram escritas: não há página para referenciar. Quando forem criadas em
 # content/visao/, acrescentar as entradas aqui com weight 12 e 13.
