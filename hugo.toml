@@ -78,6 +78,15 @@ disableKinds = ['taxonomy', 'term', 'rss']
 
 # =====================================================================
 #  Menu de navegação (sumário da documentação)
+#
+#  O sumário segue as unidades da disciplina: cada unidade agrupa as
+#  seções do Documento de Visão entregues nela. Só entra no menu o que já
+#  foi entregue — seção ainda não escrita não ganha entrada vazia. As
+#  páginas continuam em content/visao/, então os endereços e os links
+#  entre seções não mudam.
+#
+#  Os cabeçalhos de unidade e de fase não têm pageRef: são apenas rótulos que
+#  recolhem e expandem o grupo (ver layouts/partials/sidebar/nav.html).
 # =====================================================================
 
 [[menus.main]]
@@ -87,115 +96,203 @@ disableKinds = ['taxonomy', 'term', 'rss']
   weight     = 1
   pre        = '⌂'
 
-# --- Visão do Produto e Projeto -------------------------------------
+# --- Unidade 1 — Concepção do Projeto -------------------------------
 [[menus.main]]
-  identifier = 'visao'
-  name       = 'Visão do Produto e Projeto'
-  pageRef    = '/visao'
+  identifier = 'unidade-1'
+  name       = 'Unidade 1 — Concepção do Projeto'
   weight     = 2
   pre        = '◈'
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-1'
   name    = '1. Cenário Atual do Cliente e do Negócio'
   pageRef = '/visao/01-cenario-atual'
   weight  = 1
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-1'
   name    = '2. Solução Proposta'
   pageRef = '/visao/02-solucao-proposta'
   weight  = 2
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-1'
   name    = '3. Intervenção Social'
   pageRef = '/visao/03-intervencao-social'
   weight  = 3
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-1'
   name    = '4. Estratégias de Engenharia de Software'
   pageRef = '/visao/04-estrategias-engenharia-software'
   weight  = 4
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-1'
   name    = '5. Engenharia de Requisitos'
   pageRef = '/visao/05-engenharia-de-requisitos'
   weight  = 5
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-1'
   name    = '6. Cronograma e Entregas'
   pageRef = '/visao/06-cronograma-e-entregas'
   weight  = 6
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-1'
   name    = '7. Interação entre Equipe e Cliente'
   pageRef = '/visao/07-interacao-equipe-cliente'
   weight  = 7
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-1'
+  name    = 'Vídeo de Apresentação'
+  pageRef = '/entregas/unidade-1'
+  weight  = 8
+
+# --- Unidade 2 — Requisitos de Software -----------------------------
+# A Seção 13 (Backlog do Produto) e o vídeo da Unidade 2 ainda não foram
+# entregues. Quando existirem, acrescentar aqui com weight 13 e 16.
+[[menus.main]]
+  identifier = 'unidade-2'
+  name       = 'Unidade 2 — Requisitos de Software'
+  weight     = 3
+  pre        = '◈'
+
+[[menus.main]]
+  parent  = 'unidade-2'
   name    = '8. Requisitos de Software'
   pageRef = '/visao/08-requisitos-de-software'
   weight  = 8
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-2'
   name    = '9. Priorização de Requisitos'
   pageRef = '/visao/09-priorizacao-de-requisitos'
   weight  = 9
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-2'
   name    = '10. Definição e Composição do MVP'
   pageRef = '/visao/10-mvp'
   weight  = 10
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-2'
   name    = '11. Rastreabilidade dos Requisitos'
   pageRef = '/visao/11-rastreabilidade'
   weight  = 11
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-2'
   name    = '12. DoR e DoD'
   pageRef = '/visao/12-dor-e-dod'
   weight  = 12
 
-# As Seções 12 (DoR e DoD) e 13 (Backlog do Produto) são entregas da Release 2 e
-# ainda não foram escritas: não há página para referenciar. Quando forem criadas em
-# content/visao/, acrescentar as entradas aqui com weight 12 e 13.
-
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-2'
   name    = '14. Lições Aprendidas'
   pageRef = '/visao/14-licoes-aprendidas'
   weight  = 14
 
 [[menus.main]]
-  parent  = 'visao'
+  parent  = 'unidade-2'
   name    = '15. Referências Bibliográficas'
   pageRef = '/visao/15-referencias'
   weight  = 15
 
-# --- Entregas --------------------------------------------------------
+# --- Fases do OpenUP -------------------------------------------------
+# Uma página por iteração, em content/openup/<fase>/, ainda sem conteúdo.
 [[menus.main]]
-  identifier = 'entregas'
-  name       = 'Entregas'
-  pageRef    = '/entregas'
-  weight     = 3
-  pre        = '▣'
+  identifier = 'openup-concepcao'
+  name       = 'OpenUP — Concepção'
+  weight     = 4
+  pre        = '◇'
 
 [[menus.main]]
-  parent  = 'entregas'
-  name    = 'Unidade 1'
-  pageRef = '/entregas/unidade-1'
+  parent  = 'openup-concepcao'
+  name    = 'Iteração 01'
+  pageRef = '/openup/concepcao/iteracao-01'
   weight  = 1
+
+[[menus.main]]
+  parent  = 'openup-concepcao'
+  name    = 'Iteração 02'
+  pageRef = '/openup/concepcao/iteracao-02'
+  weight  = 2
+
+[[menus.main]]
+  identifier = 'openup-elaboracao'
+  name       = 'OpenUP — Elaboração'
+  weight     = 5
+  pre        = '◇'
+
+[[menus.main]]
+  parent  = 'openup-elaboracao'
+  name    = 'Iteração 03'
+  pageRef = '/openup/elaboracao/iteracao-03'
+  weight  = 3
+
+[[menus.main]]
+  parent  = 'openup-elaboracao'
+  name    = 'Iteração 04'
+  pageRef = '/openup/elaboracao/iteracao-04'
+  weight  = 4
+
+[[menus.main]]
+  identifier = 'openup-construcao'
+  name       = 'OpenUP — Construção'
+  weight     = 6
+  pre        = '◇'
+
+[[menus.main]]
+  parent  = 'openup-construcao'
+  name    = 'Iteração 05'
+  pageRef = '/openup/construcao/iteracao-05'
+  weight  = 5
+
+[[menus.main]]
+  parent  = 'openup-construcao'
+  name    = 'Iteração 06'
+  pageRef = '/openup/construcao/iteracao-06'
+  weight  = 6
+
+[[menus.main]]
+  parent  = 'openup-construcao'
+  name    = 'Iteração 07'
+  pageRef = '/openup/construcao/iteracao-07'
+  weight  = 7
+
+[[menus.main]]
+  parent  = 'openup-construcao'
+  name    = 'Iteração 08'
+  pageRef = '/openup/construcao/iteracao-08'
+  weight  = 8
+
+[[menus.main]]
+  parent  = 'openup-construcao'
+  name    = 'Iteração 09'
+  pageRef = '/openup/construcao/iteracao-09'
+  weight  = 9
+
+[[menus.main]]
+  identifier = 'openup-transicao'
+  name       = 'OpenUP — Transição'
+  weight     = 7
+  pre        = '◇'
+
+[[menus.main]]
+  parent  = 'openup-transicao'
+  name    = 'Iteração 10'
+  pageRef = '/openup/transicao/iteracao-10'
+  weight  = 10
+
+[[menus.main]]
+  parent  = 'openup-transicao'
+  name    = 'Iteração 11'
+  pageRef = '/openup/transicao/iteracao-11'
+  weight  = 11
 
 # =====================================================================
 #  Markdown / render

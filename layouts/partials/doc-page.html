@@ -13,17 +13,8 @@
   </div>
 
   <div class="single-layout">
-    {{ if and (ne .Params.toc false) (.TableOfContents) }}
-    <aside class="toc-sidebar" aria-label="{{ i18n "toc_title" }}">
-      <div class="toc-title">
-        <div class="sidebar-nav-label">{{ i18n "toc_title" }}</div>
-      </div>
-      <nav class="toc-nav">
-        {{ .TableOfContents }}
-      </nav>
-    </aside>
-    {{ end }}
-
+    {{/* Sem índice "Nesta página": o sumário lateral já basta e o índice
+         poluía as páginas com muitas subseções. */}}
     <article class="article-content">
       {{ .Content }}
 

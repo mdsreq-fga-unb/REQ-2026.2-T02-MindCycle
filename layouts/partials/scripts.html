@@ -35,10 +35,6 @@
 <script defer src="{{ $search.RelPermalink }}" integrity="{{ $search.Data.Integrity }}"></script>
 {{ end }}
 
-{{ if and .IsPage (ne .Params.toc false) }}
-{{ $toc := resources.Get "js/toc.js" | minify | fingerprint }}
-<script defer src="{{ $toc.RelPermalink }}" integrity="{{ $toc.Data.Integrity }}"></script>
-{{ end }}
 
 {{ if and .IsPage (ne site.Params.enableLightbox false) }}
 {{ $lightbox := resources.Get "js/lightbox.js" | minify | fingerprint }}

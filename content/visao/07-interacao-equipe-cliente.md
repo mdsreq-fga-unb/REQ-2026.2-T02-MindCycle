@@ -54,9 +54,8 @@ O trabalho é organizado em iterações de duas semanas, cadência fixa alinhada
 da disciplina e compatível com as iterações curtas do OpenUP. O Kanban gerencia o fluxo de
 trabalho dentro e entre as iterações por meio do quadro visual e dos limites de trabalho em
 progresso (WIP). Cada iteração começa com uma reunião de planejamento e termina com uma
-revisão e uma retrospectiva, permitindo inspeção e adaptação contínuas. A única exceção é a
-Iteração 7, de uma semana, cuja duração e justificativa constam do
-[Quadro 7 e das considerações da Seção 6](../06-cronograma-e-entregas/#considerações-importantes).
+revisão e uma retrospectiva, permitindo inspeção e adaptação contínuas. O período de cada
+iteração consta do [cronograma da Seção 6](../06-cronograma-e-entregas/).
 
 - **Planejamento da Iteração:** no primeiro dia de cada iteração, com toda a equipe.
   Seleciona os itens do backlog do produto que comporão o backlog da iteração, com base na

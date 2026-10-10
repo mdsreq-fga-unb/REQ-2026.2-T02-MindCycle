@@ -2,24 +2,35 @@
   Sumário lateral com dois níveis e grupos recolhíveis.
 
   Cada item de primeiro nível que tem filhos vira um grupo: o título continua
-  sendo um link normal e um botão ao lado recolhe ou expande a lista. O estado
-  fica no localStorage e é aplicado antes da primeira pintura (ver baseof.html).
+  sendo um link normal e um botão ao lado recolhe ou expande a lista. Um grupo
+  sem página própria (sem pageRef nem url, como as unidades) tem como título um
+  rótulo que também recolhe ou expande a lista. O estado fica no localStorage e
+  é aplicado antes da primeira pintura (ver baseof.html).
 */}}
 <nav class="sidebar-nav" aria-label="Sumário da documentação">
   {{ range site.Menus.main }}
     {{ $entry := . }}
     {{ $id := .Identifier | default (urlize .Name) }}
     {{ $href := "" }}
-    {{ with .Page }}{{ $href = .RelPermalink }}{{ else }}{{ $href = .URL | relURL }}{{ end }}
+    {{ with .Page }}{{ $href = .RelPermalink }}{{ else }}{{ with .URL }}{{ $href = . | relURL }}{{ end }}{{ end }}
     {{ $isCurrent := or ($.IsMenuCurrent "main" $entry) ($.HasMenuCurrent "main" $entry) }}
 
     {{ if .Children }}
     <div class="sidebar-group" data-grupo="{{ $id }}">
       <div class="sidebar-group-cabeca">
+        {{ if $href }}
         <a href="{{ $href }}" class="sidebar-nav-item{{ if $isCurrent }} active{{ end }}"{{ if $isCurrent }} aria-current="page"{{ end }}>
           {{ with .Pre }}<span class="nav-icon" aria-hidden="true">{{ . }}</span>{{ end }}
           <span class="nav-text">{{ .Name }}</span>
         </a>
+        {{ else }}
+        <button class="sidebar-nav-item sidebar-group-rotulo{{ if $isCurrent }} active{{ end }}" type="button"
+                data-grupo="{{ $id }}"
+                aria-expanded="true">
+          {{ with .Pre }}<span class="nav-icon" aria-hidden="true">{{ . }}</span>{{ end }}
+          <span class="nav-text">{{ .Name }}</span>
+        </button>
+        {{ end }}
         <button class="sidebar-group-btn" type="button"
                 data-grupo="{{ $id }}"
                 aria-expanded="true"
