@@ -293,6 +293,19 @@ a:hover { color: var(--accent); text-decoration: underline; }
 
 .sidebar-group-cabeca .sidebar-nav-item { flex: 1 1 auto; min-width: 0; }
 
+/* Título de grupo sem página própria: um botão com cara de item do sumário */
+.sidebar-nav .sidebar-group-rotulo {
+  width: auto;
+  border: 0;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-nav .sidebar-group-rotulo:hover { background: var(--bg-subtle); }
+.sidebar-nav .sidebar-group-rotulo.active { background: transparent; }
+
 .sidebar-nav .sidebar-group-btn {
   flex: 0 0 26px;
   width: 26px;
@@ -331,16 +344,24 @@ a:hover { color: var(--accent); text-decoration: underline; }
 }
 
 /* Estado recolhido — aplicado pelo script antiflash em <html> */
-.nav-fechado-visao .sidebar-group[data-grupo="visao"] .sidebar-subnav,
-.nav-fechado-entregas .sidebar-group[data-grupo="entregas"] .sidebar-subnav {
+.nav-fechado-unidade-1 .sidebar-group[data-grupo="unidade-1"] .sidebar-subnav,
+.nav-fechado-unidade-2 .sidebar-group[data-grupo="unidade-2"] .sidebar-subnav,
+.nav-fechado-openup-concepcao .sidebar-group[data-grupo="openup-concepcao"] .sidebar-subnav,
+.nav-fechado-openup-elaboracao .sidebar-group[data-grupo="openup-elaboracao"] .sidebar-subnav,
+.nav-fechado-openup-construcao .sidebar-group[data-grupo="openup-construcao"] .sidebar-subnav,
+.nav-fechado-openup-transicao .sidebar-group[data-grupo="openup-transicao"] .sidebar-subnav {
   grid-template-rows: 0fr;
   margin-bottom: 0;
   overflow: hidden;
   border-left-color: transparent;
 }
 
-.nav-fechado-visao .sidebar-nav .sidebar-group[data-grupo="visao"] .sidebar-group-btn svg,
-.nav-fechado-entregas .sidebar-nav .sidebar-group[data-grupo="entregas"] .sidebar-group-btn svg {
+.nav-fechado-unidade-1 .sidebar-nav .sidebar-group[data-grupo="unidade-1"] .sidebar-group-btn svg,
+.nav-fechado-unidade-2 .sidebar-nav .sidebar-group[data-grupo="unidade-2"] .sidebar-group-btn svg,
+.nav-fechado-openup-concepcao .sidebar-nav .sidebar-group[data-grupo="openup-concepcao"] .sidebar-group-btn svg,
+.nav-fechado-openup-elaboracao .sidebar-nav .sidebar-group[data-grupo="openup-elaboracao"] .sidebar-group-btn svg,
+.nav-fechado-openup-construcao .sidebar-nav .sidebar-group[data-grupo="openup-construcao"] .sidebar-group-btn svg,
+.nav-fechado-openup-transicao .sidebar-nav .sidebar-group[data-grupo="openup-transicao"] .sidebar-group-btn svg {
   transform: rotate(-90deg);
 }
 
@@ -767,6 +788,63 @@ html:not(.sidebar-collapsed) .collapse-icon-expand { display: none; }
   margin: -0.9rem 0 1.8rem;
   font-size: 0.775rem;
   color: var(--text-muted);
+}
+
+/* Cronograma (Seção 6): versão do quadro, fase do OpenUP e status */
+.crono-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-weak);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.article-content a.crono-fase {
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.article-content a.crono-fase:hover { color: var(--accent); text-decoration: underline; }
+
+/* O quadro do cronograma tem uma coluna de texto e quatro curtas: em vez da
+   largura mínima por coluna (render-table.html), a de atividades fica larga. */
+.crono table { width: 100%; min-width: 720px !important; table-layout: fixed; }
+.crono th:nth-child(1) { width: 13%; }
+.crono th:nth-child(2) { width: 14%; }
+.crono th:nth-child(3) { width: 41%; }
+.crono th:nth-child(4) { width: 15%; }
+.crono th:nth-child(5) { width: 17%; }
+.crono thead th, .crono td { white-space: normal; }
+
+.crono-status {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.crono-status--executado {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: var(--accent-contrast);
+}
+
+.crono-status--andamento {
+  background: var(--accent-weak);
+  border-color: var(--accent-line);
+  color: var(--accent);
 }
 
 /* ---------------------------------------------------------------------

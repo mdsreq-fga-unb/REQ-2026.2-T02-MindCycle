@@ -23,12 +23,21 @@
     return raiz.classList.contains('nav-fechado-' + id);
   }
 
-  function sincronizarBotao(botao, fechado) {
-    botao.setAttribute('aria-expanded', fechado ? 'false' : 'true');
+  // Um grupo pode ter dois controles — o botão da seta e, quando não tem
+  // página própria, o rótulo do título. Os dois refletem o mesmo estado.
+  var SELETOR = '.sidebar-group-btn, .sidebar-group-rotulo';
+
+  function sincronizarGrupo(id, fechado) {
+    var controles = document.querySelectorAll(SELETOR);
+    Array.prototype.forEach.call(controles, function (c) {
+      if (c.getAttribute('data-grupo') === id) {
+        c.setAttribute('aria-expanded', fechado ? 'false' : 'true');
+      }
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    var botoes = document.querySelectorAll('.sidebar-group-btn');
+    var botoes = document.querySelectorAll(SELETOR);
     if (!botoes.length) return;
 
     // Depois do primeiro quadro, libera a animação de abrir/fechar.
@@ -38,7 +47,7 @@
       var id = botao.getAttribute('data-grupo');
       if (!id) return;
 
-      sincronizarBotao(botao, estaFechado(id));
+      sincronizarGrupo(id, estaFechado(id));
 
       botao.addEventListener('click', function () {
         var fechado = estaFechado(id);
@@ -52,7 +61,7 @@
         }
 
         gravar(lista);
-        sincronizarBotao(botao, !fechado);
+        sincronizarGrupo(id, !fechado);
       });
     });
   });

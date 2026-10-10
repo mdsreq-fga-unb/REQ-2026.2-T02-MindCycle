@@ -24,11 +24,12 @@ automaticamente no GitHub Pages a cada `push`.
 │   ├── visao/                     Documento de Visão do Produto e Projeto
 │   │   ├── _index.md              Índice das seções
 │   │   ├── 01-cenario-atual.md    Seção 1
-│   │   ├── …                      Seções 2 a 7
-│   │   ├── 11-licoes-aprendidas.md
-│   │   └── 12-referencias.md
-│   └── entregas/
-│       └── unidade-1.md           Entrega da Unidade 1 (vídeo e escopo)
+│   │   ├── …                      Seções 2 a 12
+│   │   ├── 14-licoes-aprendidas.md
+│   │   └── 15-referencias.md
+│   ├── entregas/
+│   │   └── unidade-1.md           Entrega da Unidade 1 (vídeo e escopo)
+│   └── openup/                    Uma pasta por fase do OpenUP, uma página por iteração (ainda sem conteúdo)
 ├── layouts/                       Templates que substituem os do tema
 │   ├── _default/baseof.html       Estrutura da página (barra superior, tema claro/escuro)
 │   ├── partials/                  Sumário lateral, scripts e estilos enxutos
@@ -70,13 +71,22 @@ Seção 6 remapeava as duas por conta própria.
 Se os identificadores mudarem de novo, os lugares a conferir são
 `content/visao/02-solucao-proposta.md` (Quadro 2),
 `content/visao/08-requisitos-de-software.md` (árvore de derivação e catálogos) e
-`content/visao/06-cronograma-e-entregas.md` (Quadro 6, Quadro 7 e considerações 5 e 6).
+`content/visao/06-cronograma-e-entregas.md` (artefatos de entrada das Iterações 5 a 9).
 O levantamento anterior (`requisitos-por-tela-mindcycle.md`, `RF01`–`RF69`) é **histórico**
 e não deve ser citado.
 
 ## Escopo publicado
 
-O site cobre as Seções **1 a 11**, **14.1** e **15**:
+O site cobre as Seções **1 a 12**, **14.1** e **15**. O sumário lateral é organizado por
+unidade, e cada unidade lista só as seções já entregues:
+
+- **Unidade 1 — Concepção do Projeto:** Seções 1 a 7 e o vídeo de apresentação;
+- **Unidade 2 — Requisitos de Software:** Seções 8 a 12, 14 e 15;
+- **OpenUP — Concepção, Elaboração, Construção e Transição:** uma página por iteração
+  (Iterações 01 e 02, 03 e 04, 05 a 09, 10 e 11) em `content/openup/`, ainda sem conteúdo.
+
+As páginas continuam em `content/visao/`; a divisão por unidade existe apenas no menu
+(`hugo.toml`), então os endereços publicados e os links entre seções não mudaram.
 
 | Seção | Release |
 |---|---|
@@ -85,11 +95,12 @@ O site cobre as Seções **1 a 11**, **14.1** e **15**:
 | 9 — Priorização de Requisitos | 2 (Unidade 2) |
 | 10 — Definição e Composição do MVP | 2 (Unidade 2) |
 | 11 — Rastreabilidade dos Requisitos | 2 (Unidade 2) |
+| 12 — DoR e DoD | 2 (Unidade 2) |
 | 14.1 — Lições Aprendidas da Unidade 1 · 15 — Referências | 1 (Unidade 1) |
 
-Ainda **não escritas**, e por isso ausentes do menu: a Seção **12 (DoR e DoD)** e a Seção
-**13 (Backlog do Produto)**, ambas entregas da Release 2, e as Seções **14.2** a **14.4**
-(lições das Unidades 2 a 4). Quando forem escritas, basta criar os arquivos em
+Ainda **não escritas**, e por isso ausentes do menu: a Seção **13 (Backlog do Produto)** e
+o vídeo da Unidade 2, entregas da Release 2, e as Seções **14.2** a **14.4** (lições das
+Unidades 2 a 4). Quando forem escritas, basta criar os arquivos em
 `content/visao/` e acrescentar as entradas no menu em `hugo.toml` — há um comentário no
 arquivo indicando o lugar.
 
@@ -109,7 +120,7 @@ divergência sem aviso.
 | **Como comprovar o objetivo geral** | Seção 2.1 tem uma pendência registrada pela equipe (indicadores de verificação). |
 | **Validação da priorização e do MVP com a cliente** | Seções 9.8.2 e 10.4.1 — o contato com a Dra. Cláudia Araújo Bottino não ocorreu a tempo da Release 2; as notas de valor de negócio estão registradas como hipótese da equipe. |
 | **Valores de negócio VN1–VN7** | Seção 2.3 — redigidos pela equipe a partir dos critérios da Seção 9.2 após o realinhamento das características; aguardam validação com a cliente. |
-| **Seções 12 (DoR e DoD) e 13 (Backlog do Produto)** | Entregas da Release 2 ainda não escritas. |
+| **Seção 13 (Backlog do Produto) e vídeo da Unidade 2** | Entregas da Release 2 ainda não publicadas. |
 | **RNF05** | Não existe no quadro: a numeração salta de RNF04 para RNF06. Confirmar se houve descarte e registrar, ou renumerar (achado 03 da Seção 11.8). |
 
 ---
