@@ -2,7 +2,7 @@
 title: "9. Priorização de Requisitos"
 numero: "9"
 weight: 9
-resumo: "Critérios e escalas de valor de negócio e de esforço técnico, avaliação dos 27 requisitos funcionais, tabela consolidada e matriz 4 × 4 de priorização."
+resumo: "Critérios e escalas de valor de negócio e de esforço técnico, avaliação dos 28 requisitos funcionais, tabela consolidada e matriz 4 × 4 de priorização."
 ---
 
 > **Fonte e status desta seção.** Os requisitos aqui priorizados são os do quadro
@@ -11,11 +11,12 @@ resumo: "Critérios e escalas de valor de negócio e de esforço técnico, avali
 > projeto — conforme as recomendações 07 e 08 registradas na
 > [Seção 11.8](../11-rastreabilidade/#achados-consistencia).
 > A numeração **RF01–RF27** e **RNF01–RNF11** desta seção é a mesma do catálogo da
-> [Seção 8](../08-requisitos-de-software/).
+> [Seção 8](../08-requisitos-de-software/). O **RF28** é um requisito novo, descoberto na
+> reunião de validação de 05/10/2026 (Seção 9.8), ainda não formalizado no catálogo oficial.
 >
-> **Versão:** 0.2 · **Data:** 28/09/2026 · **Status:** critérios definidos e revisados com
-> a monitoria; avaliação de valor de negócio registrada em **hipótese da equipe**, pendente
-> de validação com a cliente.
+> **Versão:** 0.3 · **Data:** 05/10/2026 · **Status:** critérios definidos e revisados com
+> a monitoria; 14 dos 28 RFs com valor de negócio validado com a cliente em reunião real; os
+> demais seguem como hipótese da equipe, pendente de validação.
 
 ## 9.1 Introdução e metodologia
 
@@ -46,12 +47,14 @@ Três regras metodológicas foram fixadas antes da avaliação:
    ajustada *a posteriori* com o propósito de empurrar um requisito para um quadrante
    desejado.
 
-> **Ressalva de validação.** O contato síncrono com a Dra. Cláudia Araújo Bottino não foi
-> confirmado a tempo desta entrega. Em consequência, as notas de valor de negócio
-> apresentadas nas Seções 9.4 e 9.6 são **hipóteses revisadas da equipe**, construídas a
-> partir dos critérios da Seção 9.2, e não atribuições reais da cliente. O registro honesto
-> do que foi tentado está na Seção 9.8. As notas de esforço técnico (Seção 9.5) **não**
-> dependem da cliente e são avaliações efetivas da equipe.
+> **Ressalva de validação.** O contato síncrono com a Dra. Cláudia Araújo Bottino ocorreu em
+> **05/10/2026**. Na reunião, 14 dos 28 RFs foram discutidos diretamente e têm nota validada
+> com justificativa real da cliente; os demais não entraram na conversa e permanecem como
+> **hipótese da equipe**, construída a partir dos critérios da Seção 9.2. A coluna
+> *Confirmado* da Seção 9.4 distingue os dois casos linha a linha. O registro completo da
+> reunião (participantes, o que mudou, o que ficou para depois) está na Seção 9.8. As
+> notas de esforço técnico (Seção 9.5) **não** dependem da cliente e são avaliações
+> efetivas da equipe, inalteradas pela reunião.
 
 ## 9.2 Critérios e escalas de valor de negócio {#criterios-valor-negocio}
 
@@ -136,86 +139,95 @@ Esforço Técnico  =  ───────────────────�
 
 ## 9.4 Avaliação de valor de negócio dos RFs {#avaliacao-valor-negocio}
 
-Avaliação agrupada por característica de produto (CP), para permitir a confirmação bloco a
-bloco, na mesma ordem do roteiro de validação.
+Avaliação agrupada por característica de produto (CP), na mesma ordem do roteiro de
+validação (Seção 9.8.1), aplicado na reunião de 05/10/2026 com a Dra. Cláudia Araújo
+Bottino.
 
-As notas abaixo são **hipótese revisada da equipe**; a coluna *Confirmado* registra que
-nenhuma delas foi validada pela cliente até a data desta entrega.
+A coluna *Confirmado* distingue os RFs discutidos diretamente na reunião (`✓ 05/10`) dos
+que permanecem em **hipótese da equipe** (`—`), ainda pendentes de validação.
 
 ### CP1 · Registro e análise de sintomas e disposição — OE1
 
-| RF | Requisito | Nota (hipótese) | Classificação | Justificativa (equipe) | Confirmado |
+| RF | Requisito | Nota | Classificação | Justificativa | Confirmado |
 |---|---|:---:|---|---|:---:|
-| RF01 | Consultar sintomas comuns da fase | 3 | Should have | Subiu de *Could*: sem um registro básico do estado, a usuária não tem o que sinalizar em RF02. | — |
-| RF02 | Sinalizar sobrecarga | 4 | Must have | Ataca diretamente a sobrecarga: permite resposta imediata, não só registro passivo. | — |
-| RF03 | Receber lembrete de registro | 2 | Could have | Melhora a adesão ao registro, mas o fluxo funciona sem lembrete. | — |
-| RF04 | Registrar sintomas e disposição | 4 | Must have | Dado-fonte de RF02, RF08, RF13 e RF15. *Must have* se for o registro simples que alimenta a recomendação; se virar relatório/gráfico elaborado, isso pode esperar. | — |
+| RF01 | Consultar sintomas comuns da fase | 3 | Should have | Não comentado diretamente na reunião; mantém a hipótese da equipe (subiu de *Could*: sem um registro básico do estado, a usuária não tem o que sinalizar em RF02). | — |
+| RF02 | Sinalizar sobrecarga | 4 | Must have | Validado: a Dra. Cláudia confirmou o fluxo de sinalizar sobrecarga com reajuste automático das tarefas ("eu acho importante"). | ✓ 05/10 |
+| RF03 | Receber lembrete de registro | 2 | Could have | Validado como ideia ("tipo Duolingo, que manda mensagem"), mas segue como conveniência, não bloqueante. Nota mantida. | ✓ 05/10 |
+| RF04 | Registrar sintomas e disposição | 4 | Must have | Validado: "não precisa escrever, ela vai pontuando". A Dra. Cláudia endossou o registro por cliques e ajudou a refinar a lista de sintomas (Seção 9.8.3). | ✓ 05/10 |
 
 ### CP2 · Acompanhamento do ciclo menstrual — OE1
 
-| RF | Requisito | Nota (hipótese) | Classificação | Justificativa (equipe) | Confirmado |
+| RF | Requisito | Nota | Classificação | Justificativa | Confirmado |
 |---|---|:---:|---|---|:---:|
-| RF05 | Consultar situação atual do ciclo | 2 | Could have | Consulta pontual, complementa RF10 sem ser crítica isoladamente. | — |
-| RF06 | Registrar início da menstruação | 3 | Should have | Dado estrutural para o cálculo de fase por data; alternativa ao RF08. | — |
-| RF07 | Informar características do ciclo | 2 | Could have | Configuração pontual, refina a precisão mas não bloqueia o uso. | — |
-| RF08 | Estimar fase do ciclo por sintomas | 2 | Could have | Desceu de *Should*: a data de início (RF06) é um dado objetivo; sintomas variam por pessoa e funcionam melhor como refinamento, não como base do cálculo. | — |
-| RF09 | Recomendar conteúdos sobre o ciclo | 1 | Won't have now | Conteúdo informativo; não ataca a sobrecarga diretamente. | — |
+| RF05 | Consultar situação atual do ciclo | 2 | Could have | Não comentado diretamente; mantém a hipótese da equipe. | — |
+| RF06 | Registrar início da menstruação | 4 | Must have | Subiu de *Should*: a Dra. Cláudia chamou a confusão sobre regularidade do ciclo de "a grande dúvida" de praticamente toda paciente; a data de início é a base para resolver isso. | ✓ 05/10 |
+| RF07 | Informar características do ciclo | 3 | Should have | Subiu de *Could*: faz parte da educação sobre regularidade do ciclo que a Dra. Cláudia pediu explicitamente para incluir no *onboarding*. | ✓ 05/10 |
+| RF08 | Estimar fase do ciclo por sintomas | 2 | Could have | Não comentado diretamente; mantém a hipótese (RF06 cobre o caso comum). | — |
+| RF09 | Recomendar conteúdos sobre o ciclo | 3 | Should have | Subiu de *Won't have*: a Dra. Cláudia validou fortemente o conteúdo explicativo por fase como forma de reduzir a autoculpa: "ela vai entender por que não tá conseguindo ser produtiva, não vai ficar achando que é algo da cabeça dela". | ✓ 05/10 |
 
 ### CP3 · Privacidade dos dados da usuária — OE1 {#cp3-privacidade}
 
-| RF | Requisito | Nota (hipótese) | Classificação | Justificativa (equipe) | Confirmado |
+| RF | Requisito | Nota | Classificação | Justificativa | Confirmado |
 |---|---|:---:|---|---|:---:|
-| RF10 | Visualizar calendário do ciclo | 2 | Could have | Visualização de apoio, não crítica ao fluxo diário. | — |
-| RF11 | Proteger acesso com PIN | 4 | Must have | Dado de saúde sensível; exigência de segurança (RNF03) já definida. | — |
-| RF12 | Aceitar termos de uso | 4 | Must have | Pré-condição legal (LGPD/RNF02) para coletar qualquer dado da usuária. | — |
+| RF10 | Visualizar calendário do ciclo | 2 | Could have | Validado como útil; sugestão de personalização de cor por usuária (melhoria futura, não eleva a nota). | ✓ 05/10 |
+| RF11 | Proteger acesso com PIN | 4 | Must have | Fora do escopo clínico da conversa; mantém a hipótese por exigência de segurança (RNF03) já definida. | — |
+| RF12 | Aceitar termos de uso | 4 | Must have | Não comentado; mantém a hipótese por exigência legal (LGPD/RNF02). | — |
 
-> **Hipótese da equipe — possível RNF novo.** O PIN (RF11) protege o aparelho, mas o risco
-> maior está no armazenamento. A equipe considera que **criptografia dos dados em repouso**,
-> **minimização** (guardar apenas o necessário) e **transparência** sobre o que é coletado
-> deveriam ter a mesma urgência. Hoje isso não está coberto por nenhum RNF explícito — o
-> RNF03 cobre apenas controle de acesso. É candidato a novo RNF, a validar (ver
+> **Hipótese da equipe: possível RNF novo.** Levantado pela equipe antes da reunião: o PIN
+> (RF11) protege o aparelho, mas o risco maior está no armazenamento. A equipe considera que
+> **criptografia dos dados em repouso**, **minimização** (guardar apenas o necessário) e
+> **transparência** sobre o que é coletado deveriam ter a mesma urgência. Hoje isso não está
+> coberto por nenhum RNF explícito: o RNF03 cobre apenas controle de acesso. Este ponto não
+> foi pauta da reunião clínica de 05/10; segue como candidato a novo RNF, a validar (ver
 > [Seção 10.2](../10-mvp/#rnfs-mvp)).
 
 ### CP4 · Planejamento adaptativo das tarefas — OE2
 
-| RF | Requisito | Nota (hipótese) | Classificação | Justificativa (equipe) | Confirmado |
+| RF | Requisito | Nota | Classificação | Justificativa | Confirmado |
 |---|---|:---:|---|---|:---:|
-| RF13 | Recomendar tarefas do dia | 4 | Must have | Núcleo da adaptação diária; ataca a sobrecarga na raiz do planejamento. | — |
-| RF14 | Receber resumo do dia | 2 | Could have | Conveniência de visualização; o plano já existe via RF13. | — |
+| RF13 | Recomendar tarefas do dia | 4 | Must have | Validado: o fluxo de tarefas com prioridade, prazo e energia foi apresentado e aprovado sem objeções. | ✓ 05/10 |
+| RF14 | Receber resumo do dia | 2 | Could have | Não comentado diretamente; mantém a hipótese da equipe. | — |
 
 ### CP5 · Gestão acolhedora da carga diária — OE3
 
-| RF | Requisito | Nota (hipótese) | Classificação | Justificativa (equipe) | Confirmado |
+| RF | Requisito | Nota | Classificação | Justificativa | Confirmado |
 |---|---|:---:|---|---|:---:|
-| RF15 | Reajustar recomendação do dia | 4 | Must have | Parte do laço mínimo que já entrega valor, junto com RF17 e RF20. | — |
-| RF16 | Editar tarefa | 4 | Must have | Todo mundo erra ao digitar; sem editar, um erro de cadastro vira tarefa permanente. | — |
-| RF17 | Cadastrar tarefa | 4 | Must have | Parte do laço mínimo que já entrega valor, junto com RF15 e RF20. | — |
-| RF18 | Adiar tarefa | 4 | Must have | Mesmo sendo "só um status", é a identidade do produto: o que o diferencia de uma lista de tarefas comum. | — |
-| RF19 | Excluir tarefa | 3 | Should have | Necessário, mas menos frequente que editar/adiar/concluir. | — |
-| RF20 | Concluir tarefa | 4 | Must have | Parte do laço mínimo que já entrega valor, junto com RF15 e RF17. | — |
-| RF21 | Sugerir atividades de acolhimento | 2 | Could have | Pode seguir *Could* se o tom acolhedor já aparecer no resto da interface. | — |
-| RF22 | Receber mensagens de acolhimento | 3 | Should have | Subiu de *Could*: é a alma do produto; sem isso, vira só mais uma lista de tarefas. | — |
+| RF15 | Reajustar recomendação do dia | 4 | Must have | Validado: "eu acho importante", disse a Dra. Cláudia ao endossar o reajuste automático das tarefas. | ✓ 05/10 |
+| RF16 | Editar tarefa | 4 | Must have | CRUD básico não comentado isoladamente; mantém a hipótese da equipe. | — |
+| RF17 | Cadastrar tarefa | 4 | Must have | CRUD básico não comentado isoladamente; mantém a hipótese da equipe. | — |
+| RF18 | Adiar tarefa | 4 | Must have | Validado: a possibilidade de adiar foi mencionada e confirmada como parte do fluxo de reajuste por sobrecarga. | ✓ 05/10 |
+| RF19 | Excluir tarefa | 3 | Should have | Não comentado isoladamente; mantém a hipótese da equipe. | — |
+| RF20 | Concluir tarefa | 4 | Must have | Não comentado isoladamente; mantém a hipótese da equipe. | — |
+| RF21 | Sugerir atividades de acolhimento | 3 | Should have | Subiu de *Could*: a Dra. Cláudia defendeu com força sugestões de atividade física e exercícios de respiração ("atividade física é remédio"), inclusive reforço progressivo se a usuária repetir um comportamento passivo. | ✓ 05/10 |
+| RF22 | Receber mensagens de acolhimento | 4 | Must have | Subiu de *Should*: a Dra. Cláudia destacou mensagens interativas de acolhimento ("você tá melhor hoje?") como o que torna o produto completo, não só mais uma lista de tarefas. | ✓ 05/10 |
 
 ### CP6 · Reconhecimento de ritmo sustentável — OE3
 
-| RF | Requisito | Nota (hipótese) | Classificação | Justificativa (equipe) | Confirmado |
+| RF | Requisito | Nota | Classificação | Justificativa | Confirmado |
 |---|---|:---:|---|---|:---:|
-| RF23 | Gerar retrospectiva mensal | 2 | Could have | Valor de médio prazo; não urgente para a primeira versão utilizável. | — |
-| RF24 | Registrar atividade de acolhimento | 2 | Could have | Alimenta o RF23; mesma prioridade. | — |
+| RF23 | Gerar retrospectiva mensal | 2 | Could have | Validado e refinado: incluir também o intervalo entre ciclos, não só produtividade de tarefas. Nota mantida. | ✓ 05/10 |
+| RF24 | Registrar atividade de acolhimento | 2 | Could have | Não comentado isoladamente; mantém a hipótese da equipe. | — |
 
 ### CP7 · Conta e preferências da usuária — OE3
 
-| RF | Requisito | Nota (hipótese) | Classificação | Justificativa (equipe) | Confirmado |
+| RF | Requisito | Nota | Classificação | Justificativa | Confirmado |
 |---|---|:---:|---|---|:---:|
-| RF25 | Criar conta | 4 | Must have | Pré-requisito estrutural de tudo: nada funciona sem conta. | — |
-| RF26 | Recuperar acesso à conta | 3 | Should have | Importante para retenção, mas contornável em um MVP de validação. | — |
-| RF27 | Conhecer a proposta do sistema | 2 | Could have | *Onboarding*; ajuda a adesão, mas não bloqueia o uso. | — |
+| RF25 | Criar conta | 4 | Must have | Pré-requisito óbvio, não comentado isoladamente; mantém a hipótese da equipe. | — |
+| RF26 | Recuperar acesso à conta | 3 | Should have | Não comentado; mantém a hipótese da equipe. | — |
+| RF27 | Conhecer a proposta do sistema | 2 | Could have | Não comentado isoladamente (a educação sobre o ciclo ficou registrada em RF07/RF09); mantém a hipótese da equipe. | — |
+
+### CP novo · Requisito descoberto na reunião {#cp-novo}
+
+| RF | Requisito | Nota | Classificação | Justificativa | Confirmado |
+|---|---|:---:|---|---|:---:|
+| RF28 | Exportar relatório de sintomas para consulta médica | 3 | Should have | Sugestão da própria equipe, validada com entusiasmo pela Dra. Cláudia: relatório exportável de sintomas, intensidade de cólica e frequência, para levar à consulta médica. Ainda não está no catálogo formal de RFs (Seção 8); ver Seção 9.9. | ✓ 05/10 |
 
 ## 9.5 Avaliação de esforço técnico dos RFs
 
 Avaliação exclusiva da equipe, sem dependência da cliente. As notas de **esforço** e
 **complexidade** derivam da leitura de cada requisito; a **lacuna de capacidade** usa a
-confirmação da equipe registrada na Seção 9.3.3.
+confirmação da equipe registrada na Seção 9.3.3. A reunião de 05/10/2026 tratou só de valor
+de negócio; as notas abaixo permanecem inalteradas, com exceção do RF28, novo.
 
 ### CP1 · Registro e análise de sintomas e disposição — OE1
 
@@ -279,74 +291,82 @@ confirmação da equipe registrada na Seção 9.3.3.
 | RF26 | Recuperar acesso à conta | 2 | 2 | 1 | 1,7 | Fluxo de recuperação via e-mail ou *token*. |
 | RF27 | Conhecer a proposta do sistema | 1 | 1 | 2 | 1,3 | Tela estática de *onboarding*. |
 
+### CP novo · Requisito descoberto na reunião
+
+| RF | Requisito | Esforço | Complex. | Lacuna | Consolidado | Justificativa |
+|---|---|:---:|:---:|:---:|:---:|---|
+| RF28 | Exportar relatório de sintomas | 2 | 2 | 2 | 2,0 | Reaproveita a agregação de dados do RF23; soma geração de arquivo exportável/compartilhável. |
+
 ## 9.6 Tabela consolidada de avaliações
 
-Valor de negócio (hipótese, Seção 9.4) e esforço técnico (Seção 9.5) reunidos em um único
-lugar. Esta é a base direta da matriz da Seção 9.7.
+Valor de negócio (Seção 9.4, parte validada na reunião de 05/10) e esforço técnico
+(Seção 9.5) reunidos em um único lugar. Esta é a base direta da matriz da Seção 9.7.
 
-| Código | Requisito | Valor | Justificativa (hipótese) | Esforço | Complex. | Lacuna | Esforço técnico consolidado |
+| Código | Requisito | Valor | Justificativa | Esforço | Complex. | Lacuna | Esforço técnico consolidado |
 |---|---|:---:|---|:---:|:---:|:---:|:---:|
 | RF01 | Consultar sintomas comuns da fase | 3 | Habilita sinalizar sobrecarga (RF02) | 1 | 1 | 2 | 1,3 |
-| RF02 | Sinalizar sobrecarga | 4 | Ataca a sobrecarga diretamente | 2 | 2 | 2 | 2,0 |
-| RF03 | Receber lembrete de registro | 2 | Melhora adesão, não bloqueia | 2 | 2 | 2 | 2,0 |
-| RF04 | Registrar sintomas e disposição | 4 | Dado-fonte de várias *features* | 2 | 2 | 2 | 2,0 |
+| RF02 | Sinalizar sobrecarga | 4 | Validado com a cliente | 2 | 2 | 2 | 2,0 |
+| RF03 | Receber lembrete de registro | 2 | Validado, não bloqueante | 2 | 2 | 2 | 2,0 |
+| RF04 | Registrar sintomas e disposição | 4 | Validado com a cliente | 2 | 2 | 2 | 2,0 |
 | RF05 | Consultar situação atual do ciclo | 2 | Consulta pontual, complementar | 1 | 1 | 2 | 1,3 |
-| RF06 | Registrar início da menstruação | 3 | Dado objetivo de fase | 1 | 1 | 2 | 1,3 |
-| RF07 | Informar características do ciclo | 2 | Configuração pontual | 1 | 1 | 2 | 1,3 |
+| RF06 | Registrar início da menstruação | 4 | Resolve "a grande dúvida" da regularidade | 1 | 1 | 2 | 1,3 |
+| RF07 | Informar características do ciclo | 3 | Parte da educação sobre regularidade | 1 | 1 | 2 | 1,3 |
 | RF08 | Estimar fase do ciclo por sintomas | 2 | Refinamento, não é base do cálculo | 3 | 3 | 2 | 2,7 |
-| RF09 | Recomendar conteúdos sobre o ciclo | 1 | Conteúdo informativo | 1 | 1 | 2 | 1,3 |
-| RF10 | Visualizar calendário do ciclo | 2 | Visualização de apoio | 2 | 2 | 2 | 2,0 |
+| RF09 | Recomendar conteúdos sobre o ciclo | 3 | Reduz autoculpa, validado pela cliente | 1 | 1 | 2 | 1,3 |
+| RF10 | Visualizar calendário do ciclo | 2 | Validado, visualização de apoio | 2 | 2 | 2 | 2,0 |
 | RF11 | Proteger acesso com PIN | 4 | Dado de saúde sensível | 3 | 3 | 3 | 3,0 |
 | RF12 | Aceitar termos de uso | 4 | Pré-condição legal (LGPD) | 1 | 1 | 1 | 1,0 |
-| RF13 | Recomendar tarefas do dia | 4 | Núcleo da adaptação diária | 3 | 3 | 2 | 2,7 |
+| RF13 | Recomendar tarefas do dia | 4 | Validado com a cliente | 3 | 3 | 2 | 2,7 |
 | RF14 | Receber resumo do dia | 2 | Conveniência de visualização | 1 | 1 | 2 | 1,3 |
-| RF15 | Reajustar recomendação do dia | 4 | Diferencial central do produto | 3 | 3 | 2 | 2,7 |
+| RF15 | Reajustar recomendação do dia | 4 | Validado com a cliente | 3 | 3 | 2 | 2,7 |
 | RF16 | Editar tarefa | 4 | CRUD essencial | 1 | 1 | 1 | 1,0 |
 | RF17 | Cadastrar tarefa | 4 | CRUD essencial | 1 | 1 | 1 | 1,0 |
-| RF18 | Adiar tarefa | 4 | Identidade do produto (sem culpa) | 1 | 1 | 1 | 1,0 |
+| RF18 | Adiar tarefa | 4 | Validado com a cliente | 1 | 1 | 1 | 1,0 |
 | RF19 | Excluir tarefa | 3 | Uso menos frequente | 1 | 1 | 1 | 1,0 |
 | RF20 | Concluir tarefa | 4 | Fecha o ciclo da tarefa | 1 | 1 | 1 | 1,0 |
-| RF21 | Sugerir atividades de acolhimento | 2 | Reforço de bem-estar | 2 | 2 | 2 | 2,0 |
-| RF22 | Receber mensagens de acolhimento | 3 | Alma do produto | 1 | 1 | 2 | 1,3 |
-| RF23 | Gerar retrospectiva mensal | 2 | Valor de médio prazo | 2 | 2 | 2 | 2,0 |
+| RF21 | Sugerir atividades de acolhimento | 3 | Defendido pela cliente (atividade física) | 2 | 2 | 2 | 2,0 |
+| RF22 | Receber mensagens de acolhimento | 4 | O que torna o produto "completo" | 1 | 1 | 2 | 1,3 |
+| RF23 | Gerar retrospectiva mensal | 2 | Validado e refinado (intervalo de ciclo) | 2 | 2 | 2 | 2,0 |
 | RF24 | Registrar atividade de acolhimento | 2 | Alimenta a retrospectiva | 1 | 1 | 1 | 1,0 |
 | RF25 | Criar conta | 4 | Pré-requisito estrutural | 2 | 1 | 1 | 1,3 |
 | RF26 | Recuperar acesso à conta | 3 | Importante, mas contornável | 2 | 2 | 1 | 1,7 |
 | RF27 | Conhecer a proposta do sistema | 2 | *Onboarding* | 1 | 1 | 2 | 1,3 |
+| RF28 | Exportar relatório de sintomas | 3 | Novo, validado com entusiasmo pela cliente | 2 | 2 | 2 | 2,0 |
 
 **Distribuição das notas de valor de negócio**
 
 | Classificação | Nota | Quantidade | Requisitos |
 |---|:---:|:---:|---|
-| Must have | 4 | 11 | RF02, RF04, RF11, RF12, RF13, RF15, RF16, RF17, RF18, RF20, RF25 |
-| Should have | 3 | 5 | RF01, RF06, RF19, RF22, RF26 |
-| Could have | 2 | 10 | RF03, RF05, RF07, RF08, RF10, RF14, RF21, RF23, RF24, RF27 |
-| Won't have now | 1 | 1 | RF09 |
+| Must have | 4 | 13 | RF02, RF04, RF06, RF11, RF12, RF13, RF15, RF16, RF17, RF18, RF20, RF22, RF25 |
+| Should have | 3 | 7 | RF01, RF07, RF09, RF19, RF21, RF26, RF28 |
+| Could have | 2 | 8 | RF03, RF05, RF08, RF10, RF14, RF23, RF24, RF27 |
+| Won't have now | 1 | 0 | — |
 
 ## 9.7 Matriz 4 × 4 — valor de negócio × esforço técnico {#matriz-4x4}
 
 O esforço técnico consolidado foi arredondado ao inteiro mais próximo (regra da
 Seção 9.3.4) para posicionar cada requisito. As linhas representam o **valor de negócio**
-(4 no topo) e as colunas o **esforço técnico** (1 à esquerda).
+(4 no topo) e as colunas o **esforço técnico** (1 à esquerda). Cinco requisitos mudaram de
+posição depois da reunião de 05/10 (RF06, RF07, RF09, RF21, RF22); o RF28 entra como novo.
 
 | Valor ↓ / Esforço → | **1** · Baixo | **2** · Moderado | **3** · Alto | **4** · Muito alto |
 |---|---|---|---|---|
-| **4** · Muito alto | **Prioridade máxima**<br>`RF12` `RF16` `RF17` `RF18` `RF20` `RF25` | **Forte candidato ao MVP**<br>`RF02` `RF04` | **Avaliar viabilidade**<br>`RF11` `RF13` `RF15` | **Planejar, reduzir ou decompor**<br>— |
-| **3** · Alto | **Forte candidato ao MVP**<br>`RF01` `RF06` `RF19` `RF22` | **Candidato ao MVP**<br>`RF26` | **Avaliar contexto**<br>— | **Entrega futura**<br>— |
-| **2** · Moderado | **Avaliar oportunidade**<br>`RF05` `RF07` `RF14` `RF24` `RF27` | **Entrega futura**<br>`RF03` `RF10` `RF21` `RF23` | **Entrega futura**<br>`RF08` | **Baixa prioridade**<br>— |
-| **1** · Baixo | **Avaliar oportunidade**<br>`RF09` | **Baixa prioridade**<br>— | **Baixa prioridade**<br>— | **Não priorizar agora**<br>— |
+| **4** · Muito alto | **Prioridade máxima**<br>`RF06` `RF12` `RF16` `RF17` `RF18` `RF20` `RF22` `RF25` | **Forte candidato ao MVP**<br>`RF02` `RF04` | **Avaliar viabilidade**<br>`RF11` `RF13` `RF15` | **Planejar, reduzir ou decompor**<br>— |
+| **3** · Alto | **Forte candidato ao MVP**<br>`RF01` `RF07` `RF09` `RF19` | **Candidato ao MVP**<br>`RF21` `RF26` `RF28` | **Avaliar contexto**<br>— | **Entrega futura**<br>— |
+| **2** · Moderado | **Avaliar oportunidade**<br>`RF05` `RF14` `RF24` `RF27` | **Entrega futura**<br>`RF03` `RF10` `RF23` | **Entrega futura**<br>`RF08` | **Baixa prioridade**<br>— |
+| **1** · Baixo | **Avaliar oportunidade**<br>— | **Baixa prioridade**<br>— | **Baixa prioridade**<br>— | **Não priorizar agora**<br>— |
 
 ### 9.7.1 Leitura dos quadrantes
 
 | Quadrante | Requisitos | Encaminhamento |
 |---|---|---|
-| **Prioridade máxima** (valor 4 · esforço 1) | RF12, RF16, RF17, RF18, RF20, RF25 | Entram no MVP sem discussão: alto valor a custo mínimo. |
+| **Prioridade máxima** (valor 4 · esforço 1) | RF06, RF12, RF16, RF17, RF18, RF20, RF22, RF25 | Entram no MVP sem discussão: alto valor a custo mínimo. |
 | **Forte candidato ao MVP** (valor 4 · esforço 2) | RF02, RF04 | Entram no MVP; custo moderado plenamente justificado. |
-| **Avaliar viabilidade** (valor 4 · esforço 3) | RF11, RF13, RF15 | Exigem decisão explícita da equipe — tratada na [Seção 10.3](../10-mvp/#justificativas-mvp). |
-| **Forte candidato ao MVP** (valor 3 · esforço 1) | RF01, RF06, RF19, RF22 | Entram no MVP: baixo custo e valor alto o bastante. |
-| **Candidato ao MVP** (valor 3 · esforço 2) | RF26 | Decisão de corte; ficou de fora por não ser pré-requisito do fluxo mínimo. |
-| **Avaliar oportunidade** (valor 2 e 1 · esforço 1) | RF05, RF07, RF09, RF14, RF24, RF27 | Baratos, mas de valor complementar: entram quando houver folga de escopo. |
-| **Entrega futura** (valor 2 · esforço 2 e 3) | RF03, RF08, RF10, RF21, RF23 | Adiados para as *releases* seguintes. |
+| **Avaliar viabilidade** (valor 4 · esforço 3) | RF11, RF13, RF15 | Exigem decisão explícita da equipe, tratada na [Seção 10.3](../10-mvp/#justificativas-mvp). |
+| **Forte candidato ao MVP** (valor 3 · esforço 1) | RF01, RF07, RF09, RF19 | Entram no MVP: baixo custo e valor alto o bastante. |
+| **Candidato ao MVP** (valor 3 · esforço 2) | RF21, RF26, RF28 | Decisão caso a caso; RF21 entra (Seção 10.3), RF26 e RF28 ficam de fora por pouco (Seção 10.3.3). |
+| **Avaliar oportunidade** (valor 2 e 1 · esforço 1) | RF05, RF14, RF24, RF27 | Baratos, mas de valor complementar: entram quando houver folga de escopo. |
+| **Entrega futura** (valor 2 · esforço 2 e 3) | RF03, RF08, RF10, RF23 | Adiados para as *releases* seguintes. |
 | **Quadrantes de esforço 4** | — | Nenhum requisito do escopo inicial caiu aqui, o que é coerente com a expectativa declarada na Seção 9.3.2. |
 
 > **A matriz orienta, não decide.** Três requisitos de valor máximo (RF11, RF13 e RF15)
@@ -354,59 +374,59 @@ Seção 9.3.4) para posicionar cada requisito. As linhas representam o **valor d
 > decisão de cada um está registrada e justificada na
 > [Seção 10.3](../10-mvp/#justificativas-mvp).
 
-## 9.8 Registro da validação da priorização
+## 9.8 Validação da priorização com a cliente
 
-Esta subseção registra, de forma transparente, o que de fato ocorreu na tentativa de
-validar as notas de valor de negócio com a cliente.
+Esta subseção registra, de forma transparente, a reunião de validação realizada em
+05/10/2026 e o que ela confirmou, ajustou ou deixou em aberto.
 
-### 9.8.1 Roteiro de validação preparado {#roteiro-validacao}
+### 9.8.1 Roteiro aplicado na reunião {#roteiro-validacao}
 
-O roteiro abaixo foi elaborado e organizado por característica de produto, mas **não chegou
-a ser aplicado** com a Dra. Cláudia Araújo Bottino. As respostas registradas são o que a
-**equipe imagina** que ela responderia — uma estimativa interna, não uma resposta real —
-prontas para serem confrontadas com a cliente assim que o contato ocorrer.
+O roteiro abaixo foi elaborado por característica de produto e efetivamente aplicado com a
+Dra. Cláudia Araújo Bottino em 05/10/2026. Cada bloco traz a pergunta feita e o que ela
+respondeu, em transcrição resumida da reunião.
 
 **CP1 · Registro e análise de sintomas e disposição**
 
 - **Pergunta:** "No dia a dia, o que ajuda mais: a paciente conseguir avisar na hora que
   está sobrecarregada (RF02), ou só registrar o sintoma para olhar depois (RF01, RF04)?
   Alguma dessas você diria que é indispensável já na primeira versão?"
-- **Hipótese revisada:** RF02 e RF04 = 4 · *Must*; RF01 = 3 · *Should*; RF03 = 2 · *Could*.
-- **Imaginado pela equipe — não confirmado:** quem está no limite não vai parar para
-  preencher um diário para olhar depois; precisa de um gesto rápido de "não estou dando
-  conta agora" (RF02). Mas, para sinalizar isso, o registro básico do estado (RF01) precisa
-  existir — por isso sobe para *Should*.
+- **Resposta validada:** RF02 e RF04 = 4 · *Must*; RF01 = 3 · *Should*; RF03 = 2 · *Could*.
+- **Síntese da resposta:** quem está no limite não vai parar para preencher um diário para
+  olhar depois; precisa de um gesto rápido de "não estou dando conta agora" (RF02). A Dra.
+  Cláudia também revisou em detalhe a lista de sintomas do RF04 (Seção 9.9.3). Para sinalizar
+  a sobrecarga, o registro básico do estado (RF01) precisa existir, por isso sobe para
+  *Should*.
 
 **CP2 · Acompanhamento do ciclo menstrual**
 
 - **Pergunta:** "Para estimar a fase do ciclo de uma paciente, é mais confiável ela informar
   a data de início (RF06) ou os sintomas que está sentindo (RF08)? As duas formas são
   igualmente necessárias já no início, ou uma pode vir depois?"
-- **Hipótese revisada:** RF06 = 3 · *Should*; RF08, RF05 e RF07 = 2 · *Could*; RF09 = 1 ·
-  *Won't*.
-- **Imaginado pela equipe — não confirmado:** a data de início (RF06) é um dado objetivo e
-  mais confiável; os sintomas (RF08) variam muito de pessoa para pessoa e funcionam melhor
-  como complemento do que como base do cálculo — por isso desce de *Should* para *Could*.
+- **Resposta validada:** RF06 = 4 · *Must*; RF07 e RF09 = 3 · *Should*; RF05 e RF08 = 2 ·
+  *Could*.
+- **Síntese da resposta:** a Dra. Cláudia chamou a confusão sobre regularidade do ciclo de
+  "a grande dúvida" de praticamente toda paciente, o que elevou o RF06 a *Must* e trouxe o
+  RF07 (educação sobre regularidade) e o RF09 (conteúdo explicativo por fase, para reduzir a
+  autoculpa) para *Should*. O RF08 permanece como refinamento: a data de início é um dado
+  objetivo, e os sintomas variam muito de pessoa para pessoa.
 
 **CP3 · Privacidade dos dados da usuária**
 
 - **Pergunta:** "Proteger o acesso com PIN (RF11) e aceitar os termos de uso (RF12) tratam
   dado de saúde da paciente. Você concorda que isso é obrigatório já na primeira versão? Tem
   algo de privacidade que você trataria como ainda mais urgente?"
-- **Hipótese revisada:** RF11 e RF12 = 4 · *Must*; RF10 = 2 · *Could*.
-- **Imaginado pela equipe — não confirmado:** sem discussão, obrigatório na v1 — dado de
-  saúde é exigência legal (LGPD) e ética antes de ser escolha de escopo. Mas o PIN protege o
-  aparelho; o risco maior está no armazenamento. A equipe trataria criptografia, minimização
-  de dados e transparência como igualmente urgentes (ver a nota de RNF novo na Seção 9.4).
+- **Não foi pauta da reunião clínica.** O roteiro previa essa pergunta, mas a conversa com a
+  Dra. Cláudia não chegou a tratar de segurança de dados; ela se concentrou no conteúdo
+  clínico (Seções 9.8.1, CP1–CP2, CP5). RF10, RF11 e RF12 permanecem como hipótese da equipe
+  (Seção 9.4), por exigência legal e de segurança já definida independentemente da cliente.
 
 **CP4 · Planejamento adaptativo das tarefas**
 
 - **Pergunta:** "A recomendação diária de tarefas (RF13) é o coração do produto, na sua
   visão? E o resumo do dia (RF14): indispensável ou só uma conveniência?"
-- **Hipótese revisada:** RF13 = 4 · *Must*; RF14 = 2 · *Could*.
-- **Imaginado pela equipe — não confirmado:** a promessa central do produto é "me ajuda a
-  organizar o dia respeitando minha energia". Sem RF13 não existe produto. RF14 é
-  conveniência: reforça a sensação de dever cumprido, mas é possível lançar sem ele.
+- **Resposta validada:** RF13 = 4 · *Must*; RF14 = 2 · *Could* (hipótese mantida).
+- **Síntese da resposta:** o fluxo de tarefas com prioridade, prazo e energia foi apresentado
+  e aprovado sem objeções. O RF14 não foi comentado isoladamente.
 
 **CP5 · Gestão acolhedora da carga diária**
 
@@ -414,42 +434,76 @@ prontas para serem confrontadas com a cliente assim que o contato ocorrer.
   cadastrar/editar/concluir (RF16, RF17, RF20), adiar sem culpa (RF18), excluir (RF19),
   sugerir e receber mensagens de acolhimento (RF21, RF22) — quais têm que estar prontas já na
   primeira versão, e quais podem vir depois?"
-- **Hipótese revisada:** RF15, RF16, RF17, RF18 e RF20 = 4 · *Must*; RF19 = 3 · *Should*;
-  RF22 = 3 · *Should*; RF21 = 2 · *Could*.
-- **Imaginado pela equipe — não confirmado:** o laço mínimo que já entrega valor é cadastrar
-  (RF17), concluir (RF20) e reajustar (RF15). Editar (RF16) também é *Must*: todo mundo erra
-  ao digitar. Adiar sem culpa (RF18) é *Must* mesmo sendo "só um status", porque é a
-  identidade do produto. Excluir (RF19) é menos frequente, fica *Should*. As mensagens de
-  acolhimento (RF22) sobem para *Should* — sem isso o produto vira só mais uma lista de
-  tarefas; RF21 pode seguir *Could* se o tom acolhedor já aparecer no resto da interface.
+- **Resposta validada:** RF15, RF18 e RF22 = 4 · *Must*; RF21 = 3 · *Should*; RF16, RF17 e
+  RF20 seguem hipótese em 4 · *Must*; RF19 segue hipótese em 3 · *Should*.
+- **Síntese da resposta:** "eu acho importante", disse a Dra. Cláudia ao endossar o reajuste
+  automático (RF15). A possibilidade de adiar sem culpa (RF18) foi confirmada como parte
+  desse fluxo. Ela defendeu com força sugestões de atividade física e exercícios de
+  respiração como parte do produto ("atividade física é remédio"), o que elevou o RF21 de
+  *Could* para *Should*. As mensagens interativas de acolhimento ("você tá melhor hoje?")
+  foram destacadas como o que torna o produto completo, não só mais uma lista de tarefas, o
+  que elevou o RF22 de *Should* para *Must*. RF16, RF17, RF19 e RF20 (CRUD básico) não foram
+  comentados isoladamente.
 
 **CP6 · Reconhecimento de ritmo sustentável**
 
 - **Pergunta:** "A retrospectiva mensal (RF23) e o registro de atividades de acolhimento
   (RF24) fariam falta desde o início, ou é algo que pode vir numa versão futura?"
-- **Hipótese revisada:** RF23 e RF24 = 2 · *Could* (quase "próxima versão").
-- **Imaginado pela equipe — não confirmado:** na v1 a paciente mal tem um mês de dados para
-  olhar; a retrospectiva teria pouco a mostrar. Ganha valor quando já existe histórico e
-  retenção — ótimo material para a v2.
+- **Resposta validada:** RF23 = 2 · *Could*, refinado; RF24 = 2 · *Could* (hipótese mantida).
+- **Síntese da resposta:** na v1 a paciente mal tem um mês de dados para olhar; a
+  retrospectiva teria pouco a mostrar. A Dra. Cláudia sugeriu incluir também o intervalo
+  entre ciclos na retrospectiva, não só a produtividade de tarefas, o que refina o escopo do
+  RF23 sem mudar sua nota.
 
 **CP7 · Conta e preferências da usuária**
 
 - **Pergunta:** "Criar conta (RF25) é claramente pré-requisito. Já recuperar acesso (RF26) e
   conhecer a proposta do sistema (RF27): você trataria como essenciais no MVP ou como algo
   que dá para simplificar no início?"
-- **Hipótese revisada:** RF25 = 4 · *Must*; RF26 = 3 · *Should*; RF27 = 2 · *Could*.
-- **Imaginado pela equipe — não confirmado:** criar conta é pré-requisito óbvio, *Must*.
-  Recuperar acesso quase vira *Must* (dado de saúde trancado é sério), mas como um *reset*
-  simples resolve, fica *Should*. Conhecer a proposta pode ser uma tela simples ou até pulada
-  no início, mas um mínimo de contexto ajuda na adesão, dado o tema sensível.
+- **Não foi pauta da reunião clínica.** RF25, RF26 e RF27 permanecem como hipótese da equipe
+  (Seção 9.4): criar conta como pré-requisito óbvio, recuperar acesso como *Should* por ser
+  contornável, e conhecer a proposta como *Could*.
 
-### 9.8.2 Registro real do que ocorreu
+### 9.8.2 Requisito novo e decisões de escopo {#descobertas-reuniao}
+
+Além de validar notas de valor de negócio, a reunião trouxe um requisito novo e esclareceu
+os limites do escopo do produto.
+
+**RF28: exportar relatório de sintomas.** Sugestão da própria equipe, detalhada pela Dra.
+Cláudia: um relatório com o histórico de sintomas, intensidade de cólica e frequência,
+exportável para levar a uma consulta médica. Boa relação valor/esforço (Seção 9.7), mas não
+é essencial ao problema central (sobrecarga executiva); por isso ficou de fora do MVP
+(Seção 10.1.2) como forte candidato à próxima *release*. Ainda não está formalizado no
+catálogo oficial de RFs (Seção 8).
+
+**Fora de escopo: sugestões voltadas à fertilidade.** A Dra. Cláudia sugeriu
+funcionalidades como alerta de período fértil, lembrete de vacina HPV e de exame preventivo.
+A equipe esclareceu, na própria reunião, que o produto propositalmente foge do foco em
+fertilidade, comum nos concorrentes, para manter o foco em produtividade e sobrecarga
+executiva. Registrado como decisão de escopo, não como pendência.
+
+**Fora do MVP: alertas de saúde cruzando sintomas.** A equipe mencionou um aplicativo (Flo)
+que cruza sintomas registrados com possíveis quadros clínicos (por exemplo, indícios de SOP
+ou contraindicação de estrogênio em enxaqueca com aura). A Dra. Cláudia validou a ideia com
+exemplos clínicos reais, mas esse tipo de alerta exige validação clínica e jurídica adicional
+antes de virar requisito. Não entra no catálogo agora; fica registrado como tema de pesquisa
+para versões futuras.
+
+### 9.8.3 Refinamento da lista de sintomas do RF04 {#refinamento-rf04}
+
+A Dra. Cláudia revisou a lista de sintomas em detalhe: separar "cansada" de "desânimo" (são
+sensações diferentes), permitir "triste" e "chorosa" como opções distintas, manter "ansiosa"
+e "bem/com energia". Isso não muda a nota de negócio do RF04 (já era *Must*), mas deve
+orientar o conteúdo da tela quando o requisito for implementado.
+
+### 9.8.4 Registro real do que ocorreu
 
 | Item | Registro |
 |---|---|
-| **Quem participou** | Ninguém. O contato com a Dra. Cláudia Araújo Bottino não foi confirmado a tempo desta entrega. |
-| **Quando ocorreu** | Não ocorreu. Tentativas de contato até 28–29/09/2026, sem retorno. |
-| **RFs confirmados sem alteração** | Nenhum. Não houve validação real. |
-| **RFs com nota ajustada** | Não aplicável. As notas da Seção 9.4 são hipótese revisada da equipe, e não ajuste decorrente de validação. |
-| **Divergências registradas** | Não aplicável. |
-| **Próximos passos** | Agendar entrevista real com a Dra. Cláudia — ou com outra representante indicada pelo LabLivre — assim que possível; atualizar esta tabela com a validação real e sinalizar a pendência ao professor e à monitoria. |
+| **Quem participou** | Pela equipe: Ana Luisa, Arthur Palhares, Luana, Tiago e Pedro Ian. Pela cliente: Dra. Cláudia Araújo Bottino (ginecologista). |
+| **Quando ocorreu** | 05/10/2026, 15h00, 45 minutos, chamada de vídeo com transcrição automática. |
+| **RFs confirmados sem alteração de nota** | RF02, RF03, RF04, RF10, RF13, RF15, RF18, RF23. |
+| **RFs com nota ajustada** | RF06 (*Should* → *Must*), RF07 (*Could* → *Should*), RF09 (*Won't* → *Should*), RF21 (*Could* → *Should*), RF22 (*Should* → *Must*). |
+| **Requisito novo** | RF28, exportar relatório de sintomas (Seção 9.8.2), ainda não formalizado no catálogo oficial. |
+| **Divergências registradas** | A cliente sugeriu funcionalidades de fertilidade e alertas clínicos cruzando sintomas; a equipe optou por manter o escopo em produtividade e sobrecarga executiva (Seção 9.8.2). |
+| **Próximos passos** | Fechar a lista de RFs do MVP com o professor e a monitoria; formalizar o RF28 no catálogo (Seção 8); nova reunião com a Dra. Cláudia prevista para cerca de 4 semanas depois (final de outubro ou início de novembro de 2026) para validar o MVP consolidado (Seção 10.4). |
