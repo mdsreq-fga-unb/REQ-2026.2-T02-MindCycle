@@ -624,7 +624,7 @@
 
 <section>
       <div class="sec-head"><span class="sec-mark">04</span><h2>Avaliação de valor de negócio</h2></div>
-      <p class="sec-desc">Reunião realizada em 05/10/2026 com a Dra. Cláudia Araújo Bottino (ginecologista, cliente). Os RFs marcados como confirmados foram discutidos diretamente na reunião; os demais não entraram na conversa e mantêm a hipótese da equipe (Seção 5 do histórico anterior), ainda pendente de validação.</p>
+      <p class="sec-desc">Reunião realizada em 05/10/2026 com a Dra. Cláudia Araújo Bottino (ginecologista, cliente). Os RFs marcados como confirmados foram discutidos diretamente na reunião; os demais não entraram na conversa e mantêm a hipótese da equipe, ainda pendente de validação.</p>
 
       <div class="cp-block">
         <div class="cp-head"><span class="cp-id">CP1</span><h3>Registro e análise de sintomas e disposição</h3><span class="cp-oe">OE1</span></div>
@@ -749,6 +749,11 @@
       <div class="decision-card">
         <h4><code>Refinamento</code>Lista de sintomas do RF04</h4>
         <p>A Dra. Cláudia revisou a lista de sintomas em detalhe: separar "cansada" de "desânimo" (são sensações diferentes), permitir "triste" e "chorosa" como opções distintas, manter "ansiosa" e "bem/com energia". Isso não muda a nota de negócio do RF04 (já era Must), mas deve orientar o conteúdo da tela quando o RF for implementado.</p>
+      </div>
+
+      <div class="decision-card">
+        <h4><code>RNF-novo</code>Criptografia, minimização e transparência dos dados</h4>
+        <p>Levantado pela equipe antes da reunião: o PIN (RF11) protege o aparelho, mas o risco maior está no armazenamento. Criptografia dos dados em repouso, minimização (só guardar o necessário) e transparência sobre o que é coletado deveriam ter a mesma urgência que o PIN. Hoje isso não está coberto por nenhum RNF explícito do catálogo (RNF03 só cobre controle de acesso). Classificado como obrigatório proposto na Seção 11, ainda pendente de validação formal.</p>
       </div>
     </section>
 
@@ -996,7 +1001,7 @@
       <tr><td class="rf-id">RNF09</td><td>PIN por sequência de toques em pétalas</td><td>Restrição de design</td><td><span class="tag could hyp">Evolutivo</span></td><td>Só volta a valer quando RF11 evoluir do PIN numérico simples para o gesto de pétalas.</td></tr>
       <tr><td class="rf-id">RNF10</td><td>Interface funciona em celular e computador</td><td>Suportabilidade</td><td><span class="tag must hyp">Obrigatório</span></td><td>Transversal, vale para todo RF do MVP.</td></tr>
       <tr><td class="rf-id">RNF11</td><td>Contraste legível (WCAG 2.1 AA)</td><td>Usabilidade/acessibilidade</td><td><span class="tag must hyp">Obrigatório</span></td><td>Adição da equipe: o enunciado pede para não adiar acessibilidade só porque é mais difícil para a equipe.</td></tr>
-      <tr><td class="rf-id">RNF-novo</td><td>Criptografia, minimização e transparência dos dados</td><td>Segurança</td><td><span class="tag must hyp">Obrigatório (proposto)</span></td><td>Levantado pela equipe na Seção 4 original; ainda não é item formal do catálogo, precisa ser validado.</td></tr>
+      <tr><td class="rf-id">RNF-novo</td><td>Criptografia, minimização e transparência dos dados</td><td>Segurança</td><td><span class="tag must hyp">Obrigatório (proposto)</span></td><td>Levantado pela equipe (Seção 5); ainda não é item formal do catálogo, precisa ser validado.</td></tr>
     </tbody>
   </table></div>
 </section>
