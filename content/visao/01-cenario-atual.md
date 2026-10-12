@@ -7,11 +7,24 @@ resumo: "Quem é o cliente, em que contexto o problema aparece, quais são suas 
 
 ## 1.1 Identificação do Cliente/Parceiro
 
+**Cliente principal**
+
+- **Nome:** Dra. Cláudia Araújo Bottino
+- **Tipo:** Profissional de saúde (ginecologista)
+- **Forma de contato:** Reunião mensal de revisão por Google Meet e, sob demanda, revisão de critérios de aceitação, textos e recomendações relacionados à saúde
+- **Vínculo com o projeto:** A cliente é responsável pela priorização final do backlog e pela aceitação formal das funcionalidades, e somente ela pode aprovar ou reprovar declarações e recomendações relacionadas à saúde, conforme a [Seção 7.2](../07-interacao-equipe-cliente/#autoridade-decisória).
+
+**Usuária representativa**
+
+- **Nome:** Daniela Soares
+- **Forma de contato:** Reunião mensal de revisão por Google Meet, separada da reunião com a cliente
+- **Vínculo com o projeto:** Fornece a perspectiva de uso sobre usabilidade, linguagem, privacidade e experiência com a solução, podendo reprovar uma funcionalidade nesses aspectos para que o item retorne ao backlog.
+
+**Parceiro institucional**
+
 - **Nome:** Laboratório de Competência em Software Livre (LabLivre)
 - **Tipo:** Laboratório Avançado de Produção, Pesquisa e Inovação em Software Livre
-- **Representante:** Daniela Soares
-- **Forma de contato:** Reuniões periódicas por videoconferência, e-mail e canal de mensagens instantâneas
-- **Vínculo com o projeto:** O cliente principal é responsável por fornecer a visão do negócio, validar as decisões e aprovar as entregas do projeto.
+- **Vínculo com o projeto:** Sua rede, junto à comunidade acadêmica da universidade, é o meio de recrutamento das usuárias representativas, conforme a [Seção 7.2](../07-interacao-equipe-cliente/#participação-da-cliente-e-da-usuária-representativa).
 
 ## 1.2 Introdução ao Negócio e Contexto
 
@@ -123,10 +136,10 @@ pessoas.
 | Stakeholder | Relação com a Solução | Interesse Principal | Poder decisório |
 |---|---|---|---|
 | Mulher profissional de tecnologia | Usuária direta e principal beneficiária da solução | Planejar e organizar suas tarefas considerando as variações do ciclo menstrual, reduzindo sobrecarga e culpa punitiva | Alto |
-| Daniela Soares (representante do LabLivre) | Representante do cliente; valida decisões e aprova as entregas | Assegurar que a solução esteja alinhada aos princípios institucionais de inclusão e permanência de mulheres na tecnologia | Alto |
+| Daniela Soares (usuária representativa) | Usuária representativa; avalia usabilidade, linguagem, privacidade e experiência de uso e pode reprovar funcionalidades nesses aspectos (Seção 7) | Assegurar que a solução esteja alinhada aos princípios institucionais de inclusão e permanência de mulheres na tecnologia | Alto |
 | Gestor de equipe | Não é usuário do sistema, mas define as demandas e os prazos sobre os quais a usuária atua | Manter previsibilidade de entrega da equipe | Alto |
 | Equipe de desenvolvimento | Responsável pela construção | Entregar uma aplicação que atenda às necessidades reais do cliente | Alto |
-| Profissional de Saúde (cliente) | Cliente da área de saúde; valida a correção clínica das informações sobre ciclo, sintomas e fases e das recomendações e participa da aceitação das entregas de conteúdo sensível (Seção 7) | Garantir que as informações sobre o ciclo e as recomendações sejam apresentadas de forma clinicamente correta e responsável | Alto |
+| Dra. Cláudia Araújo Bottino (cliente profissional de saúde) | Cliente principal; valida a correção clínica das informações sobre ciclo, sintomas e fases e das recomendações, define a priorização final do backlog e realiza a aceitação formal das funcionalidades (Seção 7) | Garantir que as informações sobre o ciclo e as recomendações sejam apresentadas de forma clinicamente correta e responsável | Alto |
 
 {{< figura src="figura3-mapa-stakeholders.png" numero="3"
           alt="Mapa de stakeholders posicionados por poder decisório e interesse, com os vínculos de colaboração, dependência e conflito potencial entre eles."
