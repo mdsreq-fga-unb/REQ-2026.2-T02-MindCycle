@@ -52,8 +52,8 @@ A equipe de desenvolvimento será composta por:
 
 O trabalho é organizado em iterações de duas semanas, cadência fixa alinhada ao calendário
 da disciplina e compatível com as iterações curtas do OpenUP. O Kanban gerencia o fluxo de
-trabalho dentro e entre as iterações por meio do quadro visual e dos limites de trabalho em
-progresso (WIP). Cada iteração começa com uma reunião de planejamento e termina com uma
+trabalho dentro e entre as iterações por meio do quadro visual. Cada iteração começa com
+uma reunião de planejamento e termina com uma
 revisão e uma retrospectiva, permitindo inspeção e adaptação contínuas. O período de cada
 iteração consta do [cronograma da Seção 6](../06-cronograma-e-entregas/).
 
