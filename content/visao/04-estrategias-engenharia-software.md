@@ -53,7 +53,8 @@ A Engenharia de Requisitos tem maior intensidade na Concepção e na Elaboraçã
 escopo do MVP é delimitado, mas a disciplina não se encerra quando a Construção começa.
 Novos detalhes de requisitos, ajustes de critérios de aceitação e mudanças de prioridade
 continuam sendo tratados nas Releases 3 e 4, à medida que os incrementos funcionais são
-construídos e validados com o LabLivre e com as usuárias representativas. A Transição pode
+construídos e validados com a cliente profissional de saúde e com as usuárias
+representativas. A Transição pode
 inclusive reabrir requisitos, caso a validação de aceitação identifique lacunas.
 
 ## 4.3 Uso do Quadro Kanban
@@ -66,7 +67,7 @@ projeto, sem as demais práticas do método (WIP, políticas formais de fluxo, m
   para entrar em desenvolvimento), *A Fazer* (itens que atendem ao Definition of Ready,
   definido na [Seção 7.3](../07-interacao-equipe-cliente/#73-processo-de-validação)), *Em
   Desenvolvimento*, *Em Verificação* (revisão de código e testes), *Em Validação*
-  (validação com a representante do cliente ou com usuárias representativas) e
+  (validação com a cliente profissional de saúde ou com usuárias representativas) e
   *Concluído* (itens que atendem ao Definition of Done). Um item bloqueado não muda de
   coluna: recebe uma marcação visual de impedimento sobre o cartão, permanecendo na coluna
   em que estava até que o impedimento seja resolvido, o que é acompanhado na reunião
@@ -76,7 +77,7 @@ projeto, sem as demais práticas do método (WIP, políticas formais de fluxo, m
   início ou do fim de uma iteração. A cadência quinzenal, definida na
   [Seção 7.2](../07-interacao-equipe-cliente/#72-comunicação), não fragmenta esse fluxo em
   lotes fechados: ela é o momento em que o backlog é reabastecido e priorizado e em que os
-  itens concluídos são revisados com a representante do cliente, sem interromper cartões
+  itens concluídos são revisados com a cliente profissional de saúde, sem interromper cartões
   que estejam em andamento entre uma iteração e outra. O planejamento, o monitoramento e o
   fechamento de cada iteração são conduzidos pelo OpenUP; o quadro apenas torna esse
   andamento visível para toda a equipe.
@@ -121,7 +122,7 @@ cenário de aplicação do OpenUP, que detalha os requisitos progressivamente ao
 iterações, evitando a especificação excessiva antecipada e elaborando os detalhes em
 colaboração direta com os stakeholders no momento da implementação. Combinado ao
 reabastecimento contínuo do backlog no quadro Kanban, isso permite ajustar o escopo a
-cada iteração, incorporando o feedback dos pesquisadores do LabLivre e das usuárias
+cada iteração, incorporando o feedback da cliente profissional de saúde e das usuárias
 representativas dos segmentos definidos na
 [Seção 1.7](../01-cenario-atual/#17-segmentação-de-clientes). Isso é decisivo em
 características cujo comportamento correto não pode ser deduzido antecipadamente, como o

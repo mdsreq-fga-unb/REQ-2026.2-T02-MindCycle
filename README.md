@@ -3,8 +3,8 @@
 Repositório de projeto da disciplina de **Requisitos de Software (REQ) — Turma 02 — 2026.2**.
 
 **MindCycle** é um aplicativo de organização de tarefas que adapta o planejamento diário
-às variações de energia, foco e disposição ao longo do ciclo menstrual, desenvolvido para o
-**Laboratório de Competência em Software Livre (LabLivre)** da FCTE/UnB.
+às variações de energia, foco e disposição ao longo do ciclo menstrual, desenvolvido em
+parceria com o **Laboratório de Competência em Software Livre (LabLivre)** da FCTE/UnB.
 
 📄 **Documentação publicada:** <https://mdsreq-fga-unb.github.io/REQ-2026.2-T02-MindCycle/>
 

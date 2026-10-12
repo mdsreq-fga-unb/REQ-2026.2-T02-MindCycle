@@ -9,9 +9,9 @@ Esta página declara os requisitos da [Seção 8](../../../visao/08-requisitos-d
 
 | Identificador | Meta | Indicador | Referência | Resultado esperado | Prazo | OE |
 |---|---|---|---|---|---|:--:|
-| RNEG-01 | Melhorar a percepção dos sintomas durante todo o ciclo menstrual | a definir com a LabLivre | a definir com a LabLivre | a definir com a LabLivre | a definir com a LabLivre | OE1 |
-| RNEG-02 | Reduzir a sobrecarga executiva causada pelo planejamento de tarefas que desconsidera a fase do ciclo menstrual | a definir com a LabLivre | a definir com a LabLivre | a definir com a LabLivre | a definir com a LabLivre | OE2 |
-| RNEG-03 | Reduzir a sobrecarga executiva na execução das tarefas diárias, ajustando-as à disposição real da usuária | a definir com a LabLivre | a definir com a LabLivre | a definir com a LabLivre | a definir com a LabLivre | OE3 |
+| RNEG-01 | Melhorar a percepção dos sintomas durante todo o ciclo menstrual | a definir com a cliente | a definir com a cliente | a definir com a cliente | a definir com a cliente | OE1 |
+| RNEG-02 | Reduzir a sobrecarga executiva causada pelo planejamento de tarefas que desconsidera a fase do ciclo menstrual | a definir com a cliente | a definir com a cliente | a definir com a cliente | a definir com a cliente | OE2 |
+| RNEG-03 | Reduzir a sobrecarga executiva na execução das tarefas diárias, ajustando-as à disposição real da usuária | a definir com a cliente | a definir com a cliente | a definir com a cliente | a definir com a cliente | OE3 |
 
 RNEG-04 — Restrição externa: atender à LGPD (Lei nº 13.709/2018) no tratamento de dados pessoais sensíveis de saúde.
 

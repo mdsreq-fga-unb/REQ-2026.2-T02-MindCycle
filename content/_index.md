@@ -13,7 +13,7 @@ description: "Documentação do produto e do projeto MindCycle — Requisitos de
     <p>
       Aplicativo de organização de tarefas que adapta o planejamento diário às
       variações de energia, foco e disposição ao longo do ciclo menstrual,
-      desenvolvido para o <strong>Laboratório de Competência em Software Livre
+      desenvolvido em parceria com o <strong>Laboratório de Competência em Software Livre
       (LabLivre)</strong> da FCTE/UnB.
     </p>
   </div>
