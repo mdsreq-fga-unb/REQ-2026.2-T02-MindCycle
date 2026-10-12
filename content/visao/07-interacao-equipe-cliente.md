@@ -24,7 +24,7 @@ A equipe de desenvolvimento será composta por:
 
 | Papel | Descrição | Responsável |
 |---|---|---|
-| Gerente de Projeto<br>Analista de Requisitos<br>(Gestor do Fluxo Kanban) | Coordena o planejamento e o acompanhamento das iterações, controla prazos e entregas e mantém a comunicação com a representante do cliente. Como analista de requisitos, conduz entrevistas e workshops, redige as histórias de usuário e mantém a matriz de rastreabilidade entre objetivos específicos, características de produto e histórias. | Ana Luisa Vieira Nunes |
+| Gerente de Projeto<br>Analista de Requisitos<br>(Gestor do Fluxo Kanban) | Coordena o planejamento e o acompanhamento das iterações, controla prazos e entregas e mantém a comunicação com a cliente. Como analista de requisitos, conduz entrevistas e workshops, redige as histórias de usuário e mantém a matriz de rastreabilidade entre objetivos específicos, características de produto e histórias. | Ana Luisa Vieira Nunes |
 | Analista de Requisitos<br>Analista de Dados | Participa da elicitação e da declaração dos requisitos, escrevendo histórias de usuário e seus critérios de aceitação. Como analista de dados, modela o histórico de estado, sintomas e fases do ciclo que sustenta o planejamento adaptativo das tarefas (CP4) e as recomendações personalizadas apresentadas à usuária. | Allan Kelvin Dias Gomes Monteiro |
 | Gerente de Projeto<br>Desenvolvedor Backend<br>(Responsável pelo Backlog) | Divide a coordenação do projeto, facilitando as reuniões de cadência e a gestão do fluxo no quadro Kanban, e removendo impedimentos. Como desenvolvedor backend, implementa as regras do planejamento adaptativo das tarefas (CP4), o reajuste da carga diária por disposição (CP5) e os mecanismos de cifragem e controle de acesso dos dados sensíveis (CP3). | Tiago Santos Bittencourt |
 | Desenvolvedor Frontend<br>Analista de QA | Implementa as telas de registro de estado, de planejamento diário e da retrospectiva mensal (CP6). Como analista de QA, escreve e mantém os testes de aceitação automatizados que a equipe adota para definir formalmente quando uma história está concluída. | Gustavo Silva Rodrigues |
@@ -80,7 +80,8 @@ iteração consta do [cronograma da Seção 6](../06-cronograma-e-entregas/).
 
 ### Participação da Cliente e da Usuária Representativa
 
-A cliente principal será uma profissional de saúde, com nome a definir. Ela participará de
+A cliente principal será a Dra. Cláudia Araújo Bottino, profissional de saúde
+(ginecologista). Ela participará de
 uma reunião mensal de revisão por Google Meet, na qual avaliará as entregas, confirmará a
 priorização do backlog e analisará os conteúdos relacionados à saúde. Sob demanda, também
 revisará critérios de aceitação, textos e recomendações dessa natureza antes da aceitação

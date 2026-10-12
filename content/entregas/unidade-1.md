@@ -44,13 +44,13 @@ e conduzir o Planejamento da Próxima Release**
 - [Lições aprendidas](../../visao/14-licoes-aprendidas/#141-unidade-1) registradas na Seção 14.1;
 - Backlog da Release 2 definido e priorizado no Notion.
 
-### Validação do cliente
+### Validação com os stakeholders
 
-- **Iteração 1:** Revisão da Iteração, por Google Meet, com a representante do LabLivre, para
+- **Iteração 1:** Revisão da Iteração, por Google Meet, com Daniela Soares, para
   confirmar a caracterização do problema, o mapa de stakeholders e os segmentos de clientes.
-- **Iteração 2:** Revisão da Iteração com a representante do LabLivre, para aprovação do
+- **Iteração 2:** Revisão da Iteração com Daniela Soares, para aprovação do
   objetivo geral, dos objetivos específicos e das características de produto.
-- **Fechamento:** sessão de Refinamento do Product Backlog com a representante do LabLivre,
+- **Fechamento:** sessão de Refinamento do Product Backlog com Daniela Soares,
   para revisar o Documento de Visão v1.0 e priorizar os requisitos de alto nível da
   Release 2.
 

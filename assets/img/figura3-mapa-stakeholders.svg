@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Figura 3 do Documento de Visão: mapa de stakeholders (Seção 1.6).
+
+  Fonte editável de assets/img/figura3-mapa-stakeholders.png. Depois de editar
+  este arquivo, gere novamente o PNG a partir da raiz do repositório:
+
+    magick -density 96 -background white assets/img/figura3-mapa-stakeholders.svg \
+      -flatten -strip assets/img/figura3-mapa-stakeholders.png
+
+  Os papéis representados seguem as Seções 1.1, 1.6 e 7.2.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1254" height="1254" viewBox="0 0 1254 1254"
+     font-family="Poppins, 'Noto Sans', sans-serif">
+  <defs>
+    <marker id="aN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0.6 L10,5 L0,9.4 Z" fill="#3B2A7A"/>
+    </marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0.6 L10,5 L0,9.4 Z" fill="#EE5FA7"/>
+    </marker>
+    <!-- Pessoa genérica, centrada na origem, usada nos ícones dos stakeholders. -->
+    <g id="pessoa" fill="none" stroke="#E7469B" stroke-width="2.4" stroke-linecap="round">
+      <circle cx="0" cy="-12" r="9"/>
+      <path d="M -18 20 C -17 2, 17 2, 18 20"/>
+    </g>
+  </defs>
+
+  <rect width="1254" height="1254" fill="#FFFFFF"/>
+
+  <!-- Área do gráfico, quadrantes e eixos -->
+  <rect x="120" y="110" width="992" height="930" rx="12" fill="#FBF8FF"/>
+  <line x1="593" y1="118" x2="593" y2="1040" stroke="#CFC7E0" stroke-width="1.6" stroke-dasharray="7 6"/>
+  <line x1="120" y1="570" x2="1112" y2="570" stroke="#CFC7E0" stroke-width="1.6" stroke-dasharray="7 6"/>
+  <line x1="112" y1="1045" x2="112" y2="112" stroke="#2A1A63" stroke-width="2.8" stroke-linecap="round" marker-end="url(#aN)"/>
+  <line x1="112" y1="1045" x2="1080" y2="1045" stroke="#2A1A63" stroke-width="2.8" stroke-linecap="round" marker-end="url(#aN)"/>
+
+  <g fill="#2A1A63" font-weight="700" font-size="23">
+    <text x="12" y="46">PODER</text>
+    <text x="12" y="78">DECISÓRIO</text>
+    <text x="1100" y="1053">INTERESSE</text>
+  </g>
+  <g fill="#2A1A63" font-size="21">
+    <text x="88" y="192" text-anchor="end">Alto</text>
+    <text x="95" y="966" text-anchor="end">Baixo</text>
+    <text x="215" y="1080" text-anchor="middle">Baixo</text>
+    <text x="975" y="1080" text-anchor="middle">Alto</text>
+  </g>
+
+  <g fill="#EDE4F7">
+    <rect x="219" y="113" width="276" height="70" rx="10"/>
+    <rect x="725" y="113" width="289" height="70" rx="10"/>
+    <rect x="219" y="965" width="276" height="70" rx="10"/>
+    <rect x="723" y="963" width="289" height="70" rx="10"/>
+  </g>
+  <g fill="#2A1A63" font-weight="700" font-size="19" text-anchor="middle">
+    <text x="357" y="143">ALTO PODER</text>
+    <text x="357" y="170">BAIXO INTERESSE</text>
+    <text x="869" y="143">ALTO PODER</text>
+    <text x="869" y="170">ALTO INTERESSE</text>
+    <text x="357" y="995">BAIXO PODER</text>
+    <text x="357" y="1022">BAIXO INTERESSE</text>
+    <text x="867" y="993">BAIXO PODER</text>
+    <text x="867" y="1020">ALTO INTERESSE</text>
+  </g>
+
+  <!-- Vínculos entre os stakeholders e o sistema -->
+  <g fill="none" stroke-width="2.4" stroke-linecap="round">
+    <!-- Conflito potencial: gestor de equipe e mulher profissional de tecnologia -->
+    <line x1="338" y1="281" x2="626" y2="265" stroke="#EE5FA7" stroke-dasharray="8 6" marker-start="url(#aP)" marker-end="url(#aP)"/>
+    <!-- Dependência: gestor de equipe e sistema -->
+    <line x1="340" y1="342" x2="462" y2="488" stroke="#3B2A7A" stroke-dasharray="8 6" marker-start="url(#aN)" marker-end="url(#aN)"/>
+    <!-- Vínculo forte: mulher profissional de tecnologia e Daniela Soares -->
+    <line x1="752" y1="262" x2="816" y2="262" stroke="#3B2A7A" marker-start="url(#aN)" marker-end="url(#aN)"/>
+    <!-- Vínculo forte: mulher profissional de tecnologia e sistema -->
+    <line x1="690" y1="400" x2="690" y2="494" stroke="#3B2A7A" marker-start="url(#aN)" marker-end="url(#aN)"/>
+    <!-- Vínculo forte: Daniela Soares e sistema -->
+    <line x1="784" y1="500" x2="852" y2="434" stroke="#3B2A7A" marker-start="url(#aN)" marker-end="url(#aN)"/>
+    <!-- Vínculo forte: profissional de saúde (cliente) e sistema -->
+    <line x1="784" y1="528" x2="1012" y2="414" stroke="#3B2A7A" marker-start="url(#aN)" marker-end="url(#aN)"/>
+    <!-- Vínculo forte: equipe de desenvolvimento e sistema -->
+    <line x1="502" y1="646" x2="502" y2="698" stroke="#3B2A7A" marker-start="url(#aN)" marker-end="url(#aN)"/>
+    <path d="M 658 644 Q 622 705 578 744" stroke="#3B2A7A" marker-end="url(#aN)"/>
+    <!-- Dependência: equipe de desenvolvimento e pesquisadores do LabLivre -->
+    <line x1="580" y1="790" x2="790" y2="836" stroke="#3B2A7A" stroke-dasharray="8 6" marker-start="url(#aN)" marker-end="url(#aN)"/>
+  </g>
+
+  <!-- Sistema -->
+  <rect x="448" y="500" width="330" height="138" rx="14" fill="#FDE9F2" stroke="#F3BBD7" stroke-width="2"/>
+  <g fill="none" stroke="#E7469B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="470" y="545" width="44" height="50" rx="5"/>
+    <line x1="480" y1="539" x2="480" y2="551"/>
+    <line x1="504" y1="539" x2="504" y2="551"/>
+    <path d="M 478 563 l 4 4 l 8 -8"/>
+    <line x1="495" y1="563" x2="506" y2="563"/>
+    <path d="M 478 579 l 4 4 l 8 -8"/>
+    <line x1="495" y1="579" x2="506" y2="579"/>
+  </g>
+  <g fill="#1F1640" font-size="19" text-anchor="middle">
+    <text x="652" y="545">Sistema organizador</text>
+    <text x="652" y="572">de tarefas de acordo</text>
+    <text x="652" y="599">com o ciclo menstrual</text>
+  </g>
+
+  <!-- Stakeholders -->
+  <g fill="#FCEFF7" stroke="#F2A6D2" stroke-width="2.5">
+    <circle cx="274" cy="284" r="58"/>
+    <circle cx="690" cy="262" r="58"/>
+    <circle cx="878" cy="262" r="58"/>
+    <circle cx="1050" cy="262" r="58"/>
+    <circle cx="502" cy="764" r="58"/>
+    <circle cx="864" cy="846" r="58"/>
+  </g>
+  <g fill="none" stroke="#E7469B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Gestor de equipe: pessoa com prancheta -->
+    <use href="#pessoa" x="266" y="286"/>
+    <rect x="282" y="276" width="18" height="24" rx="2"/>
+    <line x1="286" y1="284" x2="296" y2="284"/>
+    <line x1="286" y1="291" x2="296" y2="291"/>
+    <!-- Mulher profissional de tecnologia: pessoa com notebook -->
+    <use href="#pessoa" x="682" y="262"/>
+    <rect x="690" y="262" width="24" height="16" rx="2"/>
+    <line x1="686" y1="282" x2="718" y2="282"/>
+    <!-- Daniela Soares (usuária representativa): pessoa com lupa -->
+    <use href="#pessoa" x="872" y="264"/>
+    <circle cx="893" cy="266" r="7"/>
+    <line x1="898" y1="271" x2="904" y2="277"/>
+    <!-- Profissional de saúde (cliente): pessoa com estetoscópio -->
+    <use href="#pessoa" x="1050" y="262"/>
+    <path d="M 1043 260 C 1042 274, 1058 276, 1058 266"/>
+    <circle cx="1058" cy="263" r="3"/>
+    <!-- Equipe de desenvolvimento: três pessoas -->
+    <use href="#pessoa" x="484" y="762" transform="translate(484 762) scale(0.75) translate(-484 -762)"/>
+    <use href="#pessoa" x="520" y="762" transform="translate(520 762) scale(0.75) translate(-520 -762)"/>
+    <use href="#pessoa" x="502" y="770"/>
+    <!-- Pesquisadores do LabLivre: pessoa com frasco de laboratório -->
+    <use href="#pessoa" x="856" y="848"/>
+    <path d="M 878 836 v 8 l -6 12 h 18 l -6 -12 v -8"/>
+    <line x1="876" y1="836" x2="886" y2="836"/>
+  </g>
+  <g fill="#1F1640" font-size="17" text-anchor="middle">
+    <text x="274" y="370">Gestor de</text>
+    <text x="274" y="395">equipe</text>
+    <text x="690" y="345">Mulher profissional</text>
+    <text x="690" y="370">de tecnologia</text>
+    <text x="878" y="345">Daniela Soares</text>
+    <text x="878" y="370">(usuária</text>
+    <text x="878" y="395">representativa)</text>
+    <text x="1050" y="345">Profissional</text>
+    <text x="1050" y="370">de Saúde</text>
+    <text x="1050" y="395">(cliente)</text>
+    <text x="502" y="850">Equipe de</text>
+    <text x="502" y="875">desenvolvimento</text>
+    <text x="864" y="932">Pesquisadores</text>
+    <text x="864" y="957">do LabLivre</text>
+  </g>
+
+  <!-- Legenda -->
+  <rect x="117" y="1118" width="1003" height="110" rx="11" fill="#FFFFFF" stroke="#DAD4E9" stroke-width="1.5"/>
+  <text x="140" y="1148" fill="#1F1640" font-size="16" font-weight="700">Legenda:</text>
+  <g fill="none" stroke-width="2.4" stroke-linecap="round">
+    <line x1="160" y1="1185" x2="222" y2="1185" stroke="#3B2A7A" marker-end="url(#aN)"/>
+    <line x1="470" y1="1185" x2="532" y2="1185" stroke="#3B2A7A" stroke-dasharray="8 6" marker-end="url(#aN)"/>
+    <line x1="790" y1="1185" x2="852" y2="1185" stroke="#EE5FA7" stroke-dasharray="8 6" marker-end="url(#aP)"/>
+  </g>
+  <g fill="#1F1640" font-size="15">
+    <text x="240" y="1180">Vínculo forte (colaboração</text>
+    <text x="240" y="1201">ou parceria)</text>
+    <text x="550" y="1180">Dependência (necessita de</text>
+    <text x="550" y="1201">recursos ou aprovação)</text>
+    <text x="870" y="1180">Conflito potencial</text>
+    <text x="870" y="1201">(interesses divergentes)</text>
+  </g>
+</svg>
