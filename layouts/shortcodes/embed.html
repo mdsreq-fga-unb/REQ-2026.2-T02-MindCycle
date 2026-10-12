@@ -1,0 +1,24 @@
+{{- /*
+  Conteúdo externo embutido na página (quadro do Figma, página publicada do
+  Notion etc.), para que a evidência seja vista sem sair da documentação.
+
+  O serviço precisa permitir a exibição em outro site: no Figma, use o endereço
+  de embed (embed.figma.com) com o arquivo compartilhado por link; no Notion,
+  só funcionam páginas publicadas na web (endereço notion.site).
+
+  Uso:
+    {{< embed src="https://embed.figma.com/board/..." titulo="Figma — Story Map" altura="560" >}}
+*/ -}}
+
+{{- $src := .Get "src" -}}
+{{- $titulo := .Get "titulo" -}}
+{{- $altura := .Get "altura" | default "560" -}}
+<figure class="embed">
+  <div class="embed-quadro" style="height: {{ $altura }}px">
+    <iframe src="{{ $src }}" title="{{ $titulo }}" loading="lazy" allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+  {{- with $titulo }}
+  <figcaption>{{ . }}</figcaption>
+  {{- end }}
+</figure>

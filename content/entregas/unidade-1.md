@@ -2,27 +2,26 @@
 title: "Unidade 1"
 numero: "U1"
 weight: 1
-resumo: "Release 1 — Documento de Visão do Produto e Projeto, versão 1.0. Entrega em 08/09/2026."
+resumo: "Entrega 1 — Documento de Visão do Produto e Projeto, versão 1.0. Entrega em 08/09/2026."
 ---
 
 ## Escopo da entrega
 
-A **Release 1**, correspondente à **Unidade 1**, cobriu o período de **11/08/2026 a
-14/09/2026** e teve como entrega o **Documento de Visão do Produto e Projeto, versão 1.0**,
+A **Entrega 1**, correspondente à **Unidade 1**, cobriu o período de **18/08/2026 a
+15/09/2026** e teve como produto o **Documento de Visão do Produto e Projeto, versão 1.0**,
 com as Seções 1 a 7 publicadas no GitPages. A data da entrega é **08/09/2026**.
 
 | | |
 |---|---|
-| **Release** | Release 1 |
-| **Período** | 11/08/2026 a 14/09/2026 |
+| **Entrega** | Entrega 1 |
+| **Período** | 18/08/2026 a 15/09/2026 |
 | **Data da entrega** | 08/09/2026 |
 | **Apresentação em equipe** | 08 ou 10/09/2026 |
-| **Iterações** | Iteração 1 (11/08 – 24/08) e Iteração 2 (25/08 – 07/09) |
-| **Fechamento da release** | 08/09/2026 a 14/09/2026 |
+| **Iterações** | Iteração 1 (18/08 – 01/09) e Iteração 2 (01/09 – 15/09) |
 
 ### O que foi produzido
 
-**Iteração 1 — Compreender o negócio do LabLivre e caracterizar o problema**
+**Iteração 1 — Compreender o contexto do negócio e caracterizar o problema**
 
 - [Seções 1.1 a 1.7](../../visao/01-cenario-atual/): identificação do cliente, contexto do
   negócio, Rich Picture, diagrama de Ishikawa, desafios, mapa de stakeholders e segmentação
@@ -37,12 +36,12 @@ com as Seções 1 a 7 publicadas no GitPages. A data da entrega é **08/09/2026*
   equipe;
 - Documento de Visão v1.0 publicado no GitPages.
 
-**Fechamento da Release 1 — retrospectivar a Iteração 2, entregar e apresentar a Unidade 1
-e conduzir o Planejamento da Próxima Release**
+**Fechamento da Entrega 1 — retrospectivar a Iteração 2, entregar e apresentar a Unidade 1
+e conduzir o Planejamento da Próxima Entrega**
 
 - Entrega da Unidade 1 e apresentação em equipe;
 - [Lições aprendidas](../../visao/14-licoes-aprendidas/#141-unidade-1) registradas na Seção 14.1;
-- Backlog da Release 2 definido e priorizado no Notion.
+- Backlog da Entrega 2 definido e priorizado no Notion.
 
 ### Validação com os stakeholders
 
@@ -52,7 +51,7 @@ e conduzir o Planejamento da Próxima Release**
   objetivo geral, dos objetivos específicos e das características de produto.
 - **Fechamento:** sessão de Refinamento do Product Backlog com Daniela Soares,
   para revisar o Documento de Visão v1.0 e priorizar os requisitos de alto nível da
-  Release 2.
+  Entrega 2.
 
 ## Vídeo da unidade
 

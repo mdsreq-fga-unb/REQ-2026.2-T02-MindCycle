@@ -130,9 +130,6 @@ cliente viabilizam o desenvolvimento do projeto.
 
 ## 2.7 Benefícios Esperados
 
-- **Para o parceiro institucional:** apoiar o LabLivre na promoção de soluções tecnológicas inclusivas
-  voltadas à permanência e ao bem-estar de mulheres na área de tecnologia, além de
-  contribuir para pesquisas sobre produtividade, saúde menstrual e disfunção executiva.
 - **Para as usuárias:** oferecer uma organização de tarefas mais flexível e personalizada,
   considerando variações de energia, foco, humor e ciclo menstrual. A solução deverá
   reduzir a sobrecarga e a culpa associadas à produtividade, tratando o descanso e o

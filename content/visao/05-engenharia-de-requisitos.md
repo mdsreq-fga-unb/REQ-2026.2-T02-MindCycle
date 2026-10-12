@@ -17,7 +17,7 @@ correspondência entre fases, atividades e técnicas é consolidada no Quadro 5.
 
 ### Concepção
 
-A Concepção compreende as Iterações 1 e 2, de duas e de três semanas. Cada iteração começa
+A Concepção compreende as Iterações 1 e 2, de duas semanas. Cada iteração começa
 com o Planejamento da Iteração e termina com a Revisão e a Retrospectiva da Iteração. O foco
 da fase é compreender o problema e definir a visão do produto, trabalho conduzido pela
 própria equipe, já que o contato com a cliente começou na Elaboração.
@@ -51,7 +51,7 @@ própria equipe, já que o contato com a cliente começou na Elaboração.
 
 ### Elaboração
 
-A Elaboração compreende as Iterações 3 e 4, de duas e de três semanas. A partir desta
+A Elaboração compreende as Iterações 3 e 4, de duas semanas. A partir desta
 fase, cada iteração passa a contar também com uma sessão de Refinamento do Backlog, além do
 Planejamento, da Revisão e da Retrospectiva da Iteração. O foco da fase é declarar,
 priorizar e organizar os requisitos, apresentá-los à cliente e delimitar o escopo do MVP.
@@ -142,8 +142,8 @@ priorizar e organizar os requisitos, apresentá-los à cliente e delimitar o esc
 
 ### Construção
 
-A Construção compreende as Iterações 5 a 9, semanais, cada uma dedicada a um conjunto de
-requisitos funcionais do MVP. Em cada iteração ocorrem o Planejamento, o Refinamento do
+A Construção compreende as Iterações 5 e 6, de duas semanas, cada uma dedicada a um
+conjunto de requisitos funcionais do MVP. Em cada iteração ocorrem o Planejamento, o Refinamento do
 Backlog, a Revisão e a Retrospectiva da Iteração. O foco da fase é preparar, verificar e
 validar os requisitos de cada incremento.
 
@@ -199,9 +199,8 @@ validar os requisitos de cada incremento.
 
 ### Transição
 
-A Transição compreende a Iteração 10, semanal, dedicada à homologação do MVP com a cliente e
-as usuárias representativas, e a Iteração 11, de fechamento, com os ajustes finais e a
-entrega da versão final. A fase se encerra com a retrospectiva final.
+A Transição compreende a Iteração 7, de duas semanas, dedicada à homologação do MVP com a
+cliente e as usuárias representativas, aos ajustes finais e à entrega da versão final. A fase se encerra com a retrospectiva final.
 
 **Análise e Consenso:**
 
@@ -224,23 +223,23 @@ entrega da versão final. A fase se encerra com a retrospectiva final.
 
 | Fase do OpenUP | Atividade de ER | Prática | Técnica | Resultado Esperado |
 |---|---|---|---|---|
-| **Concepção**<br>Iterações 1 e 2, de duas e de três semanas.<br>Eventos: Planejamento, Revisão e Retrospectiva da Iteração | Elicitação e Descoberta | Levantamento interno de alternativas e análise do mercado | Brainstorming, Análise de Produtos Concorrentes | Alternativas não punitivas de acompanhamento e lacunas dos concorrentes identificadas |
+| **Concepção**<br>Iterações 1 e 2, de duas semanas.<br>Eventos: Planejamento, Revisão e Retrospectiva da Iteração | Elicitação e Descoberta | Levantamento interno de alternativas e análise do mercado | Brainstorming, Análise de Produtos Concorrentes | Alternativas não punitivas de acompanhamento e lacunas dos concorrentes identificadas |
 |  | Análise e Consenso | Análise das causas do problema pela equipe | Análise de Causas com Diagrama de Ishikawa | Causas do problema organizadas pelos 6M e objetivos específicos derivados delas |
 |  | Declaração | Declaração da visão do produto | Catálogo de Metas | Objetivos específicos e características de produto declarados na Visão do Produto, com o valor de negócio de cada característica |
-| **Elaboração**<br>Iterações 3 e 4, de duas e de três semanas.<br>Eventos: Planejamento, Refinamento do Backlog, Revisão e Retrospectiva da Iteração | Elicitação e Descoberta | Levantamento de necessidades com a cliente | Entrevistas | Refinamentos dos requisitos e sugestões de novas funcionalidades levantados com a cliente profissional de saúde |
+| **Elaboração**<br>Iterações 3 e 4, de duas semanas.<br>Eventos: Planejamento, Refinamento do Backlog, Revisão e Retrospectiva da Iteração | Elicitação e Descoberta | Levantamento de necessidades com a cliente | Entrevistas | Refinamentos dos requisitos e sugestões de novas funcionalidades levantados com a cliente profissional de saúde |
 |  | Análise e Consenso | Priorização dos requisitos funcionais e negociação do escopo do MVP | Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico, Negociação | Requisitos funcionais priorizados e foco do MVP acordado com a cliente |
 |  | Declaração | Declaração dos requisitos nos níveis de negócio, usuário e produto | Catálogo de Metas, Catálogo de Requisitos Funcionais e Não Funcionais, Histórias de Usuário com Critérios de Aceitação, Casos de Uso Detalhados | Requisitos de negócio, requisitos funcionais e não funcionais e histórias declarados e rastreáveis, com os requisitos de maior risco detalhados em casos de uso |
 |  | Representação | Representação das telas do MVP | Prototipação de Baixa Fidelidade | Telas do MVP no Figma para discussão com a cliente |
 |  | Verificação e Validação (validação) | Apresentação das telas do protótipo à cliente | Coleta de Feedback com Validação por Cenários de Uso | Telas avaliadas pela cliente profissional de saúde, com ajustes apontados em cada uma |
 |  | Organização e Atualização | Organização do backlog e construção da rastreabilidade | Estruturação Hierárquica do Backlog, Matriz de Rastreabilidade | Backlog organizado por característica, história e tarefa, e matriz ligando objetivos, características, requisitos e histórias |
-| **Construção**<br>Iterações 5 a 9, semanais.<br>Eventos: Planejamento, Refinamento do Backlog, Revisão e Retrospectiva da Iteração | Elicitação e Descoberta | Esclarecimento das histórias da iteração e levantamento de requisitos novos | Entrevistas | Dúvidas esclarecidas antes do desenvolvimento e requisitos novos da cliente levantados |
+| **Construção**<br>Iterações 5 e 6, de duas semanas.<br>Eventos: Planejamento, Refinamento do Backlog, Revisão e Retrospectiva da Iteração | Elicitação e Descoberta | Esclarecimento das histórias da iteração e levantamento de requisitos novos | Entrevistas | Dúvidas esclarecidas antes do desenvolvimento e requisitos novos da cliente levantados |
 |  | Análise e Consenso | Priorização dos requisitos novos e negociação dos ajustes das revisões | Priorização MoSCoW, Matriz Valor de Negócio × Esforço Técnico, Negociação | Requisitos novos priorizados e ajustes acordados com a cliente e com a usuária representativa |
 |  | Declaração | Atualização do catálogo e refinamento das histórias da iteração | Catálogo de Requisitos Funcionais e Não Funcionais, Histórias de Usuário com Critérios de Aceitação | Catálogo atualizado e histórias da iteração com critérios de aceitação verificáveis, incluindo privacidade e ausência de linguagem punitiva |
 |  | Representação | Prototipação e ajuste das telas das histórias da iteração | Prototipação de Baixa Fidelidade | Protótipo vinculado a cada história com tela nova ou alterada |
 |  | Verificação e Validação (verificação) | Verificação de prontidão no Planejamento da Iteração e de conclusão ao final de cada história | Checklist Estruturado com os Itens do DoR, Checklist Estruturado com os Itens do DoD | Somente histórias que atendem ao DoR entram na iteração, e somente funcionalidades que atendem ao DoD seguem para validação |
 |  | Verificação e Validação (validação) | Demonstração do incremento na Revisão da Iteração | Coleta de Feedback com Validação por Cenários de Uso | Incremento validado, confirmando se reduz a sobrecarga sem gerar nova cobrança |
 |  | Organização e Atualização | Refinamento do backlog e atualização da rastreabilidade | Estruturação Hierárquica do Backlog, Matriz de Rastreabilidade | Backlog e matriz atualizados com os ajustes acordados |
-| **Transição**<br>Iteração 10, semanal, e Iteração 11, de fechamento.<br>Eventos: revisão de homologação do MVP e retrospectiva final | Análise e Consenso | Negociação dos ajustes finais | Negociação | Ajustes finais acordados com a cliente profissional de saúde |
+| **Transição**<br>Iteração 7, de duas semanas.<br>Eventos: revisão de homologação do MVP e retrospectiva final | Análise e Consenso | Negociação dos ajustes finais | Negociação | Ajustes finais acordados com a cliente profissional de saúde |
 |  | Verificação e Validação (verificação) | Verificação dos ajustes finais | Checklist Estruturado com os Itens do DoD | Ajustes finais concluídos conforme o DoD antes da entrega |
 |  | Verificação e Validação (validação) | Homologação do MVP | Coleta de Feedback com Validação por Cenários de Uso | MVP validado pela usuária representativa e homologado pela cliente profissional de saúde |
 |  | Organização e Atualização | Consolidação do conjunto de requisitos | Matriz de Rastreabilidade | Matriz consolidada e backlog remanescente registrado para evolução futura |

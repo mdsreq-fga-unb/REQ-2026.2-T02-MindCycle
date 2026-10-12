@@ -212,7 +212,7 @@ quadrante *candidato ao MVP*. A equipe reconhece que "dado de saúde trancado é
 requisito quase se tornou *Must have*. Ficou de fora porque **(i)** é contornável em um MVP
 de validação, no qual um *reset* manual conduzido pela equipe resolve o caso, e **(ii)** não
 é pré-requisito de nenhum outro requisito do fluxo mínimo. Está encaminhado como primeiro
-item da *release* seguinte.
+item da entrega seguinte.
 
 ### 10.3.4 Motivos de exclusão, por natureza do requisito
 
@@ -287,11 +287,11 @@ escopo permanecessem auditáveis e reversíveis:
 
 | # | Ação | Responsável | Prazo |
 |:--:|---|---|---|
-| 1 | Agendar e realizar a entrevista de validação com a Dra. Cláudia Araújo Bottino, ou com outra representante indicada pelo LabLivre, aplicando o roteiro da Seção 9.8.1 | Analistas de Requisitos | Antes do fechamento da Release 2 (13/10/2026) |
+| 1 | Agendar e realizar a entrevista de validação com a Dra. Cláudia Araújo Bottino, aplicando o roteiro da Seção 9.8.1 | Analistas de Requisitos | Antes do fechamento da Entrega 2 (13/10/2026) |
 | 2 | Atualizar as Seções 9.4, 9.8.2 e 10.4.1 com as notas efetivamente validadas, registrando as divergências em relação à hipótese | Analistas de Requisitos | Imediatamente após a entrevista |
 | 3 | Submeter o **RNF-novo** (criptografia, minimização e transparência) à validação conjunta da equipe e da cliente, para incorporação formal ao catálogo | Analistas de Requisitos | Junto à ação 1 |
-| 4 | Sinalizar formalmente a pendência ao professor e à monitoria da disciplina | Gerência de Projeto | Na entrega desta *release* |
-| 5 | Alinhar os objetivos específicos e as características de produto das Seções 2.2 e 2.3 à Matriz de Rastreabilidade v1.0, encerrando o achado 07 da [Seção 11.8](../11-rastreabilidade/#achados-consistencia) — o catálogo da [Seção 8](../08-requisitos-de-software/) já foi alinhado | Analistas de Requisitos | Antes do fechamento da Release 2 |
+| 4 | Sinalizar formalmente a pendência ao professor e à monitoria da disciplina | Gerência de Projeto | Nesta entrega |
+| 5 | Alinhar os objetivos específicos e as características de produto das Seções 2.2 e 2.3 à Matriz de Rastreabilidade v1.0, encerrando o achado 07 da [Seção 11.8](../11-rastreabilidade/#achados-consistencia) — o catálogo da [Seção 8](../08-requisitos-de-software/) já foi alinhado | Analistas de Requisitos | Antes do fechamento da Entrega 2 |
 
 Esta seção somente será considerada **fechada** quando a ação 1 for concluída e a
 Seção 10.4.1 deixar de conter registros de não ocorrência.

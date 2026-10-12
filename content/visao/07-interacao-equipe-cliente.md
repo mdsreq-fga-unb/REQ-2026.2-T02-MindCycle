@@ -93,8 +93,8 @@ usabilidade, linguagem, privacidade e experiência com a solução. Assim, haver
 reuniões externas por mês: uma com a cliente profissional de saúde e outra com a usuária
 representativa.
 
-As usuárias representativas são recrutadas por meio da rede do LabLivre e da comunidade
-acadêmica da universidade, que reúne mulheres em cursos e projetos de tecnologia, público
+As usuárias representativas são recrutadas por meio da comunidade acadêmica da
+universidade, que reúne mulheres em cursos e projetos de tecnologia, público
 alinhado aos segmentos definidos na
 [Seção 1.7](../01-cenario-atual/#17-segmentação-de-clientes). Daniela Soares é a usuária
 representativa fixa nas revisões, e participantes adicionais para entrevistas e validações

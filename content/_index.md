@@ -13,8 +13,7 @@ description: "Documentação do produto e do projeto MindCycle — Requisitos de
     <p>
       Aplicativo de organização de tarefas que adapta o planejamento diário às
       variações de energia, foco e disposição ao longo do ciclo menstrual,
-      desenvolvido em parceria com o <strong>Laboratório de Competência em Software Livre
-      (LabLivre)</strong> da FCTE/UnB.
+      desenvolvido na disciplina de Requisitos de Software da FCTE/UnB.
     </p>
   </div>
 </div>
@@ -33,9 +32,9 @@ exclusivo de quem os registra.
 {{< cartao href="visao/02-solucao-proposta/" icone="lista" titulo="Características do produto"
            desc="CP1 a CP7, valores de negócio e rastreabilidade com os objetivos específicos." >}}
 {{< cartao href="visao/06-cronograma-e-entregas/" icone="calendario" titulo="Cronograma e entregas"
-           desc="Releases, iterações, marcos de entrega e validação com o cliente." >}}
+           desc="Entregas, iterações, marcos e validação com o cliente." >}}
 {{< cartao href="entregas/unidade-1/" icone="entrega" titulo="Entrega da Unidade 1"
-           desc="Vídeo da apresentação e escopo entregue na Release 1." >}}
+           desc="Vídeo da apresentação e escopo entregue na Entrega 1." >}}
 </div>
 
 <h2 class="home-section-title">Sobre o projeto</h2>
@@ -45,7 +44,6 @@ exclusivo de quem os registra.
 | **Produto** | MindCycle — organização de tarefas adaptada ao ciclo menstrual |
 | **Cliente** | Dra. Cláudia Araújo Bottino — profissional de saúde (ginecologista) |
 | **Usuária representativa** | Daniela Soares |
-| **Parceiro institucional** | Laboratório de Competência em Software Livre (LabLivre) — FCTE/UnB |
 | **Disciplina** | Requisitos de Software — 2026.2 — Turma 02 |
 | **Abordagem** | Híbrida · ciclo de vida iterativo e incremental · processo OpenUP · framework Kanban |
 | **Repositório** | [mdsreq-fga-unb/REQ-2026.2-T02-MindCycle](https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle) |
