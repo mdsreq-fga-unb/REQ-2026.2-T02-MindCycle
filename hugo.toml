@@ -160,14 +160,15 @@ disableKinds = ['taxonomy', 'term', 'rss']
   weight  = 14
 
 [[menus.main]]
-  parent  = 'unidade-1'
-  name    = 'Vídeo de Apresentação'
-  pageRef = '/entregas/unidade-1'
-  weight  = 16
+  identifier = 'video-unidade-1'
+  parent     = 'unidade-1'
+  name       = 'Vídeo de Apresentação'
+  pageRef    = '/entregas/unidade-1'
+  weight     = 16
 
 # --- Unidade 2 — Requisitos de Software -----------------------------
-# A Seção 13 (Backlog do Produto) e o vídeo da Unidade 2 ainda não foram
-# entregues. Quando existirem, acrescentar aqui com weight 13 e 16.
+# A Seção 13 (Backlog do Produto) ainda não foi entregue. Quando existir,
+# acrescentar aqui com weight 13.
 [[menus.main]]
   identifier = 'unidade-2'
   name       = 'Unidade 2 — Requisitos de Software'
@@ -215,6 +216,13 @@ disableKinds = ['taxonomy', 'term', 'rss']
   name    = '15. Referências Bibliográficas'
   pageRef = '/visao/15-referencias'
   weight  = 15
+
+[[menus.main]]
+  identifier = 'video-unidade-2'
+  parent     = 'unidade-2'
+  name       = 'Vídeo de Apresentação'
+  pageRef    = '/entregas/unidade-2'
+  weight     = 16
 
 # --- Fases do OpenUP -------------------------------------------------
 # Uma página por iteração, em content/openup/<fase>/, ainda sem conteúdo.
