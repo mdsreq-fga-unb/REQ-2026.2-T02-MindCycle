@@ -24,7 +24,7 @@ disableKinds = ['taxonomy', 'term', 'rss']
   # ---------------------------------------------------------------
   author      = 'Equipe MindCycle'
   tagline     = '// REQ 2026.2 · T02'
-  description = 'Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido para o LabLivre/FCTE-UnB.'
+  description = 'Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.'
   bio         = 'Documento de Visão do Produto e Projeto e entregas da disciplina de Requisitos de Software.'
 
   # ---------------------------------------------------------------
@@ -259,24 +259,6 @@ disableKinds = ['taxonomy', 'term', 'rss']
   weight  = 6
 
 [[menus.main]]
-  parent  = 'openup-construcao'
-  name    = 'Iteração 07'
-  pageRef = '/openup/construcao/iteracao-07'
-  weight  = 7
-
-[[menus.main]]
-  parent  = 'openup-construcao'
-  name    = 'Iteração 08'
-  pageRef = '/openup/construcao/iteracao-08'
-  weight  = 8
-
-[[menus.main]]
-  parent  = 'openup-construcao'
-  name    = 'Iteração 09'
-  pageRef = '/openup/construcao/iteracao-09'
-  weight  = 9
-
-[[menus.main]]
   identifier = 'openup-transicao'
   name       = 'OpenUP — Transição'
   weight     = 7
@@ -284,15 +266,9 @@ disableKinds = ['taxonomy', 'term', 'rss']
 
 [[menus.main]]
   parent  = 'openup-transicao'
-  name    = 'Iteração 10'
-  pageRef = '/openup/transicao/iteracao-10'
-  weight  = 10
-
-[[menus.main]]
-  parent  = 'openup-transicao'
-  name    = 'Iteração 11'
-  pageRef = '/openup/transicao/iteracao-11'
-  weight  = 11
+  name    = 'Iteração 07'
+  pageRef = '/openup/transicao/iteracao-07'
+  weight  = 7
 
 # =====================================================================
 #  Markdown / render

@@ -360,50 +360,50 @@ Responde: **"onde este requisito é realizado e como se comprova que foi atendid
 
 ```text
 REQUISITO      →   ALOCAÇÃO DE ENTREGA        →   CRITÉRIO DE VERIFICAÇÃO
-RF01 … RF27        MVP (Release 3–4) ou            Critério de validação do RNF
-                   release posterior               vinculado · inspeção do RF
+RF01 … RF27        MVP (Entrega 3–4) ou            Critério de validação do RNF
+                   entrega posterior               vinculado · inspeção do RF
                         ↓
                    Seção 10.1 / 10.1.2
 ```
 
 > **Estado atual dos artefatos de saída.** Até esta entrega o projeto está na
-> **Release 2**, cujo escopo é integralmente de Engenharia de Requisitos: os incrementos
-> funcionais começam na Release 3 (20/10 – 23/11/2026), conforme o
+> **Entrega 2**, cujo escopo é integralmente de Engenharia de Requisitos: os incrementos
+> funcionais começam na Entrega 3 (13/10 – 10/11/2026), conforme o
 > [cronograma](../06-cronograma-e-entregas/). Em consequência, **não existem ainda módulos,
 > componentes de código, casos de teste ou histórias de usuário** aos quais ancorar o elo
 > *forward* de implementação. Esta subseção registra, por isso, os dois elos *forward* que já
 > são verificáveis — **alocação de entrega** e **critério de verificação** — e deixa
-> explicitamente aberta a coluna de artefatos de implementação, a ser preenchida na Release 3.
+> explicitamente aberta a coluna de artefatos de implementação, a ser preenchida na Entrega 3.
 
 | RF | Alocação de entrega | Critério de verificação disponível | Artefato de implementação |
 |---|---|---|---|
-| RF01 | MVP | Inspeção do RF · RNF10, RNF11 | A definir na Release 3 |
-| RF02 | MVP | Inspeção do RF · RNF04 ◇, RNF08 ◇ | A definir na Release 3 |
-| RF03 | *Release* posterior | RNF01 | A definir |
-| RF04 | MVP | RNF02, RNF03, RNF04, RNF08 | A definir na Release 3 |
-| RF05 | *Release* posterior | Inspeção do RF · transversais | A definir |
-| RF06 | MVP | RNF02, RNF03 | A definir na Release 3 |
-| RF07 | *Release* posterior | RNF02 | A definir |
-| RF08 | *Release* posterior | RNF04 | A definir |
-| RF09 | *Release* posterior | Inspeção do RF · transversais | A definir |
-| RF10 | *Release* posterior | Inspeção do RF · transversais | A definir |
-| RF11 | MVP — **escopo reduzido** (PIN numérico) | RNF03 · RNF09 **postergado** (evolutivo) | A definir na Release 3 |
-| RF12 | MVP | RNF02 | A definir na Release 3 |
-| RF13 | MVP | RNF06 | A definir na Release 3 |
-| RF14 | *Release* posterior | RNF01 | A definir |
-| RF15 | MVP | RNF07 | A definir na Release 3 |
-| RF16 | MVP | Inspeção do RF · transversais | A definir na Release 3 |
-| RF17 | MVP | Inspeção do RF · transversais | A definir na Release 3 |
-| RF18 | MVP | Inspeção do RF · transversais | A definir na Release 3 |
-| RF19 | MVP | Inspeção do RF · transversais | A definir na Release 3 |
-| RF20 | MVP | Inspeção do RF · transversais | A definir na Release 3 |
-| RF21 | *Release* posterior | Inspeção do RF · transversais | A definir |
-| RF22 | MVP | Inspeção do RF · transversais | A definir na Release 3 |
-| RF23 | *Release* posterior | Inspeção do RF · transversais | A definir |
-| RF24 | *Release* posterior | Inspeção do RF · transversais | A definir |
-| RF25 | MVP | Inspeção do RF · transversais | A definir na Release 3 |
-| RF26 | *Release* posterior — 1º item | Inspeção do RF · transversais | A definir |
-| RF27 | *Release* posterior | Inspeção do RF · transversais | A definir |
+| RF01 | MVP | Inspeção do RF · RNF10, RNF11 | A definir na Entrega 3 |
+| RF02 | MVP | Inspeção do RF · RNF04 ◇, RNF08 ◇ | A definir na Entrega 3 |
+| RF03 | Entrega posterior | RNF01 | A definir |
+| RF04 | MVP | RNF02, RNF03, RNF04, RNF08 | A definir na Entrega 3 |
+| RF05 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF06 | MVP | RNF02, RNF03 | A definir na Entrega 3 |
+| RF07 | Entrega posterior | RNF02 | A definir |
+| RF08 | Entrega posterior | RNF04 | A definir |
+| RF09 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF10 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF11 | MVP — **escopo reduzido** (PIN numérico) | RNF03 · RNF09 **postergado** (evolutivo) | A definir na Entrega 3 |
+| RF12 | MVP | RNF02 | A definir na Entrega 3 |
+| RF13 | MVP | RNF06 | A definir na Entrega 3 |
+| RF14 | Entrega posterior | RNF01 | A definir |
+| RF15 | MVP | RNF07 | A definir na Entrega 3 |
+| RF16 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
+| RF17 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
+| RF18 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
+| RF19 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
+| RF20 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
+| RF21 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF22 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
+| RF23 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF24 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF25 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
+| RF26 | Entrega posterior — 1º item | Inspeção do RF · transversais | A definir |
+| RF27 | Entrega posterior | Inspeção do RF · transversais | A definir |
 
 **Cobertura *forward* por critério de verificação**
 

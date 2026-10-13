@@ -3,19 +3,39 @@ title: "Iteração 03"
 weight: 1
 ---
 
-Esta página declara os requisitos da [Seção 8](../../../visao/08-requisitos-de-software/) nos níveis de negócio, usuário e produto.
+**Status:** Executado
 
-## Requisitos de negócio — Catálogo de metas
+Primeira conversa com a cliente, seguida da declaração dos requisitos nos níveis de negócio, usuário e produto: 34 requisitos funcionais e 10 não funcionais, histórias de usuário com critérios de aceitação organizadas no story map e casos de uso detalhados dos requisitos de maior risco.
+
+## Elicitação e Descoberta
+
+Conversa com a cliente profissional de saúde para apresentar o produto e levantar necessidades ainda não consideradas (vídeo ao final da página).
+
+## Declaração de Requisitos
+
+Os requisitos foram declarados nos níveis de negócio, usuário e produto, a partir do catálogo de requisitos funcionais e não funcionais.
+
+### Catálogo de requisitos funcionais e não funcionais
+
+{{< embed src="https://embed.figma.com/board/FKc15Xurl1JujbBhzMldpl/MindCycle---Figma?node-id=209-1102&embed-host=share"
+          titulo="Figma — Árvore de requisitos: problema → objetivos específicos → características → requisitos funcionais e não funcionais" altura="560" >}}
+
+{{< trecho pagina="/visao/08-requisitos-de-software" secao="Requisitos Funcionais" recolhido="true" >}}
+{{< trecho pagina="/visao/08-requisitos-de-software" secao="Requisitos Não Funcionais" recolhido="true" >}}
+
+### Requisitos de negócio — Catálogo de metas
 
 | Identificador | Meta | Indicador | Referência | Resultado esperado | Prazo | OE |
 |---|---|---|---|---|---|:--:|
-| RNEG-01 | Melhorar a percepção dos sintomas durante todo o ciclo menstrual | a definir com a cliente | a definir com a cliente | a definir com a cliente | a definir com a cliente | OE1 |
-| RNEG-02 | Reduzir a sobrecarga executiva causada pelo planejamento de tarefas que desconsidera a fase do ciclo menstrual | a definir com a cliente | a definir com a cliente | a definir com a cliente | a definir com a cliente | OE2 |
-| RNEG-03 | Reduzir a sobrecarga executiva na execução das tarefas diárias, ajustando-as à disposição real da usuária | a definir com a cliente | a definir com a cliente | a definir com a cliente | a definir com a cliente | OE3 |
+| RNEG-01 | Melhorar a percepção dos sintomas durante todo o ciclo menstrual | Usuárias que, sozinhas, registram sintomas e disposição (RF04) e consultam a fase atual do ciclo (RF01) | As ferramentas usadas hoje registram só prazos e entregas, sem os sintomas (Seção 1.2) | Todas as usuárias representativas da homologação, sem ajuda da equipe | Iteração 7 (10/11 a 24/11/2026) | OE1 |
+| RNEG-02 | Reduzir a sobrecarga executiva causada pelo planejamento de tarefas que desconsidera a fase do ciclo menstrual | Recomendação do dia (RF13) que muda a ordem das tarefas quando a disposição registrada muda | As ferramentas usadas hoje não relacionam as tarefas ao momento do ciclo (Seção 1.2) | A ordem muda em todos os testes de aceitação com disposição alta e baixa | Iteração 7 (10/11 a 24/11/2026) | OE2 |
+| RNEG-03 | Reduzir a sobrecarga executiva na execução das tarefas diárias, ajustando-as à disposição real da usuária | Usuárias que adiam uma tarefa e recebem o dia reajustado (RF18, RF15) sem mensagem de cobrança | As ferramentas usadas hoje não relacionam as tarefas à disposição real da usuária (Seção 1.2) | Todas as usuárias representativas da homologação, sem nenhuma mensagem de cobrança | Iteração 7 (10/11 a 24/11/2026) | OE3 |
+
+Metas propostas pela equipe para validação com a cliente, verificadas na sessão de homologação com as usuárias representativas e nos testes de aceitação.
 
 RNEG-04 — Restrição externa: atender à LGPD (Lei nº 13.709/2018) no tratamento de dados pessoais sensíveis de saúde.
 
-## Requisitos de usuário — Histórias de usuário
+### Requisitos de usuário — Histórias de usuário
 
 | HU | História | RF | CP · OE |
 |---|---|:--:|:--:|
@@ -54,7 +74,10 @@ RNEG-04 — Restrição externa: atender à LGPD (Lei nº 13.709/2018) no tratam
 | US33 | Como usuária, quero registrar as atividades de acolhimento de minha preferência, para gerir minha carga diária de forma acolhedora. | RF33 | CP5 · OE3 |
 | US34 | Como usuária, quero registrar os diagnósticos de saúde que já possuo, como diabetes, hipertensão ou enxaqueca, para ter consciência do meu próprio estado ao longo do ciclo. | RF34 | CP1 · OE1 |
 
-## Requisitos de produto — Casos de uso detalhados
+{{< embed src="https://embed.figma.com/board/FKc15Xurl1JujbBhzMldpl/MindCycle---Figma?node-id=141-703&embed-host=share"
+          titulo="Figma — Story Map: épico → feature → história de usuário → critério de aceitação" altura="600" >}}
+
+### Requisitos de produto — Casos de uso detalhados
 
 Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:
 
@@ -64,7 +87,7 @@ Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:
 - **RF11** — restrição de design da senha de pétalas (RNF09).
 - **RF02** — vínculo divergente com RNF04/RNF08.
 
-### Registrar sintomas e disposição (RF04)
+#### Registrar sintomas e disposição (RF04)
 
 | | |
 |---|---|
@@ -80,7 +103,7 @@ Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:
 2. Nenhum sintoma ou disposição será salvo antes do aceite dos termos de uso (RNF02).
 3. Uma requisição ao registro feita com a sessão de outra conta retornará acesso negado (RNF03).
 
-### Recomendar tarefas do dia (RF13)
+#### Recomendar tarefas do dia (RF13)
 
 | | |
 |---|---|
@@ -95,7 +118,7 @@ Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:
 1. A recomendação do dia só será aceita quando for exibida em até 3 segundos após o acesso, pela média de 5 medições no DevTools com a rede em Fast 4G (RNF06).
 2. A recomendação do dia só será aceita quando contiver todas as tarefas do dia e nenhuma outra tarefa.
 
-### Reajustar recomendação do dia (RF15)
+#### Reajustar recomendação do dia (RF15)
 
 | | |
 |---|---|
@@ -109,7 +132,7 @@ Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:
 
 1. O reajuste só será aceito quando a lista atualizada aparecer em até 2 segundos após salvar o registro, pela média de 5 medições (RNF07).
 
-### Proteger acesso com PIN (RF11)
+#### Proteger acesso com PIN (RF11)
 
 | | |
 |---|---|
@@ -124,7 +147,7 @@ Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:
 1. A tela de PIN só será aceita quando apresentar 6 pétalas selecionáveis e formar o PIN pela sequência de 4 toques, verificado por inspeção no protótipo e na aplicação (RNF09).
 2. Uma requisição aos dados da usuária feita com a sessão de outra conta retornará acesso negado (RNF03).
 
-### Sinalizar sobrecarga (RF02)
+#### Sinalizar sobrecarga (RF02)
 
 | | |
 |---|---|
@@ -138,3 +161,9 @@ Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:
 
 1. A opção de sinalizar sobrecarga estará disponível em qualquer horário do dia.
 2. Se o vínculo com RNF04 e RNF08 for confirmado, a sinalização só será considerada concluída quando for feita em no máximo 3 toques a partir da tela inicial e a confirmação aparecer em até 2 segundos.
+
+## Vídeo da iteração
+
+<div class="video-embed">
+{{< youtube id="PKoWLngGSRg" title="Elaboração — Iteração 3 (conversa com a cliente) — MindCycle" >}}
+</div>

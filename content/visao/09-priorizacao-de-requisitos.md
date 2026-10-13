@@ -83,7 +83,7 @@ do MindCycle.
 | **4** | Must have | Indispensável para o enfrentamento da sobrecarga executiva, exigência legal sobre dados de saúde, ou pré-requisito técnico do fluxo. |
 | **3** | Should have | Muito relevante para o OE correspondente, mas o produto ainda entrega valor sem ele em uma primeira versão. |
 | **2** | Could have | Agrega valor complementar, adiável sem comprometer a hipótese central do produto. |
-| **1** | Won't have now | Baixo uso esperado ou conveniência não central ao problema nesta *release*. |
+| **1** | Won't have now | Baixo uso esperado ou conveniência não central ao problema nesta entrega. |
 
 ## 9.3 Critérios e escalas de esforço técnico
 
@@ -374,13 +374,13 @@ RF03 e RF23, que ficaram fora do MVP) e acrescentou o RF29, novo.
 
 | Quadrante | Requisitos | Encaminhamento |
 |---|---|---|
-| **Prioridade máxima** (valor 4 · esforço 1) | RF06, RF11, RF12, RF16, RF17, RF18, RF20, RF25, RF29 | Entram no MVP sem discussão: alto valor a custo mínimo. |
-| **Forte candidato ao MVP** (valor 4 · esforço 2) | RF02, RF04, RF22 | Entram no MVP; custo moderado plenamente justificado. |
-| **Avaliar viabilidade** (valor 4 · esforço 3) | RF13, RF15 | Exigem decisão explícita da equipe, tratada na [Seção 10.3](../10-mvp/#justificativas-mvp). |
-| **Forte candidato ao MVP** (valor 3 · esforço 1) | RF01, RF07, RF09, RF19 | Entram no MVP: baixo custo e valor alto o bastante. |
-| **Candidato ao MVP** (valor 3 · esforço 2) | RF21, RF26, RF28 | Decisão caso a caso; RF21 e RF26 entram (Seção 10.3), RF28 fica de fora por pouco (Seção 10.3.3). |
-| **Avaliar oportunidade** (valor 2 e 1 · esforço 1) | RF05, RF14, RF24, RF27 | Baratos, mas de valor complementar; RF05 entra por necessidade estrutural (Seção 10.3.1). |
-| **Entrega futura** (valor 2 · esforço 2 e 3) | RF03, RF08, RF10, RF23 | Adiados para as *releases* seguintes. |
+| **Prioridade máxima** (valor 4 · esforço 1) | RF12, RF16, RF17, RF18, RF20, RF25 | Entram no MVP sem discussão: alto valor a custo mínimo. |
+| **Forte candidato ao MVP** (valor 4 · esforço 2) | RF02, RF04 | Entram no MVP; custo moderado plenamente justificado. |
+| **Avaliar viabilidade** (valor 4 · esforço 3) | RF11, RF13, RF15 | Exigem decisão explícita da equipe — tratada na [Seção 10.3](../10-mvp/#justificativas-mvp). |
+| **Forte candidato ao MVP** (valor 3 · esforço 1) | RF01, RF06, RF19, RF22 | Entram no MVP: baixo custo e valor alto o bastante. |
+| **Candidato ao MVP** (valor 3 · esforço 2) | RF26 | Decisão de corte; ficou de fora por não ser pré-requisito do fluxo mínimo. |
+| **Avaliar oportunidade** (valor 2 e 1 · esforço 1) | RF05, RF07, RF09, RF14, RF24, RF27 | Baratos, mas de valor complementar: entram quando houver folga de escopo. |
+| **Entrega futura** (valor 2 · esforço 2 e 3) | RF03, RF08, RF10, RF21, RF23 | Adiados para as entregas seguintes. |
 | **Quadrantes de esforço 4** | — | Nenhum requisito do escopo inicial caiu aqui, o que é coerente com a expectativa declarada na Seção 9.3.2. |
 
 > **A matriz orienta, não decide.** Dois requisitos de valor máximo (RF13 e RF15) caíram em

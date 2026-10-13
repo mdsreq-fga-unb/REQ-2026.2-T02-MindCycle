@@ -62,4 +62,4 @@ Logotipo em **Fraunces SemiBold**. Fonte e licença (SIL OFL 1.1) em
 [`typography/`](typography/). Fonte de apoio para interface: **Nunito Sans**.
 
 ---
-Feito para o projeto MindCycle — Lab Livre / FCTE-UnB.
+Feito para o projeto MindCycle — FCTE/UnB.

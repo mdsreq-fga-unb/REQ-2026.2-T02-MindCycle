@@ -1,0 +1,65 @@
+{{- /*
+  Evidência embutida: mostra, dentro da página da iteração, uma subseção do
+  Documento de Visão, lida direto do arquivo da seção. O professor vê a prova
+  sem sair da página, e o texto continua tendo uma única fonte.
+
+  Uso:
+    {{< trecho pagina="/visao/02-solucao-proposta" secao="2.5" >}}
+    {{< trecho pagina="/visao/03-intervencao-social" titulo="3. Intervenção Social" >}}
+    {{< trecho pagina="/visao/08-requisitos-de-software" secao="Requisitos Funcionais" recolhido="true" >}}
+
+  - secao: início do título da subseção (## ou ###), como "2.5" ou
+    "Requisitos Funcionais". Sem secao, entra a página inteira.
+  - recolhido: "true" mostra o trecho fechado, para abrir com um clique.
+  - Links relativos e âncoras do trecho são reescritos para continuarem
+    apontando para a seção de origem.
+*/ -}}
+{{- $pg := site.GetPage (.Get "pagina") -}}
+{{- if not $pg }}{{ errorf "trecho: página %q não encontrada (%s)" (.Get "pagina") .Position }}{{ end -}}
+{{- $secao := .Get "secao" | default "" -}}
+{{- $linhas := split $pg.RawContent "\n" -}}
+{{- $titulo := .Get "titulo" | default "" -}}
+{{- $out := slice -}}
+{{- $dentro := eq $secao "" -}}
+{{- $nivel := 0 -}}
+{{- $fim := false -}}
+{{- range $linhas -}}
+  {{- if not $fim -}}
+    {{- $m := findRESubmatch `^(#{2,4}) (.+?)\s*(\{#[^}]*\})?\s*$` . 1 -}}
+    {{- if $m -}}
+      {{- $h := len (index (index $m 0) 1) -}}
+      {{- $txt := index (index $m 0) 2 -}}
+      {{- if and $dentro (ne $secao "") (le $h $nivel) -}}
+        {{- $fim = true -}}
+      {{- else if and (not $dentro) (or (eq $txt $secao) (hasPrefix $txt (printf "%s " $secao))) -}}
+        {{- $dentro = true -}}
+        {{- $nivel = $h -}}
+        {{- if eq $titulo "" }}{{ $titulo = $txt }}{{ end -}}
+        {{- continue -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if and $dentro (not $fim) }}{{ $out = $out | append . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $out }}{{ errorf "trecho: seção %q não encontrada em %s (%s)" $secao $pg.File.Path .Position }}{{ end -}}
+{{- if eq $titulo "" }}{{ $titulo = $pg.Title }}{{ end -}}
+{{- $md := delimit $out "\n" -}}
+{{- /* subtítulos internos descem um nível, para ficarem abaixo do título do trecho */ -}}
+{{- $md = replaceRE `(?m)^(#{2,3}) ` "#$1 " $md -}}
+{{- /* links relativos ("../07-x/") e âncoras ("#a") apontam para a seção de origem */ -}}
+{{- $base := $pg.Parent.RelPermalink -}}
+{{- $md = replaceRE `\]\(\.\./` (printf "](%s" $base) $md -}}
+{{- $md = replaceRE `\]\(#` (printf "](%s#" $pg.RelPermalink) $md -}}
+{{- $html := $pg.RenderString (dict "display" "block") $md -}}
+{{- $origem := printf "%s — %s" $pg.Title $titulo -}}
+{{- if eq (.Get "recolhido") "true" }}
+<details class="trecho">
+  <summary><span class="trecho-rotulo">Evidência</span> {{ $titulo }}</summary>
+  <div class="trecho-corpo">{{ $html }}</div>
+</details>
+{{- else }}
+<section class="trecho" aria-label="{{ $titulo }}">
+  <p class="trecho-titulo"><span class="trecho-rotulo">Evidência</span> {{ $titulo }}</p>
+  <div class="trecho-corpo">{{ $html }}</div>
+</section>
+{{- end }}

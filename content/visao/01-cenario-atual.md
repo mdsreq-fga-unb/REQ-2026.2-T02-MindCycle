@@ -20,24 +20,9 @@ resumo: "Quem é o cliente, em que contexto o problema aparece, quais são suas 
 - **Forma de contato:** Reunião mensal de revisão por Google Meet, separada da reunião com a cliente
 - **Vínculo com o projeto:** Fornece a perspectiva de uso sobre usabilidade, linguagem, privacidade e experiência com a solução, podendo reprovar uma funcionalidade nesses aspectos para que o item retorne ao backlog.
 
-**Parceiro institucional**
-
-- **Nome:** Laboratório de Competência em Software Livre (LabLivre)
-- **Tipo:** Laboratório Avançado de Produção, Pesquisa e Inovação em Software Livre
-- **Vínculo com o projeto:** Sua rede, junto à comunidade acadêmica da universidade, é o meio de recrutamento das usuárias representativas, conforme a [Seção 7.2](../07-interacao-equipe-cliente/#participação-da-cliente-e-da-usuária-representativa).
-
 ## 1.2 Introdução ao Negócio e Contexto
 
-O Laboratório de Competência em Software Livre (LabLivre), vinculado à Faculdade de
-Ciências e Tecnologias em Engenharia (FCTE) da Universidade de Brasília, tem como
-missão promover a cultura do software livre por meio de pesquisa aplicada e inovação
-tecnológica. Entre seus princípios norteadores estão a inclusão e a diversidade,
-materializados na capacitação de jovens, mulheres e grupos sub-representados para
-liderar transformações sociais e tecnológicas, e entre suas linhas de pesquisa figuram
-a metodologia de co-desenvolvimento, o aprendizado por experiência e a participação
-digital.
-
-Nesse contexto, observa-se que a expectativa de produtividade diária no mercado de
+A expectativa de produtividade diária no mercado de
 tecnologia pressupõe um ritmo biológico estável ao longo de todo o mês e desconsidera
 as variações cíclicas de energia, foco, humor e dor vivenciadas por mulheres, de forma
 ainda mais acentuada por aquelas que convivem com SOP (Síndrome do Ovário Policístico),
@@ -55,11 +40,6 @@ normais em percepção de baixo desempenho e alimenta um ciclo de autocobrança 
 dificultando o planejamento realista das atividades, a autoavaliação justa do próprio
 trabalho e, em última instância, a permanência e a adaptação da mulher no mercado de
 trabalho tecnológico.
-
-Essa lacuna se alinha diretamente à atuação do LabLivre: ao assumir a inclusão e a
-permanência de mulheres na tecnologia como princípio institucional, o laboratório tem
-interesse direto em compreender como as expectativas de produtividade vigentes afetam a
-trajetória dessas profissionais e em produzir evidências sobre o tema.
 
 ## 1.3 Rich Picture
 

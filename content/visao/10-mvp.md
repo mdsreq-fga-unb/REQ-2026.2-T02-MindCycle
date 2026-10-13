@@ -255,6 +255,14 @@ Duas observações sobre dependências resolvidas por escolha de rota:
   acolhimento. Os dois requisitos da CP6 saem em conjunto, preservando a consistência do
   recorte.
 
+**Decisão de corte registrada — RF26 (Recuperar acesso à conta).** É o requisito que ficou
+fora por menor margem: valor 3 (*Should have*) e esforço baixo (1,7), posicionado no
+quadrante *candidato ao MVP*. A equipe reconhece que "dado de saúde trancado é sério" e que o
+requisito quase se tornou *Must have*. Ficou de fora porque **(i)** é contornável em um MVP
+de validação, no qual um *reset* manual conduzido pela equipe resolve o caso, e **(ii)** não
+é pré-requisito de nenhum outro requisito do fluxo mínimo. Está encaminhado como primeiro
+item da entrega seguinte.
+
 ### 10.3.4 Motivos de exclusão, por natureza do requisito
 
 Os oito requisitos fora do MVP se distribuem em três naturezas, nenhuma delas essencial à
