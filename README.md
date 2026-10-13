@@ -25,7 +25,8 @@ automaticamente no GitHub Pages a cada `push`.
 │   │   ├── _index.md              Índice das seções
 │   │   ├── 01-cenario-atual.md    Seção 1
 │   │   ├── …                      Seções 2 a 12
-│   │   ├── 14-licoes-aprendidas.md
+│   │   ├── 14-1-licoes-aprendidas-unidade-1.md   Seção 14.1 (lições da Unidade 1)
+│   │   ├── 14-2-licoes-aprendidas-unidade-2.md   Seção 14.2 (lições da Unidade 2)
 │   │   └── 15-referencias.md
 │   ├── entregas/
 │   │   └── unidade-1.md           Entrega da Unidade 1 (vídeo e escopo)
@@ -83,16 +84,19 @@ e não deve ser citado.
 
 ## Escopo publicado
 
-O site cobre as Seções **1 a 12**, **14.1** e **15**. O sumário lateral é organizado por
+O site cobre as Seções **1 a 12**, **14.1**, **14.2** e **15**. O sumário lateral é organizado por
 unidade, e cada unidade lista só as seções já entregues:
 
-- **Unidade 1 — Concepção do Projeto:** Seções 1 a 7 e o vídeo de apresentação;
-- **Unidade 2 — Requisitos de Software:** Seções 8 a 12, 14 e 15;
+- **Unidade 1 — Concepção do Projeto:** Seções 1 a 7, 14.1 e o vídeo de apresentação;
+- **Unidade 2 — Requisitos de Software:** Seções 8 a 12, 14.2 e 15;
 - **OpenUP — Concepção, Elaboração, Construção e Transição:** uma página por iteração
   (Iterações 01 e 02, 03 e 04, 05 e 06, 07) em `content/openup/`.
 
 As páginas continuam em `content/visao/`; a divisão por unidade existe apenas no menu
-(`hugo.toml`), então os endereços publicados e os links entre seções não mudaram.
+(`hugo.toml`), então os endereços publicados e os links entre seções não mudaram. A exceção
+é a Seção 14 (Lições Aprendidas): cada unidade tem as suas lições, então há uma página por
+subseção (`14-1-licoes-aprendidas-unidade-1.md`, …), listada no grupo da unidade
+correspondente. O endereço antigo, `/visao/14-licoes-aprendidas/`, redireciona para a 14.1.
 
 | Seção | Entrega |
 |---|---|
@@ -103,10 +107,11 @@ As páginas continuam em `content/visao/`; a divisão por unidade existe apenas 
 | 11 — Rastreabilidade dos Requisitos | 2 (Unidade 2) |
 | 12 — DoR e DoD | 2 (Unidade 2) |
 | 14.1 — Lições Aprendidas da Unidade 1 · 15 — Referências | 1 (Unidade 1) |
+| 14.2 — Lições Aprendidas da Unidade 2 | 2 (Unidade 2) |
 
 Ainda **não escritas**, e por isso ausentes do menu: a Seção **13 (Backlog do Produto)** e
-o vídeo da Unidade 2, previstos para a Entrega 2, e as Seções **14.2** a **14.4** (lições das
-Unidades 2 a 4). Quando forem escritas, basta criar os arquivos em
+o vídeo da Unidade 2, previstos para a Entrega 2, e as Seções **14.3** e **14.4** (lições das
+Unidades 3 e 4). Quando forem escritas, basta criar os arquivos em
 `content/visao/` e acrescentar as entradas no menu em `hugo.toml` — há um comentário no
 arquivo indicando o lugar.
 
