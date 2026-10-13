@@ -5,7 +5,7 @@ weight: 1
 
 **Status:** Executado
 
-Primeira conversa com a cliente, seguida da declaração dos requisitos nos níveis de negócio, usuário e produto: 34 requisitos funcionais e 10 não funcionais, histórias de usuário com critérios de aceitação organizadas no story map e casos de uso detalhados dos requisitos de maior risco.
+Primeira conversa com a cliente, seguida da declaração dos requisitos nos níveis de negócio, usuário e produto: 34 requisitos funcionais e 10 não funcionais, histórias de usuário com critérios de aceitação organizadas no story map e casos de uso detalhados dos requisitos de maior risco. Na Iteração 4 o catálogo passou a 36 requisitos funcionais, com o RF35 e o RF36 ([Seção 8](../../../visao/08-requisitos-de-software/)).
 
 ## Elicitação e Descoberta
 
@@ -27,7 +27,7 @@ Os requisitos foram declarados nos níveis de negócio, usuário e produto, a pa
 
 | Identificador | Meta | Indicador | Referência | Resultado esperado | Prazo | OE |
 |---|---|---|---|---|---|:--:|
-| RNEG-01 | Melhorar a percepção dos sintomas durante todo o ciclo menstrual | Usuárias que, sozinhas, registram sintomas e disposição (RF04) e consultam a fase atual do ciclo (RF01) | As ferramentas usadas hoje registram só prazos e entregas, sem os sintomas (Seção 1.2) | Todas as usuárias representativas da homologação, sem ajuda da equipe | Iteração 7 (10/11 a 24/11/2026) | OE1 |
+| RNEG-01 | Melhorar a percepção dos sintomas durante todo o ciclo menstrual | Usuárias que, sozinhas, registram sintomas e disposição (RF04) e consultam a fase atual do ciclo (RF05) | As ferramentas usadas hoje registram só prazos e entregas, sem os sintomas (Seção 1.2) | Todas as usuárias representativas da homologação, sem ajuda da equipe | Iteração 7 (10/11 a 24/11/2026) | OE1 |
 | RNEG-02 | Reduzir a sobrecarga executiva causada pelo planejamento de tarefas que desconsidera a fase do ciclo menstrual | Recomendação do dia (RF13) que muda a ordem das tarefas quando a disposição registrada muda | As ferramentas usadas hoje não relacionam as tarefas ao momento do ciclo (Seção 1.2) | A ordem muda em todos os testes de aceitação com disposição alta e baixa | Iteração 7 (10/11 a 24/11/2026) | OE2 |
 | RNEG-03 | Reduzir a sobrecarga executiva na execução das tarefas diárias, ajustando-as à disposição real da usuária | Usuárias que adiam uma tarefa e recebem o dia reajustado (RF18, RF15) sem mensagem de cobrança | As ferramentas usadas hoje não relacionam as tarefas à disposição real da usuária (Seção 1.2) | Todas as usuárias representativas da homologação, sem nenhuma mensagem de cobrança | Iteração 7 (10/11 a 24/11/2026) | OE3 |
 
@@ -55,7 +55,7 @@ RNEG-04 — Restrição externa: atender à LGPD (Lei nº 13.709/2018) no tratam
 | US14 | Como usuária, quero receber, a cada dia, um resumo do que está previsto para o dia, para que o planejamento das minhas tarefas não desconsidere a fase do meu ciclo menstrual. | RF14 | CP4 · OE2 |
 | US15 | Como usuária, quero visualizar minhas tarefas do dia ajustadas ao nível de disposição registrado, para ajustar a execução das tarefas diárias à minha disposição real. | RF15 | CP5 · OE3 |
 | US16 | Como usuária, quero alterar as informações de uma tarefa cadastrada, para gerir minha carga diária de forma flexível e sem culpa. | RF16 | CP5 · OE3 |
-| US17 | Como usuária, quero cadastrar tarefas informando título, prazo e prioridade, para gerir minha carga diária de forma flexível e sem culpa. | RF17 | CP5 · OE3 |
+| US17 | Como usuária, quero cadastrar tarefas informando título, prazo, prioridade e energia necessária, para gerir minha carga diária de forma flexível e sem culpa. | RF17 | CP5 · OE3 |
 | US18 | Como usuária, quero adiar uma tarefa para outra data, mantendo suas demais informações e seu prazo, para gerir minha carga diária de forma flexível e sem culpa. | RF18 | CP5 · OE3 |
 | US19 | Como usuária, quero excluir uma tarefa cadastrada, para gerir minha carga diária de forma flexível e sem culpa. | RF19 | CP5 · OE3 |
 | US20 | Como usuária, quero marcar uma tarefa como concluída, mantendo o registro da data de conclusão, para gerir minha carga diária de forma flexível e sem culpa. | RF20 | CP5 · OE3 |
@@ -84,7 +84,7 @@ Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:
 - **RF04** — dado-fonte de RF02, RF08, RF13 e RF15; ainda sem card no quadro.
 - **RF13** — regra de cálculo da ordem de precedência (energia, prazo, prioridade).
 - **RF15** — reajuste dependente de RF04, com restrição de tempo (RNF07).
-- **RF11** — restrição de design da senha de pétalas (RNF09).
+- **RF11** — restrição de design da senha de pétalas (RNF09), postergada: a primeira versão usa PIN numérico ([Seção 10.2](../../../visao/10-mvp/#rnfs-mvp)).
 - **RF02** — vínculo divergente com RNF04/RNF08.
 
 #### Registrar sintomas e disposição (RF04)
@@ -108,8 +108,8 @@ Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:
 | | |
 |---|---|
 | **Ator principal** | Usuária |
-| **Pré-condição** | A usuária tem tarefas do dia cadastradas com prazo e prioridade (RF17) e registrou sua disposição (RF04). |
-| **Fluxo principal** | 1. A usuária acessa o produto.<br>2. O sistema calcula a ordem de precedência das tarefas do dia a partir do registro de energia, do prazo e da prioridade.<br>3. O sistema exibe a recomendação do dia. |
+| **Pré-condição** | A usuária tem tarefas do dia cadastradas com prazo, prioridade e energia necessária (RF17) e registrou sua disposição (RF04). |
+| **Fluxo principal** | 1. A usuária acessa o produto.<br>2. O sistema calcula a ordem de precedência das tarefas do dia a partir do registro de energia, da energia necessária, do prazo e da prioridade de cada tarefa.<br>3. O sistema exibe a recomendação do dia. |
 | **Fluxos alternativos** | — |
 | **Exceções** | — |
 
@@ -138,14 +138,15 @@ Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:
 |---|---|
 | **Ator principal** | Usuária |
 | **Pré-condição** | A usuária criou sua conta (RF25). |
-| **Fluxo principal** | 1. A usuária escolhe proteger o acesso à conta com PIN.<br>2. O sistema exibe a senha de pétalas.<br>3. A usuária toca a sequência de 4 pétalas.<br>4. O sistema registra o PIN e passa a exigi-lo no acesso à conta. |
-| **Fluxos alternativos** | 2a. Na primeira versão, a usuária informa um PIN numérico (glossário da Seção 8). |
-| **Exceções** | — |
+| **Fluxo principal** | 1. A usuária escolhe proteger o acesso à conta com PIN.<br>2. O sistema solicita um PIN numérico.<br>3. A usuária informa e confirma o PIN.<br>4. O sistema registra o PIN e passa a exigi-lo no acesso à conta. |
+| **Fluxos alternativos** | 2a. Em versão posterior ao MVP, o sistema exibe a senha de pétalas e a usuária toca a sequência de 4 pétalas (RNF09, classificado como evolutivo na Seção 10.2). |
+| **Exceções** | PIN esquecido: a usuária recupera o acesso à conta (RF26). |
 
 **Critérios de aceitação**
 
-1. A tela de PIN só será aceita quando apresentar 6 pétalas selecionáveis e formar o PIN pela sequência de 4 toques, verificado por inspeção no protótipo e na aplicação (RNF09).
+1. Na primeira versão, o acesso à conta só será liberado após a usuária informar o PIN numérico cadastrado.
 2. Uma requisição aos dados da usuária feita com a sessão de outra conta retornará acesso negado (RNF03).
+3. Quando o RF11 evoluir para a senha de pétalas, a tela de PIN só será aceita quando apresentar 6 pétalas selecionáveis e formar o PIN pela sequência de 4 toques, verificado por inspeção no protótipo e na aplicação (RNF09).
 
 #### Sinalizar sobrecarga (RF02)
 
