@@ -206,6 +206,12 @@ disableKinds = ['taxonomy', 'term', 'rss']
 
 [[menus.main]]
   parent  = 'unidade-2'
+  name    = '14.2 Lições Aprendidas'
+  pageRef = '/visao/14-2-licoes-aprendidas-unidade-2'
+  weight  = 14
+
+[[menus.main]]
+  parent  = 'unidade-2'
   name    = '15. Referências Bibliográficas'
   pageRef = '/visao/15-referencias'
   weight  = 15
