@@ -40,7 +40,7 @@ com as Seções 1 a 7 publicadas no GitPages. A data da entrega é **08/09/2026*
 e conduzir o Planejamento da Próxima Entrega**
 
 - Entrega da Unidade 1 e apresentação em equipe;
-- [Lições aprendidas](../../visao/14-licoes-aprendidas/#141-unidade-1) registradas na Seção 14.1;
+- [Lições aprendidas](../../visao/14-1-licoes-aprendidas-unidade-1/) registradas na Seção 14.1;
 - Backlog da Entrega 2 definido e priorizado no Notion.
 
 ### Validação com os stakeholders

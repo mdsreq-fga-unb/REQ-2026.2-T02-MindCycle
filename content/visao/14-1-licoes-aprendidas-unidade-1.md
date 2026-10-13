@@ -1,13 +1,13 @@
 ---
-title: "14. Lições Aprendidas"
-numero: "14"
+title: "14.1 Lições Aprendidas — Unidade 1"
+numero: "14.1"
 weight: 14
-resumo: "Dificuldades enfrentadas pela equipe em cada unidade e as ações de melhoria adotadas."
+resumo: "Dificuldades enfrentadas pela equipe na Unidade 1 e as ações de melhoria adotadas."
+aliases:
+  - /visao/14-licoes-aprendidas/
 ---
 
-## 14.1 Unidade 1
-
-### Lição 1: Aderência ao template do Documento de Visão
+## Lição 1: Aderência ao template do Documento de Visão
 
 **Dificuldade observada:** A equipe teve dificuldade em redigir a Documentação do Projeto de modo que atendesse integralmente à estrutura apresentada pelo professor. O template é extenso, possui seções interdependentes e exige rastreabilidade entre objetivos, características do produto e requisitos, e a primeira versão não contemplou todos os pontos esperados.
 
@@ -28,7 +28,7 @@ resumo: "Dificuldades enfrentadas pela equipe em cada unidade e as ações de me
 
 **Forma de verificar se a ação funcionou:** A ação será considerada eficaz se o documento for aprovado, quanto à estrutura, em uma única rodada de revisão.
 
-### Lição 2: Necessidade de aprofundamento nos conteúdos
+## Lição 2: Necessidade de aprofundamento nos conteúdos
 
 **Dificuldade observada:** Parte dos erros da Unidade 1 teve origem em um estudo superficial dos conteúdos da disciplina. A equipe leu os conceitos o suficiente para preencher as seções, mas sem se apropriar deles, como apontou o professor em sua avaliação. Como consequência, permaneceram inconsistências entre CPs, tecnologias, entregas e processo.
 

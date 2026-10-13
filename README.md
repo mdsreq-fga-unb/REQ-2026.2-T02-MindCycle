@@ -25,7 +25,7 @@ automaticamente no GitHub Pages a cada `push`.
 │   │   ├── _index.md              Índice das seções
 │   │   ├── 01-cenario-atual.md    Seção 1
 │   │   ├── …                      Seções 2 a 12
-│   │   ├── 14-licoes-aprendidas.md
+│   │   ├── 14-1-licoes-aprendidas-unidade-1.md   Seção 14.1 (lições da Unidade 1)
 │   │   └── 15-referencias.md
 │   ├── entregas/
 │   │   └── unidade-1.md           Entrega da Unidade 1 (vídeo e escopo)
@@ -86,13 +86,16 @@ e não deve ser citado.
 O site cobre as Seções **1 a 12**, **14.1** e **15**. O sumário lateral é organizado por
 unidade, e cada unidade lista só as seções já entregues:
 
-- **Unidade 1 — Concepção do Projeto:** Seções 1 a 7 e o vídeo de apresentação;
-- **Unidade 2 — Requisitos de Software:** Seções 8 a 12, 14 e 15;
+- **Unidade 1 — Concepção do Projeto:** Seções 1 a 7, 14.1 e o vídeo de apresentação;
+- **Unidade 2 — Requisitos de Software:** Seções 8 a 12 e 15;
 - **OpenUP — Concepção, Elaboração, Construção e Transição:** uma página por iteração
   (Iterações 01 e 02, 03 e 04, 05 e 06, 07) em `content/openup/`.
 
 As páginas continuam em `content/visao/`; a divisão por unidade existe apenas no menu
-(`hugo.toml`), então os endereços publicados e os links entre seções não mudaram.
+(`hugo.toml`), então os endereços publicados e os links entre seções não mudaram. A exceção
+é a Seção 14 (Lições Aprendidas): cada unidade tem as suas lições, então há uma página por
+subseção (`14-1-licoes-aprendidas-unidade-1.md`, …), listada no grupo da unidade
+correspondente. O endereço antigo, `/visao/14-licoes-aprendidas/`, redireciona para a 14.1.
 
 | Seção | Entrega |
 |---|---|

@@ -85,6 +85,14 @@ disableKinds = ['taxonomy', 'term', 'rss']
 #  páginas continuam em content/visao/, então os endereços e os links
 #  entre seções não mudam.
 #
+#  A Seção 14 (Lições Aprendidas) é a exceção: cada unidade tem as suas
+#  lições, então há uma página por subseção (14.1, 14.2, …), listada no
+#  grupo da unidade correspondente. O endereço antigo da página única,
+#  /visao/14-licoes-aprendidas/, redireciona para a 14.1 (aliases).
+#
+#  Dentro de cada unidade, o weight segue o número da seção; o vídeo da
+#  unidade fica por último, com weight 16.
+#
 #  Os cabeçalhos de unidade e de fase não têm pageRef: são apenas rótulos que
 #  recolhem e expandem o grupo (ver layouts/partials/sidebar/nav.html).
 # =====================================================================
@@ -147,9 +155,15 @@ disableKinds = ['taxonomy', 'term', 'rss']
 
 [[menus.main]]
   parent  = 'unidade-1'
+  name    = '14.1 Lições Aprendidas'
+  pageRef = '/visao/14-1-licoes-aprendidas-unidade-1'
+  weight  = 14
+
+[[menus.main]]
+  parent  = 'unidade-1'
   name    = 'Vídeo de Apresentação'
   pageRef = '/entregas/unidade-1'
-  weight  = 8
+  weight  = 16
 
 # --- Unidade 2 — Requisitos de Software -----------------------------
 # A Seção 13 (Backlog do Produto) e o vídeo da Unidade 2 ainda não foram
@@ -189,12 +203,6 @@ disableKinds = ['taxonomy', 'term', 'rss']
   name    = '12. DoR e DoD'
   pageRef = '/visao/12-dor-e-dod'
   weight  = 12
-
-[[menus.main]]
-  parent  = 'unidade-2'
-  name    = '14. Lições Aprendidas'
-  pageRef = '/visao/14-licoes-aprendidas'
-  weight  = 14
 
 [[menus.main]]
   parent  = 'unidade-2'
