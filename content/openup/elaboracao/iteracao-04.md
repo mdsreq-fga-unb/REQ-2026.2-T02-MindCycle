@@ -24,7 +24,7 @@ Backlog do produto e acordos de entrada e saída das histórias (DoR e DoD).
 
 ### Backlog do produto
 
-Histórias organizadas no Notion por característica de produto e objetivo específico, cada uma vinculada ao requisito funcional de mesmo número. Todas estão com status *Backlog*; as 15 do MVP já estão alocadas às Iterações 5 e 6, da Construção.
+Histórias organizadas no Notion por característica de produto e objetivo específico, cada uma vinculada ao requisito funcional de mesmo número. Todas estão com status *Backlog*; as 22 do MVP estão alocadas às Iterações 5 e 6, da Construção, conforme a [Seção 10.1.3](../../../visao/10-mvp/#alocacao-iteracoes).
 
 | História | Nome | CP | OE | Alocação |
 |---|---|:--:|:--:|---|
@@ -32,11 +32,11 @@ Histórias organizadas no Notion por característica de produto e objetivo espec
 | US02 | Sinalizar sobrecarga | CP1 | OE1 | Iteração 5 |
 | US03 | Receber lembrete de registro | CP1 | OE1 | Backlog posterior |
 | US04 | Registrar sintomas e disposição | CP1 | OE1 | Iteração 5 |
-| US05 | Consultar situação atual do ciclo | CP2 | OE1 | Backlog posterior |
+| US05 | Consultar situação atual do ciclo | CP2 | OE1 | Iteração 5 |
 | US06 | Registrar início da menstruação | CP2 | OE1 | Iteração 5 |
-| US07 | Informar características do ciclo | CP2 | OE1 | Backlog posterior |
+| US07 | Informar características do ciclo | CP2 | OE1 | Iteração 5 |
 | US08 | Estimar fase do ciclo por sintomas | CP2 | OE1 | Backlog posterior |
-| US09 | Recomendar conteúdos sobre o ciclo | CP2 | OE1 | Backlog posterior |
+| US09 | Recomendar conteúdos sobre o ciclo | CP2 | OE1 | Iteração 6 |
 | US10 | Visualizar calendário do ciclo | CP3 | OE1 | Backlog posterior |
 | US11 | Proteger acesso com PIN | CP3 | OE1 | Iteração 5 |
 | US12 | Aceitar termos de uso | CP3 | OE1 | Iteração 5 |
@@ -48,22 +48,24 @@ Histórias organizadas no Notion por característica de produto e objetivo espec
 | US18 | Adiar tarefa | CP5 | OE3 | Iteração 6 |
 | US19 | Excluir tarefa | CP5 | OE3 | Iteração 6 |
 | US20 | Concluir tarefa | CP5 | OE3 | Iteração 6 |
-| US21 | Sugerir atividades de acolhimento | CP5 | OE3 | Backlog posterior |
+| US21 | Sugerir atividades de acolhimento | CP5 | OE3 | Iteração 6 |
 | US22 | Receber mensagens de acolhimento | CP5 | OE3 | Iteração 6 |
 | US23 | Gerar retrospectiva mensal | CP6 | OE3 | Backlog posterior |
 | US24 | Registrar atividade de acolhimento | CP6 | OE3 | Backlog posterior |
 | US25 | Criar conta | CP7 | OE3 | Iteração 5 |
-| US26 | Recuperar acesso à conta | CP7 | OE3 | Backlog posterior |
+| US26 | Recuperar acesso à conta | CP7 | OE3 | Iteração 5 |
 | US27 | Conhecer a proposta do sistema | CP7 | OE3 | Backlog posterior |
-| US28 | Consultar funcionamento do ciclo | CP2 | OE1 | Backlog posterior |
+| US28 | Consultar funcionamento do ciclo | CP2 | OE1 | Iteração 6 |
 | US29 | Gerenciar notificações | CP7 | OE3 | Backlog posterior |
 | US30 | Gerenciar medicações | CP1 | OE1 | Backlog posterior |
 | US31 | Comparar relatórios mensais | CP6 | OE3 | Backlog posterior |
 | US32 | Exportar relatório mensal | CP6 | OE3 | Backlog posterior |
 | US33 | Registrar atividades de acolhimento favoritas | CP5 | OE3 | Backlog posterior |
 | US34 | Registrar diagnósticos prévios | CP1 | OE1 | Backlog posterior |
+| US35 | Exportar relatório de sintomas | CP1 | OE1 | Backlog posterior (1º item da entrega seguinte) |
+| US36 | Excluir conta e dados | CP3 | OE1 | Iteração 5 |
 
-<span class="quadro-fonte">Fonte: backlog do produto no Notion, extraído em 12/10/2026.</span>
+<span class="quadro-fonte">Fonte: backlog do produto no Notion, extraído em 12/10/2026, com a alocação de US05, US07, US09, US21, US26 e US28 e as histórias US35 e US36 atualizadas conforme a Seção 10 v0.5; essas mudanças ainda precisam ser levadas ao Notion.</span>
 
 ### Definition of Ready (DoR)
 

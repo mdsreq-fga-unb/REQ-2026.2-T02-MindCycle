@@ -59,7 +59,7 @@ quadro *MindCycle – Figma* em 28/09/2026 e reproduzida na **Seção 11**. Dela
 | Problema | Sobrecarga Executiva |
 | Objetivos específicos | `OE1` a `OE3` |
 | Características de produto | `CP1` a `CP7` |
-| Requisitos funcionais | `RF01` a `RF27` |
+| Requisitos funcionais | `RF01` a `RF27` (quadro) · `RF28` a `RF36` (acrescentados pela equipe, sem card) |
 | Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** |
 
 As Seções 2.2, 2.3, 8 e 6 foram realinhadas a esse conjunto. Antes disso, o site tinha
@@ -70,8 +70,14 @@ Seção 6 remapeava as duas por conta própria.
 
 Se os identificadores mudarem de novo, os lugares a conferir são
 `content/visao/02-solucao-proposta.md` (Quadro 2),
-`content/visao/08-requisitos-de-software.md` (árvore de derivação e catálogos) e
-`content/visao/06-cronograma-e-entregas.md` (artefatos de entrada das Iterações 5 e 6).
+`content/visao/08-requisitos-de-software.md` (árvore de derivação e catálogos),
+`content/visao/09-priorizacao-de-requisitos.md` (avaliações e matriz 4 × 4),
+`content/visao/10-mvp.md` (composição e alocação do MVP),
+`content/visao/11-rastreabilidade.md` (matrizes e elo *forward*),
+`content/visao/06-cronograma-e-entregas.md` (artefatos de entrada das Iterações 5 e 6) e
+as páginas das Iterações 3 e 4 em `content/openup/elaboracao/` (histórias e backlog).
+Um RF novo recebe sempre o próximo número livre do catálogo da Seção 8, nunca um número já
+usado em outra seção.
 O levantamento anterior (`requisitos-por-tela-mindcycle.md`, `RF01`–`RF69`) é **histórico**
 e não deve ser citado.
 
@@ -118,7 +124,7 @@ divergência sem aviso.
 | **Vídeo da Unidade 1** | `content/entregas/unidade-1.md` — instruções comentadas no arquivo. |
 | **GitHub do Allan Kelvin** | `content/_index.md` — é o único integrante que não aparece na lista de colaboradores do repositório, então o cartão dele está sem `github=` e sem `foto=`. Baixe o avatar para `assets/img/equipe/` e preencha os dois parâmetros. |
 | **Como comprovar o objetivo geral** | Seção 2.1 tem uma pendência registrada pela equipe (indicadores de verificação). |
-| **Validação da priorização e do MVP com a cliente** | Seções 9.8.2 e 10.4.1 — o contato com a Dra. Cláudia Araújo Bottino não ocorreu a tempo da Entrega 2; as notas de valor de negócio estão registradas como hipótese da equipe. |
+| **Validação da priorização e do MVP com a cliente** | Seções 9.8 e 10.4 — a reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino validou 14 dos 36 RFs; os demais e o MVP consolidado seguem como hipótese da equipe, a validar na reunião de acompanhamento. |
 | **Valores de negócio VN1–VN7** | Seção 2.3 — redigidos pela equipe a partir dos critérios da Seção 9.2 após o realinhamento das características; aguardam validação com a cliente. |
 | **Seção 13 (Backlog do Produto) e vídeo da Unidade 2** | Itens da Entrega 2 ainda não publicados. |
 | **RNF05** | Não existe no quadro: a numeração salta de RNF04 para RNF06. Confirmar se houve descarte e registrar, ou renumerar (achado 03 da Seção 11.8). |

@@ -8,9 +8,10 @@ resumo: "Matriz de rastreabilidade do MindCycle: do problema raiz aos objetivos,
 > **Fonte desta seção.** **Matriz de Rastreabilidade de Requisitos v1.0**, extraída do quadro
 > *MindCycle – Figma* em **28/09/2026**. Cliente: **Dra. Cláudia Araújo Bottino**. Este documento é a
 > fonte oficial de requisitos do projeto, e sua numeração **RF01–RF27** / **RNF01–RNF11** é a
-> adotada no catálogo da [Seção 8](../08-requisitos-de-software/). Permanece em aberto o
-> alinhamento das Seções 2.2 e 2.3 (objetivos específicos e características de produto),
-> registrado no achado 07 da Seção 11.8.
+> adotada no catálogo da [Seção 8](../08-requisitos-de-software/). Os **RF28–RF36**,
+> acrescentados ao catálogo depois da extração do quadro e sem card no Figma, estão
+> incorporados às matrizes das Seções 11.4, 11.5 e 11.7 com a notação △. O alinhamento das
+> Seções 2.2 e 2.3 (achado 07) foi concluído.
 
 ## 11.1 Introdução
 
@@ -34,8 +35,9 @@ os artefatos que o realizam e o verificam. No MindCycle, ela cumpre três funç�
 Além disso, o exercício de construção desta matriz teve um resultado próprio: a confrontação
 sistemática entre as duas fontes de vínculo do quadro — a **seta desenhada** e a **lista escrita
 no campo "RFs:"** de cada card de RNF — revelou **doze inconsistências** no material de origem,
-registradas na Seção 11.6. Essas inconsistências não seriam visíveis sem a rastreabilidade
-formalizada.
+registradas na Seção 11.8. Essas inconsistências não seriam visíveis sem a rastreabilidade
+formalizada. Uma décima terceira, a colisão de identificadores entre o catálogo e a
+priorização, foi encontrada depois, ao cruzar as Seções 8 a 10 com o backlog.
 
 ### 11.1.1 Dimensão do escopo rastreado
 
@@ -44,7 +46,7 @@ formalizada.
 | Problema | 1 | Sobrecarga Executiva |
 | Objetivos específicos | 3 | OE1 – OE3 |
 | Características de produto | 7 | CP1 – CP7 |
-| Requisitos funcionais | 27 | RF01 – RF27 — 26 com card no quadro e 1 apenas citado (RF04) |
+| Requisitos funcionais | 36 | RF01 – RF27 do quadro (26 com card e 1 apenas citado, RF04) · RF28 – RF36 acrescentados pela equipe, sem card |
 | Requisitos não funcionais | 10 | RNF01 – RNF11, **sem RNF05** · 2 deles transversais (RNF10, RNF11) |
 
 ### 11.1.2 Notação adotada
@@ -58,6 +60,7 @@ evidência que o sustenta:
 | **○** | O RF é citado no campo "RFs:", mas **não há seta** no quadro. |
 | **◇** | Há **seta no quadro**, mas o RF **não** é citado no campo "RFs:" — **divergência**. |
 | **▪** | Vínculo **transversal** — o card declara "RFs: todos". |
+| **△** | Vínculo **proposto pela equipe** para RF acrescentado depois do quadro (RF28–RF36), que não tem card. |
 | **—** | Nenhum RNF específico; o RF é coberto apenas pelos transversais. |
 
 Quando as duas fontes divergem, este documento **apresenta ambas** em vez de escolher uma, e
@@ -86,24 +89,30 @@ requisitos funcionais que agrega e de requisitos não funcionais específicos vi
  4 RF  5 RF  3 RF                       2 RF              8 RF            2 RF            3 RF
  5 RNF 3 RNF 3 RNF                      2 RNF             1 RNF           0 RNF           0 RNF
 
-              RNF10 · RNF11 — transversais, valem para todos os 27 RFs
+              RNF10 · RNF11 — transversais, valem para todos os 36 RFs
               (no quadro estão ligadas apenas à CP5 — ver achado 04)
 ```
 
-| CP | Característica | OE | RF | RNF específicos |
-|---|---|:--:|:--:|:--:|
-| CP1 | Registro e análise de sintomas e disposição | OE1 | 4 | 5 |
-| CP2 | Acompanhamento do ciclo menstrual | OE1 | 5 | 3 |
-| CP3 | Privacidade dos dados da usuária | OE1 | 3 | 3 |
-| CP4 | Planejamento adaptativo das tarefas | OE2 | 2 | 2 |
-| CP5 | Gestão acolhedora da carga diária | OE3 | 8 | 1 |
-| CP6 | Reconhecimento de ritmo sustentável | OE3 | 2 | 0 |
-| CP7 | Conta e preferências da usuária | OE3 | 3 | 0 |
+O diagrama reproduz as contagens do quadro. A tabela abaixo acrescenta os RFs incluídos
+pela equipe depois da extração (RF28–RF36), que não têm card no quadro.
+
+| CP | Característica | OE | RF no quadro | RF acrescentados △ | RNF específicos (quadro) |
+|---|---|:--:|:--:|---|:--:|
+| CP1 | Registro e análise de sintomas e disposição | OE1 | 4 | 3 (RF30, RF34, RF35) | 5 |
+| CP2 | Acompanhamento do ciclo menstrual | OE1 | 5 | 1 (RF28) | 3 |
+| CP3 | Privacidade dos dados da usuária | OE1 | 3 | 1 (RF36) | 3 |
+| CP4 | Planejamento adaptativo das tarefas | OE2 | 2 | — | 2 |
+| CP5 | Gestão acolhedora da carga diária | OE3 | 8 | 1 (RF33) | 1 |
+| CP6 | Reconhecimento de ritmo sustentável | OE3 | 2 | 2 (RF31, RF32) | 0 |
+| CP7 | Conta e preferências da usuária | OE3 | 3 | 1 (RF29) | 0 |
+| **Total** | | | **27** | **9** | — |
 
 ## 11.3 Detalhamento por objetivo e característica
 
 Texto de cada requisito funcional **como está no quadro**, com os RNFs vinculados a ele. Os
-RNFs aparecem na característica onde a seta deles chega.
+RNFs aparecem na característica onde a seta deles chega. Os RF28–RF36 não têm card no quadro;
+seu texto está no catálogo da [Seção 8](../08-requisitos-de-software/) e eles entram nas
+matrizes a partir da Seção 11.4.
 
 ### OE1 · Melhorar a percepção dos sintomas durante todo o ciclo menstrual
 
@@ -224,7 +233,8 @@ RNFs aparecem na característica onde a seta deles chega.
 
 Cada linha liga um requisito funcional à sua característica, ao objetivo específico e ao
 problema raiz. Todos os RFs herdam, adicionalmente, os RNFs transversais **RNF10** e
-**RNF11**.
+**RNF11**. As linhas marcadas *(acrescentado)* são os RF28–RF36, incluídos pela equipe depois
+da extração do quadro ([Seção 8](../08-requisitos-de-software/)).
 
 | RF | Requisito funcional | CP | OE | Problema | RNFs específicos |
 |---|---|---|:--:|---|---|
@@ -233,14 +243,19 @@ problema raiz. Todos os RFs herdam, adicionalmente, os RNFs transversais **RNF10
 | RF02 | Sinalizar sobrecarga | CP1 Registro e análise de sintomas e disposição | OE1 | Sobrecarga Executiva | ◇ RNF04 · ◇ RNF08 |
 | RF03 | Receber lembrete de registro | CP1 Registro e análise de sintomas e disposição | OE1 | Sobrecarga Executiva | ● RNF01 |
 | RF04 | Registrar sintomas e disposição *(sem card)* | CP1 Registro e análise de sintomas e disposição | OE1 | Sobrecarga Executiva | ○ RNF02 · ○ RNF03 · ○ RNF04 · ○ RNF08 |
+| RF30 | Gerenciar medicações *(acrescentado)* | CP1 Registro e análise de sintomas e disposição | OE1 | Sobrecarga Executiva | △ RNF02 · △ RNF03 |
+| RF34 | Registrar diagnósticos prévios *(acrescentado)* | CP1 Registro e análise de sintomas e disposição | OE1 | Sobrecarga Executiva | △ RNF02 · △ RNF03 |
+| RF35 | Exportar relatório de sintomas *(acrescentado)* | CP1 Registro e análise de sintomas e disposição | OE1 | Sobrecarga Executiva | △ RNF02 · △ RNF03 |
 | RF05 | Consultar situação atual do ciclo | CP2 Acompanhamento do ciclo menstrual | OE1 | Sobrecarga Executiva | — |
 | RF06 | Registrar início da menstruação | CP2 Acompanhamento do ciclo menstrual | OE1 | Sobrecarga Executiva | ○ RNF02 · ○ RNF03 |
 | RF07 | Informar características do ciclo | CP2 Acompanhamento do ciclo menstrual | OE1 | Sobrecarga Executiva | ○ RNF02 |
 | RF08 | Estimar fase do ciclo por sintomas | CP2 Acompanhamento do ciclo menstrual | OE1 | Sobrecarga Executiva | ○ RNF04 |
 | RF09 | Recomendar conteúdos sobre o ciclo | CP2 Acompanhamento do ciclo menstrual | OE1 | Sobrecarga Executiva | — |
+| RF28 | Consultar funcionamento do ciclo *(acrescentado)* | CP2 Acompanhamento do ciclo menstrual | OE1 | Sobrecarga Executiva | — |
 | RF10 | Visualizar calendário do ciclo | CP3 Privacidade dos dados da usuária | OE1 | Sobrecarga Executiva | — |
 | RF11 | Proteger acesso com PIN | CP3 Privacidade dos dados da usuária | OE1 | Sobrecarga Executiva | ● RNF03 · ● RNF09 |
 | RF12 | Aceitar termos de uso | CP3 Privacidade dos dados da usuária | OE1 | Sobrecarga Executiva | ● RNF02 |
+| RF36 | Excluir conta e dados *(acrescentado)* | CP3 Privacidade dos dados da usuária | OE1 | Sobrecarga Executiva | △ RNF02 · △ RNF03 |
 | | **OE2 — Reduzir a sobrecarga executiva causada pelo planejamento de tarefas que desconsidera a fase do ciclo menstrual** | | | | |
 | RF13 | Recomendar tarefas do dia | CP4 Planejamento adaptativo das tarefas | OE2 | Sobrecarga Executiva | ● RNF06 |
 | RF14 | Receber resumo do dia | CP4 Planejamento adaptativo das tarefas | OE2 | Sobrecarga Executiva | ○ RNF01 |
@@ -253,11 +268,15 @@ problema raiz. Todos os RFs herdam, adicionalmente, os RNFs transversais **RNF10
 | RF20 | Concluir tarefa | CP5 Gestão acolhedora da carga diária | OE3 | Sobrecarga Executiva | — |
 | RF21 | Sugerir atividades de acolhimento | CP5 Gestão acolhedora da carga diária | OE3 | Sobrecarga Executiva | — |
 | RF22 | Receber mensagens de acolhimento | CP5 Gestão acolhedora da carga diária | OE3 | Sobrecarga Executiva | — |
+| RF33 | Registrar atividades de acolhimento favoritas *(acrescentado)* | CP5 Gestão acolhedora da carga diária | OE3 | Sobrecarga Executiva | — |
 | RF23 | Gerar retrospectiva mensal | CP6 Reconhecimento de ritmo sustentável | OE3 | Sobrecarga Executiva | — |
 | RF24 | Registrar atividade de acolhimento | CP6 Reconhecimento de ritmo sustentável | OE3 | Sobrecarga Executiva | — |
+| RF31 | Comparar relatórios mensais *(acrescentado)* | CP6 Reconhecimento de ritmo sustentável | OE3 | Sobrecarga Executiva | — |
+| RF32 | Exportar relatório mensal *(acrescentado)* | CP6 Reconhecimento de ritmo sustentável | OE3 | Sobrecarga Executiva | △ RNF02 · △ RNF03 |
 | RF25 | Criar conta | CP7 Conta e preferências da usuária | OE3 | Sobrecarga Executiva | — |
 | RF26 | Recuperar acesso à conta | CP7 Conta e preferências da usuária | OE3 | Sobrecarga Executiva | — |
 | RF27 | Conhecer a proposta do sistema | CP7 Conta e preferências da usuária | OE3 | Sobrecarga Executiva | — |
+| RF29 | Gerenciar notificações *(acrescentado)* | CP7 Conta e preferências da usuária | OE3 | Sobrecarga Executiva | △ RNF01 |
 
 ## 11.5 Matriz RF × RNF
 
@@ -265,7 +284,8 @@ Compara as duas fontes de vínculo do quadro: a **seta** desenhada a partir do c
 **lista escrita no campo "RFs:"** do próprio card.
 
 **Legenda:** ● seta no quadro *e* citado no campo RFs · ○ citado no campo RFs, sem seta ·
-◇ seta no quadro, mas não citado no campo RFs (**divergência**) · ▪ transversal ("RFs: todos")
+◇ seta no quadro, mas não citado no campo RFs (**divergência**) · ▪ transversal ("RFs: todos") ·
+△ vínculo proposto pela equipe para RF acrescentado depois do quadro
 
 | RF | RNF01<br>Segurança | RNF02<br>Externo | RNF03<br>Segurança | RNF04<br>Usabilidade | RNF06<br>Desempenho | RNF07<br>Desempenho | RNF08<br>Desempenho | RNF09<br>Restr. design | RNF10<br>Suportab. | RNF11<br>Usabilidade |
 |---|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
@@ -274,16 +294,21 @@ Compara as duas fontes de vínculo do quadro: a **seta** desenhada a partir do c
 | RF02 Sinalizar sobrecarga | | | | ◇ | | | ◇ | | ▪ | ▪ |
 | RF03 Receber lembrete de registro | ● | | | | | | | | ▪ | ▪ |
 | RF04 Registrar sintomas e disposição *(sem card)* | | ○ | ○ | ○ | | | ○ | | ▪ | ▪ |
+| RF30 Gerenciar medicações *(acrescentado)* |  | △ | △ |  |  |  |  |  | ▪ | ▪ |
+| RF34 Registrar diagnósticos prévios *(acrescentado)* |  | △ | △ |  |  |  |  |  | ▪ | ▪ |
+| RF35 Exportar relatório de sintomas *(acrescentado)* |  | △ | △ |  |  |  |  |  | ▪ | ▪ |
 | **CP2 · Acompanhamento do ciclo menstrual (OE1)** | | | | | | | | | | |
 | RF05 Consultar situação atual do ciclo | | | | | | | | | ▪ | ▪ |
 | RF06 Registrar início da menstruação | | ○ | ○ | | | | | | ▪ | ▪ |
 | RF07 Informar características do ciclo | | ○ | | | | | | | ▪ | ▪ |
 | RF08 Estimar fase do ciclo por sintomas | | | | ○ | | | | | ▪ | ▪ |
 | RF09 Recomendar conteúdos sobre o ciclo | | | | | | | | | ▪ | ▪ |
+| RF28 Consultar funcionamento do ciclo *(acrescentado)* |  |  |  |  |  |  |  |  | ▪ | ▪ |
 | **CP3 · Privacidade dos dados da usuária (OE1)** | | | | | | | | | | |
 | RF10 Visualizar calendário do ciclo | | | | | | | | | ▪ | ▪ |
 | RF11 Proteger acesso com PIN | | | ● | | | | | ● | ▪ | ▪ |
 | RF12 Aceitar termos de uso | | ● | | | | | | | ▪ | ▪ |
+| RF36 Excluir conta e dados *(acrescentado)* |  | △ | △ |  |  |  |  |  | ▪ | ▪ |
 | **CP4 · Planejamento adaptativo das tarefas (OE2)** | | | | | | | | | | |
 | RF13 Recomendar tarefas do dia | | | | | ● | | | | ▪ | ▪ |
 | RF14 Receber resumo do dia | ○ | | | | | | | | ▪ | ▪ |
@@ -296,14 +321,18 @@ Compara as duas fontes de vínculo do quadro: a **seta** desenhada a partir do c
 | RF20 Concluir tarefa | | | | | | | | | ▪ | ▪ |
 | RF21 Sugerir atividades de acolhimento | | | | | | | | | ▪ | ▪ |
 | RF22 Receber mensagens de acolhimento | | | | | | | | | ▪ | ▪ |
+| RF33 Registrar atividades de acolhimento favoritas *(acrescentado)* |  |  |  |  |  |  |  |  | ▪ | ▪ |
 | **CP6 · Reconhecimento de ritmo sustentável (OE3)** | | | | | | | | | | |
 | RF23 Gerar retrospectiva mensal | | | | | | | | | ▪ | ▪ |
 | RF24 Registrar atividade de acolhimento | | | | | | | | | ▪ | ▪ |
+| RF31 Comparar relatórios mensais *(acrescentado)* |  |  |  |  |  |  |  |  | ▪ | ▪ |
+| RF32 Exportar relatório mensal *(acrescentado)* |  | △ | △ |  |  |  |  |  | ▪ | ▪ |
 | **CP7 · Conta e preferências da usuária (OE3)** | | | | | | | | | | |
 | RF25 Criar conta | | | | | | | | | ▪ | ▪ |
 | RF26 Recuperar acesso à conta | | | | | | | | | ▪ | ▪ |
 | RF27 Conhecer a proposta do sistema | | | | | | | | | ▪ | ▪ |
-| **RFs vinculados** | **2** | **4** | **3** | **3** | **1** | **1** | **2** | **1** | **27** | **27** |
+| RF29 Gerenciar notificações *(acrescentado)* | △ |  |  |  |  |  |  |  | ▪ | ▪ |
+| **RFs vinculados** | **2** + 1 △ | **4** + 5 △ | **3** + 5 △ | **3** | **1** | **1** | **2** | **1** | **36** | **36** |
 
 ## 11.6 Catálogo de requisitos não funcionais
 
@@ -336,84 +365,97 @@ desce até ele.
 
 ```text
 FONTE                    PROBLEMA              OBJETIVO           CARACTERÍSTICA        REQUISITO
-Card do quadro    →   Sobrecarga        →   OE1 | OE2 | OE3   →   CP1 … CP7        →   RF01 … RF27
+Card do quadro    →   Sobrecarga        →   OE1 | OE2 | OE3   →   CP1 … CP7        →   RF01 … RF36
 MindCycle – Figma     Executiva                                                           ↓
 (28/09/2026)                                                                         RNF vinculado
-                                                                                     (● ○ ◇ ▪)
+ou Seção 8 (RF28–RF36)                                                               (● ○ ◇ ▪ △)
 ```
 
 | Elemento do elo | Como é evidenciado neste projeto |
 |---|---|
-| **Fonte primária** | Card individual no quadro *MindCycle – Figma*, capturado em 28/09/2026 e consolidado na Matriz de Rastreabilidade v1.0. Exceção: o **RF04** não possui card e foi derivado do campo "RFs:" dos cards RNF02, RNF03, RNF04 e RNF08 (achado 01). |
+| **Fonte primária** | Card individual no quadro *MindCycle – Figma*, capturado em 28/09/2026 e consolidado na Matriz de Rastreabilidade v1.0. Exceções: o **RF04** não possui card e foi derivado do campo "RFs:" dos cards RNF02, RNF03, RNF04 e RNF08 (achado 01); os **RF28–RF36** também não têm card, e sua origem está registrada na [Seção 8](../08-requisitos-de-software/): pedidos da cliente (RF28–RF34), reunião de validação de 05/10/2026 (RF35) e revisão técnica por exigência da LGPD (RF36). |
 | **Problema → Objetivo** | Seta desenhada do card do problema para cada card de OE. |
 | **Objetivo → Característica** | Seta desenhada do card de OE para cada card de CP: OE1 → CP1, CP2, CP3 · OE2 → CP4 · OE3 → CP5, CP6, CP7. |
 | **Característica → Requisito** | Agrupamento dos cards de RF sob o card da CP, conforme a Seção 11.2. |
-| **Requisito → Requisito não funcional** | Dupla evidência: a seta do card de RNF e a lista do campo "RFs:". A notação ● ○ ◇ ▪ da Seção 11.5 registra qual das duas sustenta cada vínculo. |
+| **Requisito → Requisito não funcional** | Dupla evidência: a seta do card de RNF e a lista do campo "RFs:". A notação ● ○ ◇ ▪ da Seção 11.5 registra qual das duas sustenta cada vínculo; △ marca o vínculo proposto pela equipe para os RF28–RF36. |
 
-**Cobertura *backward*:** os **27 requisitos funcionais** fecham a cadeia completa até o
+**Cobertura *backward*:** os **36 requisitos funcionais** fecham a cadeia completa até o
 problema raiz — nenhum requisito órfão foi identificado. A rastreabilidade de origem está,
-portanto, **íntegra em 27/27 (100 %)**, com a ressalva documental do RF04.
+portanto, **íntegra em 36/36 (100 %)**, com a ressalva documental do RF04 e dos RF28–RF36,
+cuja origem está registrada fora do quadro.
 
 ### 11.7.2 Rastreabilidade *forward* — requisito para realização e verificação
 
 Responde: **"onde este requisito é realizado e como se comprova que foi atendido?"**
 
 ```text
-REQUISITO      →   ALOCAÇÃO DE ENTREGA        →   CRITÉRIO DE VERIFICAÇÃO
-RF01 … RF27        MVP (Entrega 3–4) ou            Critério de validação do RNF
-                   entrega posterior               vinculado · inspeção do RF
-                        ↓
-                   Seção 10.1 / 10.1.2
+REQUISITO      →   HISTÓRIA     →   ALOCAÇÃO DE ENTREGA        →   CRITÉRIO DE VERIFICAÇÃO
+RF01 … RF36        US01 … US36      MVP (Iterações 5 e 6) ou        Critério de validação do RNF
+                                    entrega posterior               vinculado · inspeção do RF
+                                         ↓
+                                    Seção 10.1.3 / 10.1.2
 ```
 
-> **Estado atual dos artefatos de saída.** Até esta entrega o projeto está na
-> **Entrega 2**, cujo escopo é integralmente de Engenharia de Requisitos: os incrementos
-> funcionais começam na Entrega 3 (13/10 – 10/11/2026), conforme o
-> [cronograma](../06-cronograma-e-entregas/). Em consequência, **não existem ainda módulos,
-> componentes de código, casos de teste ou histórias de usuário** aos quais ancorar o elo
-> *forward* de implementação. Esta subseção registra, por isso, os dois elos *forward* que já
-> são verificáveis — **alocação de entrega** e **critério de verificação** — e deixa
-> explicitamente aberta a coluna de artefatos de implementação, a ser preenchida na Entrega 3.
+> **Estado atual dos artefatos de saída.** O projeto está na **Entrega 2**, cujo escopo é
+> integralmente de Engenharia de Requisitos: os incrementos funcionais começam na Entrega 3
+> (13/10 – 10/11/2026), conforme o [cronograma](../06-cronograma-e-entregas/). Já existem as
+> **histórias de usuário** (US01–US34 no backlog do Notion, declaradas na
+> [Iteração 3](../../openup/elaboracao/iteracao-03/) e organizadas na
+> [Iteração 4](../../openup/elaboracao/iteracao-04/); US35 e US36 ainda a criar), cada uma
+> com o número do RF de origem. **Ainda não existem módulos, componentes de código ou casos
+> de teste**, e por isso a coluna de artefatos de implementação fica aberta até a iteração
+> em que o requisito for construído.
 
-| RF | Alocação de entrega | Critério de verificação disponível | Artefato de implementação |
-|---|---|---|---|
-| RF01 | MVP | Inspeção do RF · RNF10, RNF11 | A definir na Entrega 3 |
-| RF02 | MVP | Inspeção do RF · RNF04 ◇, RNF08 ◇ | A definir na Entrega 3 |
-| RF03 | Entrega posterior | RNF01 | A definir |
-| RF04 | MVP | RNF02, RNF03, RNF04, RNF08 | A definir na Entrega 3 |
-| RF05 | Entrega posterior | Inspeção do RF · transversais | A definir |
-| RF06 | MVP | RNF02, RNF03 | A definir na Entrega 3 |
-| RF07 | Entrega posterior | RNF02 | A definir |
-| RF08 | Entrega posterior | RNF04 | A definir |
-| RF09 | Entrega posterior | Inspeção do RF · transversais | A definir |
-| RF10 | Entrega posterior | Inspeção do RF · transversais | A definir |
-| RF11 | MVP — **escopo reduzido** (PIN numérico) | RNF03 · RNF09 **postergado** (evolutivo) | A definir na Entrega 3 |
-| RF12 | MVP | RNF02 | A definir na Entrega 3 |
-| RF13 | MVP | RNF06 | A definir na Entrega 3 |
-| RF14 | Entrega posterior | RNF01 | A definir |
-| RF15 | MVP | RNF07 | A definir na Entrega 3 |
-| RF16 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
-| RF17 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
-| RF18 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
-| RF19 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
-| RF20 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
-| RF21 | Entrega posterior | Inspeção do RF · transversais | A definir |
-| RF22 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
-| RF23 | Entrega posterior | Inspeção do RF · transversais | A definir |
-| RF24 | Entrega posterior | Inspeção do RF · transversais | A definir |
-| RF25 | MVP | Inspeção do RF · transversais | A definir na Entrega 3 |
-| RF26 | Entrega posterior — 1º item | Inspeção do RF · transversais | A definir |
-| RF27 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF | História | Alocação de entrega | Critério de verificação disponível | Artefato de implementação |
+|---|---|---|---|---|
+| RF01 | US01 | MVP · Iteração 5 | Inspeção do RF · transversais | A definir na Iteração 5 |
+| RF02 | US02 | MVP · Iteração 5 | Inspeção do RF · RNF04 ◇, RNF08 ◇ | A definir na Iteração 5 |
+| RF03 | US03 | Entrega posterior | RNF01 | A definir |
+| RF04 | US04 | MVP · Iteração 5 | RNF02, RNF03, RNF04, RNF08 | A definir na Iteração 5 |
+| RF05 | US05 | MVP · Iteração 5 | Inspeção do RF · transversais | A definir na Iteração 5 |
+| RF06 | US06 | MVP · Iteração 5 | RNF02, RNF03 | A definir na Iteração 5 |
+| RF07 | US07 | MVP · Iteração 5 | RNF02 | A definir na Iteração 5 |
+| RF08 | US08 | Entrega posterior | RNF04 | A definir |
+| RF09 | US09 | MVP · Iteração 6 | Inspeção do RF · transversais | A definir na Iteração 6 |
+| RF10 | US10 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF11 | US11 | MVP · Iteração 5 — **escopo reduzido** (PIN numérico) | RNF03 · RNF09 **postergado** (evolutivo) | A definir na Iteração 5 |
+| RF12 | US12 | MVP · Iteração 5 | RNF02 | A definir na Iteração 5 |
+| RF13 | US13 | MVP · Iteração 6 | RNF06 | A definir na Iteração 6 |
+| RF14 | US14 | Entrega posterior | RNF01 | A definir |
+| RF15 | US15 | MVP · Iteração 6 | RNF07 | A definir na Iteração 6 |
+| RF16 | US16 | MVP · Iteração 6 | Inspeção do RF · transversais | A definir na Iteração 6 |
+| RF17 | US17 | MVP · Iteração 6 | Inspeção do RF · transversais | A definir na Iteração 6 |
+| RF18 | US18 | MVP · Iteração 6 | Inspeção do RF · transversais | A definir na Iteração 6 |
+| RF19 | US19 | MVP · Iteração 6 | Inspeção do RF · transversais | A definir na Iteração 6 |
+| RF20 | US20 | MVP · Iteração 6 | Inspeção do RF · transversais | A definir na Iteração 6 |
+| RF21 | US21 | MVP · Iteração 6 | Inspeção do RF · transversais | A definir na Iteração 6 |
+| RF22 | US22 | MVP · Iteração 6 | Inspeção do RF · transversais | A definir na Iteração 6 |
+| RF23 | US23 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF24 | US24 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF25 | US25 | MVP · Iteração 5 | Inspeção do RF · transversais | A definir na Iteração 5 |
+| RF26 | US26 | MVP · Iteração 5 | Inspeção do RF · transversais | A definir na Iteração 5 |
+| RF27 | US27 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF28 | US28 | MVP · Iteração 6 | Inspeção do RF · transversais | A definir na Iteração 6 |
+| RF29 | US29 | Entrega posterior | RNF01 △ | A definir |
+| RF30 | US30 | Entrega posterior | RNF02 △, RNF03 △ | A definir |
+| RF31 | US31 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF32 | US32 | Entrega posterior | RNF02 △, RNF03 △ | A definir |
+| RF33 | US33 | Entrega posterior | Inspeção do RF · transversais | A definir |
+| RF34 | US34 | Entrega posterior | RNF02 △, RNF03 △ | A definir |
+| RF35 | US35 *(a criar no Notion)* | Entrega posterior — 1º item | RNF02 △, RNF03 △ | A definir |
+| RF36 | US36 *(a criar no Notion)* | MVP · Iteração 5 | RNF02 △, RNF03 △ | A definir na Iteração 5 |
 
 **Cobertura *forward* por critério de verificação**
 
 | Situação | Quantidade | RFs |
 |---|:---:|---|
-| Possui RNF específico com critério de validação mensurável | 11 | RF02, RF03, RF04, RF06, RF07, RF08, RF11, RF12, RF13, RF14, RF15 |
-| Coberto apenas pelos critérios transversais (RNF10, RNF11) + inspeção do RF | 16 | RF01, RF05, RF09, RF10, RF16, RF17, RF18, RF19, RF20, RF21, RF22, RF23, RF24, RF25, RF26, RF27 |
+| Possui RNF específico do quadro com critério de validação mensurável | 11 | RF02, RF03, RF04, RF06, RF07, RF08, RF11, RF12, RF13, RF14, RF15 |
+| Possui apenas RNF com vínculo proposto (△) e critério mensurável | 6 | RF29, RF30, RF32, RF34, RF35, RF36 |
+| Coberto apenas pelos critérios transversais (RNF10, RNF11) + inspeção do RF | 19 | RF01, RF05, RF09, RF10, RF16, RF17, RF18, RF19, RF20, RF21, RF22, RF23, RF24, RF25, RF26, RF27, RF28, RF31, RF33 |
 
-A concentração de critérios mensuráveis em 11 dos 27 requisitos é registrada como achado 11 —
-não é erro, mas indica onde a especificação de qualidade ainda pode ser adensada.
+A concentração de critérios mensuráveis em 17 dos 36 requisitos (11 pelo quadro e 6 por
+vínculo proposto) é registrada como achado 11 — não é erro, mas indica onde a especificação
+de qualidade ainda pode ser adensada.
 
 ### 11.7.3 Elo reverso dos requisitos não funcionais
 
@@ -421,16 +463,16 @@ Percurso inverso, do RNF para o conjunto de requisitos funcionais que ele condic
 
 | RNF | RFs condicionados | No MVP | Fora do MVP | Classificação no MVP |
 |---|---|---|---|---|
-| RNF01 | RF03, RF14 | — | RF03, RF14 | Associado ao MVP (via RF22) |
-| RNF02 | RF04, RF06, RF07, RF12 | RF04, RF06, RF12 | RF07 | Obrigatório |
-| RNF03 | RF04, RF06, RF11 | RF04, RF06, RF11 | — | Obrigatório |
+| RNF01 | RF03, RF14 · △ RF29 | — | RF03, RF14, RF29 | Associado ao MVP (via RF21 e RF22; atendido por padrão, ver Seção 10.3.3) |
+| RNF02 | RF04, RF06, RF07, RF12 · △ RF30, RF32, RF34, RF35, RF36 | RF04, RF06, RF07, RF12, RF36 | RF30, RF32, RF34, RF35 | Obrigatório |
+| RNF03 | RF04, RF06, RF11 · △ RF30, RF32, RF34, RF35, RF36 | RF04, RF06, RF11, RF36 | RF30, RF32, RF34, RF35 | Obrigatório |
 | RNF04 | RF04, RF08 *(+ seta em RF02)* | RF04, RF02 | RF08 | Obrigatório |
 | RNF06 | RF13 | RF13 | — | Associado ao MVP |
 | RNF07 | RF15 | RF15 | — | Associado ao MVP |
 | RNF08 | RF04 *(+ seta em RF02)* | RF04, RF02 | — | Obrigatório |
 | RNF09 | RF11 | RF11 *(escopo reduzido)* | — | Evolutivo |
-| RNF10 | Todos os 27 RFs | 15 | 12 | Obrigatório |
-| RNF11 | Todos os 27 RFs | 15 | 12 | Obrigatório |
+| RNF10 | Todos os 36 RFs | 22 | 14 | Obrigatório |
+| RNF11 | Todos os 36 RFs | 22 | 14 | Obrigatório |
 
 A coluna de classificação reproduz o tratamento definido na
 [Seção 10.2](../10-mvp/#rnfs-mvp).
@@ -440,7 +482,7 @@ A coluna de classificação reproduz o tratamento definido na
 Pontos em que o quadro de origem está incompleto, contraditório ou desalinhado com os demais
 artefatos do projeto.
 
-**Severidade:** ALTA: 2 · MÉDIA: 5 · BAIXA: 3 · INFO: 2
+**Severidade:** ALTA: 3 · MÉDIA: 5 · BAIXA: 3 · INFO: 2 · **Resolvidos:** 05, 07 e 13
 
 ### 11.8.1 Severidade ALTA
 
@@ -456,6 +498,16 @@ sobrecarga" (RF02), mas o campo RFs dessas RNFs cita "Registrar sintomas e dispo
 RF02.
 → *Recomendação:* decidir se "Sinalizar sobrecarga" é o próprio registro de disposição — e
 então renomear e unificar — ou mover as setas para o novo card RF04.
+
+**13 · Mesmo identificador para requisitos diferentes entre catálogo e priorização**
+Até a versão 0.4 das Seções 9 e 10, **RF28** era "Exportar relatório de sintomas" e **RF29**
+era "Excluir conta e dados", enquanto o catálogo da Seção 8, as histórias US28/US29 e o
+backlog já usavam RF28 para "Consultar funcionamento do ciclo" e RF29 para "Gerenciar
+notificações". Com isso, "Excluir conta e dados", um *Must have* exigido pela LGPD, não
+estava no catálogo nem no backlog, e os RF28–RF34 do catálogo não tinham sido priorizados.
+→ *Situação:* **resolvido** em 12/10/2026. Os dois requisitos novos das Seções 9 e 10
+passaram a ser **RF35** e **RF36** e entraram no catálogo; os RF28–RF34 foram avaliados na
+[Seção 9.9](../09-priorizacao-de-requisitos/#reavaliacao-acrescentados).
 
 ### 11.8.2 Severidade MÉDIA
 
@@ -475,6 +527,8 @@ pressupõe uma configuração para desativar a exibição de informações do ci
 e essa configuração não existe como RF.
 → *Recomendação:* criar um RF de preferência, por exemplo "Configurar privacidade das
 notificações", em CP7 ou CP3.
+→ *Situação:* **resolvido** pelo **RF29** (Gerenciar notificações), acrescentado à CP7 na
+[Seção 8](../08-requisitos-de-software/#cp7).
 
 **06 · "Visualizar calendário do ciclo" fora da característica natural**
 O RF está sob CP3 (Privacidade), mas trata de acompanhar as fases do ciclo, que é o escopo da
@@ -487,6 +541,8 @@ tarefas" / CP2 "Motor reativo de realocação silenciosa". O quadro usa OE1–OE
 outro conteúdo.
 → *Recomendação:* atualizar as seções 2.2 e 2.3 da Visão (e o GitPages) com a estrutura do
 quadro.
+→ *Situação:* **resolvido**. A [Seção 2](../02-solucao-proposta/) já usa OE1–OE3 e CP1–CP7
+da Matriz v1.0.
 
 ### 11.8.3 Severidade BAIXA
 
@@ -513,8 +569,9 @@ erros de digitação.
 ### 11.8.4 Severidade INFO
 
 **11 · Cobertura de RNFs específicos**
-16 de 27 RFs só são cobertos pelas RNFs transversais: RF01, RF05, RF09, RF10, RF16, RF17, RF18,
-RF19, RF20, RF21, RF22, RF23, RF24, RF25, RF26, RF27. CP6 e CP7 não têm nenhum RNF específico.
+19 de 36 RFs só são cobertos pelas RNFs transversais: RF01, RF05, RF09, RF10, RF16, RF17, RF18,
+RF19, RF20, RF21, RF22, RF23, RF24, RF25, RF26, RF27, RF28, RF31 e RF33. Pelo quadro, CP6 e
+CP7 não tinham nenhum RNF específico; hoje têm apenas os vínculos propostos (△) de RF32 e RF29.
 → *Recomendação:* não é um erro. Vale avaliar RNFs para CRUD de tarefas (ex.: tempo de
 resposta) e para Criar/Recuperar conta (ex.: segurança da senha).
 
@@ -532,3 +589,5 @@ para deixar a árvore de valor mais nítida.
 - Reações (estrelas, corações) e autoria dos cards **não** foram consideradas.
 - Os RFs **não têm ID no quadro**; RF01–RF27 são propostos na Matriz de Rastreabilidade v1.0 e
   devem ser confirmados pela equipe.
+- Os **RF28–RF36** foram acrescentados depois, sem card. Seus vínculos com CP, OE e RNF vêm
+  do catálogo da [Seção 8](../08-requisitos-de-software/) e são marcados com **△**.

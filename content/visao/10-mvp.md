@@ -7,20 +7,25 @@ resumo: "Requisitos funcionais selecionados para o MVP, classificação dos requ
 
 > **Fonte e status desta seção.** A composição do MVP deriva diretamente da matriz 4 × 4 da
 > [Seção 9.7](../09-priorizacao-de-requisitos/#matriz-4x4).
-> A numeração **RF01–RF27** e **RNF01–RNF11** segue a **Matriz de Rastreabilidade de
-> Requisitos v1.0** (quadro *MindCycle – Figma*, extração de 28/09/2026), fonte oficial de
-> requisitos do projeto.
+> A numeração segue o catálogo da [Seção 8](../08-requisitos-de-software/): **RF01–RF27** e
+> **RNF01–RNF11** vêm da **Matriz de Rastreabilidade de Requisitos v1.0** (quadro
+> *MindCycle – Figma*, extração de 28/09/2026), fonte oficial de requisitos do projeto, e
+> **RF28–RF36** foram acrescentados depois pela equipe.
 >
-> **Versão:** 0.4 · **Data:** 12/10/2026 · **Status:** MVP proposto pela equipe com 14 dos 29
+> **Versão:** 0.5 · **Data:** 12/10/2026 · **Status:** MVP proposto pela equipe com 14 dos 36
 > RFs validados individualmente com a cliente (Seção 9.8); validação formal do **MVP
-> consolidado ainda pendente** (ver Seção 10.4).
+> consolidado ainda pendente** (ver Seção 10.4). Na versão 0.5, "exportar relatório de
+> sintomas" e "excluir conta e dados" passaram a ser **RF35** e **RF36** (eram RF28 e RF29,
+> números que o catálogo já usava para outros requisitos), e os RF28–RF34 do catálogo foram
+> avaliados pela primeira vez ([Seção 9.9](../09-priorizacao-de-requisitos/#reavaliacao-acrescentados)).
 
 ## 10.1 Requisitos funcionais selecionados para o MVP
 
-O MVP é composto por **21 dos 29 requisitos funcionais** do catálogo (18 depois da reunião de
-validação de 05/10/2026, mais RF05, RF26 e RF29, incluídos depois de revisão técnica da
-equipe em 12/10/2026). A seleção combina dois critérios: (i) o posicionamento do requisito
-nos quadrantes de prioridade da matriz 4 × 4 e (ii) a formação de um **fluxo de uso coerente e
+O MVP é composto por **22 dos 36 requisitos funcionais** do catálogo: 18 depois da reunião
+de validação de 05/10/2026, mais RF05, RF26 e RF36, incluídos depois de revisão técnica da
+equipe, e RF28, incluído na reavaliação dos requisitos acrescentados ao catálogo, ambas em
+12/10/2026. A seleção combina dois critérios: (i) o posicionamento do requisito nos
+quadrantes de prioridade da matriz 4 × 4 e (ii) a formação de um **fluxo de uso coerente e
 completo**, capaz de ser exercitado de ponta a ponta por uma usuária real.
 
 ### 10.1.1 Requisitos incluídos
@@ -31,52 +36,77 @@ completo**, capaz de ser exercitado de ponta a ponta por uma usuária real.
 | 2 | RF26 | Recuperar acesso à conta | CP7 | OE3 | 3 | 1,7 | Candidato ao MVP | Evita o beco sem saída do PIN esquecido (ver 10.3.1) |
 | 3 | RF12 | Aceitar termos de uso | CP3 | OE1 | 4 | 1,0 | Prioridade máxima | Pré-condição legal (LGPD) para coletar qualquer dado |
 | 4 | RF11 | Proteger acesso com PIN | CP3 | OE1 | 4 | 1,0 | Prioridade máxima | Proteção do dado sensível de saúde, com PIN numérico (**escopo reduzido**, ver 10.3.1) |
-| 5 | RF29 | Excluir conta e dados | CP3 | OE1 | 4 | 1,0 | Prioridade máxima | Direito legal da titular (LGPD, art. 18); contrapartida do consentimento do RF12 |
+| 5 | RF36 | Excluir conta e dados | CP3 | OE1 | 4 | 1,0 | Prioridade máxima | Direito legal da titular (LGPD, art. 18); contrapartida do consentimento do RF12 |
 | 6 | RF06 | Registrar início da menstruação | CP2 | OE1 | 4 | 1,3 | Prioridade máxima | Dado objetivo que calibra a fase do ciclo; valor confirmado com a cliente |
 | 7 | RF07 | Informar características do ciclo | CP2 | OE1 | 3 | 1,3 | Forte candidato | Duração média do ciclo: dependência estrutural do cálculo de fase, não só educação |
 | 8 | RF09 | Recomendar conteúdos sobre o ciclo | CP2 | OE1 | 3 | 1,3 | Forte candidato | Reduz autoculpa; validado com entusiasmo pela cliente |
-| 9 | RF05 | Consultar situação atual do ciclo | CP2 | OE1 | 2 | 1,3 | Avaliar oportunidade | Exibe a fase que o RF06+RF07 já calculam no MVP (ver 10.3.1) |
-| 10 | RF01 | Consultar sintomas comuns da fase | CP1 | OE1 | 3 | 1,3 | Forte candidato | Base de leitura que habilita a sinalização do RF02 |
-| 11 | RF04 | Registrar sintomas e disposição | CP1 | OE1 | 4 | 2,0 | Forte candidato | *Check-in* diário; dado-fonte de RF02, RF13 e RF15 |
-| 12 | RF02 | Sinalizar sobrecarga | CP1 | OE1 | 4 | 2,0 | Forte candidato | Resposta imediata à sobrecarga, a qualquer momento do dia |
-| 13 | RF13 | Recomendar tarefas do dia | CP4 | OE2 | 4 | 2,7 | Avaliar viabilidade | Promessa central do produto |
-| 14 | RF17 | Cadastrar tarefa | CP5 | OE3 | 4 | 1,0 | Prioridade máxima | Laço mínimo de valor |
-| 15 | RF16 | Editar tarefa | CP5 | OE3 | 4 | 1,0 | Prioridade máxima | Correção de erro de cadastro |
-| 16 | RF18 | Adiar tarefa | CP5 | OE3 | 4 | 1,0 | Prioridade máxima | Identidade do produto: adiar sem culpa; valor confirmado com a cliente |
-| 17 | RF19 | Excluir tarefa | CP5 | OE3 | 3 | 1,0 | Forte candidato | Fecha o CRUD de tarefas a custo nulo |
-| 18 | RF20 | Concluir tarefa | CP5 | OE3 | 4 | 1,0 | Prioridade máxima | Fecha o laço mínimo de valor |
-| 19 | RF15 | Reajustar recomendação do dia | CP5 | OE3 | 4 | 2,7 | Avaliar viabilidade | Diferencial central: realocação por disposição; valor confirmado com a cliente |
-| 20 | RF21 | Sugerir atividades de acolhimento | CP5 | OE3 | 3 | 2,0 | Candidato ao MVP | Atividade física e respiração defendidas com força pela cliente; v1 traz sugestão estática |
-| 21 | RF22 | Receber mensagens de acolhimento | CP5 | OE3 | 4 | 1,7 | Forte candidato | Tom acolhedor que atravessa todo o percurso; valor confirmado com a cliente |
+| 9 | RF28 | Consultar funcionamento do ciclo | CP2 | OE1 | 3 | 1,3 | Forte candidato | Educação sobre regularidade pedida pela cliente; nota ainda em hipótese (ver 10.3.1) |
+| 10 | RF05 | Consultar situação atual do ciclo | CP2 | OE1 | 2 | 1,3 | Avaliar oportunidade | Exibe a fase que o RF06+RF07 já calculam no MVP (ver 10.3.1) |
+| 11 | RF01 | Consultar sintomas comuns da fase | CP1 | OE1 | 3 | 1,3 | Forte candidato | Conteúdo sobre os sintomas típicos da fase atual; reduz estranheza e autoculpa |
+| 12 | RF04 | Registrar sintomas e disposição | CP1 | OE1 | 4 | 2,0 | Forte candidato | *Check-in* diário; dado-fonte de RF02, RF13 e RF15 |
+| 13 | RF02 | Sinalizar sobrecarga | CP1 | OE1 | 4 | 2,0 | Forte candidato | Resposta imediata à sobrecarga, a qualquer momento do dia |
+| 14 | RF13 | Recomendar tarefas do dia | CP4 | OE2 | 4 | 2,7 | Avaliar viabilidade | Promessa central do produto |
+| 15 | RF17 | Cadastrar tarefa | CP5 | OE3 | 4 | 1,0 | Prioridade máxima | Laço mínimo de valor; registra a energia necessária usada por RF13 e RF15 |
+| 16 | RF16 | Editar tarefa | CP5 | OE3 | 4 | 1,0 | Prioridade máxima | Correção de erro de cadastro |
+| 17 | RF18 | Adiar tarefa | CP5 | OE3 | 4 | 1,0 | Prioridade máxima | Identidade do produto: adiar sem culpa; valor confirmado com a cliente |
+| 18 | RF19 | Excluir tarefa | CP5 | OE3 | 3 | 1,0 | Forte candidato | Fecha o CRUD de tarefas a custo nulo |
+| 19 | RF20 | Concluir tarefa | CP5 | OE3 | 4 | 1,0 | Prioridade máxima | Fecha o laço mínimo de valor |
+| 20 | RF15 | Reajustar recomendação do dia | CP5 | OE3 | 4 | 2,7 | Avaliar viabilidade | Diferencial central: realocação por disposição; valor confirmado com a cliente |
+| 21 | RF21 | Sugerir atividades de acolhimento | CP5 | OE3 | 3 | 2,0 | Candidato ao MVP | Atividade física e respiração defendidas com força pela cliente; v1 traz sugestão estática |
+| 22 | RF22 | Receber mensagens de acolhimento | CP5 | OE3 | 4 | 1,7 | Forte candidato | Tom acolhedor que atravessa todo o percurso; valor confirmado com a cliente |
 
 **Cobertura do MVP por característica e objetivo**
 
 | CP | Característica | OE | RFs no MVP | RFs fora | Cobertura |
 |---|---|:--:|---|---|:--:|
-| CP1 | Registro e análise de sintomas e disposição | OE1 | RF01, RF02, RF04 | RF03 | 3/4 |
-| CP2 | Acompanhamento do ciclo menstrual | OE1 | RF05, RF06, RF07, RF09 | RF08 | 4/5 |
-| CP3 | Privacidade dos dados da usuária | OE1 | RF11, RF12, RF29 | RF10 | 3/4 |
+| CP1 | Registro e análise de sintomas e disposição | OE1 | RF01, RF02, RF04 | RF03, RF30, RF34, RF35 | 3/7 |
+| CP2 | Acompanhamento do ciclo menstrual | OE1 | RF05, RF06, RF07, RF09, RF28 | RF08 | 5/6 |
+| CP3 | Privacidade dos dados da usuária | OE1 | RF11, RF12, RF36 | RF10 | 3/4 |
 | CP4 | Planejamento adaptativo das tarefas | OE2 | RF13 | RF14 | 1/2 |
-| CP5 | Gestão acolhedora da carga diária | OE3 | RF15, RF16, RF17, RF18, RF19, RF20, RF21, RF22 | — | 8/8 |
-| CP6 | Reconhecimento de ritmo sustentável | OE3 | — | RF23, RF24 | 0/2 |
-| CP7 | Conta e preferências da usuária | OE3 | RF25, RF26 | RF27 | 2/3 |
+| CP5 | Gestão acolhedora da carga diária | OE3 | RF15, RF16, RF17, RF18, RF19, RF20, RF21, RF22 | RF33 | 8/9 |
+| CP6 | Reconhecimento de ritmo sustentável | OE3 | — | RF23, RF24, RF31, RF32 | 0/4 |
+| CP7 | Conta e preferências da usuária | OE3 | RF25, RF26 | RF27, RF29 | 2/4 |
 
-Seis das sete características de produto estão representadas no MVP, incluindo agora a CP5
-por completo. A exceção é a **CP6** (Reconhecimento de ritmo sustentável), cuja natureza
-retrospectiva a torna inaplicável em uma primeira versão; justificativa em 10.3.4.
+Seis das sete características de produto estão representadas no MVP. A CP5 tem 8 dos seus 9
+RFs no MVP; fica de fora apenas o RF33, refinamento do RF21. A exceção é a **CP6**
+(Reconhecimento de ritmo sustentável), cuja natureza retrospectiva a torna inaplicável em
+uma primeira versão; justificativa em 10.3.4.
 
 ### 10.1.2 Requisitos excluídos do MVP
 
 | RF | Requisito | CP | Valor | Esforço | Motivo da exclusão |
 |---|---|---|:---:|:---:|---|
 | RF03 | Receber lembrete de registro | CP1 | 2 | 2,0 | Validado como ideia pela cliente, mas o fluxo funciona sem lembrete. |
-| RF08 | Estimar fase do ciclo por sintomas | CP2 | 2 | 2,7 | Refinamento, não base do cálculo: o RF06 cobre a função no MVP a custo muito menor. |
+| RF08 | Estimar fase do ciclo por sintomas | CP2 | 2 | 2,7 | Refinamento, não base do cálculo: RF06 e RF07 cobrem a função no MVP a custo muito menor. |
 | RF10 | Visualizar calendário do ciclo | CP3 | 2 | 2,0 | Validado como útil pela cliente, mas não crítico ao fluxo diário. |
 | RF14 | Receber resumo do dia | CP4 | 2 | 1,3 | Conveniência de visualização; o plano já existe via RF13. |
 | RF23 | Gerar retrospectiva mensal | CP6 | 2 | 2,0 | Validado e refinado pela cliente, mas depende de histórico que o MVP ainda não produz. |
 | RF24 | Registrar atividade de acolhimento | CP6 | 2 | 1,0 | Alimenta o RF23; sai junto com ele. |
 | RF27 | Conhecer a proposta do sistema | CP7 | 2 | 1,3 | *Onboarding*; ajuda a adesão, mas não bloqueia o uso. |
-| RF28 | Exportar relatório de sintomas | Novo | 3 | 2,3 | **Requisito novo, ficou fora por pouco:** forte candidato à próxima *release* (ver 10.3.3). |
+| RF29 | Gerenciar notificações | CP7 | 3 | 2,0 | Sem objeto no MVP, que não emite notificações; entra junto com RF03 e RF14 (ver 10.3.3). |
+| RF30 | Gerenciar medicações | CP1 | 2 | 1,3 | Dado sensível sem uso no fluxo do MVP; coletá-lo agora contraria a minimização (RNF proposto, 10.2). |
+| RF31 | Comparar relatórios mensais | CP6 | 2 | 2,3 | Exige ao menos dois meses de histórico e um relatório mensal que nenhum RF gera ainda. |
+| RF32 | Exportar relatório mensal | CP6 | 2 | 2,3 | Mesma dependência do RF31; o uso clínico é atendido antes pelo RF35. |
+| RF33 | Registrar atividades de acolhimento favoritas | CP5 | 2 | 1,0 | Só faz diferença quando as sugestões do RF21 deixarem de ser estáticas. |
+| RF34 | Registrar diagnósticos prévios | CP1 | 2 | 1,3 | Mesmo caso do RF30; base dos alertas clínicos adiados na Seção 9.8.2. |
+| RF35 | Exportar relatório de sintomas | CP1 | 3 | 2,3 | **Ficou fora por pouco:** forte candidato à próxima *release* (ver 10.3.3). |
+
+### 10.1.3 Alocação às iterações da Construção {#alocacao-iteracoes}
+
+Os 22 RFs do MVP foram distribuídos entre as duas iterações da Construção
+([Seção 6](../06-cronograma-e-entregas/)) de forma que cada requisito chegue com as suas
+dependências (10.3.3) na mesma iteração ou em uma anterior, como exige o item 6 do
+[DoR](../12-dor-e-dod/).
+
+| Iteração | Período | RFs | Foco | Esforço somado |
+|---|---|---|---|:---:|
+| **Iteração 5** | 13/10 a 27/10/2026 | RF25, RF12, RF11, RF26, RF36, RF06, RF07, RF05, RF01, RF04, RF02 | Conta, consentimento e acesso (LGPD); calibração do ciclo; *check-in* diário | 15,2 |
+| **Iteração 6** | 27/10 a 10/11/2026 | RF17, RF16, RF18, RF19, RF20, RF13, RF15, RF09, RF28, RF21, RF22 | Tarefas, recomendação e reajuste; conteúdos e acolhimento; integração do MVP | 16,7 |
+
+O RF07 vai para a Iteração 5 porque sem ele não há cálculo de fase, do qual dependem RF01 e
+RF05. RF09 e RF28 ficam na Iteração 6 porque são conteúdo cuja curadoria corre em paralelo
+com a cliente (nota da Seção 9.5). A coluna de esforço soma as notas consolidadas da
+Seção 9.5 e serve só para comparar a carga das duas iterações; não é estimativa em horas.
 
 ## 10.2 Requisitos não funcionais aplicáveis ao MVP {#rnfs-mvp}
 
@@ -94,9 +124,9 @@ categorias:
 
 | RNF | Requisito | Categoria (URPS+/Sommerville) | Classificação | Observação |
 |---|---|---|---|---|
-| RNF01 | As notificações não devem exibir informações sobre ciclo, sintomas ou disposição sem autorização da usuária. | Segurança da informação | **Associado a RF do MVP** | Os RFs originalmente citados (RF03 e RF14) ficaram fora do MVP, mas o princípio vale para RF21 e RF22, que estão no MVP. |
-| RNF02 | O tratamento dos dados deve atender à LGPD (Lei nº 13.709/2018), considerando dados de saúde como dados pessoais sensíveis. | Externo (Legislativo) | **Obrigatório** | Aplica-se a RF04, RF06, RF12 e RF29 — todos no MVP. O RF29 (excluir conta e dados) é a contrapartida do art. 18 da LGPD ao consentimento coletado pelo RF12. |
-| RNF03 | Os dados de ciclo, sintomas, disposição e tarefas devem ser acessíveis somente pela própria usuária. | Segurança da informação | **Obrigatório** | Aplica-se a RF04, RF06, RF11 e RF29 — todos no MVP. O RF26 (recuperar acesso) foi desenhado para não violar este RNF: ver 10.3.1. |
+| RNF01 | As notificações não devem exibir informações sobre ciclo, sintomas ou disposição sem autorização da usuária. | Segurança da informação | **Associado a RF do MVP** | Os RFs citados no quadro (RF03 e RF14) e o RF29, que dá à usuária o controle previsto no critério, ficaram fora do MVP. O princípio vale para RF21 e RF22, que estão no MVP; na primeira versão eles aparecem só dentro do aplicativo, sem notificação do sistema, o que atende ao RNF01 por padrão (ver 10.3.3). |
+| RNF02 | O tratamento dos dados deve atender à LGPD (Lei nº 13.709/2018), considerando dados de saúde como dados pessoais sensíveis. | Externo (Legislativo) | **Obrigatório** | Aplica-se a RF04, RF06, RF07, RF12 e RF36 — todos no MVP. O RF36 (excluir conta e dados) é a contrapartida do art. 18 da LGPD ao consentimento coletado pelo RF12. |
+| RNF03 | Os dados de ciclo, sintomas, disposição e tarefas devem ser acessíveis somente pela própria usuária. | Segurança da informação | **Obrigatório** | Aplica-se a RF04, RF06, RF11 e RF36 — todos no MVP. O RF26 (recuperar acesso) foi desenhado para não violar este RNF: ver 10.3.1. |
 | RNF04 | O registro de sintomas e disposição deve exigir poucas interações (no máximo 3 toques). | Usabilidade | **Obrigatório** | Alvo direto do RF04, a ação mais frequente do produto. |
 | RNF06 | A recomendação do dia deve ser exibida em até 3 segundos após o acesso. | Desempenho | **Associado a RF do MVP** | Meta de qualidade do RF13. |
 | RNF07 | O reajuste da recomendação deve aparecer em até 2 segundos após o registro de disposição. | Desempenho | **Associado a RF do MVP** | Meta de qualidade do RF15. |
@@ -118,7 +148,7 @@ categorias:
 ### 10.2.2 Observações sobre a classificação
 
 - **Nenhum RNF foi classificado como "não aplicável ao MVP".** O único candidato natural
-  seria o RNF01, cujos RFs citados no quadro (RF03 e RF14) ficaram ambos fora do MVP; a
+  seria o RNF01, cujos RFs vinculados (RF03, RF14 e RF29) ficaram todos fora do MVP; a
   equipe optou por mantê-lo como *associado*, porque o mesmo princípio de não exposição de
   dado sensível em notificação incide sobre RF21 e RF22, ambos no MVP.
 - **Privacidade, LGPD e desempenho do *check-in* não foram adiados.** RNF02, RNF03, RNF04 e
@@ -167,11 +197,11 @@ do MVP.
 
 **RF05: consultar situação atual do ciclo.** Caiu no quadrante *avaliar oportunidade* (valor
 2, esforço baixo 1,3), fora das faixas de inclusão automática, mas a equipe decidiu
-incluí-lo: o RF06, que está no MVP, já calcula a fase do ciclo; sem o RF05, esse dado existe
-no sistema mas não é exibido à usuária em lugar nenhum, o que esvazia parte do propósito do
-próprio RF06. É leitura de um dado que o MVP já produz, a custo quase nulo. A exclusão
-anterior fazia sentido apenas enquanto o RF05 dependia do RF08 (também fora do MVP); deixou
-de fazer sentido quando o RF06 passou a cobrir essa função (10.3.3).
+incluí-lo: o MVP já calcula a fase do ciclo a partir de RF06 e RF07; sem o RF05, esse dado
+existe no sistema mas não é exibido à usuária em lugar nenhum, o que esvazia parte do
+propósito dos próprios RF06 e RF07. É leitura de um dado que o MVP já produz, a custo quase
+nulo. A exclusão anterior fazia sentido apenas enquanto o RF05 dependia do RF08 (também fora
+do MVP); deixou de fazer sentido quando RF06 e RF07 passaram a cobrir essa função (10.3.3).
 
 **RF26: recuperar acesso à conta.** Está no quadrante *candidato ao MVP* (valor 3, esforço
 1,7) e a equipe decidiu incluí-lo, revertendo a decisão anterior. A justificativa de exclusão
@@ -182,6 +212,12 @@ acessar ou resetar a conta de uma usuária para recuperar seu acesso, o controle
 trancada para fora dos próprios dados de saúde, o que é uma falha grave de usabilidade num
 produto cujo dado mais sensível está justamente atrás desse PIN. Entra no MVP sem redução de
 escopo.
+
+**RF28: consultar funcionamento do ciclo.** Está no quadrante *forte candidato ao MVP*
+(valor 3, esforço 1,3) e entra como os demais requisitos desse quadrante. Vale registrar
+que sua nota de valor é **hipótese da equipe**: a cliente pediu o requisito, mas ainda não
+o pontuou (Seção 9.9). Se a validação baixar a nota para 2, o RF28 passa a *avaliar
+oportunidade* e pode sair do MVP sem afetar nenhum outro requisito, pois nenhum depende dele.
 
 ### 10.3.2 Coerência da solução mínima e fluxo de valor
 
@@ -196,7 +232,7 @@ contínuo**, em que cada etapa produz o insumo da etapa seguinte.
   [2] Calibração do ciclo
       RF06 Registrar início da menstruação → RF07 Informar características do ciclo
       RF05 Consultar situação atual → RF01 Consultar sintomas da fase
-      RF09 Receber conteúdo explicativo
+      RF09 Receber conteúdo explicativo · RF28 Consultar funcionamento do ciclo
                                   ↓
   [3] Check-in diário
       RF04 Registrar sintomas e disposição → RF02 Sinalizar sobrecarga
@@ -211,7 +247,7 @@ contínuo**, em que cada etapa produz o insumo da etapa seguinte.
   RF21 Sugerir atividades de acolhimento e RF22 Receber mensagens de acolhimento
   atravessam todas as cinco etapas
 
-  RF29 Excluir conta e dados é um fluxo de saída, à parte do percurso principal,
+  RF36 Excluir conta e dados é um fluxo de saída, à parte do percurso principal,
   disponível a qualquer momento nas configurações da conta
 ```
 
@@ -234,17 +270,19 @@ de requisito excluído:
 |---|---|---|
 | Todos os RFs | RF25 Criar conta | ✅ Incluído — pré-requisito estrutural |
 | Qualquer coleta de dado | RF12 Aceitar termos de uso | ✅ Incluído — pré-condição legal (RNF02) |
-| RF02 Sinalizar sobrecarga | RF01 e RF04 (registro do estado) | ✅ Ambos incluídos |
-| RF13 Recomendar tarefas do dia | RF04 (disposição) e RF17 (tarefas existentes) | ✅ Ambos incluídos |
+| RF02 Sinalizar sobrecarga | RF04 (registro do estado) | ✅ Incluído — o RF01 é conteúdo de leitura e não é dependência do RF02 (Seção 9.8.1) |
+| RF01 Consultar sintomas comuns da fase | Cálculo da fase (RF06 + RF07) | ✅ Ambos incluídos |
+| RF09 Recomendar conteúdos sobre o ciclo | Cálculo da fase (RF06 + RF07) e RF04 (sintomas registrados) | ✅ Todos incluídos |
+| RF13 Recomendar tarefas do dia | RF04 (disposição) e RF17 (tarefas com energia necessária, prazo e prioridade) | ✅ Ambos incluídos |
 | RF15 Reajustar recomendação | RF04, RF02 e RF13 | ✅ Todos incluídos |
 | RF16, RF18, RF19, RF20 | RF17 Cadastrar tarefa | ✅ Incluído |
 | RF11 Proteger acesso com PIN | RF25 Criar conta | ✅ Incluído |
 | RF26 Recuperar acesso à conta | RF11 Proteger acesso com PIN (RF26 é o caminho de contorno do PIN esquecido) | ✅ Incluído |
-| RF29 Excluir conta e dados | RF25 Criar conta | ✅ Incluído |
+| RF36 Excluir conta e dados | RF25 Criar conta | ✅ Incluído |
 | RF05 Consultar situação atual do ciclo | RF06 + RF07 (fase do ciclo calculada) | ✅ Todos incluídos |
 | Cálculo da fase do ciclo | RF06 (data de início) **+** RF07 (duração média do ciclo) | ✅ Ambos incluídos — RF06 isolado não basta: sem a duração média do RF07, não há como saber em que fase a usuária está. A alternativa RF08 (estimar por sintomas) ficou fora, por esforço maior (2,7 contra 1,3 de cada um de RF06/RF07) |
 
-Duas observações sobre dependências resolvidas por escolha de rota:
+Três observações sobre dependências resolvidas por escolha de rota:
 
 - **RF05 depende do cálculo de fase (RF06 + RF07), não do RF08.** O RF05 (consultar situação
   atual do ciclo) lê o dado de fase calculado. Na proposta anterior, esse cálculo vinha do
@@ -254,37 +292,47 @@ Duas observações sobre dependências resolvidas por escolha de rota:
 - **RF23 dependia do RF24.** A retrospectiva mensal se alimenta do registro de atividades de
   acolhimento. Os dois requisitos da CP6 saem em conjunto, preservando a consistência do
   recorte.
+- **RF31 e RF32 dependem de um relatório mensal que nenhum RF gera.** A lacuna está
+  registrada na [Seção 8](../08-requisitos-de-software/#cp6) e os dois saem com o restante
+  da CP6.
 
-**Decisão de corte registrada — RF26 (Recuperar acesso à conta).** É o requisito que ficou
-fora por menor margem: valor 3 (*Should have*) e esforço baixo (1,7), posicionado no
-quadrante *candidato ao MVP*. A equipe reconhece que "dado de saúde trancado é sério" e que o
-requisito quase se tornou *Must have*. Ficou de fora porque **(i)** é contornável em um MVP
-de validação, no qual um *reset* manual conduzido pela equipe resolve o caso, e **(ii)** não
-é pré-requisito de nenhum outro requisito do fluxo mínimo. Está encaminhado como primeiro
-item da entrega seguinte.
+**Decisões de corte registradas — RF35 e RF29.** São os dois requisitos do quadrante
+*candidato ao MVP* que ficaram fora.
+
+- **RF35 (Exportar relatório de sintomas)** é o que ficou fora por menor margem: valor 3,
+  validado com entusiasmo pela cliente, e esforço 2,3. Saiu porque **(i)** não ataca a
+  sobrecarga executiva diretamente (10.3.4) e **(ii)** não é pré-requisito de nenhum outro
+  requisito do fluxo mínimo. Está encaminhado como primeiro item da entrega seguinte.
+- **RF29 (Gerenciar notificações)** não tem objeto no MVP. Nenhum requisito do MVP emite
+  notificação do sistema (RF03 e RF14 estão fora), e as mensagens e sugestões de acolhimento
+  (RF22 e RF21) aparecem só dentro do aplicativo. Assim, o RNF01 é atendido por padrão, já
+  que nenhuma informação de ciclo, sintoma ou disposição é exibida fora do app. O RF29 entra
+  junto com o primeiro requisito que emitir notificação.
 
 ### 10.3.4 Motivos de exclusão, por natureza do requisito
 
-Os oito requisitos fora do MVP se distribuem em três naturezas, nenhuma delas essencial à
-hipótese central do produto:
+Os catorze requisitos fora do MVP se distribuem em cinco naturezas, nenhuma delas essencial
+à hipótese central do produto:
 
 | Natureza | Requisitos | Por que é adiável |
 |---|---|---|
 | **Conveniência de visualização** | RF03, RF10, RF14, RF27 | Apresentam ou lembram informação que o MVP já produz ou já permite obter por outro caminho. |
-| **Refinamento e valor de médio prazo** | RF08, RF23, RF24 | Aumentam precisão, bem-estar ou retenção sobre um produto que precisa, antes, existir e ser exercitado. |
-| **Funcionalidade nova, fora do núcleo** | RF28 | Boa relação valor/esforço e bem recebida pela cliente, mas não ataca a sobrecarga executiva diretamente: é complementar ao problema central, não parte dele. |
+| **Refinamento e valor de médio prazo** | RF08, RF23, RF24, RF31, RF33 | Aumentam precisão, bem-estar, personalização ou retenção sobre um produto que precisa, antes, existir e ser exercitado. |
+| **Funcionalidade nova, fora do núcleo** | RF32, RF35 | Boa relação valor/esforço no caso do RF35, bem recebido pela cliente, mas não atacam a sobrecarga executiva diretamente: são complementares ao problema central, não parte dele. |
+| **Coleta de dado sensível sem uso no MVP** | RF30, RF34 | Acrescentariam dado de saúde que nenhum requisito do MVP usa; adiá-los segue a minimização proposta no RNF-novo (10.2.1). |
+| **Preferência sem objeto no MVP** | RF29 | Configura notificações que o MVP não emite (10.3.3). |
 
 O caso da **CP6 (Reconhecimento de ritmo sustentável)** merece registro próprio: é a única
 característica sem nenhum requisito no MVP. A razão é temporal, não de valor — na primeira
 versão a usuária mal terá um mês de dados registrados, e a retrospectiva teria pouco a
-mostrar. O RF23 e o RF24 ganham valor quando já existirem histórico e retenção, o que os
-torna material adequado para a v2.
+mostrar. RF23, RF24, RF31 e RF32 ganham valor quando já existirem histórico e retenção, o que
+os torna material adequado para a v2.
 
 ## 10.4 Evidência da validação com a cliente
 
 A reunião de 05/10/2026 validou o **valor de negócio de RFs individuais** (Seção 9.8), não
 o MVP consolidado como um todo. A validação do **MVP consolidado**, isto é, da lista fechada
-de 21 requisitos e das classificações de RNF desta Seção 10, é uma etapa posterior e
+de 22 requisitos e das classificações de RNF desta Seção 10, é uma etapa posterior e
 separada, já combinada com a cliente.
 
 ### 10.4.1 Registro da situação
@@ -295,18 +343,18 @@ separada, já combinada com a cliente.
 | **Quando ocorreu** | 05/10/2026, avaliação de RFs individuais, não do MVP consolidado. |
 | **MVP consolidado (Seção 10.1)** | Ainda não apresentado à cliente; é o resultado da análise de quadrantes feita depois da reunião. |
 | **RNFs aplicáveis (Seção 10.2)** | Classificação da equipe, não discutida diretamente com a cliente (fora do escopo clínico da conversa). |
-| **O que ficou para depois** | RF28 e os demais requisitos fora do MVP (Seção 10.1.2); o gesto de pétalas do RNF09; os temas fora de escopo registrados em 9.8.2. RF05, RF26 e RF29 foram incluídos por revisão técnica da equipe em 12/10/2026, sem contato direto com a cliente sobre essa inclusão. |
+| **O que ficou para depois** | RF35 e os demais requisitos fora do MVP (Seção 10.1.2); o gesto de pétalas do RNF09; os temas fora de escopo registrados em 9.8.2. RF05, RF26 e RF36 foram incluídos por revisão técnica da equipe, e RF28 pela reavaliação dos requisitos acrescentados ao catálogo, ambas em 12/10/2026, sem contato direto com a cliente sobre essas inclusões. |
 | **Próxima validação prevista** | Reunião de acompanhamento com a Dra. Cláudia em cerca de 4 semanas (final de outubro ou início de novembro de 2026), depois de fechar a lista com o professor e a monitoria, para validar o MVP consolidado. |
 
 > **Declaração de transparência.** A equipe registra com precisão o que foi e o que não foi
-> validado. Catorze dos 29 RFs têm nota de valor de negócio confirmada pela cliente, com
+> validado. Catorze dos 36 RFs têm nota de valor de negócio confirmada pela cliente, com
 > justificativa real, na [Seção 9.8](../09-priorizacao-de-requisitos/#roteiro-validacao). Os
 > demais seguem como *hipótese da equipe*. Nenhuma nota desta seção foi apresentada como
 > validada sem efetivamente ter sido.
 
 ### 10.4.2 Critérios adotados pela equipe para as notas ainda em hipótese
 
-Para os 15 RFs que permanecem em hipótese e para o MVP consolidado como um todo, a equipe
+Para os 22 RFs que permanecem em hipótese e para o MVP consolidado como um todo, a equipe
 adotou cinco medidas para que as decisões de escopo permanecessem auditáveis e reversíveis
 até a próxima validação:
 
@@ -316,7 +364,7 @@ até a próxima validação:
    Assim, nenhuma nota pôde ser ajustada depois para empurrar um requisito ao quadrante
    desejado, e cada nota é contestável pela cliente contra um critério explícito, não contra
    uma preferência da equipe.
-2. **Justificativa individual e rastreável por requisito.** Cada um dos 29 RFs tem
+2. **Justificativa individual e rastreável por requisito.** Cada um dos 36 RFs tem
    justificativa registrada de valor **e** de esforço. Na próxima validação, a cliente
    discutirá argumentos nomeados, não rótulos MoSCoW isolados, o que torna a revisão das
    notas um trabalho de conferência, e não de reconstrução.
@@ -328,7 +376,7 @@ até a próxima validação:
    preferência, mas de obrigação, a equipe decidiu pela via mais conservadora,
    independentemente da confirmação da cliente: LGPD (RNF02), controle de acesso ao dado
    sensível (RNF03) e acessibilidade (RNF11) foram mantidos como **obrigatórios**, e o RF11,
-   o RF12 e o RF29 permaneceram *Must have*. O RF29 (excluir conta e dados) é um exemplo
+   o RF12 e o RF36 permaneceram *Must have*. O RF36 (excluir conta e dados) é um exemplo
    direto deste princípio: nenhum RF correspondente existia no catálogo original, mas o art.
    18 da LGPD o torna obrigatório, com ou sem confirmação da cliente. Dado de saúde é
    exigência legal e ética antes de ser escolha de escopo.
@@ -340,14 +388,19 @@ até a próxima validação:
 
 ### 10.4.3 Encaminhamentos e condição de fechamento
 
+Duas ações das versões anteriores foram concluídas e saíram da lista: a formalização dos
+requisitos novos no catálogo (RF35 e RF36, [Seção 8](../08-requisitos-de-software/)) e o
+alinhamento das Seções 2.2 e 2.3 à Matriz v1.0 (achado 07 da
+[Seção 11.8](../11-rastreabilidade/#achados-consistencia)).
+
 | # | Ação | Responsável | Prazo |
 |:--:|---|---|---|
 | 1 | Fechar a lista de RFs do MVP (Seção 10.1) com o professor e a monitoria | Analistas de Requisitos | Antes do fechamento da Release 2 (13/10/2026) |
-| 2 | Formalizar o **RF28** (exportar relatório de sintomas) e o **RF29** (excluir conta e dados) no catálogo oficial de RFs ([Seção 8](../08-requisitos-de-software/)) | Analistas de Requisitos | Antes da próxima validação |
-| 3 | Submeter o **RNF-novo** (criptografia, minimização e transparência) à validação conjunta da equipe e da cliente, para incorporação formal ao catálogo | Analistas de Requisitos | Junto à ação 4 |
-| 4 | Agendar e realizar a reunião de acompanhamento com a Dra. Cláudia Araújo Bottino para validar o MVP consolidado | Analistas de Requisitos | ~4 semanas após 05/10/2026 |
-| 5 | Atualizar as Seções 9.4, 9.8 e 10.4.1 com as notas efetivamente validadas na reunião de acompanhamento, registrando as divergências em relação à hipótese | Analistas de Requisitos | Imediatamente após a reunião |
-| 6 | Alinhar os objetivos específicos e as características de produto das Seções 2.2 e 2.3 à Matriz de Rastreabilidade v1.0, encerrando o achado 07 da [Seção 11.8](../11-rastreabilidade/#achados-consistencia) (o catálogo da [Seção 8](../08-requisitos-de-software/) já foi alinhado) | Analistas de Requisitos | Antes do fechamento da Release 2 |
+| 2 | Confirmar com a cliente, no Planejamento da Iteração 5, a prioridade das histórias da iteração que seguem em hipótese (RF25, RF12, RF11, RF26, RF36, RF05 e RF01), exigida pelo item 2 do [DoR](../12-dor-e-dod/); a história não confirmada entra com NÃO justificado no Quadro 12.1 | Analistas de Requisitos | Planejamento da Iteração 5 (13/10/2026) |
+| 3 | Atualizar o backlog no Notion com a alocação da Seção 10.1.3 (US05, US07, US09, US21, US26 e US28 passam para as Iterações 5 e 6) e criar as histórias US35 e US36 | Analistas de Requisitos | Planejamento da Iteração 5 (13/10/2026) |
+| 4 | Submeter o **RNF-novo** (criptografia, minimização e transparência) à validação conjunta da equipe e da cliente, para incorporação formal ao catálogo | Analistas de Requisitos | Junto à ação 5 |
+| 5 | Agendar e realizar a reunião de acompanhamento com a Dra. Cláudia Araújo Bottino para validar o MVP consolidado, incluindo as notas em hipótese dos RFs acrescentados ao catálogo (RF28 a RF34 e RF36), em especial a do RF28, que entrou no MVP sem nota validada | Analistas de Requisitos | ~4 semanas após 05/10/2026 |
+| 6 | Atualizar as Seções 9.4, 9.8 e 10.4.1 com as notas efetivamente validadas na reunião de acompanhamento, registrando as divergências em relação à hipótese | Analistas de Requisitos | Imediatamente após a reunião |
 
-Esta seção somente será considerada **fechada** quando a ação 4 for concluída e o MVP
+Esta seção somente será considerada **fechada** quando a ação 5 for concluída e o MVP
 consolidado desta Seção 10 estiver validado pela cliente, não apenas os RFs individuais.
