@@ -147,9 +147,16 @@ disableKinds = ['taxonomy', 'term', 'rss']
 
 [[menus.main]]
   parent  = 'unidade-1'
+  name    = 'Lições Aprendidas'
+  identifier = 'licoes-u1'
+  pageRef = '/visao/licoes-aprendidas-u1'
+  weight  = 8
+
+[[menus.main]]
+  parent  = 'unidade-1'
   name    = 'Vídeo de Apresentação'
   pageRef = '/entregas/unidade-1'
-  weight  = 8
+  weight  = 9
 
 # --- Unidade 2 — Requisitos de Software -----------------------------
 # A Seção 13 (Backlog do Produto) e o vídeo da Unidade 2 ainda não foram
@@ -192,9 +199,10 @@ disableKinds = ['taxonomy', 'term', 'rss']
 
 [[menus.main]]
   parent  = 'unidade-2'
-  name    = '14. Lições Aprendidas'
-  pageRef = '/visao/14-licoes-aprendidas'
-  weight  = 14
+  name    = 'Lições Aprendidas'
+  identifier = 'licoes-u2'
+  pageRef = '/visao/licoes-aprendidas-u2'
+  weight  = 13
 
 [[menus.main]]
   parent  = 'unidade-2'

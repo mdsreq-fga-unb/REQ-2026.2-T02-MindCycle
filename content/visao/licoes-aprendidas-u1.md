@@ -1,11 +1,9 @@
 ---
-title: "14. Lições Aprendidas"
-numero: "14"
-weight: 14
-resumo: "Dificuldades enfrentadas pela equipe em cada unidade e as ações de melhoria adotadas."
+title: "Lições Aprendidas"
+resumo: "Dificuldades enfrentadas pela equipe na Unidade 1 e as ações de melhoria adotadas."
 ---
 
-## 14.1 Unidade 1
+## Unidade 1
 
 ### Lição 1: Aderência ao template do Documento de Visão
 
