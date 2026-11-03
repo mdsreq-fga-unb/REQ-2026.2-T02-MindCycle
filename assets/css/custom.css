@@ -7,8 +7,19 @@
    esses efeitos, deixando um documento acadêmico legível: um acento só,
    cinzas neutros, réguas finas e espaço em branco.
 
-   Carregado depois do CSS do tema, portanto sobrescreve.
+   Carregado depois de spectra.css (o CSS do tema), portanto sobrescreve.
    ===================================================================== */
+
+/* Fraunces SemiBold — a fonte do logotipo, usada só nos títulos.
+   Subconjunto latino em WOFF2 (24 KB); o corpo do texto continua na pilha
+   do sistema. `swap` garante texto visível desde o primeiro quadro. */
+@font-face {
+  font-family: 'Fraunces';
+  src: url('../fonts/fraunces-semibold-latin.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* ---------------------------------------------------------------------
    1. Design tokens
@@ -815,7 +826,7 @@ html:not(.sidebar-collapsed) .collapse-icon-expand { display: none; }
 .article-content a.crono-fase:hover { color: var(--accent); text-decoration: underline; }
 
 /* O quadro do cronograma tem uma coluna de texto e quatro curtas: em vez da
-   largura mínima por coluna (render-table.html), a de atividades fica larga. */
+   largura mínima por coluna (o style da <table>), a de atividades fica larga. */
 .crono table { width: 100%; min-width: 720px !important; table-layout: fixed; }
 .crono th:nth-child(1) { width: 13%; }
 .crono th:nth-child(2) { width: 14%; }
@@ -883,7 +894,7 @@ html:not(.sidebar-collapsed) .collapse-icon-expand { display: none; }
 /* ---------------------------------------------------------------------
    6.1 Vídeo incorporado
    --------------------------------------------------------------------- */
-/* Evidência embutida (shortcode trecho): subseção do Documento de Visão */
+/* Evidência embutida (.trecho): subseção do Documento de Visão reproduzida na iteração */
 .trecho {
   margin: 1.1rem 0 1.5rem;
   padding: 0.9rem 1.1rem;
@@ -910,7 +921,7 @@ html:not(.sidebar-collapsed) .collapse-icon-expand { display: none; }
 .trecho-corpo > :first-child { margin-top: 0; }
 .trecho-corpo > :last-child { margin-bottom: 0; }
 
-/* Conteúdo externo embutido (shortcode embed): Figma, Notion publicado */
+/* Conteúdo externo embutido (.embed, um iframe): Figma, Notion publicado */
 .embed { margin: 1.4rem 0 1.6rem; }
 .embed-quadro {
   border: 1px solid var(--border);
@@ -929,7 +940,7 @@ html:not(.sidebar-collapsed) .collapse-icon-expand { display: none; }
   background: var(--bg-subtle);
 }
 
-/* o shortcode do Hugo devolve um <div> com padding-bottom de 56,25% */
+/* o iframe do vídeo fica num <div> com padding-bottom de 56,25% (16:9) */
 .video-embed > div { border-radius: 0; }
 
 .article-content .video-link {

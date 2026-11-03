@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iteração 03 | MindCycle</title>
+  <meta name="description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta name="author" content="Equipe MindCycle">
+  <meta property="og:title" content="Iteração 03">
+  <meta property="og:description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta property="og:site_name" content="MindCycle">
+  <link rel="icon" href="../../../assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Antes da primeira pintura: aplica o tema salvo e o sumário recolhido. -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
+      d.setAttribute('data-theme', t);
+      d.classList.add('spectra-revisit');
+      if (localStorage.getItem('sidebar-collapsed') === 'true') d.classList.add('sidebar-collapsed');
+      d.classList.add('js');
+    })();
+  </script>
+
+  <link rel="preload" as="font" type="font/woff2" href="../../../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../../../assets/css/spectra.css">
+  <link rel="stylesheet" href="../../../assets/css/custom.css">
+</head>
+<body>
+  <!-- Antes da primeira pintura: recolhe os grupos do sumário que o leitor deixou fechados. -->
+  <script>
+    (function () {
+      try {
+        JSON.parse(localStorage.getItem('navFechados') || '[]').forEach(function (id) {
+          document.documentElement.classList.add('nav-fechado-' + id);
+        });
+      } catch (e) {}
+    })();
+  </script>
+
+  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
+
+  <noscript>
+    <div class="noscript-notice">Alguns recursos (sumário, busca e alternância de tema) precisam de JavaScript.</div>
+  </noscript>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="sidebar-brand" href="../../../">
+      <span class="sidebar-brand-mark">
+        <img src="../../../assets/brand/logo/icon-lua/lua-original_transparente.svg" alt="" width="34" height="34" loading="eager" decoding="async">
+      </span>
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-name">MindCycle</span>
+        <span class="sidebar-brand-sub">// REQ 2026.2 · T02</span>
+      </span>
+    </a>
+
+    <nav class="sidebar-nav" aria-label="Sumário da documentação">
+      <!-- Os itens do sumário ficam em assets/js/sumario.js, que os escreve aqui. -->
+      <script src="../../../assets/js/sumario.js"></script>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-links">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+      <div class="sidebar-copyright">&copy; 2026 Equipe MindCycle</div>
+    </div>
+  </aside>
+  <button class="sidebar-collapse-btn" id="sidebarCollapse" aria-label="Recolher ou expandir o sumário">
+    <svg class="collapse-icon-collapse" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L5 8l6 6"/></svg>
+    <svg class="collapse-icon-expand" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l6 6-6 6"/></svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="site-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-btn topbar-menu" id="sidebarToggle" aria-label="Abrir o sumário" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13"/></svg>
+        </button>
+
+        <nav class="breadcrumb" aria-label="Trilha de navegação">
+          <a href="../../../">MindCycle</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <a href="../">OpenUP — Elaboração</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <span aria-current="page">Iteração 03</span>
+        </nav>
+      </div>
+
+      <div class="topbar-centro">
+        <button class="busca-btn" id="searchTrigger" aria-label="Buscar">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <span class="busca-btn-texto">Buscar na documentação...</span>
+        </button>
+      </div>
+
+      <div class="topbar-direita">
+        <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="Alternar tema" aria-pressed="false" title="Alternar tema">
+          <span id="themeIcon" aria-hidden="true">&#9790;</span>
+          <span class="topbar-btn-label" id="themeLabel">Tema escuro</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-area" id="main-content">
+      <main class="main-content">
+        <div class="article-header">
+          <div class="section-label">
+            <a href="../">OpenUP — Elaboração</a>
+          </div>
+          <h1>Iteração 03</h1>
+        </div>
+        <div class="single-layout">
+          <article class="article-content">
+            <p><strong>Status:</strong> Executado</p>
+            <p>Primeira conversa com a cliente, seguida da declaração dos requisitos nos níveis de negócio, usuário e produto: 34 requisitos funcionais e 10 não funcionais, histórias de usuário com critérios de aceitação organizadas no story map e casos de uso detalhados dos requisitos de maior risco. Na Iteração 4 o catálogo passou a 36 requisitos funcionais, com o RF35 e o RF36 (<a href="../../../visao/08-requisitos-de-software/">Seção 8</a>).</p>
+            <h2 id="elicitação-e-descoberta">Elicitação e Descoberta</h2>
+            <p>Conversa com a cliente profissional de saúde para apresentar o produto e levantar necessidades ainda não consideradas (vídeo ao final da página).</p>
+            <h2 id="declaração-de-requisitos">Declaração de Requisitos</h2>
+            <p>Os requisitos foram declarados nos níveis de negócio, usuário e produto, a partir do catálogo de requisitos funcionais e não funcionais.</p>
+            <h3 id="catálogo-de-requisitos-funcionais-e-não-funcionais">Catálogo de requisitos funcionais e não funcionais</h3>
+            <figure class="embed">
+              <div class="embed-quadro" style="height: 560px">
+                <iframe src="https://embed.figma.com/board/FKc15Xurl1JujbBhzMldpl/MindCycle---Figma?node-id=209-1102&amp;embed-host=share" title="Figma — Árvore de requisitos: problema → objetivos específicos → características → requisitos funcionais e não funcionais" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              </div>
+              <figcaption>Figma — Árvore de requisitos: problema → objetivos específicos → características → requisitos funcionais e não funcionais</figcaption>
+            </figure>
+            <p>
+              <details class="trecho">
+                <summary><span class="trecho-rotulo">Evidência</span> Requisitos Funcionais</summary>
+                <div class="trecho-corpo"><h4 id="cp1">CP1: Registro e análise de sintomas e disposição</h4>
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                    <table style="min-width:1025px">
+                      <thead>
+                        <tr>
+                          <th>Código</th>
+                          <th>Nome</th>
+                          <th>Descrição</th>
+                          <th>RNFs</th>
+                          <th>Rastreabilidade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td class="td-curta">RF01</td><td>Consultar sintomas comuns da fase</td><td>Deve ser possível à usuária consultar os sintomas comuns da fase atual do seu ciclo menstrual.</td><td class="td-curta">—</td><td class="td-curta">CP1 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF02</td><td>Sinalizar sobrecarga</td><td>Deve ser possível à usuária sinalizar, a qualquer momento do dia, que está sobrecarregada ou indisposta, para que suas tarefas do dia sejam readequadas (<a href="../../../visao/08-requisitos-de-software/#cp5">RF15</a>).</td><td>◇ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF04</a> · ◇ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF08</a></td><td class="td-curta">CP1 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF03</td><td>Receber lembrete de registro</td><td>Deve ser possível à usuária receber um lembrete para registrar seus sintomas e sua disposição.</td><td class="td-curta">● <a href="../../../visao/08-requisitos-de-software/#rnf">RNF01</a></td><td class="td-curta">CP1 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF04</td><td>Registrar sintomas e disposição</td><td>Deve ser possível à usuária registrar os sintomas sentidos, com a intensidade de cada um, e o seu nível de disposição.</td><td>○ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF02</a> · ○ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF03</a> · ○ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF04</a> · ○ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF08</a></td><td class="td-curta">CP1 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF30</td><td>Gerenciar medicações</td><td>Deve ser possível à usuária cadastrar, alterar e excluir as medicações que utiliza, indicando se o uso é diário ou esporádico.</td><td>△ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF02</a> · △ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF03</a></td><td class="td-curta">CP1 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF34</td><td>Registrar diagnósticos prévios</td><td>Deve ser possível à usuária registrar os diagnósticos de saúde que já possui, como diabetes, hipertensão ou enxaqueca.</td><td>△ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF02</a> · △ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF03</a></td><td class="td-curta">CP1 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF35</td><td>Exportar relatório de sintomas</td><td>Deve ser possível à usuária exportar um relatório com o histórico dos sintomas registrados, sua intensidade e frequência, para levar a uma consulta médica.</td><td>△ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF02</a> · △ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF03</a></td><td class="td-curta">CP1 · OE1</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <blockquote>
+                    <p>⚠ <strong>Pendência de especificação — RF04.</strong> Este requisito <strong>não possui card no quadro</strong>: seu
+                      nome foi derivado do campo &ldquo;RFs&rdquo; dos cards RNF02, RNF03, RNF04 e RNF08, e a descrição acima
+                      é uma redação mínima da equipe, ainda <strong>não validada</strong>, que inclui a intensidade de cada
+                      sintoma por decisão da equipe. Na prática é o requisito central da
+                      CP1 — é dado-fonte de RF02, RF08, RF13, RF15 e RF35 — e está classificado como <em>Must have</em> na
+                      <a href="../../../visao/09-priorizacao-de-requisitos/#avaliacao-valor-negocio">Seção 9.4</a>. A criação do card é a
+                      recomendação do achado 01 da <a href="../../../visao/11-rastreabilidade/#achados-consistencia">Seção 11.8</a>.</p>
+                  </blockquote>
+                  <h4 id="cp2">CP2: Acompanhamento do ciclo menstrual</h4>
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                    <table style="min-width:1025px">
+                      <thead>
+                        <tr>
+                          <th>Código</th>
+                          <th>Nome</th>
+                          <th>Descrição</th>
+                          <th>RNFs</th>
+                          <th>Rastreabilidade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td class="td-curta">RF05</td><td>Consultar situação atual do ciclo</td><td>Deve ser possível à usuária consultar a situação atual do seu ciclo menstrual.</td><td class="td-curta">—</td><td class="td-curta">CP2 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF06</td><td>Registrar início da menstruação</td><td>Deve ser possível à usuária registrar a data de início da sua menstruação.</td><td>○ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF02</a> · ○ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF03</a></td><td class="td-curta">CP2 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF07</td><td>Informar características do ciclo</td><td>Deve ser possível à usuária informar a duração média do seu ciclo menstrual ou que seu ciclo é irregular.</td><td class="td-curta">○ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF02</a></td><td class="td-curta">CP2 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF08</td><td>Estimar fase do ciclo por sintomas</td><td>Deve ser possível à usuária obter uma estimativa da fase atual do seu ciclo menstrual informando seus sintomas atuais.</td><td class="td-curta">○ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF04</a></td><td class="td-curta">CP2 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF09</td><td>Recomendar conteúdos sobre o ciclo</td><td>Deve ser possível à usuária receber recomendações de conteúdos informativos sobre o ciclo menstrual, relacionados à fase atual e aos sintomas registrados.</td><td class="td-curta">—</td><td class="td-curta">CP2 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF28</td><td>Consultar funcionamento do ciclo</td><td>Deve ser possível à usuária consultar informações sobre como o ciclo menstrual funciona e o que caracteriza cada uma de suas fases.</td><td class="td-curta">—</td><td class="td-curta">CP2 · OE1</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <h4 id="cp3">CP3: Privacidade dos dados da usuária</h4>
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                    <table style="min-width:1025px">
+                      <thead>
+                        <tr>
+                          <th>Código</th>
+                          <th>Nome</th>
+                          <th>Descrição</th>
+                          <th>RNFs</th>
+                          <th>Rastreabilidade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td class="td-curta">RF10</td><td>Visualizar calendário do ciclo</td><td>Deve ser possível à usuária visualizar as fases do seu ciclo menstrual em um calendário.</td><td class="td-curta">—</td><td class="td-curta">CP3 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF11</td><td>Proteger acesso com PIN</td><td>Deve ser possível à usuária proteger o acesso à sua conta com um PIN.</td><td>● <a href="../../../visao/08-requisitos-de-software/#rnf">RNF03</a> · ● <a href="../../../visao/08-requisitos-de-software/#rnf">RNF09</a></td><td class="td-curta">CP3 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF12</td><td>Aceitar termos de uso</td><td>Deve ser possível à usuária consultar e aceitar os termos de uso e de tratamento dos seus dados.</td><td class="td-curta">● <a href="../../../visao/08-requisitos-de-software/#rnf">RNF02</a></td><td class="td-curta">CP3 · OE1</td>
+                        </tr>
+                        <tr><td class="td-curta">RF36</td><td>Excluir conta e dados</td><td>Deve ser possível à usuária excluir sua conta e todos os seus dados, revogando o consentimento dado no aceite dos termos de uso.</td><td>△ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF02</a> · △ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF03</a></td><td class="td-curta">CP3 · OE1</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <blockquote>
+                    <p>O RF10 trata de acompanhar as fases do ciclo, escopo da CP2, e está sob a CP3 apenas por
+                      como o quadro foi desenhado. A realocação para a CP2 é a recomendação do achado 06 da
+                      <a href="../../../visao/11-rastreabilidade/#achados-consistencia">Seção 11.8</a>.</p>
+                  </blockquote>
+                  <blockquote>
+                    <p><strong>RF11 na primeira versão.</strong> O vínculo com o <a href="../../../visao/08-requisitos-de-software/#rnf">RNF09</a> (senha de pétalas) vem do
+                      quadro e está mantido, mas na primeira versão o PIN é numérico: o RNF09 foi classificado
+                      como <strong>evolutivo</strong> na <a href="../../../visao/10-mvp/#rnfs-mvp">Seção 10.2</a> e só passa a ser exigido quando o
+                      RF11 evoluir para a senha de pétalas.</p>
+                  </blockquote>
+                  <blockquote>
+                    <p>O RF36 é a contrapartida do RF12 exigida pela LGPD (art. 18): a titular pode revogar o
+                      consentimento e pedir a eliminação dos dados a qualquer momento.</p>
+                  </blockquote>
+                  <h4 id="cp4">CP4: Planejamento adaptativo das tarefas</h4>
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                    <table style="min-width:1025px">
+                      <thead>
+                        <tr>
+                          <th>Código</th>
+                          <th>Nome</th>
+                          <th>Descrição</th>
+                          <th>RNFs</th>
+                          <th>Rastreabilidade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td class="td-curta">RF13</td><td>Recomendar tarefas do dia</td><td>Deve ser possível à usuária receber, a cada dia, a recomendação das tarefas a realizar, em ordem de precedência, com base no registro de energia, prazo e prioridade.</td><td class="td-curta">● <a href="../../../visao/08-requisitos-de-software/#rnf">RNF06</a></td><td class="td-curta">CP4 · OE2</td>
+                        </tr>
+                        <tr><td class="td-curta">RF14</td><td>Receber resumo do dia</td><td>Deve ser possível à usuária receber, a cada dia, um resumo do que está previsto para o dia.</td><td class="td-curta">○ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF01</a></td><td class="td-curta">CP4 · OE2</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <h4 id="cp5">CP5: Gestão acolhedora da carga diária</h4>
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                    <table style="min-width:1025px">
+                      <thead>
+                        <tr>
+                          <th>Código</th>
+                          <th>Nome</th>
+                          <th>Descrição</th>
+                          <th>RNFs</th>
+                          <th>Rastreabilidade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td class="td-curta">RF15</td><td>Reajustar recomendação do dia</td><td>Deve ser possível à usuária visualizar suas tarefas do dia ajustadas ao nível de disposição registrado.</td><td class="td-curta">● <a href="../../../visao/08-requisitos-de-software/#rnf">RNF07</a></td><td class="td-curta">CP5 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF16</td><td class="td-curta">Editar tarefa</td><td>Deve ser possível à usuária alterar as informações de uma tarefa cadastrada.</td><td class="td-curta">—</td><td class="td-curta">CP5 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF17</td><td class="td-curta">Cadastrar tarefa</td><td>Deve ser possível à usuária cadastrar tarefas informando título, prazo, prioridade e energia necessária.</td><td class="td-curta">—</td><td class="td-curta">CP5 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF18</td><td class="td-curta">Adiar tarefa</td><td>Deve ser possível à usuária adiar uma tarefa para outra data, mantendo suas demais informações e seu prazo final, alterando apenas o dia em que essa tarefa será feita.</td><td class="td-curta">—</td><td class="td-curta">CP5 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF19</td><td class="td-curta">Excluir tarefa</td><td>Deve ser possível à usuária excluir uma tarefa cadastrada.</td><td class="td-curta">—</td><td class="td-curta">CP5 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF20</td><td class="td-curta">Concluir tarefa</td><td>Deve ser possível à usuária marcar uma tarefa como concluída, mantendo o registro da data de conclusão.</td><td class="td-curta">—</td><td class="td-curta">CP5 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF21</td><td>Sugerir atividades de acolhimento</td><td>Deve ser possível à usuária receber sugestões de atividades de acolhimento.</td><td class="td-curta">—</td><td class="td-curta">CP5 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF22</td><td>Receber mensagens de acolhimento</td><td>Deve ser possível à usuária receber mensagens de acolhimento.</td><td class="td-curta">—</td><td class="td-curta">CP5 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF33</td><td>Registrar atividades de acolhimento favoritas</td><td>Deve ser possível à usuária registrar as atividades de acolhimento de sua preferência.</td><td class="td-curta">—</td><td class="td-curta">CP5 · OE3</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <blockquote>
+                    <p>O card do RF19 está redigido no quadro como &ldquo;Deve ser possível o usuário deletar a tarefa
+                      criada&rdquo;. A redação acima padroniza a forma (&ldquo;Deve ser possível à usuária …&rdquo;) e a grafia de
+                      <em>usuária</em>, sem alterar o conteúdo do requisito — ver achado 10 da
+                      <a href="../../../visao/11-rastreabilidade/#achados-consistencia">Seção 11.8</a>.</p>
+                  </blockquote>
+                  <blockquote>
+                    <p>O card do RF17 no quadro cita apenas título, prazo e prioridade. A <strong>energia necessária</strong>
+                      foi acrescentada pela equipe porque é ela que permite ao RF13 e ao RF15 comparar cada
+                      tarefa com a disposição registrada; o campo já constava do critério de aceite do RF17 na
+                      <a href="../../../visao/09-priorizacao-de-requisitos/#avaliacao-valor-negocio">Seção 9.4</a>.</p>
+                  </blockquote>
+                  <h4 id="cp6">CP6: Reconhecimento de ritmo sustentável</h4>
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                    <table style="min-width:1025px">
+                      <thead>
+                        <tr>
+                          <th>Código</th>
+                          <th>Nome</th>
+                          <th>Descrição</th>
+                          <th>RNFs</th>
+                          <th>Rastreabilidade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td class="td-curta">RF23</td><td>Gerar retrospectiva mensal</td><td>Deve ser possível à usuária gerar, ao final de cada mês, uma retrospectiva das tarefas concluídas e das atividades de acolhimento realizadas no período.</td><td class="td-curta">—</td><td class="td-curta">CP6 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF24</td><td>Registrar atividade de acolhimento</td><td>Deve ser possível à usuária registrar as atividades de acolhimento que realizou.</td><td class="td-curta">—</td><td class="td-curta">CP6 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF31</td><td>Comparar relatórios mensais</td><td>Deve ser possível à usuária comparar os relatórios mensais de meses diferentes, abrangendo ciclo, sintomas, disposição e tarefas.</td><td class="td-curta">—</td><td class="td-curta">CP6 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF32</td><td>Exportar relatório mensal</td><td>Deve ser possível à usuária exportar o relatório mensal em arquivo.</td><td>△ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF02</a> · △ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF03</a></td><td class="td-curta">CP6 · OE3</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <blockquote>
+                    <p>O relatório mensal de RF31 e RF32 vai além da retrospectiva do <a href="../../../visao/08-requisitos-de-software/#cp6">RF23</a>: reúne também
+                      os dados de ciclo, sintomas e disposição. Por isso esses requisitos contribuem para o OE1
+                      além do OE3, o que corresponde à contribuição secundária da CP6 declarada na
+                      <a href="../../../visao/02-solucao-proposta/">Seção 2</a>. <strong>Lacuna:</strong> nenhum RF gera o relatório mensal completo,
+                      já que o RF23 gera apenas a retrospectiva. A equipe precisa ampliar o RF23 ou criar um
+                      requisito para gerar o relatório. O uso clínico, levar os sintomas a uma consulta, não
+                      depende dessa lacuna: é atendido pelo <a href="../../../visao/08-requisitos-de-software/#cp1">RF35</a>, que exporta só o relatório de sintomas.</p>
+                  </blockquote>
+                  <h4 id="cp7">CP7: Conta e preferências da usuária</h4>
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                    <table style="min-width:1025px">
+                      <thead>
+                        <tr>
+                          <th>Código</th>
+                          <th>Nome</th>
+                          <th>Descrição</th>
+                          <th>RNFs</th>
+                          <th>Rastreabilidade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td class="td-curta">RF25</td><td class="td-curta">Criar conta</td><td>Deve ser possível à usuária criar sua conta.</td><td class="td-curta">—</td><td class="td-curta">CP7 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF26</td><td>Recuperar acesso à conta</td><td>Deve ser possível à usuária recuperar o acesso à sua conta.</td><td class="td-curta">—</td><td class="td-curta">CP7 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF27</td><td>Conhecer a proposta do sistema</td><td>Deve ser possível à usuária conhecer o objetivo do sistema ao iniciar o uso.</td><td class="td-curta">—</td><td class="td-curta">CP7 · OE3</td>
+                        </tr>
+                        <tr><td class="td-curta">RF29</td><td>Gerenciar notificações</td><td>Deve ser possível à usuária ativar, desativar e configurar as notificações do aplicativo, inclusive a exibição de informações do ciclo nelas.</td><td class="td-curta">△ <a href="../../../visao/08-requisitos-de-software/#rnf">RNF01</a></td><td class="td-curta">CP7 · OE3</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <blockquote>
+                    <p>O RF29 é o requisito de preferência que faltava à CP7: ele fornece a configuração para
+                      desativar a exibição de informações do ciclo nas notificações, pressuposta pelo critério de
+                      validação do <a href="../../../visao/08-requisitos-de-software/#rnf">RNF01</a>, e atende à recomendação do achado 05 da
+                      <a href="../../../visao/11-rastreabilidade/#achados-consistencia">Seção 11.8</a>.</p>
+                  </blockquote>
+                  <p><strong>Legenda dos vínculos com RNF:</strong> ● seta no quadro <em>e</em> citado no campo &ldquo;RFs:&rdquo; ·
+                    ○ citado no campo &ldquo;RFs:&rdquo;, sem seta · ◇ seta no quadro, mas não citado no campo &ldquo;RFs:&rdquo;
+                    (<strong>divergência</strong>) · △ vínculo proposto pela equipe para requisito sem card no quadro
+                    (RF28–RF36) · — apenas os RNFs transversais <a href="../../../visao/08-requisitos-de-software/#rnf">RNF10</a> e <a href="../../../visao/08-requisitos-de-software/#rnf">RNF11</a>.</p>
+                </div>
+              </details>
+              <details class="trecho">
+                <summary><span class="trecho-rotulo">Evidência</span> Requisitos Não Funcionais</summary>
+                <div class="trecho-corpo"><p>Todos os 36 requisitos funcionais estão sujeitos aos requisitos transversais <strong>RNF10</strong> e
+                    <strong>RNF11</strong>.</p>
+                  <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                    <table style="min-width:1230px">
+                      <thead>
+                        <tr>
+                          <th>Código</th>
+                          <th>Nome</th>
+                          <th>Descrição</th>
+                          <th>Classificação</th>
+                          <th>Critério verificável</th>
+                          <th>Rastreabilidade</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr><td class="td-curta">RNF01</td><td>Sigilo das notificações</td><td>As notificações não devem exibir informações sobre ciclo, sintomas ou disposição sem autorização da usuária.</td><td>Quadro: Segurança da informação · Sommerville: Produto / Segurança da informação</td><td>Com a exibição de informações do ciclo desativada, as notificações de resumo e de lembrete não apresentam fase, sintomas nem disposição.</td><td><a href="../../../visao/08-requisitos-de-software/#cp1">RF03</a>, <a href="../../../visao/08-requisitos-de-software/#cp4">RF14</a> · △ <a href="../../../visao/08-requisitos-de-software/#cp7">RF29</a></td>
+                        </tr>
+                        <tr><td class="td-curta">RNF02</td><td>Conformidade com a LGPD</td><td>O tratamento dos dados deve atender à LGPD (Lei nº 13.709/2018), considerando dados de saúde como dados pessoais sensíveis.</td><td>Quadro: Externo (Legislativo) · Sommerville: Externo / Legislativo</td><td>Nenhum dado de ciclo, sintoma ou disposição é salvo antes do aceite dos termos, e os termos descrevem a finalidade de cada tipo de dado.</td><td><a href="../../../visao/08-requisitos-de-software/#cp3">RF12</a>, <a href="../../../visao/08-requisitos-de-software/#cp1">RF04</a>, <a href="../../../visao/08-requisitos-de-software/#cp2">RF07</a>, <a href="../../../visao/08-requisitos-de-software/#cp2">RF06</a> · △ <a href="../../../visao/08-requisitos-de-software/#cp1">RF30</a>, <a href="../../../visao/08-requisitos-de-software/#cp6">RF32</a>, <a href="../../../visao/08-requisitos-de-software/#cp1">RF34</a>, <a href="../../../visao/08-requisitos-de-software/#cp1">RF35</a>, <a href="../../../visao/08-requisitos-de-software/#cp3">RF36</a></td>
+                        </tr>
+                        <tr><td class="td-curta">RNF03</td><td>Acesso exclusivo da usuária</td><td>Os dados de ciclo, sintomas, disposição e tarefas devem ser acessíveis somente pela própria usuária.</td><td>Quadro: Segurança da informação · Sommerville: Produto / Segurança da informação</td><td>Uma requisição aos dados de uma usuária feita com a sessão de outra conta retorna acesso negado.</td><td><a href="../../../visao/08-requisitos-de-software/#cp1">RF04</a>, <a href="../../../visao/08-requisitos-de-software/#cp2">RF06</a>, <a href="../../../visao/08-requisitos-de-software/#cp3">RF11</a> · △ <a href="../../../visao/08-requisitos-de-software/#cp1">RF30</a>, <a href="../../../visao/08-requisitos-de-software/#cp6">RF32</a>, <a href="../../../visao/08-requisitos-de-software/#cp1">RF34</a>, <a href="../../../visao/08-requisitos-de-software/#cp1">RF35</a>, <a href="../../../visao/08-requisitos-de-software/#cp3">RF36</a></td>
+                        </tr>
+                        <tr><td class="td-curta">RNF04</td><td>Agilidade no registro</td><td>O registro de sintomas e disposição deve exigir poucas interações.</td><td>Quadro: Usabilidade · URPS+: Usabilidade · Sommerville: Produto / Usabilidade</td><td>O registro é concluído em no máximo 3 toques a partir da tela inicial.</td><td><a href="../../../visao/08-requisitos-de-software/#cp1">RF04</a>, <a href="../../../visao/08-requisitos-de-software/#cp2">RF08</a> · seta em <a href="../../../visao/08-requisitos-de-software/#cp1">RF02</a></td>
+                        </tr>
+                        <tr><td class="td-curta">RNF06</td><td>Tempo de exibição da recomendação</td><td>A recomendação do dia deve ser exibida em até 3 segundos após o acesso.</td><td>Quadro: Desempenho · URPS+: Desempenho · Sommerville: Produto / Eficiência (desempenho)</td><td>Média de 5 medições no DevTools, com a rede em Fast 4G, igual ou inferior a 3 s.</td><td class="td-curta"><a href="../../../visao/08-requisitos-de-software/#cp4">RF13</a></td>
+                        </tr>
+                        <tr><td class="td-curta">RNF07</td><td>Tempo de reajuste da recomendação</td><td>O reajuste da recomendação deve aparecer em até 2 segundos após o registro de disposição.</td><td>Quadro: Desempenho · URPS+: Desempenho · Sommerville: Produto / Eficiência (desempenho)</td><td>Média de 5 medições entre salvar o registro e a lista atualizada igual ou inferior a 2 s.</td><td class="td-curta"><a href="../../../visao/08-requisitos-de-software/#cp5">RF15</a></td>
+                        </tr>
+                        <tr><td class="td-curta">RNF08</td><td>Tempo de confirmação do registro</td><td>A confirmação do registro de sintomas e disposição deve aparecer em até 2 segundos.</td><td>Quadro: Desempenho · URPS+: Desempenho · Sommerville: Produto / Eficiência (desempenho)</td><td>Média de 5 medições no DevTools igual ou inferior a 2 s.</td><td><a href="../../../visao/08-requisitos-de-software/#cp1">RF04</a> · seta em <a href="../../../visao/08-requisitos-de-software/#cp1">RF02</a></td>
+                        </tr>
+                        <tr><td class="td-curta">RNF09</td><td>Senha de pétalas</td><td>O PIN deve ser informado pela sequência de toques em pétalas de uma flor.</td><td>Quadro: Restrição de design · Sommerville: Externo / Restrição de design</td><td>A tela de PIN apresenta 6 pétalas selecionáveis e o PIN é formado pela sequência de 4 toques; verificado por inspeção no protótipo e na aplicação.</td><td class="td-curta"><a href="../../../visao/08-requisitos-de-software/#cp3">RF11</a></td>
+                        </tr>
+                        <tr><td class="td-curta">RNF10</td><td>Compatibilidade de telas</td><td>A interface deve funcionar em telas de celular e de computador.</td><td>Quadro: Suportabilidade (compatibilidade) · URPS+: Suportabilidade</td><td>No modo dispositivo do DevTools, as telas funcionam de 360 px a 1440 px de largura sem rolagem horizontal.</td><td class="td-curta"><strong>Todos os RFs</strong></td>
+                        </tr>
+                        <tr><td class="td-curta">RNF11</td><td>Contraste legível</td><td>Os textos devem ter contraste legível.</td><td>Quadro: Usabilidade (acessibilidade) · URPS+: Usabilidade · Sommerville: Produto / Usabilidade</td><td>A auditoria do Lighthouse não aponta erros de contraste (WCAG 2.1 nível AA).</td><td class="td-curta"><strong>Todos os RFs</strong></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <h4 id="observações-sobre-o-catálogo-de-rnfs">Observações sobre o catálogo de RNFs</h4>
+                  <ul>
+                    <li><strong>Não existe RNF05.</strong> A numeração do quadro salta de RNF04 para RNF06. A lacuna é o achado
+                      03 da <a href="../../../visao/11-rastreabilidade/#achados-consistencia">Seção 11.8</a> e permanece em aberto: a
+                      equipe precisa confirmar se houve descarte, registrando-o, ou renumerar.</li>
+                    <li><strong>RNF10 e RNF11 são transversais</strong>, mas no quadro suas setas apontam apenas para o card da
+                      CP5. A leitura correta é a declarada no próprio card (&ldquo;RFs: todos&rdquo;) — achado 04.</li>
+                    <li><strong>RNF04 e RNF08 têm vínculo divergente.</strong> A seta de ambos chega em <a href="../../../visao/08-requisitos-de-software/#cp1">RF02</a>, enquanto o
+                      campo &ldquo;RFs:&rdquo; cita <a href="../../../visao/08-requisitos-de-software/#cp1">RF04</a>. As duas leituras estão registradas com a notação ◇ e ○, sem
+                      que este documento escolha uma delas — achado 02.</li>
+                    <li><strong>Há um RNF proposto e ainda não incorporado:</strong> criptografia dos dados em repouso,
+                      minimização e transparência sobre os dados coletados. Foi levantado pela equipe durante a
+                      priorização, está classificado como <em>obrigatório (proposto)</em> na
+                      <a href="../../../visao/10-mvp/#rnfs-mvp">Seção 10.2</a> e depende de validação para entrar formalmente neste
+                      catálogo.</li>
+                    <li><strong>19 dos 36 RFs são cobertos apenas pelos RNFs transversais</strong> (os 16 do quadro mais RF28,
+                      RF31 e RF33). Não é erro, mas indica onde a
+                      especificação de qualidade pode ser adensada — por exemplo, tempo de resposta do CRUD de
+                      tarefas e segurança de credencial em criar/recuperar conta (achado 11).</li>
+                  </ul>
+                </div>
+              </details>
+            </p>
+            <h3 id="requisitos-de-negócio--catálogo-de-metas">Requisitos de negócio — Catálogo de metas</h3>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+              <table style="min-width:1435px">
+                <thead>
+                  <tr>
+                    <th>Identificador</th>
+                    <th>Meta</th>
+                    <th>Indicador</th>
+                    <th>Referência</th>
+                    <th>Resultado esperado</th>
+                    <th>Prazo</th>
+                    <th style="text-align: center">OE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td class="td-curta">RNEG-01</td><td>Melhorar a percepção dos sintomas durante todo o ciclo menstrual</td><td>Usuárias que, sozinhas, registram sintomas e disposição (RF04) e consultam a fase atual do ciclo (RF05)</td><td>As ferramentas usadas hoje registram só prazos e entregas, sem os sintomas (Seção 1.2)</td><td>Todas as usuárias representativas da homologação, sem ajuda da equipe</td><td>Iteração 7 (10/11 a 24/11/2026)</td><td class="td-curta" style="text-align: center">OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">RNEG-02</td><td>Reduzir a sobrecarga executiva causada pelo planejamento de tarefas que desconsidera a fase do ciclo menstrual</td><td>Recomendação do dia (RF13) que muda a ordem das tarefas quando a disposição registrada muda</td><td>As ferramentas usadas hoje não relacionam as tarefas ao momento do ciclo (Seção 1.2)</td><td>A ordem muda em todos os testes de aceitação com disposição alta e baixa</td><td>Iteração 7 (10/11 a 24/11/2026)</td><td class="td-curta" style="text-align: center">OE2</td>
+                  </tr>
+                  <tr><td class="td-curta">RNEG-03</td><td>Reduzir a sobrecarga executiva na execução das tarefas diárias, ajustando-as à disposição real da usuária</td><td>Usuárias que adiam uma tarefa e recebem o dia reajustado (RF18, RF15) sem mensagem de cobrança</td><td>As ferramentas usadas hoje não relacionam as tarefas à disposição real da usuária (Seção 1.2)</td><td>Todas as usuárias representativas da homologação, sem nenhuma mensagem de cobrança</td><td>Iteração 7 (10/11 a 24/11/2026)</td><td class="td-curta" style="text-align: center">OE3</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Metas propostas pela equipe para validação com a cliente, verificadas na sessão de homologação com as usuárias representativas e nos testes de aceitação.</p>
+            <p>RNEG-04 — Restrição externa: atender à LGPD (Lei nº 13.709/2018) no tratamento de dados pessoais sensíveis de saúde.</p>
+            <h3 id="requisitos-de-usuário--histórias-de-usuário">Requisitos de usuário — Histórias de usuário</h3>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+              <table style="min-width:760px">
+                <thead>
+                  <tr>
+                    <th>HU</th>
+                    <th>História</th>
+                    <th style="text-align: center">RF</th>
+                    <th style="text-align: center">CP · OE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td class="td-curta">US01</td><td>Como usuária, quero consultar os sintomas comuns da fase atual do meu ciclo menstrual, para ter consciência do meu próprio estado ao longo do ciclo.</td><td class="td-curta" style="text-align: center">RF01</td><td class="td-curta" style="text-align: center">CP1 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US02</td><td>Como usuária, quero sinalizar, a qualquer momento do dia, que estou sobrecarregada ou indisposta, para ter consciência do meu próprio estado ao longo do ciclo.</td><td class="td-curta" style="text-align: center">RF02</td><td class="td-curta" style="text-align: center">CP1 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US03</td><td>Como usuária, quero receber um lembrete para registrar meus sintomas e minha disposição, para ter consciência do meu próprio estado ao longo do ciclo.</td><td class="td-curta" style="text-align: center">RF03</td><td class="td-curta" style="text-align: center">CP1 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US04</td><td>Como usuária, quero registrar os sintomas sentidos, com a intensidade de cada um, e o meu nível de disposição, para ter consciência do meu próprio estado ao longo do ciclo.</td><td class="td-curta" style="text-align: center">RF04</td><td class="td-curta" style="text-align: center">CP1 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US05</td><td>Como usuária, quero consultar a situação atual do meu ciclo menstrual, para acompanhar e compreender meu ciclo menstrual.</td><td class="td-curta" style="text-align: center">RF05</td><td class="td-curta" style="text-align: center">CP2 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US06</td><td>Como usuária, quero registrar a data de início da minha menstruação, para acompanhar e compreender meu ciclo menstrual.</td><td class="td-curta" style="text-align: center">RF06</td><td class="td-curta" style="text-align: center">CP2 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US07</td><td>Como usuária, quero informar a duração média do meu ciclo menstrual ou que meu ciclo é irregular, para acompanhar e compreender meu ciclo menstrual.</td><td class="td-curta" style="text-align: center">RF07</td><td class="td-curta" style="text-align: center">CP2 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US08</td><td>Como usuária, quero obter uma estimativa da fase atual do meu ciclo menstrual informando meus sintomas atuais, para acompanhar e compreender meu ciclo menstrual.</td><td class="td-curta" style="text-align: center">RF08</td><td class="td-curta" style="text-align: center">CP2 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US09</td><td>Como usuária, quero receber recomendações de conteúdos informativos relacionados à fase atual e aos sintomas registrados, para acompanhar e compreender meu ciclo menstrual.</td><td class="td-curta" style="text-align: center">RF09</td><td class="td-curta" style="text-align: center">CP2 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US10</td><td>Como usuária, quero visualizar as fases do meu ciclo menstrual em um calendário, para melhorar a percepção dos meus sintomas durante todo o ciclo menstrual.</td><td class="td-curta" style="text-align: center">RF10</td><td class="td-curta" style="text-align: center">CP3 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US11</td><td>Como usuária, quero proteger o acesso à minha conta com um PIN, para manter a privacidade dos meus dados.</td><td class="td-curta" style="text-align: center">RF11</td><td class="td-curta" style="text-align: center">CP3 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US12</td><td>Como usuária, quero consultar e aceitar os termos de uso e de tratamento dos meus dados, para manter a privacidade dos meus dados.</td><td class="td-curta" style="text-align: center">RF12</td><td class="td-curta" style="text-align: center">CP3 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US13</td><td>Como usuária, quero receber, a cada dia, a recomendação das tarefas a realizar em ordem de precedência, com base no registro de energia, prazo e prioridade, para que o planejamento das minhas tarefas não desconsidere a fase do meu ciclo menstrual.</td><td class="td-curta" style="text-align: center">RF13</td><td class="td-curta" style="text-align: center">CP4 · OE2</td>
+                  </tr>
+                  <tr><td class="td-curta">US14</td><td>Como usuária, quero receber, a cada dia, um resumo do que está previsto para o dia, para que o planejamento das minhas tarefas não desconsidere a fase do meu ciclo menstrual.</td><td class="td-curta" style="text-align: center">RF14</td><td class="td-curta" style="text-align: center">CP4 · OE2</td>
+                  </tr>
+                  <tr><td class="td-curta">US15</td><td>Como usuária, quero visualizar minhas tarefas do dia ajustadas ao nível de disposição registrado, para ajustar a execução das tarefas diárias à minha disposição real.</td><td class="td-curta" style="text-align: center">RF15</td><td class="td-curta" style="text-align: center">CP5 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US16</td><td>Como usuária, quero alterar as informações de uma tarefa cadastrada, para gerir minha carga diária de forma flexível e sem culpa.</td><td class="td-curta" style="text-align: center">RF16</td><td class="td-curta" style="text-align: center">CP5 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US17</td><td>Como usuária, quero cadastrar tarefas informando título, prazo, prioridade e energia necessária, para gerir minha carga diária de forma flexível e sem culpa.</td><td class="td-curta" style="text-align: center">RF17</td><td class="td-curta" style="text-align: center">CP5 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US18</td><td>Como usuária, quero adiar uma tarefa para outra data, mantendo suas demais informações e seu prazo, para gerir minha carga diária de forma flexível e sem culpa.</td><td class="td-curta" style="text-align: center">RF18</td><td class="td-curta" style="text-align: center">CP5 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US19</td><td>Como usuária, quero excluir uma tarefa cadastrada, para gerir minha carga diária de forma flexível e sem culpa.</td><td class="td-curta" style="text-align: center">RF19</td><td class="td-curta" style="text-align: center">CP5 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US20</td><td>Como usuária, quero marcar uma tarefa como concluída, mantendo o registro da data de conclusão, para gerir minha carga diária de forma flexível e sem culpa.</td><td class="td-curta" style="text-align: center">RF20</td><td class="td-curta" style="text-align: center">CP5 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US21</td><td>Como usuária, quero receber sugestões de atividades de acolhimento, para gerir minha carga diária de forma acolhedora.</td><td class="td-curta" style="text-align: center">RF21</td><td class="td-curta" style="text-align: center">CP5 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US22</td><td>Como usuária, quero receber mensagens de acolhimento, para gerir minha carga diária de forma acolhedora.</td><td class="td-curta" style="text-align: center">RF22</td><td class="td-curta" style="text-align: center">CP5 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US23</td><td>Como usuária, quero gerar, ao final de cada mês, uma retrospectiva das tarefas concluídas e das atividades de acolhimento realizadas, para reconhecer meu ritmo de trabalho sustentável.</td><td class="td-curta" style="text-align: center">RF23</td><td class="td-curta" style="text-align: center">CP6 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US24</td><td>Como usuária, quero registrar as atividades de acolhimento que realizei, para reconhecer meu ritmo de trabalho sustentável.</td><td class="td-curta" style="text-align: center">RF24</td><td class="td-curta" style="text-align: center">CP6 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US25</td><td>Como usuária, quero criar minha conta, para gerir minha conta e minhas preferências no produto.</td><td class="td-curta" style="text-align: center">RF25</td><td class="td-curta" style="text-align: center">CP7 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US26</td><td>Como usuária, quero recuperar o acesso à minha conta, para gerir minha conta e minhas preferências no produto.</td><td class="td-curta" style="text-align: center">RF26</td><td class="td-curta" style="text-align: center">CP7 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US27</td><td>Como usuária, quero conhecer o objetivo do sistema ao iniciar o uso, para ter uma experiência inicial clara no produto.</td><td class="td-curta" style="text-align: center">RF27</td><td class="td-curta" style="text-align: center">CP7 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US28</td><td>Como usuária, quero consultar como o ciclo menstrual funciona e o que caracteriza cada uma de suas fases, para acompanhar e compreender meu ciclo menstrual.</td><td class="td-curta" style="text-align: center">RF28</td><td class="td-curta" style="text-align: center">CP2 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US29</td><td>Como usuária, quero ativar, desativar e configurar as notificações do aplicativo, inclusive a exibição de informações do ciclo nelas, para gerir minha conta e minhas preferências no produto.</td><td class="td-curta" style="text-align: center">RF29</td><td class="td-curta" style="text-align: center">CP7 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US30</td><td>Como usuária, quero cadastrar, alterar e excluir as medicações que utilizo, indicando se o uso é diário ou esporádico, para ter consciência do meu próprio estado ao longo do ciclo.</td><td class="td-curta" style="text-align: center">RF30</td><td class="td-curta" style="text-align: center">CP1 · OE1</td>
+                  </tr>
+                  <tr><td class="td-curta">US31</td><td>Como usuária, quero comparar os relatórios mensais de meses diferentes, abrangendo ciclo, sintomas, disposição e tarefas, para reconhecer meu ritmo de trabalho sustentável.</td><td class="td-curta" style="text-align: center">RF31</td><td class="td-curta" style="text-align: center">CP6 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US32</td><td>Como usuária, quero exportar o relatório mensal em arquivo, para reconhecer meu ritmo de trabalho sustentável.</td><td class="td-curta" style="text-align: center">RF32</td><td class="td-curta" style="text-align: center">CP6 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US33</td><td>Como usuária, quero registrar as atividades de acolhimento de minha preferência, para gerir minha carga diária de forma acolhedora.</td><td class="td-curta" style="text-align: center">RF33</td><td class="td-curta" style="text-align: center">CP5 · OE3</td>
+                  </tr>
+                  <tr><td class="td-curta">US34</td><td>Como usuária, quero registrar os diagnósticos de saúde que já possuo, como diabetes, hipertensão ou enxaqueca, para ter consciência do meu próprio estado ao longo do ciclo.</td><td class="td-curta" style="text-align: center">RF34</td><td class="td-curta" style="text-align: center">CP1 · OE1</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <figure class="embed">
+              <div class="embed-quadro" style="height: 600px">
+                <iframe src="https://embed.figma.com/board/FKc15Xurl1JujbBhzMldpl/MindCycle---Figma?node-id=141-703&amp;embed-host=share" title="Figma — Story Map: épico → feature → história de usuário → critério de aceitação" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              </div>
+              <figcaption>Figma — Story Map: épico → feature → história de usuário → critério de aceitação</figcaption>
+            </figure>
+            <h3 id="requisitos-de-produto--casos-de-uso-detalhados">Requisitos de produto — Casos de uso detalhados</h3>
+            <p>Foram detalhados primeiro os requisitos de maior risco, como orienta o OpenUP:</p>
+            <ul>
+              <li><strong>RF04</strong> — dado-fonte de RF02, RF08, RF13 e RF15; ainda sem card no quadro.</li>
+              <li><strong>RF13</strong> — regra de cálculo da ordem de precedência (energia, prazo, prioridade).</li>
+              <li><strong>RF15</strong> — reajuste dependente de RF04, com restrição de tempo (RNF07).</li>
+              <li><strong>RF11</strong> — restrição de design da senha de pétalas (RNF09), postergada: a primeira versão usa PIN numérico (<a href="../../../visao/10-mvp/#rnfs-mvp">Seção 10.2</a>).</li>
+              <li><strong>RF02</strong> — vínculo divergente com RNF04/RNF08.</li>
+            </ul>
+            <h4 id="registrar-sintomas-e-disposição-rf04">Registrar sintomas e disposição (RF04)</h4>
+            <div class="table-scroll table-plain" tabindex="0" role="region" aria-label="Tabela">
+              <table>
+                <tbody>
+                  <tr><td class="td-curta"><strong>Ator principal</strong></td><td class="td-curta">Usuária</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Pré-condição</strong></td><td>A usuária está com acesso à conta e aceitou os termos de uso (RF12).</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Fluxo principal</strong></td><td>1. A usuária abre o registro de sintomas e disposição a partir da tela inicial.<br>2. A usuária informa os sintomas sentidos e a intensidade de cada um.<br>3. A usuária informa seu nível de disposição.<br>4. A usuária confirma o registro.<br>5. O sistema salva o registro e exibe a confirmação.</td>
+                  </tr>
+                  <tr><td><strong>Fluxos alternativos</strong></td><td class="td-curta">—</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Exceções</strong></td><td>Termos de uso não aceitos: o sistema não salva o registro (RNF02).</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Critérios de aceitação</strong></p>
+            <ol>
+              <li>O registro só será considerado concluído quando for feito em no máximo 3 toques a partir da tela inicial (RNF04) e a confirmação aparecer em até 2 segundos (RNF08).</li>
+              <li>Nenhum sintoma ou disposição será salvo antes do aceite dos termos de uso (RNF02).</li>
+              <li>Uma requisição ao registro feita com a sessão de outra conta retornará acesso negado (RNF03).</li>
+            </ol>
+            <h4 id="recomendar-tarefas-do-dia-rf13">Recomendar tarefas do dia (RF13)</h4>
+            <div class="table-scroll table-plain" tabindex="0" role="region" aria-label="Tabela">
+              <table>
+                <tbody>
+                  <tr><td class="td-curta"><strong>Ator principal</strong></td><td class="td-curta">Usuária</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Pré-condição</strong></td><td>A usuária tem tarefas do dia cadastradas com prazo, prioridade e energia necessária (RF17) e registrou sua disposição (RF04).</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Fluxo principal</strong></td><td>1. A usuária acessa o produto.<br>2. O sistema calcula a ordem de precedência das tarefas do dia a partir do registro de energia, da energia necessária, do prazo e da prioridade de cada tarefa.<br>3. O sistema exibe a recomendação do dia.</td>
+                  </tr>
+                  <tr><td><strong>Fluxos alternativos</strong></td><td class="td-curta">—</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Exceções</strong></td><td class="td-curta">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Critérios de aceitação</strong></p>
+            <ol>
+              <li>A recomendação do dia só será aceita quando for exibida em até 3 segundos após o acesso, pela média de 5 medições no DevTools com a rede em Fast 4G (RNF06).</li>
+              <li>A recomendação do dia só será aceita quando contiver todas as tarefas do dia e nenhuma outra tarefa.</li>
+            </ol>
+            <h4 id="reajustar-recomendação-do-dia-rf15">Reajustar recomendação do dia (RF15)</h4>
+            <div class="table-scroll table-plain" tabindex="0" role="region" aria-label="Tabela">
+              <table>
+                <tbody>
+                  <tr><td class="td-curta"><strong>Ator principal</strong></td><td class="td-curta">Usuária</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Pré-condição</strong></td><td>A recomendação do dia foi exibida (RF13).</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Fluxo principal</strong></td><td>1. A usuária registra sua disposição (RF04).<br>2. O sistema reajusta a recomendação do dia ao nível de disposição registrado.<br>3. O sistema exibe as tarefas do dia atualizadas.</td>
+                  </tr>
+                  <tr><td><strong>Fluxos alternativos</strong></td><td>1a. A usuária sinaliza sobrecarga (RF02); o fluxo segue no passo 2.</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Exceções</strong></td><td class="td-curta">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Critérios de aceitação</strong></p>
+            <ol>
+              <li>O reajuste só será aceito quando a lista atualizada aparecer em até 2 segundos após salvar o registro, pela média de 5 medições (RNF07).</li>
+            </ol>
+            <h4 id="proteger-acesso-com-pin-rf11">Proteger acesso com PIN (RF11)</h4>
+            <div class="table-scroll table-plain" tabindex="0" role="region" aria-label="Tabela">
+              <table>
+                <tbody>
+                  <tr><td class="td-curta"><strong>Ator principal</strong></td><td class="td-curta">Usuária</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Pré-condição</strong></td><td>A usuária criou sua conta (RF25).</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Fluxo principal</strong></td><td>1. A usuária escolhe proteger o acesso à conta com PIN.<br>2. O sistema solicita um PIN numérico.<br>3. A usuária informa e confirma o PIN.<br>4. O sistema registra o PIN e passa a exigi-lo no acesso à conta.</td>
+                  </tr>
+                  <tr><td><strong>Fluxos alternativos</strong></td><td>2a. Em versão posterior ao MVP, o sistema exibe a senha de pétalas e a usuária toca a sequência de 4 pétalas (RNF09, classificado como evolutivo na Seção 10.2).</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Exceções</strong></td><td>PIN esquecido: a usuária recupera o acesso à conta (RF26).</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Critérios de aceitação</strong></p>
+            <ol>
+              <li>Na primeira versão, o acesso à conta só será liberado após a usuária informar o PIN numérico cadastrado.</li>
+              <li>Uma requisição aos dados da usuária feita com a sessão de outra conta retornará acesso negado (RNF03).</li>
+              <li>Quando o RF11 evoluir para a senha de pétalas, a tela de PIN só será aceita quando apresentar 6 pétalas selecionáveis e formar o PIN pela sequência de 4 toques, verificado por inspeção no protótipo e na aplicação (RNF09).</li>
+            </ol>
+            <h4 id="sinalizar-sobrecarga-rf02">Sinalizar sobrecarga (RF02)</h4>
+            <div class="table-scroll table-plain" tabindex="0" role="region" aria-label="Tabela">
+              <table>
+                <tbody>
+                  <tr><td class="td-curta"><strong>Ator principal</strong></td><td class="td-curta">Usuária</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Pré-condição</strong></td><td>A usuária está com acesso à conta.</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Fluxo principal</strong></td><td>1. A usuária sinaliza que está sobrecarregada ou indisposta.<br>2. O sistema registra a sinalização.<br>3. O sistema readequa as tarefas do dia (RF15).</td>
+                  </tr>
+                  <tr><td><strong>Fluxos alternativos</strong></td><td class="td-curta">—</td>
+                  </tr>
+                  <tr><td class="td-curta"><strong>Exceções</strong></td><td class="td-curta">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>Critérios de aceitação</strong></p>
+            <ol>
+              <li>A opção de sinalizar sobrecarga estará disponível em qualquer horário do dia.</li>
+              <li>Se o vínculo com RNF04 e RNF08 for confirmado, a sinalização só será considerada concluída quando for feita em no máximo 3 toques a partir da tela inicial e a confirmação aparecer em até 2 segundos.</li>
+            </ol>
+            <h2 id="vídeo-da-iteração">Vídeo da iteração</h2>
+            <div class="video-embed">
+              <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/PKoWLngGSRg?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="Elaboração — Iteração 3 (conversa com a cliente) — MindCycle"></iframe>
+              </div>
+            </div>
+            <nav class="doc-pager" aria-label="Navegação entre seções">
+              <span></span>
+              <a class="doc-pager-link doc-pager-next" href="../iteracao-04/">
+                <span class="doc-pager-dir">Próxima &rarr;</span>
+                <span class="doc-pager-title">Iteração 04</span>
+              </a>
+            </nav>
+          </article>
+        </div>
+      </main>
+
+      <footer class="content-footer">
+        <div class="footer-deco" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div>MindCycle · Requisitos de Software 2026.2 · FCTE/UnB</div>
+        <div class="footer-theme-credit">Theme <a href="https://github.com/JoeYang1412/hugo-theme-spectra" target="_blank" rel="noopener noreferrer">Spectra</a> by <a href="https://github.com/JoeYang1412" target="_blank" rel="noopener noreferrer">JoeYang1412</a></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Buscar">
+    <div class="search-container">
+      <div class="search-header">
+        <div class="search-input-wrapper">
+          <svg class="search-input-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar na documentação..." autocomplete="off">
+        </div>
+        <button class="search-close" id="searchClose" aria-label="Fechar busca">
+          <kbd>ESC</kbd>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-empty" id="searchEmpty">Digite para buscar na documentação</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14V4"/><path d="M4 8l5-5 5 5"/></svg>
+  </button>
+
+  <script defer src="../../../assets/js/theme-toggle.js"></script>
+  <script defer src="../../../assets/js/sidebar.js"></script>
+  <script defer src="../../../assets/js/nav-collapse.js"></script>
+  <script defer src="../../../assets/js/scroll-top.js"></script>
+  <script defer src="../../../assets/js/vendor/fuse.min.js"></script>
+  <script defer src="../../../assets/js/search.js"></script>
+  <script defer src="../../../assets/js/lightbox.js"></script>
+</body>
+</html>

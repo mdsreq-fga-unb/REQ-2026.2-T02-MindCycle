@@ -2,9 +2,9 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "hugo",
-      "runtimeExecutable": "hugo",
-      "runtimeArgs": ["server", "--port", "1314", "--noHTTPCache", "--disableFastRender", "--disableKinds", "taxonomy,term,rss,404"],
+      "name": "site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "1314"],
       "port": 1314
     }
   ]

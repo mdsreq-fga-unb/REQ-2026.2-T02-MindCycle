@@ -12,41 +12,44 @@ disciplina de Requisitos de Software da FCTE/UnB.
 
 ## O que há neste repositório
 
-Esta branch (`gh-pages`) contém o **site de documentação** do projeto, gerado com
-[Hugo](https://gohugo.io/) e o tema
-[Spectra](https://github.com/JoeYang1412/hugo-theme-spectra) (MIT), e publicado
-automaticamente no GitHub Pages a cada `push`.
+Esta branch (`gh-pages`) contém o **site de documentação** do projeto, feito em HTML, CSS
+e JavaScript puros — sem gerador de site nem build — e publicado automaticamente no GitHub
+Pages a cada `push`. O visual vem do tema
+[Spectra](https://github.com/JoeYang1412/hugo-theme-spectra) (MIT), com a identidade do
+MindCycle por cima.
 
 ```
 .
-├── content/                       Conteúdo em Markdown
-│   ├── _index.md                  Página inicial (equipe, histórico de revisão)
-│   ├── visao/                     Documento de Visão do Produto e Projeto
-│   │   ├── _index.md              Índice das seções
-│   │   ├── 01-cenario-atual.md    Seção 1
-│   │   ├── …                      Seções 2 a 12
-│   │   ├── 14-1-licoes-aprendidas-unidade-1.md   Seção 14.1 (lições da Unidade 1)
-│   │   ├── 14-2-licoes-aprendidas-unidade-2.md   Seção 14.2 (lições da Unidade 2)
-│   │   └── 15-referencias.md
-│   ├── entregas/
-│   │   └── unidade-1.md           Entrega da Unidade 1 (vídeo e escopo)
-│   └── openup/                    Uma pasta por fase do OpenUP, uma página por iteração (ainda sem conteúdo)
-├── layouts/                       Templates que substituem os do tema
-│   ├── _default/baseof.html       Estrutura da página (barra superior, tema claro/escuro)
-│   ├── partials/                  Sumário lateral, scripts e estilos enxutos
-│   └── shortcodes/                figura, cartao e membro (WebP responsivo)
+├── index.html                     Página inicial (equipe, acesso rápido)
+├── 404.html                       Página de erro do GitHub Pages
+├── visao/                         Documento de Visão do Produto e Projeto
+│   ├── index.html                 Índice das seções
+│   ├── 01-cenario-atual/          Seção 1 (cada página é o index.html da sua pasta)
+│   ├── …                          Seções 2 a 12
+│   ├── 14-1-licoes-aprendidas-unidade-1/   Seção 14.1 (lições da Unidade 1)
+│   ├── 14-2-licoes-aprendidas-unidade-2/   Seção 14.2 (lições da Unidade 2)
+│   ├── 14-licoes-aprendidas/      Endereço antigo da Seção 14, redireciona para a 14.1
+│   └── 15-referencias/
+├── entregas/                      Vídeo de apresentação e escopo de cada unidade
+├── openup/                        Uma pasta por fase do OpenUP, uma página por iteração
 ├── assets/
-│   ├── css/custom.css             Camada visual da documentação
-│   ├── img/                       Figuras do Documento de Visão (originais, não publicados)
-│   │   └── equipe/                Avatares do GitHub da equipe
-│   └── js/search.js               Busca ajustada para documentação (ver comentários)
-├── assets/brand/                  Marca (vem da branch main): paleta, logos, Fraunces
-├── assets/fonts/                  Fraunces SemiBold, subconjunto latino em WOFF2
-├── static/
-│   └── img/favicon.svg            Ícone da lua
-├── themes/hugo-theme-spectra/     Tema (cópia local, licença MIT)
-├── i18n/pt-br.toml                Textos da interface em português
-├── hugo.toml                      Configuração do site e menu de navegação
+│   ├── css/
+│   │   ├── spectra.css            Base visual: CSS do tema Spectra, só com as regras usadas
+│   │   └── custom.css             Identidade do MindCycle: cores, tipografia e componentes
+│   ├── js/
+│   │   ├── sumario.js             Itens do sumário lateral — edite aqui para incluir páginas
+│   │   ├── search.js              Busca: monta o índice lendo as páginas do sumário
+│   │   ├── nav-collapse.js        Recolher e expandir os grupos do sumário
+│   │   ├── theme-toggle.js        Tema claro/escuro
+│   │   ├── sidebar.js             Sumário no celular e sumário recolhido no desktop
+│   │   ├── scroll-top.js          Botão de voltar ao topo
+│   │   ├── lightbox.js            Ampliar as figuras
+│   │   └── vendor/fuse.min.js     Fuse.js (busca aproximada)
+│   ├── img/                       Figuras do Documento de Visão (WebP em 480, 800 e 1280 px) e favicon
+│   │   └── equipe/                Avatares da equipe (WebP, 144 × 144)
+│   ├── brand/                     Marca (vem da branch main): paleta, logos, Fraunces
+│   ├── fonts/                     Fraunces SemiBold, subconjunto latino em WOFF2
+│   └── LICENSE-spectra.txt        Licença MIT do tema Spectra
 └── .github/workflows/gh-pages.yml Publicação automática
 ```
 
@@ -70,13 +73,14 @@ a Seção 8 usava `CP1`–`CP8` e `RF01`–`RF37` com outro significado para os 
 Seção 6 remapeava as duas por conta própria.
 
 Se os identificadores mudarem de novo, os lugares a conferir são
-`content/visao/02-solucao-proposta.md` (Quadro 2),
-`content/visao/08-requisitos-de-software.md` (árvore de derivação e catálogos),
-`content/visao/09-priorizacao-de-requisitos.md` (avaliações e matriz 4 × 4),
-`content/visao/10-mvp.md` (composição e alocação do MVP),
-`content/visao/11-rastreabilidade.md` (matrizes e elo *forward*),
-`content/visao/06-cronograma-e-entregas.md` (artefatos de entrada das Iterações 5 e 6) e
-as páginas das Iterações 3 e 4 em `content/openup/elaboracao/` (histórias e backlog).
+`visao/02-solucao-proposta/index.html` (Quadro 2),
+`visao/08-requisitos-de-software/index.html` (árvore de derivação e catálogos),
+`visao/09-priorizacao-de-requisitos/index.html` (avaliações e matriz 4 × 4),
+`visao/10-mvp/index.html` (composição e alocação do MVP),
+`visao/11-rastreabilidade/index.html` (matrizes e elo *forward*),
+`visao/06-cronograma-e-entregas/index.html` (artefatos de entrada das Iterações 5 e 6) e
+as páginas das Iterações 2, 3 e 4 em `openup/` (histórias, backlog e as evidências copiadas
+das Seções 2, 8 e 9).
 Um RF novo recebe sempre o próximo número livre do catálogo da Seção 8, nunca um número já
 usado em outra seção.
 O levantamento anterior (`requisitos-por-tela-mindcycle.md`, `RF01`–`RF69`) é **histórico**
@@ -90,13 +94,14 @@ unidade, e cada unidade lista só as seções já entregues:
 - **Unidade 1 — Concepção do Projeto:** Seções 1 a 7, 14.1 e o vídeo de apresentação;
 - **Unidade 2 — Requisitos de Software:** Seções 8 a 12, 14.2 e 15;
 - **OpenUP — Concepção, Elaboração, Construção e Transição:** uma página por iteração
-  (Iterações 01 e 02, 03 e 04, 05 e 06, 07) em `content/openup/`.
+  (Iterações 01 e 02, 03 e 04, 05 e 06, 07) em `openup/`.
 
-As páginas continuam em `content/visao/`; a divisão por unidade existe apenas no menu
-(`hugo.toml`), então os endereços publicados e os links entre seções não mudaram. A exceção
-é a Seção 14 (Lições Aprendidas): cada unidade tem as suas lições, então há uma página por
-subseção (`14-1-licoes-aprendidas-unidade-1.md`, …), listada no grupo da unidade
-correspondente. O endereço antigo, `/visao/14-licoes-aprendidas/`, redireciona para a 14.1.
+As páginas continuam em `visao/`; a divisão por unidade existe apenas no sumário
+(`assets/js/sumario.js`), então os endereços publicados e os links entre seções não mudaram.
+A exceção é a Seção 14 (Lições Aprendidas): cada unidade tem as suas lições, então há uma
+página por subseção (`visao/14-1-licoes-aprendidas-unidade-1/`, …), listada no grupo da
+unidade correspondente. O endereço antigo, `/visao/14-licoes-aprendidas/`, redireciona para a
+14.1.
 
 | Seção | Entrega |
 |---|---|
@@ -111,9 +116,9 @@ correspondente. O endereço antigo, `/visao/14-licoes-aprendidas/`, redireciona 
 
 Ainda **não escritas**, e por isso ausentes do menu: a Seção **13 (Backlog do Produto)** e
 o vídeo da Unidade 2, previstos para a Entrega 2, e as Seções **14.3** e **14.4** (lições das
-Unidades 3 e 4). Quando forem escritas, basta criar os arquivos em
-`content/visao/` e acrescentar as entradas no menu em `hugo.toml` — há um comentário no
-arquivo indicando o lugar.
+Unidades 3 e 4). Quando forem escritas, basta seguir
+[Acrescentar uma página](#acrescentar-uma-página) — há um comentário em
+`assets/js/sumario.js` indicando o lugar da Seção 13.
 
 As páginas da seção *Visão do Produto e Projeto* reproduzem o documento e nada além dele,
 com uma exceção deliberada: as Seções 2.3, 8, 9, 10 e 11 trazem notas que registram a
@@ -126,8 +131,8 @@ divergência sem aviso.
 
 | O que | Onde |
 |---|---|
-| **Vídeo da Unidade 1** | `content/entregas/unidade-1.md` — instruções comentadas no arquivo. |
-| **GitHub do Allan Kelvin** | `content/_index.md` — é o único integrante que não aparece na lista de colaboradores do repositório, então o cartão dele está sem `github=` e sem `foto=`. Baixe o avatar para `assets/img/equipe/` e preencha os dois parâmetros. |
+| **Vídeo da Unidade 1** | `entregas/unidade-1/index.html`. |
+| **GitHub do Allan Kelvin** | `index.html` — é o único integrante que não aparece na lista de colaboradores do repositório, então o cartão dele mostra as iniciais e "@ a preencher". Salve o avatar em `assets/img/equipe/` (WebP, 144 × 144) e troque, no cartão dele, as iniciais pela `<img>` e o "@ a preencher" pelo link do GitHub, copiando o cartão de outro integrante. |
 | **Como comprovar o objetivo geral** | Seção 2.1 tem uma pendência registrada pela equipe (indicadores de verificação). |
 | **Validação da priorização e do MVP com a cliente** | Seções 9.8 e 10.4 — a reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino validou 14 dos 36 RFs; os demais e o MVP consolidado seguem como hipótese da equipe, a validar na reunião de acompanhamento. |
 | **Valores de negócio VN1–VN7** | Seção 2.3 — redigidos pela equipe a partir dos critérios da Seção 9.2 após o realinhamento das características; aguardam validação com a cliente. |
@@ -136,26 +141,59 @@ divergência sem aviso.
 
 ---
 
+## Como editar o site
+
+### Editar uma página
+
+Cada página é o `index.html` da pasta com o seu endereço: a Seção 8 está em
+`visao/08-requisitos-de-software/index.html`. O conteúdo fica entre
+`<article class="article-content">` e `</article>`; o resto (sumário, barra superior,
+rodapé) é igual em todas as páginas.
+
+Os blocos do conteúdo usam classes de `assets/css/custom.css`. O jeito mais seguro de criar
+um bloco novo é copiar um que já existe em outra página:
+
+| Bloco | Marcação |
+|---|---|
+| Tabela | `<div class="table-scroll" tabindex="0" role="region" aria-label="Tabela"><table>…</table></div>`. Com 3 ou mais colunas, a `<table>` leva `style="min-width:…px"` (190 px por coluna; 205 px a partir de 5 colunas); células curtas (até 16 caracteres) levam `class="td-curta"` para não quebrar linha. Tabela sem cabeçalho: acrescente `table-plain` à `<div>`. |
+| Figura | `<figure class="figura">` com a `<img>` em `srcset` (480, 800 e 1280 px) e a `<figcaption>` |
+| Cartão de acesso | `<a class="cartao">` dentro de `<div class="card-grid">` (página inicial) |
+| Integrante | `<div class="membro">` dentro de `<div class="equipe-grid">` (página inicial) |
+| Evidência | `<details class="trecho">` (recolhida) ou `<section class="trecho">` (aberta), nas páginas das iterações |
+| Vídeo | `<div class="video-embed">` com o `<iframe>` do YouTube (`youtube-nocookie.com`) |
+| Quadro externo | `<figure class="embed">` com o `<iframe>` do Figma ou do Notion |
+
+As evidências das iterações são **cópias** de subseções do Documento de Visão. Se a seção de
+origem mudar e a evidência precisar acompanhar, copie o trecho de novo.
+
+### Acrescentar uma página
+
+1. Copie a pasta de uma página da mesma seção (por exemplo, `visao/12-dor-e-dod/`) com o novo
+   nome e troque o título (`<title>`, trilha de navegação e `<h1>`), o resumo (`doc-lead`) e
+   o conteúdo.
+2. Ajuste os links *Anterior* e *Próxima* (`doc-pager`) da nova página e das duas vizinhas.
+3. Inclua o item em `assets/js/sumario.js`. O sumário e a busca de todas as páginas passam a
+   mostrar a página nova.
+4. Se a seção tiver índice (`visao/index.html`, por exemplo), inclua a página na lista
+   `doc-index`.
+
 ## Rodando localmente
 
-Requer **Hugo extended ≥ 0.157.0** (o tema exige essa versão; a publicação usa a 0.165.0).
+Não há build nem dependências. Abrir o `index.html` no navegador já funciona — só a busca
+fica indisponível, porque o navegador não deixa uma página aberta do disco ler as outras.
+Para ter tudo, sirva a pasta:
 
 ```bash
-hugo server
+python3 -m http.server 8000
 ```
 
-O site fica em `http://localhost:1313/REQ-2026.2-T02-MindCycle/`.
-
-Para gerar a versão de produção em `public/`:
-
-```bash
-hugo --gc --minify
-```
+e abra `http://localhost:8000/`.
 
 ## Publicação
 
-O workflow `.github/workflows/gh-pages.yml` constrói o site e publica no GitHub Pages a cada
-`push` nas branches `gh-pages` ou `main`, e também sob demanda (*Run workflow*).
+O workflow `.github/workflows/gh-pages.yml` publica os arquivos do site (tudo menos o
+README, `.github` e `.claude`) no GitHub Pages a cada `push` na branch `gh-pages`, e também
+sob demanda (*Run workflow*).
 
 > **Configuração necessária uma única vez:** em **Settings → Pages**, definir
 > **Source: GitHub Actions**.
@@ -181,11 +219,12 @@ O site usa o ícone da lua no sumário, o wordmark na página inicial (versão d
 no tema claro, versão creme no escuro) e a **Fraunces SemiBold** nos títulos —
 subconjunto latino em WOFF2, 24 KB. As cores da marca que não alcançavam 4,5:1 de
 contraste em texto foram escurecidas: Rose `#EC6F9C` → `#B84371`, Plum `#8A5C77` →
-`#6E4A5F`. Para trocar qualquer logo, basta apontar `logoIcone`, `logoWordmark` e
-`logoWordmarkEscuro` em `hugo.toml` para outro arquivo de `assets/`.
+`#6E4A5F`. O ícone da lua está no `<aside class="sidebar">` de cada página e o wordmark no
+`<div class="wordmark">` do `index.html`.
 
 ## Créditos
 
 Tema [Spectra](https://github.com/JoeYang1412/hugo-theme-spectra) por
 [JoeYang1412](https://github.com/JoeYang1412), sob licença MIT
-(`themes/hugo-theme-spectra/LICENSE`).
+(`assets/LICENSE-spectra.txt`). O site usa o CSS do tema compilado e reduzido
+(`assets/css/spectra.css`) e alguns dos seus scripts.

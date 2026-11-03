@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iteração 02 | MindCycle</title>
+  <meta name="description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta name="author" content="Equipe MindCycle">
+  <meta property="og:title" content="Iteração 02">
+  <meta property="og:description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta property="og:site_name" content="MindCycle">
+  <link rel="icon" href="../../../assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Antes da primeira pintura: aplica o tema salvo e o sumário recolhido. -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
+      d.setAttribute('data-theme', t);
+      d.classList.add('spectra-revisit');
+      if (localStorage.getItem('sidebar-collapsed') === 'true') d.classList.add('sidebar-collapsed');
+      d.classList.add('js');
+    })();
+  </script>
+
+  <link rel="preload" as="font" type="font/woff2" href="../../../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../../../assets/css/spectra.css">
+  <link rel="stylesheet" href="../../../assets/css/custom.css">
+</head>
+<body>
+  <!-- Antes da primeira pintura: recolhe os grupos do sumário que o leitor deixou fechados. -->
+  <script>
+    (function () {
+      try {
+        JSON.parse(localStorage.getItem('navFechados') || '[]').forEach(function (id) {
+          document.documentElement.classList.add('nav-fechado-' + id);
+        });
+      } catch (e) {}
+    })();
+  </script>
+
+  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
+
+  <noscript>
+    <div class="noscript-notice">Alguns recursos (sumário, busca e alternância de tema) precisam de JavaScript.</div>
+  </noscript>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="sidebar-brand" href="../../../">
+      <span class="sidebar-brand-mark">
+        <img src="../../../assets/brand/logo/icon-lua/lua-original_transparente.svg" alt="" width="34" height="34" loading="eager" decoding="async">
+      </span>
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-name">MindCycle</span>
+        <span class="sidebar-brand-sub">// REQ 2026.2 · T02</span>
+      </span>
+    </a>
+
+    <nav class="sidebar-nav" aria-label="Sumário da documentação">
+      <!-- Os itens do sumário ficam em assets/js/sumario.js, que os escreve aqui. -->
+      <script src="../../../assets/js/sumario.js"></script>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-links">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+      <div class="sidebar-copyright">&copy; 2026 Equipe MindCycle</div>
+    </div>
+  </aside>
+  <button class="sidebar-collapse-btn" id="sidebarCollapse" aria-label="Recolher ou expandir o sumário">
+    <svg class="collapse-icon-collapse" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L5 8l6 6"/></svg>
+    <svg class="collapse-icon-expand" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l6 6-6 6"/></svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="site-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-btn topbar-menu" id="sidebarToggle" aria-label="Abrir o sumário" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13"/></svg>
+        </button>
+
+        <nav class="breadcrumb" aria-label="Trilha de navegação">
+          <a href="../../../">MindCycle</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <a href="../">OpenUP — Concepção</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <span aria-current="page">Iteração 02</span>
+        </nav>
+      </div>
+
+      <div class="topbar-centro">
+        <button class="busca-btn" id="searchTrigger" aria-label="Buscar">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <span class="busca-btn-texto">Buscar na documentação...</span>
+        </button>
+      </div>
+
+      <div class="topbar-direita">
+        <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="Alternar tema" aria-pressed="false" title="Alternar tema">
+          <span id="themeIcon" aria-hidden="true">&#9790;</span>
+          <span class="topbar-btn-label" id="themeLabel">Tema escuro</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-area" id="main-content">
+      <main class="main-content">
+        <div class="article-header">
+          <div class="section-label">
+            <a href="../">OpenUP — Concepção</a>
+          </div>
+          <h1>Iteração 02</h1>
+        </div>
+        <div class="single-layout">
+          <article class="article-content">
+            <p><strong>Status:</strong> Executado</p>
+            <p>Declaração da solução e das estratégias, consolidadas no Documento de Visão v1.0, entregue na Unidade 1 (08/09/2026).</p>
+            <h2 id="elicitação-e-descoberta">Elicitação e Descoberta</h2>
+            <p>Análise de produtos concorrentes (Lunar, Muna, Tiimo e SheVinci).</p>
+            <details class="trecho">
+              <summary><span class="trecho-rotulo">Evidência</span> 2.5 Pesquisa de Mercado e Análise Competitiva</summary>
+              <div class="trecho-corpo"><p>No mercado atual de aplicativos de produtividade e organização pessoal, existem soluções
+                  que combinam gerenciamento de tarefas, acompanhamento do ciclo menstrual e apoio a
+                  pessoas com TDAH e disfunções executivas. No entanto, após a análise dos principais
+                  concorrentes, foram identificadas algumas fragilidades em relação à adaptação das
+                  demandas e à redução da sobrecarga e da culpa.</p>
+                <ul>
+                  <li><strong>Lunar:</strong> Possui integração entre ciclo menstrual, o nível de energia informada pela
+                    usuária e as necessidades relacionadas ao TDAH, filtrando as tarefas de acordo com a
+                    capacidade da usuária e adotando uma abordagem livre de culpa. Entretanto, não
+                    redistribui automaticamente as tarefas e não possui uma gamificação positiva que
+                    valorize o descanso.</li>
+                  <li><strong>Muna:</strong> Considera as fases do ciclo menstrual, prevê níveis de energia e possui o
+                    &ldquo;Grace Mode&rdquo;, que reduz expectativas e sugere o reagendamento de tarefas. Porém, a
+                    redistribuição das demandas ainda depende da usuária, não ocorrendo de forma automática
+                    e contínua.</li>
+                  <li><strong>Tiimo:</strong> É voltado para pessoas neurodivergentes, isto é, pessoas cujo funcionamento
+                    cognitivo diverge do padrão típico, como no TDAH (Transtorno do Déficit de Atenção com
+                    Hiperatividade) e no autismo, e apresenta recursos de organização visual da rotina e
+                    gamificação sem punição. Entretanto, não considera o ciclo menstrual nem é direcionado
+                    especificamente para mulheres.</li>
+                  <li><strong>SheVinci:</strong> Sincroniza o planejamento com o ciclo menstrual e adapta o agendamento às
+                    diferentes fases e níveis de energia. Porém, seu foco está principalmente em TDPM
+                    (Transtorno Disfórico Pré-Menstrual), SOP (Síndrome dos Ovários Policísticos) e TPM
+                    (Tensão Pré-menstrual), não apresentando como foco central neurodivergência ou disfunção
+                    executiva, além de não possuir gamificação.</li>
+                </ul>
+                <p>A solução irá se diferenciar por:</p>
+                <ul>
+                  <li><strong>Foco em Mulheres na Tecnologia:</strong> Diferente dos concorrentes, o sistema será
+                    desenvolvido especificamente para mulheres que atuam ou estudam na área de tecnologia,
+                    considerando as características e demandas presentes nesse contexto.</li>
+                  <li><strong>Redistribuição Automática de Tarefas:</strong> Enquanto os concorrentes filtram tarefas ou
+                    sugerem reagendamentos, a solução irá redistribuir as demandas de acordo com as
+                    variações de energia e capacidade de execução da usuária.</li>
+                  <li><strong>Reconhecimento do Descanso sem Lógica de Pontuação:</strong> O Tiimo já evita punições, mas
+                    não reconhece o descanso como parte do trabalho. A solução tratará o reagendamento e a
+                    pausa como estados legítimos da rotina, sem contadores de falha, sequências perdidas ou
+                    escore de desempenho. Não haverá mecanismo de pontuação ou recompensa, uma vez que a
+                    gamificação punitiva foi identificada na <a href="../../../visao/01-cenario-atual/#14-identifica%C3%A7%C3%A3o-da-oportunidade-ou-problema">Seção 1.4</a>
+                    como causa do problema.</li>
+                </ul>
+              </div>
+            </details>
+            <h2 id="declaração-de-requisitos">Declaração de Requisitos</h2>
+            <p>Catálogo de metas: objetivos específicos, características de produto e valor de negócio de cada uma.</p>
+            <section class="trecho" aria-label="2.3 Características do Produto (CP)">
+              <p class="trecho-titulo"><span class="trecho-rotulo">Evidência</span> 2.3 Características do Produto (CP)</p>
+              <div class="trecho-corpo"><div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                  <table style="min-width:1435px">
+                    <thead>
+                      <tr>
+                        <th>ID (CP)</th>
+                        <th>Característica (CP)</th>
+                        <th>Descrição resumida</th>
+                        <th>ID (VN)</th>
+                        <th>Valor de Negócio (VN) principal</th>
+                        <th>Contribuição Principal</th>
+                        <th>Contribuição Secundária</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td class="td-curta">CP1</td><td>Registro e análise de sintomas e disposição</td><td>Consciência do próprio estado ao longo do ciclo, a partir do registro de sintomas e disposição e da sinalização de sobrecarga.</td><td class="td-curta">VN1</td><td>Percepção do próprio estado ao longo do ciclo e possibilidade de resposta imediata à sobrecarga, em vez de registro passivo para consulta posterior.</td><td class="td-curta">OE1</td><td class="td-curta">OE2</td>
+                      </tr>
+                      <tr><td class="td-curta">CP2</td><td>Acompanhamento do ciclo menstrual</td><td>Compreensão do ciclo menstrual, com estimativa da fase atual e conteúdo informativo associado a ela.</td><td class="td-curta">VN2</td><td>Precisão da adaptação do planejamento à condição real da usuária, permitindo que a recomendação reflita a fase do ciclo em vez de padrões genéricos de produtividade.</td><td class="td-curta">OE1</td><td class="td-curta">OE2</td>
+                      </tr>
+                      <tr><td class="td-curta">CP3</td><td>Privacidade dos dados da usuária</td><td>Proteção dos dados pessoais sensíveis da usuária, com controle de acesso à conta e consentimento sobre a coleta.</td><td class="td-curta">VN3</td><td>Confiança para registrar dado de saúde sem risco de exposição a gestores ou terceiros, condição sem a qual o produto não é utilizável no contexto profissional.</td><td class="td-curta">OE1</td><td class="td-curta">—</td>
+                      </tr>
+                      <tr><td class="td-curta">CP4</td><td>Planejamento adaptativo das tarefas</td><td>Planejamento diário das tarefas, priorizado pela energia, pelo prazo e pela prioridade informados pela usuária.</td><td class="td-curta">VN4</td><td>Alinhamento entre o que é planejado e a capacidade real da usuária no dia, reduzindo o acúmulo de tarefas não cumpridas.</td><td class="td-curta">OE2</td><td class="td-curta">OE3</td>
+                      </tr>
+                      <tr><td class="td-curta">CP5</td><td>Gestão acolhedora da carga diária</td><td>Gestão flexível e sem culpa da carga diária, com reorganização, adiamento e mensagens de acolhimento.</td><td class="td-curta">VN5</td><td>Reorganização da rotina sem culpa: o adiamento é tratado como estado legítimo, sem contadores de falha nem linguagem de cobrança.</td><td class="td-curta">OE3</td><td class="td-curta">OE2</td>
+                      </tr>
+                      <tr><td class="td-curta">CP6</td><td>Reconhecimento de ritmo sustentável</td><td>Reconhecimento do ritmo de trabalho sustentável, por meio do registro de autocuidado e da retrospectiva mensal.</td><td class="td-curta">VN6</td><td>Reconhecimento do descanso como parte legítima do trabalho, devolvendo à usuária evidência do próprio ritmo em lugar de escore de desempenho.</td><td class="td-curta">OE3</td><td class="td-curta">OE1</td>
+                      </tr>
+                      <tr><td class="td-curta">CP7</td><td>Conta e preferências da usuária</td><td>Gestão da conta da usuária e da experiência inicial no produto.</td><td class="td-curta">VN7</td><td>Acesso contínuo e exclusivo ao próprio histórico, com contexto suficiente para adesão a um produto que trata de tema sensível.</td><td class="td-curta">OE3</td><td class="td-curta">—</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p><span class="quadro-fonte"><strong>Quadro 2</strong> – Características de produto, valores de negócio e rastreabilidade com os objetivos específicos. Fonte: elaborado pela equipe a partir da Matriz de Rastreabilidade de Requisitos v1.0.</span></p>
+                <blockquote>
+                  <p><strong>Origem e status deste quadro.</strong> Os objetivos específicos e as características de produto
+                    acima são os consolidados na <strong>Matriz de Rastreabilidade de Requisitos v1.0</strong> (quadro
+                    <em>MindCycle – Figma</em>, 28/09/2026), adotada como fonte oficial do projeto — ver
+                    <a href="../../../visao/11-rastreabilidade/">Seção 11</a>. Substituem o conjunto de OE1–OE3 e CP1–CP6 publicado na
+                    versão 1.0 do Documento de Visão, cujos nomes não correspondiam a nenhum requisito
+                    elicitado. As <strong>descrições resumidas</strong> foram reescritas em nível de característica, mais
+                    amplo que o dos requisitos funcionais que cada uma agrega
+                    (<a href="../../../visao/08-requisitos-de-software/">Seção 8</a>), para que o detalhamento comportamental fique a
+                    cargo dos RFs e RNFs. A coluna de <strong>contribuição secundária</strong> não está na Matriz de
+                    Rastreabilidade original (que registra apenas um OE por CP) e foi acrescentada pela equipe
+                    para tornar explícitos os vínculos que as próprias descrições já sugerem — por exemplo, o
+                    registro de energia da CP1 alimentando o planejamento da CP4 (OE2). CP3 e CP7 permanecem
+                    sem contribuição secundária por serem características habilitadoras, conforme observado na
+                    <a href="../../../visao/08-requisitos-de-software/#arvore-de-derivacao">Seção 8</a> e no achado 12 da
+                    <a href="../../../visao/11-rastreabilidade/#achados-consistencia">Seção 11.8</a>; os <strong>valores de negócio
+                      (VN1–VN7)</strong> foram redigidos pela equipe a partir dos critérios de valor da
+                    <a href="../../../visao/09-priorizacao-de-requisitos/#criterios-valor-negocio">Seção 9.2</a> e <strong>aguardam validação
+                      com a cliente</strong>, pendência registrada na
+                    <a href="../../../visao/10-mvp/#104-evid%C3%AAncia-da-valida%C3%A7%C3%A3o-do-mvp-com-a-cliente">Seção 10.4</a>.</p>
+                </blockquote>
+              </div>
+            </section>
+            <h2 id="vídeo-da-iteração">Vídeo da iteração</h2>
+            <div class="video-embed">
+              <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/RH9t-HPfwcg?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="Concepção — Iteração 2 — MindCycle"></iframe>
+              </div>
+            </div>
+            <nav class="doc-pager" aria-label="Navegação entre seções">
+              <a class="doc-pager-link doc-pager-prev" href="../iteracao-01/">
+                <span class="doc-pager-dir">&larr; Anterior</span>
+                <span class="doc-pager-title">Iteração 01</span>
+              </a>
+              <span></span>
+            </nav>
+          </article>
+        </div>
+      </main>
+
+      <footer class="content-footer">
+        <div class="footer-deco" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div>MindCycle · Requisitos de Software 2026.2 · FCTE/UnB</div>
+        <div class="footer-theme-credit">Theme <a href="https://github.com/JoeYang1412/hugo-theme-spectra" target="_blank" rel="noopener noreferrer">Spectra</a> by <a href="https://github.com/JoeYang1412" target="_blank" rel="noopener noreferrer">JoeYang1412</a></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Buscar">
+    <div class="search-container">
+      <div class="search-header">
+        <div class="search-input-wrapper">
+          <svg class="search-input-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar na documentação..." autocomplete="off">
+        </div>
+        <button class="search-close" id="searchClose" aria-label="Fechar busca">
+          <kbd>ESC</kbd>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-empty" id="searchEmpty">Digite para buscar na documentação</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14V4"/><path d="M4 8l5-5 5 5"/></svg>
+  </button>
+
+  <script defer src="../../../assets/js/theme-toggle.js"></script>
+  <script defer src="../../../assets/js/sidebar.js"></script>
+  <script defer src="../../../assets/js/nav-collapse.js"></script>
+  <script defer src="../../../assets/js/scroll-top.js"></script>
+  <script defer src="../../../assets/js/vendor/fuse.min.js"></script>
+  <script defer src="../../../assets/js/search.js"></script>
+  <script defer src="../../../assets/js/lightbox.js"></script>
+</body>
+</html>

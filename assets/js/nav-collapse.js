@@ -2,7 +2,7 @@
 //
 // O estado vive em `localStorage` sob a chave `navFechados`, uma lista com os
 // identificadores dos grupos recolhidos. Um script curto no início do <body>
-// (baseof.html) lê essa mesma lista e aplica as classes antes da primeira
+// (em cada página) lê essa mesma lista e aplica as classes antes da primeira
 // pintura, então a página nunca abre com o sumário piscando.
 
 (function () {

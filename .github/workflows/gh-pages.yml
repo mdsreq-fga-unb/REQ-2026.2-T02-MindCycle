@@ -15,54 +15,39 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
-env:
-  # O tema Spectra exige Hugo extended >= 0.157.0
-  HUGO_VERSION: 0.165.0
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Instalar Hugo ${{ env.HUGO_VERSION }} (extended)
-        run: |
-          set -euo pipefail
-          curl -sSL -o hugo.deb \
-            "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
-          sudo dpkg -i hugo.deb
-          hugo version
-
-      # O tema usa apenas @import no SCSS, compilado pelo libsass embutido no
-      # Hugo extended. Não é necessário instalar o Dart Sass.
-
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       # `enablement: true` liga o GitHub Pages na primeira execução, usando o
       # GITHUB_TOKEN (permissão `pages: write` acima). Sem isso a ação falha
       # com "Get Pages site failed" enquanto ninguém tiver ido em
       # Settings > Pages > Source: GitHub Actions.
       - name: Configurar GitHub Pages
-        id: pages
         uses: actions/configure-pages@v5
         with:
           enablement: true
 
-      - name: Construir o site
-        env:
-          HUGO_ENVIRONMENT: production
-          HUGO_ENV: production
-          TZ: America/Sao_Paulo
+      # O site é HTML, CSS e JavaScript puros: não há build. Só os arquivos
+      # do site são publicados — README, workflows e configurações do
+      # repositório ficam de fora.
+      - name: Separar os arquivos do site
         run: |
-          hugo \
-            --gc \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+          mkdir _site
+          rsync -a \
+            --exclude '.git*' \
+            --exclude '.github' \
+            --exclude '.claude' \
+            --exclude '_site' \
+            --exclude 'README.md' \
+            ./ _site/
 
       - name: Enviar artefato
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./_site
 
   deploy:
     environment:
