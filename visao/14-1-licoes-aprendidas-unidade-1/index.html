@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>14.1 Lições Aprendidas — Unidade 1 | MindCycle</title>
+  <meta name="description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta name="author" content="Equipe MindCycle">
+  <meta property="og:title" content="14.1 Lições Aprendidas — Unidade 1">
+  <meta property="og:description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta property="og:site_name" content="MindCycle">
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Antes da primeira pintura: aplica o tema salvo e o sumário recolhido. -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
+      d.setAttribute('data-theme', t);
+      d.classList.add('spectra-revisit');
+      if (localStorage.getItem('sidebar-collapsed') === 'true') d.classList.add('sidebar-collapsed');
+      d.classList.add('js');
+    })();
+  </script>
+
+  <link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/spectra.css">
+  <link rel="stylesheet" href="../../assets/css/custom.css">
+</head>
+<body>
+  <!-- Antes da primeira pintura: recolhe os grupos do sumário que o leitor deixou fechados. -->
+  <script>
+    (function () {
+      try {
+        JSON.parse(localStorage.getItem('navFechados') || '[]').forEach(function (id) {
+          document.documentElement.classList.add('nav-fechado-' + id);
+        });
+      } catch (e) {}
+    })();
+  </script>
+
+  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
+
+  <noscript>
+    <div class="noscript-notice">Alguns recursos (sumário, busca e alternância de tema) precisam de JavaScript.</div>
+  </noscript>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="sidebar-brand" href="../../">
+      <span class="sidebar-brand-mark">
+        <img src="../../assets/brand/logo/icon-lua/lua-original_transparente.svg" alt="" width="34" height="34" loading="eager" decoding="async">
+      </span>
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-name">MindCycle</span>
+        <span class="sidebar-brand-sub">// REQ 2026.2 · T02</span>
+      </span>
+    </a>
+
+    <nav class="sidebar-nav" aria-label="Sumário da documentação">
+      <!-- Os itens do sumário ficam em assets/js/sumario.js, que os escreve aqui. -->
+      <script src="../../assets/js/sumario.js"></script>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-links">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+      <div class="sidebar-copyright">&copy; 2026 Equipe MindCycle</div>
+    </div>
+  </aside>
+  <button class="sidebar-collapse-btn" id="sidebarCollapse" aria-label="Recolher ou expandir o sumário">
+    <svg class="collapse-icon-collapse" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L5 8l6 6"/></svg>
+    <svg class="collapse-icon-expand" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l6 6-6 6"/></svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="site-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-btn topbar-menu" id="sidebarToggle" aria-label="Abrir o sumário" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13"/></svg>
+        </button>
+
+        <nav class="breadcrumb" aria-label="Trilha de navegação">
+          <a href="../../">MindCycle</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <a href="../">Visão do Produto e Projeto</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <span aria-current="page">14.1 Lições Aprendidas — Unidade 1</span>
+        </nav>
+      </div>
+
+      <div class="topbar-centro">
+        <button class="busca-btn" id="searchTrigger" aria-label="Buscar">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <span class="busca-btn-texto">Buscar na documentação...</span>
+        </button>
+      </div>
+
+      <div class="topbar-direita">
+        <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="Alternar tema" aria-pressed="false" title="Alternar tema">
+          <span id="themeIcon" aria-hidden="true">&#9790;</span>
+          <span class="topbar-btn-label" id="themeLabel">Tema escuro</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-area" id="main-content">
+      <main class="main-content">
+        <div class="article-header">
+          <div class="section-label">
+            <a href="../">Visão do Produto e Projeto</a>
+          </div>
+          <h1>14.1 Lições Aprendidas — Unidade 1</h1>
+          <p class="doc-lead">Dificuldades enfrentadas pela equipe na Unidade 1 e as ações de melhoria adotadas.</p>
+        </div>
+        <div class="single-layout">
+          <article class="article-content">
+            <h2 id="lição-1-aderência-ao-template-do-documento-de-visão">Lição 1: Aderência ao template do Documento de Visão</h2>
+            <p><strong>Dificuldade observada:</strong> A equipe teve dificuldade em redigir a Documentação do Projeto de modo que atendesse integralmente à estrutura apresentada pelo professor. O template é extenso, possui seções interdependentes e exige rastreabilidade entre objetivos, características do produto e requisitos, e a primeira versão não contemplou todos os pontos esperados.</p>
+            <p><strong>Causa:</strong> O template é longo e detalhado, e a Unidade 1 foi a primeira experiência da equipe com um documento desse porte e nível de exigência. Havendo certa dificuldade da equipe em realizar seu preenchimento.</p>
+            <p><strong>Impacto no projeto:</strong> O documento precisou de mais de uma rodada de revisão e análise antes da Entrega 1, o que gerou retrabalho e consumiu levemente um tempo que poderia ser usado em outras atividades.</p>
+            <p><strong>Como foi superada:</strong> O documento foi refeito seguindo, ponto a ponto, as orientações do professor e da monitora, o que alinhou a estrutura ao padrão esperado antes da Entrega 1.</p>
+            <p><strong>Aprendizado resultante:</strong> Ter um template extenso exige planejamento. A equipe precisa ler a estrutura completa antes de começar, entender o que cada seção pede e como ela se relaciona com as demais, e só então dividir e redigir o conteúdo. Esclarecer dúvidas com o professor e a monitora durante a elaboração é mais eficaz do que corrigir o documento ao final.</p>
+            <p><strong>Ações concretas de melhoria:</strong></p>
+            <ol>
+              <li>Ler o template completo em grupo e se atentar com o que cada seção exige, antes de iniciar o preenchimento.</li>
+              <li>Submeter uma versão preliminar ao professor ou à monitora antes do prazo final de cada entrega.</li>
+            </ol>
+            <p><strong>Responsável e Prazo:</strong> Atividade realizada em equipe e deve sempre ser considerada e refeita até o fim do semestre.</p>
+            <p><strong>Forma de verificar se a ação funcionou:</strong> A ação será considerada eficaz se o documento for aprovado, quanto à estrutura, em uma única rodada de revisão.</p>
+            <h2 id="lição-2-necessidade-de-aprofundamento-nos-conteúdos">Lição 2: Necessidade de aprofundamento nos conteúdos</h2>
+            <p><strong>Dificuldade observada:</strong> Parte dos erros da Unidade 1 teve origem em um estudo superficial dos conteúdos da disciplina. A equipe leu os conceitos o suficiente para preencher as seções, mas sem se apropriar deles, como apontou o professor em sua avaliação. Como consequência, permaneceram inconsistências entre CPs, tecnologias, entregas e processo.</p>
+            <p><strong>Causa:</strong> O template foi tratado, em boa parte, como um formulário a preencher, e não como um guia que exige compreensão dos conceitos por trás de cada seção. O estudo feito de partes isoladas por parte de cada integrante também acabou resultando em algumas inconsistências.</p>
+            <p><strong>Impacto no projeto:</strong> O estudo superficial foi uma fonte considerável de erros na Unidade 1. Ele gerou inconsistências entre as seções do documento, exigindo retrabalho e comprometeu a qualidade da documentação entregue, que foi avaliada como insuficiente neste ponto.</p>
+            <p><strong>Como foi (ou não) superada:</strong> Ainda não foi superada. Refazer o documento corrigiu a estrutura, mas a avaliação do professor mostrou que as inconsistências persistiram. A correção definitiva depende de a equipe estudar e compreender melhor os temas abordados.</p>
+            <p><strong>Aprendizado resultante:</strong> Preencher corretamente cada seção só é possível com domínio dos conceitos envolvidos. A equipe precisa estudar cada tema com profundidade, entendendo por que cada elemento existe e como ele se conecta aos demais: os objetivos (OE) se desdobram nas características (CP), que devem ser coerentes com as tecnologias, com o planejamento das entregas e com o processo adotado.</p>
+            <p><strong>Ação concreta de melhoria:</strong></p>
+            <ol>
+              <li>Estudar cada tema antes de redigir a seção correspondente, usando o material da disciplina e, quando necessário, outras fontes.</li>
+              <li>Realizar seções de estudo em grupo durante as reuniões, nas quais cada membro explica um conceito aos demais, para confirmar que o entendimento é comum.</li>
+              <li>Levar as dúvidas(se houver) ao professor e à monitora com antecedência, e não apenas após a avaliação.</li>
+              <li>Fazer uma revisão cruzada de consistência entre OE, CP, tecnologias, entregas e processo antes de cada entrega.</li>
+            </ol>
+            <p><strong>Responsável e Prazo:</strong> Atividade realizada em equipe, devendo-se aplicar as ações 1 à 4 na correção das inconsistências apontadas, até o dia 22/09/2026, e manter todas as ações a partir da próxima entrega.</p>
+            <p><strong>Forma de verificar se a ação funcionou:</strong> A ação será considerada eficaz se a próxima avaliação do professor não apontar inconsistências entre CPs, tecnologias, entregas e processos e os membros conseguirem explicar, nas reuniões de estudo, os conceitos de cada seção.</p>
+            <nav class="doc-pager" aria-label="Navegação entre seções">
+              <a class="doc-pager-link doc-pager-prev" href="../12-dor-e-dod/">
+                <span class="doc-pager-dir">&larr; Anterior</span>
+                <span class="doc-pager-title">12. DoR e DoD</span>
+              </a>
+              <a class="doc-pager-link doc-pager-next" href="../14-2-licoes-aprendidas-unidade-2/">
+                <span class="doc-pager-dir">Próxima &rarr;</span>
+                <span class="doc-pager-title">14.2 Lições Aprendidas — Unidade 2</span>
+              </a>
+            </nav>
+          </article>
+        </div>
+      </main>
+
+      <footer class="content-footer">
+        <div class="footer-deco" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div>MindCycle · Requisitos de Software 2026.2 · FCTE/UnB</div>
+        <div class="footer-theme-credit">Theme <a href="https://github.com/JoeYang1412/hugo-theme-spectra" target="_blank" rel="noopener noreferrer">Spectra</a> by <a href="https://github.com/JoeYang1412" target="_blank" rel="noopener noreferrer">JoeYang1412</a></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Buscar">
+    <div class="search-container">
+      <div class="search-header">
+        <div class="search-input-wrapper">
+          <svg class="search-input-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar na documentação..." autocomplete="off">
+        </div>
+        <button class="search-close" id="searchClose" aria-label="Fechar busca">
+          <kbd>ESC</kbd>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-empty" id="searchEmpty">Digite para buscar na documentação</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14V4"/><path d="M4 8l5-5 5 5"/></svg>
+  </button>
+
+  <script defer src="../../assets/js/theme-toggle.js"></script>
+  <script defer src="../../assets/js/sidebar.js"></script>
+  <script defer src="../../assets/js/nav-collapse.js"></script>
+  <script defer src="../../assets/js/scroll-top.js"></script>
+  <script defer src="../../assets/js/vendor/fuse.min.js"></script>
+  <script defer src="../../assets/js/search.js"></script>
+  <script defer src="../../assets/js/lightbox.js"></script>
+</body>
+</html>

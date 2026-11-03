@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1. Cenário Atual do Cliente e do Negócio | MindCycle</title>
+  <meta name="description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta name="author" content="Equipe MindCycle">
+  <meta property="og:title" content="1. Cenário Atual do Cliente e do Negócio">
+  <meta property="og:description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta property="og:site_name" content="MindCycle">
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Antes da primeira pintura: aplica o tema salvo e o sumário recolhido. -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
+      d.setAttribute('data-theme', t);
+      d.classList.add('spectra-revisit');
+      if (localStorage.getItem('sidebar-collapsed') === 'true') d.classList.add('sidebar-collapsed');
+      d.classList.add('js');
+    })();
+  </script>
+
+  <link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/spectra.css">
+  <link rel="stylesheet" href="../../assets/css/custom.css">
+</head>
+<body>
+  <!-- Antes da primeira pintura: recolhe os grupos do sumário que o leitor deixou fechados. -->
+  <script>
+    (function () {
+      try {
+        JSON.parse(localStorage.getItem('navFechados') || '[]').forEach(function (id) {
+          document.documentElement.classList.add('nav-fechado-' + id);
+        });
+      } catch (e) {}
+    })();
+  </script>
+
+  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
+
+  <noscript>
+    <div class="noscript-notice">Alguns recursos (sumário, busca e alternância de tema) precisam de JavaScript.</div>
+  </noscript>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="sidebar-brand" href="../../">
+      <span class="sidebar-brand-mark">
+        <img src="../../assets/brand/logo/icon-lua/lua-original_transparente.svg" alt="" width="34" height="34" loading="eager" decoding="async">
+      </span>
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-name">MindCycle</span>
+        <span class="sidebar-brand-sub">// REQ 2026.2 · T02</span>
+      </span>
+    </a>
+
+    <nav class="sidebar-nav" aria-label="Sumário da documentação">
+      <!-- Os itens do sumário ficam em assets/js/sumario.js, que os escreve aqui. -->
+      <script src="../../assets/js/sumario.js"></script>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-links">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+      <div class="sidebar-copyright">&copy; 2026 Equipe MindCycle</div>
+    </div>
+  </aside>
+  <button class="sidebar-collapse-btn" id="sidebarCollapse" aria-label="Recolher ou expandir o sumário">
+    <svg class="collapse-icon-collapse" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L5 8l6 6"/></svg>
+    <svg class="collapse-icon-expand" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l6 6-6 6"/></svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="site-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-btn topbar-menu" id="sidebarToggle" aria-label="Abrir o sumário" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13"/></svg>
+        </button>
+
+        <nav class="breadcrumb" aria-label="Trilha de navegação">
+          <a href="../../">MindCycle</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <a href="../">Visão do Produto e Projeto</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <span aria-current="page">1. Cenário Atual do Cliente e do Negócio</span>
+        </nav>
+      </div>
+
+      <div class="topbar-centro">
+        <button class="busca-btn" id="searchTrigger" aria-label="Buscar">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <span class="busca-btn-texto">Buscar na documentação...</span>
+        </button>
+      </div>
+
+      <div class="topbar-direita">
+        <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="Alternar tema" aria-pressed="false" title="Alternar tema">
+          <span id="themeIcon" aria-hidden="true">&#9790;</span>
+          <span class="topbar-btn-label" id="themeLabel">Tema escuro</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-area" id="main-content">
+      <main class="main-content">
+        <div class="article-header">
+          <div class="section-label">
+            <a href="../">Visão do Produto e Projeto</a>
+          </div>
+          <h1>1. Cenário Atual do Cliente e do Negócio</h1>
+          <p class="doc-lead">Quem é o cliente, em que contexto o problema aparece, quais são suas causas e quem é afetado por ele.</p>
+        </div>
+        <div class="single-layout">
+          <article class="article-content">
+            <h2 id="11-identificação-do-clienteparceiro">1.1 Identificação do Cliente/Parceiro</h2>
+            <p><strong>Cliente principal</strong></p>
+            <ul>
+              <li><strong>Nome:</strong> Dra. Cláudia Araújo Bottino</li>
+              <li><strong>Tipo:</strong> Profissional de saúde (ginecologista)</li>
+              <li><strong>Forma de contato:</strong> Reunião mensal de revisão por Google Meet e, sob demanda, revisão de critérios de aceitação, textos e recomendações relacionados à saúde</li>
+              <li><strong>Vínculo com o projeto:</strong> A cliente é responsável pela priorização final do backlog e pela aceitação formal das funcionalidades, e somente ela pode aprovar ou reprovar declarações e recomendações relacionadas à saúde, conforme a <a href="../07-interacao-equipe-cliente/#autoridade-decis%C3%B3ria">Seção 7.2</a>.</li>
+            </ul>
+            <p><strong>Usuária representativa</strong></p>
+            <ul>
+              <li><strong>Nome:</strong> Daniela Soares</li>
+              <li><strong>Forma de contato:</strong> Reunião mensal de revisão por Google Meet, separada da reunião com a cliente</li>
+              <li><strong>Vínculo com o projeto:</strong> Fornece a perspectiva de uso sobre usabilidade, linguagem, privacidade e experiência com a solução, podendo reprovar uma funcionalidade nesses aspectos para que o item retorne ao backlog.</li>
+            </ul>
+            <h2 id="12-introdução-ao-negócio-e-contexto">1.2 Introdução ao Negócio e Contexto</h2>
+            <p>A expectativa de produtividade diária no mercado de
+              tecnologia pressupõe um ritmo biológico estável ao longo de todo o mês e desconsidera
+              as variações cíclicas de energia, foco, humor e dor vivenciadas por mulheres, de forma
+              ainda mais acentuada por aquelas que convivem com SOP (Síndrome do Ovário Policístico),
+              endometriose e TDAH (Transtorno do Déficit de Atenção com Hiperatividade), bem como por
+              aquelas que atravessam a perimenopausa e a menopausa, período em que as oscilações
+              hormonais deixam de seguir um padrão cíclico previsível e passam a afetar de maneira
+              irregular o sono, a concentração e a disposição.</p>
+            <p>Atualmente, entretanto, essas profissionais organizam seu trabalho em ferramentas
+              genéricas de gestão de tarefas, como Notion, listas pessoais e planilhas, que registram
+              apenas prazos e entregas, sem qualquer relação com o momento do ciclo, os sintomas ou a
+              disposição real da pessoa naquele período. Essa forma de organização produz metas
+              diárias descoladas da capacidade efetiva de execução, transforma oscilações fisiológicas
+              normais em percepção de baixo desempenho e alimenta um ciclo de autocobrança e culpa,
+              dificultando o planejamento realista das atividades, a autoavaliação justa do próprio
+              trabalho e, em última instância, a permanência e a adaptação da mulher no mercado de
+              trabalho tecnológico.</p>
+            <h2 id="13-rich-picture">1.3 Rich Picture</h2>
+            <p>A Figura 1 apresenta a Rich Picture do contexto atual. Atores representados: mulher
+              profissional de tecnologia (usuária) e gestor de equipe.</p>
+            <figure class="figura">
+              <img src="../../assets/img/figura1-rich-picture-1280.webp" srcset="../../assets/img/figura1-rich-picture-480.webp 480w, ../../assets/img/figura1-rich-picture-800.webp 800w, ../../assets/img/figura1-rich-picture-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 780px" width="1280" height="901" alt="Rich Picture do contexto atual: a desenvolvedora, o gestor de equipe, o ciclo menstrual e o gerenciador de tarefas, e o caminho que leva à culpa punitiva." loading="lazy" decoding="async">
+              <figcaption><span class="figura-num">Figura 1</span>
+                Rich Picture do contexto atual. <span class="figura-fonte">Fonte: elaborado pela equipe.</span>
+              </figcaption>
+            </figure>
+            <p><strong>Fluxo problemático atual:</strong> A mulher desenvolvedora realiza suas atividades
+              profissionais sob a influência de alterações hormonais ao longo do ciclo menstrual, que
+              podem provocar variações em sua produtividade. Embora o ciclo menstrual possa ser
+              acompanhado por meio de um calendário, essa informação não é integrada automaticamente
+              ao planejamento das atividades e ao gerenciamento de tarefas. Dessa forma, as tasks são
+              organizadas sem considerar o período do ciclo menstrual, enquanto o supervisor mantém a
+              expectativa de cumprimento das demandas e existe uma cobrança diária por produtividade.
+              Como consequência, quando a desenvolvedora apresenta uma redução de produtividade e não
+              consegue cumprir todas as tarefas planejadas, pode ocorrer culpa punitiva,
+              intensificando a pressão e contribuindo para um ciclo de sobrecarga e perda oculta da
+              produtividade.</p>
+            <h2 id="14-identificação-da-oportunidade-ou-problema">1.4 Identificação da Oportunidade ou Problema</h2>
+            <p>Mulheres que atuam na área de tecnologia enfrentam dificuldades para organizar e
+              executar suas atividades em ferramentas de produtividade que tratam todos os dias da
+              mesma forma, desconsiderando variações de energia, foco e disposição ao longo do ciclo
+              menstrual. Rotinas rígidas, cobranças por resultados e métricas tradicionais de
+              desempenho podem intensificar essa dificuldade.</p>
+            <p>As ferramentas atuais não integram adequadamente os dados do ciclo ao planejamento, não
+              adaptam a organização das tarefas às variações de disposição e podem reforçar uma lógica
+              punitiva de produtividade. Para mulheres com disfunções executivas ou TDAH, essas
+              limitações podem aumentar o esforço necessário para gerenciar as atividades, favorecendo
+              a autocobrança e a culpa.</p>
+            <p>Esse cenário é agravado por uma cultura profissional que espera um ritmo constante de
+              produtividade e pouco considera a saúde menstrual. Como consequência, ocorre sobrecarga
+              executiva e perda oculta de produtividade, pois a profissional precisa manter o mesmo
+              padrão de desempenho mesmo quando sua capacidade de foco, energia e execução varia ao
+              longo do ciclo.</p>
+            <p>A Figura 2 apresenta o Diagrama de Ishikawa, no qual são organizadas as possíveis causas
+              do problema identificado segundo os 6M&rsquo;s (Método, Mão de Obra, Máquina, Materiais,
+              Medida e Meio Ambiente). O diagrama evidencia como fatores relacionados aos métodos de
+              trabalho, recursos utilizados, ferramentas tecnológicas, características individuais,
+              métricas e ambiente profissional contribuem conjuntamente para o problema identificado.</p>
+            <figure class="figura">
+              <img src="../../assets/img/figura2-ishikawa-1280.webp" srcset="../../assets/img/figura2-ishikawa-480.webp 480w, ../../assets/img/figura2-ishikawa-800.webp 800w, ../../assets/img/figura2-ishikawa-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 780px" width="1280" height="843" alt="Diagrama de Ishikawa com as seis espinhas — Método, Mão de Obra, Máquina, Materiais, Medida e Meio Ambiente — apontando para a sobrecarga executiva na organização do trabalho." loading="lazy" decoding="async">
+              <figcaption><span class="figura-num">Figura 2</span>
+                Diagrama de Ishikawa das causas da sobrecarga executiva e da perda oculta de produtividade. <span class="figura-fonte">Fonte: elaborado pela equipe.</span>
+              </figcaption>
+            </figure>
+            <h2 id="15-desafios-do-projeto">1.5 Desafios do Projeto</h2>
+            <p>O principal desafio operacional é considerar as variações de produtividade relacionadas
+              ao ciclo menstrual sem reforçar a cobrança e a culpa sobre a mulher desenvolvedora, pois
+              qualquer forma de acompanhamento corre o risco de se converter em uma nova métrica de
+              controle e reproduzir a mesma lógica punitiva que caracteriza o problema.</p>
+            <p>Soma-se a isso um desafio de conhecimento, já que a equipe não domina o domínio de saúde
+              menstrual e de função executiva, e a relação entre a fase do ciclo e a capacidade de
+              execução varia de pessoa para pessoa, o que exige elicitação junto a usuárias e validação
+              com o cliente antes que qualquer padrão seja assumido como regra, evitando o tratamento
+              determinístico do ciclo.</p>
+            <p>Do ponto de vista técnico, o desafio será correlacionar automaticamente as tarefas
+              diárias com o período do ciclo menstrual e ajustar o planejamento das atividades às
+              possíveis variações de disposição, operando sobre dados sensíveis que precisam permanecer
+              sob controle exclusivo da usuária, sem exposição indevida a supervisores ou outras
+              pessoas.</p>
+            <h2 id="16-mapa-de-stakeholders">1.6 Mapa de Stakeholders</h2>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+              <table style="min-width:760px">
+                <thead>
+                  <tr>
+                    <th>Stakeholder</th>
+                    <th>Relação com a Solução</th>
+                    <th>Interesse Principal</th>
+                    <th>Poder decisório</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Mulher profissional de tecnologia</td><td>Usuária direta e principal beneficiária da solução</td><td>Planejar e organizar suas tarefas considerando as variações do ciclo menstrual, reduzindo sobrecarga e culpa punitiva</td><td class="td-curta">Alto</td>
+                  </tr>
+                  <tr><td>Daniela Soares (usuária representativa)</td><td>Usuária representativa; avalia usabilidade, linguagem, privacidade e experiência de uso e pode reprovar funcionalidades nesses aspectos (Seção 7)</td><td>Assegurar que a solução esteja alinhada aos princípios institucionais de inclusão e permanência de mulheres na tecnologia</td><td class="td-curta">Alto</td>
+                  </tr>
+                  <tr><td class="td-curta">Gestor de equipe</td><td>Não é usuário do sistema, mas define as demandas e os prazos sobre os quais a usuária atua</td><td>Manter previsibilidade de entrega da equipe</td><td class="td-curta">Alto</td>
+                  </tr>
+                  <tr><td>Equipe de desenvolvimento</td><td>Responsável pela construção</td><td>Entregar uma aplicação que atenda às necessidades reais do cliente</td><td class="td-curta">Alto</td>
+                  </tr>
+                  <tr><td>Dra. Cláudia Araújo Bottino (cliente profissional de saúde)</td><td>Cliente principal; valida a correção clínica das informações sobre ciclo, sintomas e fases e das recomendações, define a priorização final do backlog e realiza a aceitação formal das funcionalidades (Seção 7)</td><td>Garantir que as informações sobre o ciclo e as recomendações sejam apresentadas de forma clinicamente correta e responsável</td><td class="td-curta">Alto</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <figure class="figura">
+              <img src="../../assets/img/figura3-mapa-stakeholders-1280.webp" srcset="../../assets/img/figura3-mapa-stakeholders-480.webp 480w, ../../assets/img/figura3-mapa-stakeholders-800.webp 800w" sizes="(max-width: 900px) 100vw, 780px" width="1280" height="1280" alt="Mapa de stakeholders posicionados por poder decisório e interesse, com os vínculos de colaboração, dependência e conflito potencial entre eles." loading="lazy" decoding="async">
+              <figcaption><span class="figura-num">Figura 3</span>
+                Mapa de stakeholders. <span class="figura-fonte">Fonte: elaborado pela equipe.</span>
+              </figcaption>
+            </figure>
+            <h2 id="17-segmentação-de-clientes">1.7 Segmentação de Clientes</h2>
+            <p>A solução deverá atender a três segmentos de clientes, definidos por faixas etárias
+              mutuamente exclusivas, acrescidos de um recorte transversal que atravessa os três:</p>
+            <ul>
+              <li><strong>Estudantes de tecnologia (18–24 anos):</strong> São mulheres que cursam graduação ou
+                formação na área de tecnologia e precisam conciliar estudos, projetos, trabalhos
+                acadêmicos e outras responsabilidades. Buscam ferramentas que auxiliem na organização
+                das atividades e que considerem suas variações de energia, foco e disposição ao longo
+                do ciclo menstrual.</li>
+              <li><strong>Jovens profissionais de tecnologia (25–30 anos):</strong> São mulheres em início ou
+                consolidação da carreira, como desenvolvedoras, engenheiras de software e analistas.
+                Lidam com prazos, demandas simultâneas e necessidade de manter um ritmo constante de
+                produtividade, podendo enfrentar sobrecarga executiva e dificuldades para adaptar sua
+                rotina às variações individuais.</li>
+              <li><strong>Profissionais experientes de tecnologia (31–55 anos):</strong> São mulheres que possuem
+                maior experiência profissional e geralmente lidam com responsabilidades mais complexas,
+                como projetos, liderança, reuniões e múltiplas demandas. Valorizam organização e
+                previsibilidade, mas podem enfrentar dificuldades quando as ferramentas tradicionais
+                não consideram suas variações de energia, foco e capacidade de execução.</li>
+              <li><strong>Mulheres neurodivergentes na tecnologia (recorte transversal aos três segmentos
+                  anteriores):</strong> Este segmento reúne mulheres que atuam ou estudam na área e apresentam
+                dificuldades relacionadas à função executiva, como planejamento, início, organização e
+                conclusão de tarefas. Buscam uma forma de produtividade que reduza a sobrecarga, a
+                autocobrança e a culpa, adaptando as demandas à sua capacidade de execução.</li>
+              <li><strong>Mulheres em perimenopausa e menopausa na tecnologia (recorte transversal):</strong> Este
+                segmento reúne mulheres que atuam na área e vivenciam a transição menopausal, período
+                em que as variações hormonais deixam de seguir a regularidade do ciclo menstrual e
+                passam a se manifestar de forma irregular, com impactos sobre sono, concentração,
+                memória de trabalho e disposição. Buscam uma organização de tarefas que acomode
+                oscilações menos previsíveis e que não trate a queda de desempenho em dias sintomáticos
+                como falha pessoal.</li>
+            </ul>
+            <nav class="doc-pager" aria-label="Navegação entre seções">
+              <span></span>
+              <a class="doc-pager-link doc-pager-next" href="../02-solucao-proposta/">
+                <span class="doc-pager-dir">Próxima &rarr;</span>
+                <span class="doc-pager-title">2. Solução Proposta</span>
+              </a>
+            </nav>
+          </article>
+        </div>
+      </main>
+
+      <footer class="content-footer">
+        <div class="footer-deco" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div>MindCycle · Requisitos de Software 2026.2 · FCTE/UnB</div>
+        <div class="footer-theme-credit">Theme <a href="https://github.com/JoeYang1412/hugo-theme-spectra" target="_blank" rel="noopener noreferrer">Spectra</a> by <a href="https://github.com/JoeYang1412" target="_blank" rel="noopener noreferrer">JoeYang1412</a></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Buscar">
+    <div class="search-container">
+      <div class="search-header">
+        <div class="search-input-wrapper">
+          <svg class="search-input-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar na documentação..." autocomplete="off">
+        </div>
+        <button class="search-close" id="searchClose" aria-label="Fechar busca">
+          <kbd>ESC</kbd>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-empty" id="searchEmpty">Digite para buscar na documentação</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14V4"/><path d="M4 8l5-5 5 5"/></svg>
+  </button>
+
+  <script defer src="../../assets/js/theme-toggle.js"></script>
+  <script defer src="../../assets/js/sidebar.js"></script>
+  <script defer src="../../assets/js/nav-collapse.js"></script>
+  <script defer src="../../assets/js/scroll-top.js"></script>
+  <script defer src="../../assets/js/vendor/fuse.min.js"></script>
+  <script defer src="../../assets/js/search.js"></script>
+  <script defer src="../../assets/js/lightbox.js"></script>
+</body>
+</html>

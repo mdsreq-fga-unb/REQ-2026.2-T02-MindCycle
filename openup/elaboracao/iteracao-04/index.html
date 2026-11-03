@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iteração 04 | MindCycle</title>
+  <meta name="description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta name="author" content="Equipe MindCycle">
+  <meta property="og:title" content="Iteração 04">
+  <meta property="og:description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta property="og:site_name" content="MindCycle">
+  <link rel="icon" href="../../../assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Antes da primeira pintura: aplica o tema salvo e o sumário recolhido. -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
+      d.setAttribute('data-theme', t);
+      d.classList.add('spectra-revisit');
+      if (localStorage.getItem('sidebar-collapsed') === 'true') d.classList.add('sidebar-collapsed');
+      d.classList.add('js');
+    })();
+  </script>
+
+  <link rel="preload" as="font" type="font/woff2" href="../../../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../../../assets/css/spectra.css">
+  <link rel="stylesheet" href="../../../assets/css/custom.css">
+</head>
+<body>
+  <!-- Antes da primeira pintura: recolhe os grupos do sumário que o leitor deixou fechados. -->
+  <script>
+    (function () {
+      try {
+        JSON.parse(localStorage.getItem('navFechados') || '[]').forEach(function (id) {
+          document.documentElement.classList.add('nav-fechado-' + id);
+        });
+      } catch (e) {}
+    })();
+  </script>
+
+  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
+
+  <noscript>
+    <div class="noscript-notice">Alguns recursos (sumário, busca e alternância de tema) precisam de JavaScript.</div>
+  </noscript>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="sidebar-brand" href="../../../">
+      <span class="sidebar-brand-mark">
+        <img src="../../../assets/brand/logo/icon-lua/lua-original_transparente.svg" alt="" width="34" height="34" loading="eager" decoding="async">
+      </span>
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-name">MindCycle</span>
+        <span class="sidebar-brand-sub">// REQ 2026.2 · T02</span>
+      </span>
+    </a>
+
+    <nav class="sidebar-nav" aria-label="Sumário da documentação">
+      <!-- Os itens do sumário ficam em assets/js/sumario.js, que os escreve aqui. -->
+      <script src="../../../assets/js/sumario.js"></script>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-links">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+      <div class="sidebar-copyright">&copy; 2026 Equipe MindCycle</div>
+    </div>
+  </aside>
+  <button class="sidebar-collapse-btn" id="sidebarCollapse" aria-label="Recolher ou expandir o sumário">
+    <svg class="collapse-icon-collapse" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L5 8l6 6"/></svg>
+    <svg class="collapse-icon-expand" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l6 6-6 6"/></svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="site-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-btn topbar-menu" id="sidebarToggle" aria-label="Abrir o sumário" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13"/></svg>
+        </button>
+
+        <nav class="breadcrumb" aria-label="Trilha de navegação">
+          <a href="../../../">MindCycle</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <a href="../">OpenUP — Elaboração</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <span aria-current="page">Iteração 04</span>
+        </nav>
+      </div>
+
+      <div class="topbar-centro">
+        <button class="busca-btn" id="searchTrigger" aria-label="Buscar">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <span class="busca-btn-texto">Buscar na documentação...</span>
+        </button>
+      </div>
+
+      <div class="topbar-direita">
+        <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="Alternar tema" aria-pressed="false" title="Alternar tema">
+          <span id="themeIcon" aria-hidden="true">&#9790;</span>
+          <span class="topbar-btn-label" id="themeLabel">Tema escuro</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-area" id="main-content">
+      <main class="main-content">
+        <div class="article-header">
+          <div class="section-label">
+            <a href="../">OpenUP — Elaboração</a>
+          </div>
+          <h1>Iteração 04</h1>
+        </div>
+        <div class="single-layout">
+          <article class="article-content">
+            <p><strong>Status:</strong> Em andamento</p>
+            <p>Análise e consenso, organização e validação dos requisitos: priorização, definição do MVP, matriz de rastreabilidade, DoR e DoD e organização do backlog do produto, com cada história vinculada ao requisito de origem.</p>
+            <p>Ainda em andamento: protótipo de baixa fidelidade das telas do MVP e validação por cenários de uso com a cliente.</p>
+            <h2 id="análise-e-consenso">Análise e Consenso</h2>
+            <p>Priorização MoSCoW e matriz valor de negócio × esforço técnico, base para a definição do MVP.</p>
+            <figure class="embed">
+              <div class="embed-quadro" style="height: 560px">
+                <iframe src="https://embed.figma.com/board/FKc15Xurl1JujbBhzMldpl/MindCycle---Figma?node-id=246-836&amp;embed-host=share" title="Figma — Priorização MoSCoW dos requisitos funcionais" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              </div>
+              <figcaption>Figma — Priorização MoSCoW dos requisitos funcionais</figcaption>
+            </figure>
+            <section class="trecho" aria-label="9.7 Matriz 4 × 4 — valor de negócio × esforço técnico">
+              <p class="trecho-titulo"><span class="trecho-rotulo">Evidência</span> 9.7 Matriz 4 × 4 — valor de negócio × esforço técnico</p>
+              <div class="trecho-corpo"><p>O esforço técnico consolidado foi arredondado ao inteiro mais próximo (regra da
+                  Seção 9.3.4) para posicionar cada requisito. As linhas representam o <strong>valor de negócio</strong>
+                  (4 no topo) e as colunas o <strong>esforço técnico</strong> (1 à esquerda). Além das cinco mudanças de
+                  posição da reunião de 05/10 (RF06, RF07, RF09, RF21, RF22), a revisão técnica da equipe
+                  recalculou o esforço de RF11 (escopo reduzido), RF22 e RF35 (não podem mais reaproveitar
+                  RF03 e RF23, que ficaram fora do MVP), acrescentou o RF36 e posicionou pela primeira vez os
+                  RF28 a RF34 do catálogo (Seção 9.9).</p>
+                <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                  <table style="min-width:1025px">
+                    <thead>
+                      <tr>
+                        <th>Valor ↓ / Esforço →</th>
+                        <th><strong>1</strong> · Baixo</th>
+                        <th><strong>2</strong> · Moderado</th>
+                        <th><strong>3</strong> · Alto</th>
+                        <th><strong>4</strong> · Muito alto</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td class="td-curta"><strong>4</strong> · Muito alto</td><td><strong>Prioridade máxima</strong><br><code>RF06</code> <code>RF11</code> <code>RF12</code> <code>RF16</code> <code>RF17</code> <code>RF18</code> <code>RF20</code> <code>RF25</code> <code>RF36</code></td><td><strong>Forte candidato ao MVP</strong><br><code>RF02</code> <code>RF04</code> <code>RF22</code></td><td><strong>Avaliar viabilidade</strong><br><code>RF13</code> <code>RF15</code></td><td><strong>Planejar, reduzir ou decompor</strong><br>—</td>
+                      </tr>
+                      <tr><td class="td-curta"><strong>3</strong> · Alto</td><td><strong>Forte candidato ao MVP</strong><br><code>RF01</code> <code>RF07</code> <code>RF09</code> <code>RF19</code> <code>RF28</code></td><td><strong>Candidato ao MVP</strong><br><code>RF21</code> <code>RF26</code> <code>RF29</code> <code>RF35</code></td><td><strong>Avaliar contexto</strong><br>—</td><td><strong>Entrega futura</strong><br>—</td>
+                      </tr>
+                      <tr><td class="td-curta"><strong>2</strong> · Moderado</td><td><strong>Avaliar oportunidade</strong><br><code>RF05</code> <code>RF14</code> <code>RF24</code> <code>RF27</code> <code>RF30</code> <code>RF33</code> <code>RF34</code></td><td><strong>Entrega futura</strong><br><code>RF03</code> <code>RF10</code> <code>RF23</code> <code>RF31</code> <code>RF32</code></td><td><strong>Entrega futura</strong><br><code>RF08</code></td><td><strong>Baixa prioridade</strong><br>—</td>
+                      </tr>
+                      <tr><td class="td-curta"><strong>1</strong> · Baixo</td><td><strong>Avaliar oportunidade</strong><br>—</td><td><strong>Baixa prioridade</strong><br>—</td><td><strong>Baixa prioridade</strong><br>—</td><td><strong>Não priorizar agora</strong><br>—</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <h4 id="971-leitura-dos-quadrantes">9.7.1 Leitura dos quadrantes</h4>
+                <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+                  <table style="min-width:570px">
+                    <thead>
+                      <tr>
+                        <th>Quadrante</th>
+                        <th>Requisitos</th>
+                        <th>Encaminhamento</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td><strong>Prioridade máxima</strong> (valor 4 · esforço 1)</td><td>RF06, RF11, RF12, RF16, RF17, RF18, RF20, RF25, RF36</td><td>Entram no MVP sem discussão: alto valor a custo mínimo.</td>
+                      </tr>
+                      <tr><td><strong>Forte candidato ao MVP</strong> (valor 4 · esforço 2)</td><td class="td-curta">RF02, RF04, RF22</td><td>Entram no MVP; custo moderado plenamente justificado.</td>
+                      </tr>
+                      <tr><td><strong>Avaliar viabilidade</strong> (valor 4 · esforço 3)</td><td class="td-curta">RF13, RF15</td><td>Exigem decisão explícita da equipe — tratada na <a href="../../../visao/10-mvp/#justificativas-mvp">Seção 10.3</a>.</td>
+                      </tr>
+                      <tr><td><strong>Forte candidato ao MVP</strong> (valor 3 · esforço 1)</td><td>RF01, RF07, RF09, RF19, RF28</td><td>Entram no MVP: baixo custo e valor alto o bastante.</td>
+                      </tr>
+                      <tr><td><strong>Candidato ao MVP</strong> (valor 3 · esforço 2)</td><td>RF21, RF26, RF29, RF35</td><td>Decisão caso a caso na <a href="../../../visao/10-mvp/#justificativas-mvp">Seção 10.3</a>: RF21 e RF26 entram; RF29 e RF35 ficam para a entrega seguinte.</td>
+                      </tr>
+                      <tr><td><strong>Avaliar oportunidade</strong> (valor 2 · esforço 1)</td><td>RF05, RF14, RF24, RF27, RF30, RF33, RF34</td><td>Baratos, mas de valor complementar: entram quando houver folga de escopo ou motivo específico, como o RF05 (Seção 10.3).</td>
+                      </tr>
+                      <tr><td><strong>Entrega futura</strong> (valor 2 · esforço 2 e 3)</td><td>RF03, RF08, RF10, RF23, RF31, RF32</td><td>Adiados para as entregas seguintes.</td>
+                      </tr>
+                      <tr><td><strong>Quadrantes de esforço 4 e de valor 1</strong></td><td class="td-curta">—</td><td>Nenhum requisito caiu aqui, o que é coerente com a expectativa declarada na Seção 9.3.2.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <blockquote>
+                  <p><strong>A matriz orienta, não decide.</strong> Dois requisitos de valor máximo (RF13 e RF15) caíram em
+                    <em>avaliar viabilidade</em>. Eles <strong>não</strong> entram nem saem do MVP automaticamente: a decisão de
+                    cada um, e dos casos do quadrante <em>candidato ao MVP</em> e do RF05, está registrada e
+                    justificada na
+                    <a href="../../../visao/10-mvp/#justificativas-mvp">Seção 10.3</a>.</p>
+                </blockquote>
+              </div>
+            </section>
+            <h2 id="organização-e-atualização">Organização e Atualização</h2>
+            <p>Backlog do produto e acordos de entrada e saída das histórias (DoR e DoD).</p>
+            <h3 id="backlog-do-produto">Backlog do produto</h3>
+            <p>Histórias organizadas no Notion por característica de produto e objetivo específico, cada uma vinculada ao requisito funcional de mesmo número. Todas estão com status <em>Backlog</em>; as 22 do MVP estão alocadas às Iterações 5 e 6, da Construção, conforme a <a href="../../../visao/10-mvp/#alocacao-iteracoes">Seção 10.1.3</a>.</p>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
+              <table style="min-width:1025px">
+                <thead>
+                  <tr>
+                    <th>História</th>
+                    <th>Nome</th>
+                    <th style="text-align: center">CP</th>
+                    <th style="text-align: center">OE</th>
+                    <th>Alocação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td class="td-curta">US01</td><td>Consultar sintomas comuns da fase</td><td class="td-curta" style="text-align: center">CP1</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                  <tr><td class="td-curta">US02</td><td>Sinalizar sobrecarga</td><td class="td-curta" style="text-align: center">CP1</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                  <tr><td class="td-curta">US03</td><td>Receber lembrete de registro</td><td class="td-curta" style="text-align: center">CP1</td><td class="td-curta" style="text-align: center">OE1</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US04</td><td>Registrar sintomas e disposição</td><td class="td-curta" style="text-align: center">CP1</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                  <tr><td class="td-curta">US05</td><td>Consultar situação atual do ciclo</td><td class="td-curta" style="text-align: center">CP2</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                  <tr><td class="td-curta">US06</td><td>Registrar início da menstruação</td><td class="td-curta" style="text-align: center">CP2</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                  <tr><td class="td-curta">US07</td><td>Informar características do ciclo</td><td class="td-curta" style="text-align: center">CP2</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                  <tr><td class="td-curta">US08</td><td>Estimar fase do ciclo por sintomas</td><td class="td-curta" style="text-align: center">CP2</td><td class="td-curta" style="text-align: center">OE1</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US09</td><td>Recomendar conteúdos sobre o ciclo</td><td class="td-curta" style="text-align: center">CP2</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US10</td><td>Visualizar calendário do ciclo</td><td class="td-curta" style="text-align: center">CP3</td><td class="td-curta" style="text-align: center">OE1</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US11</td><td>Proteger acesso com PIN</td><td class="td-curta" style="text-align: center">CP3</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                  <tr><td class="td-curta">US12</td><td>Aceitar termos de uso</td><td class="td-curta" style="text-align: center">CP3</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                  <tr><td class="td-curta">US13</td><td>Recomendar tarefas do dia</td><td class="td-curta" style="text-align: center">CP4</td><td class="td-curta" style="text-align: center">OE2</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US14</td><td>Receber resumo do dia</td><td class="td-curta" style="text-align: center">CP4</td><td class="td-curta" style="text-align: center">OE2</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US15</td><td>Reajustar recomendação do dia</td><td class="td-curta" style="text-align: center">CP5</td><td class="td-curta" style="text-align: center">OE3</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US16</td><td class="td-curta">Editar tarefa</td><td class="td-curta" style="text-align: center">CP5</td><td class="td-curta" style="text-align: center">OE3</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US17</td><td class="td-curta">Cadastrar tarefa</td><td class="td-curta" style="text-align: center">CP5</td><td class="td-curta" style="text-align: center">OE3</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US18</td><td class="td-curta">Adiar tarefa</td><td class="td-curta" style="text-align: center">CP5</td><td class="td-curta" style="text-align: center">OE3</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US19</td><td class="td-curta">Excluir tarefa</td><td class="td-curta" style="text-align: center">CP5</td><td class="td-curta" style="text-align: center">OE3</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US20</td><td class="td-curta">Concluir tarefa</td><td class="td-curta" style="text-align: center">CP5</td><td class="td-curta" style="text-align: center">OE3</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US21</td><td>Sugerir atividades de acolhimento</td><td class="td-curta" style="text-align: center">CP5</td><td class="td-curta" style="text-align: center">OE3</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US22</td><td>Receber mensagens de acolhimento</td><td class="td-curta" style="text-align: center">CP5</td><td class="td-curta" style="text-align: center">OE3</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US23</td><td>Gerar retrospectiva mensal</td><td class="td-curta" style="text-align: center">CP6</td><td class="td-curta" style="text-align: center">OE3</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US24</td><td>Registrar atividade de acolhimento</td><td class="td-curta" style="text-align: center">CP6</td><td class="td-curta" style="text-align: center">OE3</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US25</td><td class="td-curta">Criar conta</td><td class="td-curta" style="text-align: center">CP7</td><td class="td-curta" style="text-align: center">OE3</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                  <tr><td class="td-curta">US26</td><td>Recuperar acesso à conta</td><td class="td-curta" style="text-align: center">CP7</td><td class="td-curta" style="text-align: center">OE3</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                  <tr><td class="td-curta">US27</td><td>Conhecer a proposta do sistema</td><td class="td-curta" style="text-align: center">CP7</td><td class="td-curta" style="text-align: center">OE3</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US28</td><td>Consultar funcionamento do ciclo</td><td class="td-curta" style="text-align: center">CP2</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 6</td>
+                  </tr>
+                  <tr><td class="td-curta">US29</td><td>Gerenciar notificações</td><td class="td-curta" style="text-align: center">CP7</td><td class="td-curta" style="text-align: center">OE3</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US30</td><td>Gerenciar medicações</td><td class="td-curta" style="text-align: center">CP1</td><td class="td-curta" style="text-align: center">OE1</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US31</td><td>Comparar relatórios mensais</td><td class="td-curta" style="text-align: center">CP6</td><td class="td-curta" style="text-align: center">OE3</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US32</td><td>Exportar relatório mensal</td><td class="td-curta" style="text-align: center">CP6</td><td class="td-curta" style="text-align: center">OE3</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US33</td><td>Registrar atividades de acolhimento favoritas</td><td class="td-curta" style="text-align: center">CP5</td><td class="td-curta" style="text-align: center">OE3</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US34</td><td>Registrar diagnósticos prévios</td><td class="td-curta" style="text-align: center">CP1</td><td class="td-curta" style="text-align: center">OE1</td><td>Backlog posterior</td>
+                  </tr>
+                  <tr><td class="td-curta">US35</td><td>Exportar relatório de sintomas</td><td class="td-curta" style="text-align: center">CP1</td><td class="td-curta" style="text-align: center">OE1</td><td>Backlog posterior (1º item da entrega seguinte)</td>
+                  </tr>
+                  <tr><td class="td-curta">US36</td><td>Excluir conta e dados</td><td class="td-curta" style="text-align: center">CP3</td><td class="td-curta" style="text-align: center">OE1</td><td class="td-curta">Iteração 5</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p><span class="quadro-fonte">Fonte: backlog do produto no Notion, extraído em 12/10/2026, com a alocação de US05, US07, US09, US21, US26 e US28 e as histórias US35 e US36 atualizadas conforme a Seção 10 v0.5; essas mudanças ainda precisam ser levadas ao Notion.</span></p>
+            <h3 id="definition-of-ready-dor">Definition of Ready (DoR)</h3>
+            <p>No Planejamento da Iteração, só vai para a coluna <em>A Fazer</em> do quadro a história que atende a todos os critérios abaixo:</p>
+            <ol>
+              <li>A história deriva de pelo menos um requisito funcional da Seção 8 e está vinculada à característica de produto e ao objetivo específico na matriz de rastreabilidade da Seção 11.</li>
+              <li>A prioridade da história foi confirmada pela cliente profissional de saúde e, quando a história envolve sintomas, fases do ciclo, recomendações ou mensagens relacionadas à saúde, o conteúdo também foi revisado por ela.</li>
+              <li>A história está registrada no backlog do Notion no formato &ldquo;Como usuária, quero … para …&rdquo;, usa os termos do glossário da Seção 8 e não tem dúvidas em aberto após o Planejamento da Iteração, de forma que qualquer integrante consiga implementá-la sem pedir esclarecimentos.</li>
+              <li>A história tem critérios de aceitação objetivos e verificáveis, que incluem, quando aplicável, as condições de privacidade dos dados e a ausência de linguagem punitiva.</li>
+              <li>A equipe avaliou coletivamente que a história cabe em uma iteração de duas semanas, considerando os demais itens planejados, e definiu o integrante responsável. A história que não cabe é dividida antes de entrar.</li>
+              <li>As dependências da história foram identificadas e estão disponíveis ou planejadas para a mesma iteração, como a dependência do planejamento adaptativo das tarefas (CP4) em relação aos registros de sintomas e disposição (CP1) e do ciclo (CP2).</li>
+              <li>Quando a história envolve tela nova ou alterada, o protótipo de alta ou de baixa fidelidade está no Figma e vinculado à história.</li>
+              <li>As regras de negócio que a história deve respeitar estão identificadas e registradas junto a ela.</li>
+            </ol>
+            <h3 id="definition-of-done-dod">Definition of Done (DoD)</h3>
+            <p>Uma funcionalidade só segue para a coluna <em>Em Validação</em> quando atende a todos os critérios abaixo, e só é aceita após a validação na Revisão da Iteração:</p>
+            <ol>
+              <li>Todos os critérios de aceitação da história foram cumpridos, e a funcionalidade está integrada ao incremento da iteração e pode ser demonstrada.</li>
+              <li>A funcionalidade respeita os requisitos não funcionais aplicáveis da Seção 8, em especial os de privacidade e proteção dos dados sensíveis (CP3).</li>
+              <li>Os testes unitários e de integração da funcionalidade foram escritos, executados e aprovados na integração contínua do GitHub Actions, com cobertura de 100%.</li>
+              <li>O código passou por revisão de pelo menos um integrante que não é o autor, via pull request no GitHub, segue os padrões de codificação da equipe e foi aprovado antes da integração.</li>
+              <li>Os textos e as mensagens exibidos à usuária foram revisados e não contêm termos de cobrança, culpa ou contadores de falha.</li>
+              <li>A história está vinculada ao requisito funcional na matriz de rastreabilidade da Seção 11, e a documentação de uso foi atualizada quando necessário.</li>
+            </ol>
+            <h2 id="vídeo-da-iteração">Vídeo da iteração</h2>
+            <div class="video-embed">
+              <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/Je44KbpoASk?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="Elaboração — Iteração 4 (MoSCoW) — MindCycle"></iframe>
+              </div>
+            </div>
+            <nav class="doc-pager" aria-label="Navegação entre seções">
+              <a class="doc-pager-link doc-pager-prev" href="../iteracao-03/">
+                <span class="doc-pager-dir">&larr; Anterior</span>
+                <span class="doc-pager-title">Iteração 03</span>
+              </a>
+              <span></span>
+            </nav>
+          </article>
+        </div>
+      </main>
+
+      <footer class="content-footer">
+        <div class="footer-deco" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div>MindCycle · Requisitos de Software 2026.2 · FCTE/UnB</div>
+        <div class="footer-theme-credit">Theme <a href="https://github.com/JoeYang1412/hugo-theme-spectra" target="_blank" rel="noopener noreferrer">Spectra</a> by <a href="https://github.com/JoeYang1412" target="_blank" rel="noopener noreferrer">JoeYang1412</a></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Buscar">
+    <div class="search-container">
+      <div class="search-header">
+        <div class="search-input-wrapper">
+          <svg class="search-input-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar na documentação..." autocomplete="off">
+        </div>
+        <button class="search-close" id="searchClose" aria-label="Fechar busca">
+          <kbd>ESC</kbd>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-empty" id="searchEmpty">Digite para buscar na documentação</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14V4"/><path d="M4 8l5-5 5 5"/></svg>
+  </button>
+
+  <script defer src="../../../assets/js/theme-toggle.js"></script>
+  <script defer src="../../../assets/js/sidebar.js"></script>
+  <script defer src="../../../assets/js/nav-collapse.js"></script>
+  <script defer src="../../../assets/js/scroll-top.js"></script>
+  <script defer src="../../../assets/js/vendor/fuse.min.js"></script>
+  <script defer src="../../../assets/js/search.js"></script>
+  <script defer src="../../../assets/js/lightbox.js"></script>
+</body>
+</html>

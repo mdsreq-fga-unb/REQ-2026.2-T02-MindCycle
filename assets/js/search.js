@@ -1,4 +1,7 @@
 // ===== Search: Fuse.js client-side full-text search =====
+//
+// Derivado do search.js do tema Spectra (MIT, © 2026 JoeYang1412 — ver
+// assets/LICENSE-spectra.txt), com três alterações marcadas abaixo.
 
 (function () {
 
@@ -21,15 +24,13 @@ var MAX_RESULTS = 20;
 var DEBOUNCE_MS = 300;
 
 // ---------------------------------------------------------------------
-// ALTERAÇÃO 1 DE 2 EM RELAÇÃO AO TEMA:
+// ALTERAÇÃO 1 DE 3 EM RELAÇÃO AO TEMA:
 // o Spectra é um tema de blog e trata o corpo do texto como último
 // recurso, com `ignoreLocation` desligado — o Fuse.js então só procura
 // perto do início da string, e uma busca por um termo que aparece no meio
 // de uma seção não retorna nada. Esta é uma documentação: buscar dentro do
 // texto é o caso principal. Por isso `ignoreLocation: true`, peso maior em
 // `content` e `minMatchCharLength` para evitar ruído de duas letras.
-// Se atualizar o tema, recopie themes/hugo-theme-spectra/assets/js/search.js
-// e reaplique este bloco e a ALTERAÇÃO 2 (linha do `search-result-meta`).
 // ---------------------------------------------------------------------
 var SEARCH_CONFIG = {
   keys: [
@@ -54,13 +55,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!overlay || !input || !closeBtn || !resultsEl || !emptyEl) return;
 
-  var body = document.body;
-  var txtHint = body.getAttribute('data-i18n-search-hint') || 'Type to search posts';
-  var txtNoResults = body.getAttribute('data-i18n-search-no-results') || 'No results found';
-  var txtLoading = body.getAttribute('data-i18n-search-loading') || 'Loading search index...';
+  var txtHint = 'Digite para buscar na documentação';
+  var txtNoResults = 'Nenhum resultado encontrado';
+  var txtLoading = 'Carregando índice de busca...';
+  var txtUnavailable = 'Busca indisponível: abra o site por um servidor (veja o README).';
 
   var fuse = null;
   var indexLoaded = false;
+  var indexFailed = false;
   var debounceTimer = null;
   var activeIndex = -1;
   var cachedItems = null;
@@ -85,29 +87,65 @@ document.addEventListener('DOMContentLoaded', function () {
     activeIndex = -1;
   }
 
-  // Load search index lazily
+  // ---------------------------------------------------------------------
+  // ALTERAÇÃO 2 DE 3: o tema lê um index.json gerado no build. Aqui não há
+  // build, então o índice é montado na hora, a partir das próprias páginas:
+  // cada link do sumário é baixado e lido (título, resumo, seção e texto).
+  // Não há arquivo de índice para manter — uma página entra na busca quando
+  // entra no sumário (assets/js/sumario.js).
+  // ---------------------------------------------------------------------
   function loadIndex() {
     indexLoaded = true;
-    var url = overlay.getAttribute('data-index');
-    if (!url) return;
+    indexFailed = false;
+    var links = document.querySelectorAll('.sidebar-subnav-item[href]');
+    var urls = Array.prototype.map.call(links, function (a) { return a.href; });
+    var parser = new DOMParser();
 
-    fetch(url)
-      .then(function (res) { return res.json(); })
-      .then(function (data) {
-        if (!Array.isArray(data)) {
-          console.error('Search index is not an array');
-          emptyEl.textContent = 'Search unavailable';
-          return;
-        }
-        fuse = new Fuse(data, SEARCH_CONFIG);
-        // Auto-search if user already typed while index was loading
-        if (input.value.trim()) renderResults(input.value);
-      })
-      .catch(function (err) {
-        console.error('Search index load failed:', err);
-        emptyEl.textContent = 'Search unavailable';
+    Promise.all(urls.map(function (url) {
+      return fetch(url)
+        .then(function (res) {
+          if (!res.ok) throw new Error(res.status + ' ' + url);
+          return res.text();
+        })
+        .then(function (html) { return readPage(parser.parseFromString(html, 'text/html'), url); })
+        .catch(function (err) {
+          console.error('Search: page not indexed:', err);
+          return null;
+        });
+    })).then(function (pages) {
+      var data = pages.filter(Boolean);
+      if (!data.length) {
+        // Aberto direto do disco (file://), o navegador bloqueia o fetch.
+        indexFailed = true;
         indexLoaded = false;
-      });
+        emptyEl.textContent = txtUnavailable;
+        return;
+      }
+      fuse = new Fuse(data, SEARCH_CONFIG);
+      // Auto-search if user already typed while index was loading
+      if (input.value.trim()) renderResults(input.value);
+    });
+  }
+
+  function plainText(el) {
+    return el ? el.textContent.replace(/\s+/g, ' ').trim() : '';
+  }
+
+  // Same fields the old index.json had: the navigation between sections is
+  // not part of the page text.
+  function readPage(doc, url) {
+    var article = doc.querySelector('.article-content');
+    if (article) {
+      var pager = article.querySelector('.doc-pager');
+      if (pager) pager.parentNode.removeChild(pager);
+    }
+    return {
+      title: plainText(doc.querySelector('h1')) || '(Sem título)',
+      permalink: url,
+      description: plainText(doc.querySelector('.doc-lead')),
+      content: plainText(article),
+      section: plainText(doc.querySelector('.section-label'))
+    };
   }
 
   // Render search results
@@ -115,14 +153,14 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!query.trim()) {
       resultsEl.innerHTML = '';
       cachedItems = null;
-      emptyEl.textContent = txtHint;
+      emptyEl.textContent = indexFailed ? txtUnavailable : txtHint;
       emptyEl.style.display = '';
       activeIndex = -1;
       return;
     }
 
     if (!fuse) {
-      emptyEl.textContent = txtLoading;
+      emptyEl.textContent = indexFailed ? txtUnavailable : txtLoading;
       emptyEl.style.display = '';
       resultsEl.innerHTML = '';
       return;
@@ -149,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
       html += '<div class="search-result-item" data-href="' + escapeAttr(item.permalink) + '">' +
         '<a href="' + escapeAttr(item.permalink) + '">' +
         '<div class="search-result-title">' + title + '</div>' +
-        // ALTERAÇÃO 2 DE 2: o tema mostra a data do post aqui. As páginas
+        // ALTERAÇÃO 3 DE 3: o tema mostra a data do post aqui. As páginas
         // desta documentação não têm data, então mostramos a seção.
         '<div class="search-result-meta">' + escapeHtml(item.section || '') + '</div>' +
         (desc ? '<div class="search-result-desc">' + escapeHtml(desc) + '</div>' : '') +

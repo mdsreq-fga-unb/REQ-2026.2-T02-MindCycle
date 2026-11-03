@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>14.2 Lições Aprendidas — Unidade 2 | MindCycle</title>
+  <meta name="description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta name="author" content="Equipe MindCycle">
+  <meta property="og:title" content="14.2 Lições Aprendidas — Unidade 2">
+  <meta property="og:description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
+  <meta property="og:site_name" content="MindCycle">
+  <link rel="icon" href="../../assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Antes da primeira pintura: aplica o tema salvo e o sumário recolhido. -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
+      d.setAttribute('data-theme', t);
+      d.classList.add('spectra-revisit');
+      if (localStorage.getItem('sidebar-collapsed') === 'true') d.classList.add('sidebar-collapsed');
+      d.classList.add('js');
+    })();
+  </script>
+
+  <link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../../assets/css/spectra.css">
+  <link rel="stylesheet" href="../../assets/css/custom.css">
+</head>
+<body>
+  <!-- Antes da primeira pintura: recolhe os grupos do sumário que o leitor deixou fechados. -->
+  <script>
+    (function () {
+      try {
+        JSON.parse(localStorage.getItem('navFechados') || '[]').forEach(function (id) {
+          document.documentElement.classList.add('nav-fechado-' + id);
+        });
+      } catch (e) {}
+    })();
+  </script>
+
+  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
+
+  <noscript>
+    <div class="noscript-notice">Alguns recursos (sumário, busca e alternância de tema) precisam de JavaScript.</div>
+  </noscript>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="sidebar-brand" href="../../">
+      <span class="sidebar-brand-mark">
+        <img src="../../assets/brand/logo/icon-lua/lua-original_transparente.svg" alt="" width="34" height="34" loading="eager" decoding="async">
+      </span>
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-name">MindCycle</span>
+        <span class="sidebar-brand-sub">// REQ 2026.2 · T02</span>
+      </span>
+    </a>
+
+    <nav class="sidebar-nav" aria-label="Sumário da documentação">
+      <!-- Os itens do sumário ficam em assets/js/sumario.js, que os escreve aqui. -->
+      <script src="../../assets/js/sumario.js"></script>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-links">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+      <div class="sidebar-copyright">&copy; 2026 Equipe MindCycle</div>
+    </div>
+  </aside>
+  <button class="sidebar-collapse-btn" id="sidebarCollapse" aria-label="Recolher ou expandir o sumário">
+    <svg class="collapse-icon-collapse" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L5 8l6 6"/></svg>
+    <svg class="collapse-icon-expand" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l6 6-6 6"/></svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="site-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="topbar-btn topbar-menu" id="sidebarToggle" aria-label="Abrir o sumário" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13"/></svg>
+        </button>
+
+        <nav class="breadcrumb" aria-label="Trilha de navegação">
+          <a href="../../">MindCycle</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <a href="../">Visão do Produto e Projeto</a>
+          <span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <span aria-current="page">14.2 Lições Aprendidas — Unidade 2</span>
+        </nav>
+      </div>
+
+      <div class="topbar-centro">
+        <button class="busca-btn" id="searchTrigger" aria-label="Buscar">
+          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <span class="busca-btn-texto">Buscar na documentação...</span>
+        </button>
+      </div>
+
+      <div class="topbar-direita">
+        <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="Alternar tema" aria-pressed="false" title="Alternar tema">
+          <span id="themeIcon" aria-hidden="true">&#9790;</span>
+          <span class="topbar-btn-label" id="themeLabel">Tema escuro</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="content-area" id="main-content">
+      <main class="main-content">
+        <div class="article-header">
+          <div class="section-label">
+            <a href="../">Visão do Produto e Projeto</a>
+          </div>
+          <h1>14.2 Lições Aprendidas — Unidade 2</h1>
+          <p class="doc-lead">Dificuldades enfrentadas pela equipe na Unidade 2 e as ações de melhoria adotadas.</p>
+        </div>
+        <div class="single-layout">
+          <article class="article-content">
+            <h2 id="lição-1-consistência-dos-requisitos-entre-as-seções-do-documento">Lição 1: Consistência dos requisitos entre as seções do documento</h2>
+            <p><strong>Dificuldade observada:</strong> A equipe teve dificuldade em manter os requisitos consistentes entre as seções do documento. As Seções 8 a 12 foram escritas em paralelo, por integrantes diferentes, e cada uma acabou usando a sua própria versão dos objetivos, das características e dos requisitos. Chegaram a conviver três conjuntos de características (CP1 a CP6 na Seção 2.3, CP1 a CP8 na Seção 8 e CP1 a CP7 no quadro do Figma), o mesmo número de RF com significados diferentes em páginas diferentes, totais de requisitos distintos (27, 29 e 34 RFs) e um MVP no cronograma diferente do MVP da Seção 10.</p>
+            <p><strong>Causa:</strong> A equipe não definiu, antes de começar a redação, qual artefato seria a fonte oficial dos requisitos, nem uma regra para criar e numerar requisitos novos. Os requisitos acrescentados depois da extração da Matriz de Rastreabilidade receberam números escolhidos dentro de cada seção, e as mudanças feitas em uma página não eram levadas às demais páginas que citavam os mesmos identificadores. Com isso, a dificuldade registrada na Lição 2 da <a href="../14-1-licoes-aprendidas-unidade-1/">Unidade 1</a> voltou a aparecer, agora concentrada nos requisitos.</p>
+            <p><strong>Impacto no projeto:</strong> O documento precisou de duas rodadas de realinhamento geral na Unidade 2. A primeira, ao incorporar as Seções 9 a 11, realinhou as Seções 2 e 4 a 8; a segunda, às vésperas da Entrega 2, corrigiu oito inconsistências entre as Seções 6, 8, 9, 10 e 11, as páginas das Iterações 3 e 4 e o README. Além do retrabalho, a divergência deixou fora do catálogo e do backlog, até a segunda rodada, um requisito obrigatório pela LGPD: a exclusão da conta e dos dados, hoje RF36.</p>
+            <p><strong>Como foi (ou não) superada:</strong> Foi superada no documento publicado. A Matriz de Rastreabilidade de Requisitos v1.0 passou a ser a fonte oficial dos identificadores, e ficou definido que um RF novo recebe sempre o próximo número livre do catálogo da Seção 8, nunca um número já usado em outra seção. Por isso os requisitos novos da Seção 9 foram renumerados para RF35 e RF36 (<a href="../09-priorizacao-de-requisitos/#reavaliacao-acrescentados">Seção 9.9</a>). O README do repositório passou a registrar o conjunto válido de cada nível e a lista de arquivos a conferir quando um identificador muda. A atualização do backlog no Notion com a mesma alocação ficou como encaminhamento da <a href="../10-mvp/">Seção 10.4.3</a>.</p>
+            <p><strong>Aprendizado resultante:</strong> Quando várias pessoas escrevem em paralelo seções que citam os mesmos identificadores, a consistência não pode depender de uma revisão feita no fim. Ela exige uma fonte única definida antes da redação, regras explícitas para criar e numerar requisitos e a propagação de cada mudança a todos os lugares que a citam, no mesmo momento em que ela é feita.</p>
+            <p><strong>Ações concretas de melhoria:</strong></p>
+            <ol>
+              <li>Tratar o catálogo da Seção 8 como fonte única: toda criação, exclusão ou renumeração de requisito é feita primeiro nele e só depois levada às demais seções.</li>
+              <li>Em toda alteração de identificador, percorrer a lista de arquivos do README, incluindo o backlog do Notion, e atualizá-los no mesmo pull request. O revisor só aprova depois de conferir essa lista.</li>
+              <li>Fazer a revisão cruzada de consistência (total de RFs, significado de cada identificador e composição do MVP) ao fim de cada iteração, e não apenas antes da entrega.</li>
+            </ol>
+            <p><strong>Responsável e Prazo:</strong> Analistas de Requisitos, com revisão de toda a equipe nos pull requests. As ações 1 e 2 valem a partir da Iteração 5 (13/10/2026), e a ação 3, ao fim de cada iteração, até o fim do semestre.</p>
+            <p><strong>Forma de verificar se a ação funcionou:</strong> A ação será considerada eficaz se, na Entrega 3, o total de RFs, o significado de cada identificador e a composição do MVP forem os mesmos em todas as seções, nas páginas das iterações e no Notion, sem que seja necessária uma nova rodada de correção de consistência antes da entrega.</p>
+            <h2 id="lição-2-dificuldade-de-contato-com-a-cliente">Lição 2: Dificuldade de contato com a cliente</h2>
+            <p><strong>Dificuldade observada:</strong> A equipe teve dificuldade em conseguir horários com a cliente, a Dra. Cláudia Araújo Bottino. Por ser uma profissional de saúde muito requisitada, com a agenda lotada de compromissos, as janelas disponíveis para reuniões com a equipe foram poucas. A reunião de validação da priorização só pôde acontecer em 05/10/2026, já na Iteração 4, perto do fechamento da Entrega 2, e a reunião de acompanhamento, para validar o MVP consolidado, está prevista apenas para o final de outubro ou o início de novembro de 2026.</p>
+            <p><strong>Causa:</strong> A disponibilidade da cliente é limitada pelos compromissos profissionais dela, algo fora do controle da equipe. O processo definido na <a href="../07-interacao-equipe-cliente/">Seção 7</a>, porém, depende dela em vários pontos: a reunião mensal de revisão, a decisão final sobre a priorização, a aceitação formal das entregas e a revisão dos conteúdos de saúde. Com tantas decisões concentradas em uma pessoa de agenda tão restrita, cada atraso para encontrar um horário atrasa também as validações.</p>
+            <p><strong>Impacto no projeto:</strong> Com pouco tempo de contato, a validação ficou incompleta. Apenas 14 dos 36 RFs têm valor de negócio confirmado pela cliente; os demais, incluindo os RF28 a RF34, que ela mesma pediu, seguem como hipótese da equipe (<a href="../09-priorizacao-de-requisitos/#avaliacao-valor-negocio">Seção 9.4</a>). A conversa se concentrou no conteúdo clínico e não chegou a tratar da privacidade dos dados (CP3) nem da conta da usuária (CP7). O MVP consolidado ainda não foi apresentado a ela, de modo que a Seção 10 não pode ser considerada fechada, e sete histórias da Iteração 5 ainda dependem da confirmação de prioridade exigida pelo item 2 do <a href="../12-dor-e-dod/">DoR</a>.</p>
+            <p><strong>Como foi (ou não) superada:</strong> Foi contornada, mas ainda não superada. Para aproveitar ao máximo a reunião de 05/10/2026, a equipe preparou um roteiro de perguntas por característica de produto (<a href="../09-priorizacao-de-requisitos/#roteiro-validacao">Seção 9.8.1</a>) e registrou com transparência o que foi e o que não foi validado, na coluna <em>Confirmado</em> da Seção 9.4. Para as notas que seguem em hipótese, adotou medidas que mantêm as decisões auditáveis e reversíveis até a próxima validação: critérios de valor fixados antes das notas, justificativa individual por requisito e separação entre o que depende e o que não depende da cliente (<a href="../10-mvp/">Seção 10.4.2</a>). A dificuldade só será superada quando a reunião de acompanhamento validar o MVP consolidado.</p>
+            <p><strong>Aprendizado resultante:</strong> Com uma cliente de agenda tão disputada, cada contato é um recurso escasso e precisa ser planejado. As datas devem ser garantidas com antecedência, e o tempo de reunião deve ir para o que só a cliente pode decidir, como o valor de negócio e os conteúdos de saúde. O que a equipe decide sozinha, como o esforço técnico, e o que cabe à usuária representativa, como usabilidade e linguagem, não deve ocupar esse tempo. Um canal assíncrono para validações pontuais reduz a dependência de reuniões.</p>
+            <p><strong>Ações concretas de melhoria:</strong></p>
+            <ol>
+              <li>Agendar com a cliente, de uma só vez, todas as reuniões que restam no semestre: a reunião de acompanhamento, para validar o MVP consolidado, as revisões de iteração em que ela participa e a homologação da Iteração 7.</li>
+              <li>Enviar à cliente a pauta e um resumo curto dos itens a validar com pelo menos três dias de antecedência, ordenados pelo que bloqueia a próxima iteração: a prioridade das histórias da iteração seguinte e as notas dos RFs do MVP ainda em hipótese.</li>
+              <li>Combinar com a cliente um canal assíncrono, como mensagens ou um formulário curto, para validações pontuais de notas de RFs e de textos de saúde, sem depender de reunião síncrona.</li>
+              <li>Atualizar as Seções 9.4, 9.8 e 10.4.1 logo após cada contato, registrando o que passou de hipótese a validado.</li>
+            </ol>
+            <p><strong>Responsável e Prazo:</strong> Gerente de Projeto responsável pela comunicação com a cliente, com apoio dos Analistas de Requisitos. As ações 1 e 3 devem ser concluídas na primeira semana da Iteração 5 (até 20/10/2026), e as ações 2 e 4 valem para todos os contatos com a cliente até o fim do semestre.</p>
+            <p><strong>Forma de verificar se a ação funcionou:</strong> A ação será considerada eficaz se as reuniões agendadas acontecerem nas datas combinadas, se o MVP consolidado for validado pela cliente na reunião de acompanhamento e se, ao fim da Unidade 3, nenhum RF do MVP permanecer com valor de negócio em hipótese.</p>
+            <nav class="doc-pager" aria-label="Navegação entre seções">
+              <a class="doc-pager-link doc-pager-prev" href="../14-1-licoes-aprendidas-unidade-1/">
+                <span class="doc-pager-dir">&larr; Anterior</span>
+                <span class="doc-pager-title">14.1 Lições Aprendidas — Unidade 1</span>
+              </a>
+              <a class="doc-pager-link doc-pager-next" href="../15-referencias/">
+                <span class="doc-pager-dir">Próxima &rarr;</span>
+                <span class="doc-pager-title">15. Referências Bibliográficas</span>
+              </a>
+            </nav>
+          </article>
+        </div>
+      </main>
+
+      <footer class="content-footer">
+        <div class="footer-deco" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div>MindCycle · Requisitos de Software 2026.2 · FCTE/UnB</div>
+        <div class="footer-theme-credit">Theme <a href="https://github.com/JoeYang1412/hugo-theme-spectra" target="_blank" rel="noopener noreferrer">Spectra</a> by <a href="https://github.com/JoeYang1412" target="_blank" rel="noopener noreferrer">JoeYang1412</a></div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Buscar">
+    <div class="search-container">
+      <div class="search-header">
+        <div class="search-input-wrapper">
+          <svg class="search-input-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar na documentação..." autocomplete="off">
+        </div>
+        <button class="search-close" id="searchClose" aria-label="Fechar busca">
+          <kbd>ESC</kbd>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-empty" id="searchEmpty">Digite para buscar na documentação</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14V4"/><path d="M4 8l5-5 5 5"/></svg>
+  </button>
+
+  <script defer src="../../assets/js/theme-toggle.js"></script>
+  <script defer src="../../assets/js/sidebar.js"></script>
+  <script defer src="../../assets/js/nav-collapse.js"></script>
+  <script defer src="../../assets/js/scroll-top.js"></script>
+  <script defer src="../../assets/js/vendor/fuse.min.js"></script>
+  <script defer src="../../assets/js/search.js"></script>
+  <script defer src="../../assets/js/lightbox.js"></script>
+</body>
+</html>
