@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Priorização de requisitos | MindCycle</title>
+  <meta name="description" content="Como os requisitos do MindCycle foram priorizados: valor de negócio da cliente, esforço da equipe, MoSCoW e a matriz que compôs o MVP.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <script>
+    // Antes da primeira pintura: o tema escolhido antes ou, sem escolha, o do sistema.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-pagina="priorizacao">
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+  <aside class="side">
+    <a class="brand" href="../" aria-label="Ir para a página principal">
+      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
+      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
+    </a>
+    <nav class="menu" aria-label="Páginas do site">
+      <a class="navb" href="../">◈ Requisitos</a>
+      <div class="navh">◇ Como trabalhamos</div>
+      <a class="navb" href="../visao/">Visão de produto</a>
+      <a class="navb" href="../engenharia-de-requisitos/">Engenharia de requisitos</a>
+      <a class="navb" href="../mvp/">MVP</a>
+      <a class="navb" href="../historico/">Histórico</a>
+      <a class="navb" href="../reunioes/">Reuniões</a>
+      <a class="navb" href="../cronograma/">Entregas e cronograma</a>
+      <a class="navb" href="../dor-e-dod/">DoR e DoD</a>
+      <a class="navb on" href="../priorizacao/" aria-current="page">Priorização de requisitos</a>
+      <a class="navb" href="../licoes-aprendidas/">Lições aprendidas</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div class="crumb">MindCycle / Priorização de requisitos</div>
+      <div class="tools">
+        <button class="btn" id="tema" type="button">☾ Tema escuro</button>
+      </div>
+    </header>
+
+    <main class="content" id="conteudo">
+      <h1>Priorização de requisitos</h1>
+      <p class="lead">O método: duas dimensões independentes, cada uma avaliada por quem entende dela. Os resultados estão no quadro e na matriz abaixo.</p>
+      <div class="cards" style="margin-top: 20px">
+        <div class="card"><h3>Valor de negócio</h3><p style="margin: 0">Atribuído pela cliente, em escala MoSCoW: 4 Must, 3 Should, 2 Could, 1 Won't have now.</p></div>
+        <div class="card"><h3>Esforço técnico</h3><p style="margin: 0">Atribuído pela equipe: média de Esforço, Complexidade e Lacuna de capacidade.</p></div>
+      </div>
+      <noscript><p class="sem-js">Os quadros com as histórias são montados por JavaScript.</p></noscript>
+      <h2>Como priorizamos</h2>
+      <details class="fold">
+        <summary class="foldh"><span><b>Critérios de valor</b><span class="state">Os 5 critérios usados pela cliente</span></span><span class="chev" aria-hidden="true"></span></summary>
+        <div class="foldb"><ol class="ol">
+          <li>Contribuição para o objetivo específico</li>
+          <li>Impacto na sobrecarga e na culpa</li>
+          <li>Obrigatoriedade legal (LGPD)</li>
+          <li>Frequência de uso no fluxo diário</li>
+          <li>Dependência estrutural</li>
+        </ol></div>
+      </details>
+      <details class="fold">
+        <summary class="foldh"><span><b>Como calculamos</b><span class="state">Valor, esforço e posição na matriz</span></span><span class="chev" aria-hidden="true"></span></summary>
+        <div class="foldb">
+          <ol class="steps">
+            <li><span class="dot">1</span><div><h3>Valor de negócio</h3><p>A cliente classifica cada história pelos critérios acima: 4 Must, 3 Should, 2 Could, 1 Won't have now.</p></div></li>
+            <li><span class="dot">2</span><div><h3>Esforço técnico</h3><p>A equipe dá notas de 1 a 4 em três dimensões e tira a média.</p><p class="formula mono">Esforço consolidado = (Esforço + Complexidade + Lacuna de capacidade) ÷ 3</p><p class="note" style="margin: 8px 0 0">Exemplo, HU22: (2 + 1 + 2) ÷ 3 = 1,7, que arredonda para 2 na matriz.</p></div></li>
+            <li><span class="dot">3</span><div><h3>Posição na matriz</h3><p style="margin: 0">O valor define a linha e o esforço arredondado define a coluna de uma matriz 4 × 4. A posição orienta a decisão, sem determiná-la.</p></div></li>
+            <li><span class="dot">4</span><div><h3>Decisão do MVP</h3><p style="margin: 0">Cada quadrante recebe uma decisão, e os casos de exceção são justificados.</p></div></li>
+          </ol>
+          <div class="tblw" style="margin-top: 14px"><table>
+            <thead><tr><th>Nota</th><th>Esforço</th><th>Complexidade</th><th>Lacuna de capacidade</th></tr></thead>
+            <tbody>
+              <tr><td><b>1</b></td><td>Até 2 horas</td><td>Solução conhecida, poucas dependências</td><td>A equipe domina plenamente</td></tr>
+              <tr><td><b>2</b></td><td>De 2 a 6 horas</td><td>Exige investigação ou integração</td><td>Pouca aprendizagem adicional</td></tr>
+              <tr><td><b>3</b></td><td>De 6 a 12 horas</td><td>Várias dependências ou incertezas</td><td>Precisa desenvolver conhecimento relevante</td></tr>
+              <tr><td><b>4</b></td><td>Mais de 12 horas</td><td>Incerteza elevada ou integração crítica</td><td>Ainda não possui conhecimento ou recursos</td></tr>
+            </tbody>
+          </table></div>
+          <button class="btn" id="ver-calculo" type="button" style="margin-top: 12px" aria-expanded="false" aria-controls="calculo">Ver o cálculo das 36 histórias</button>
+          <div class="tblw" id="calculo" hidden style="margin-top: 10px; max-height: 420px; overflow-y: auto"><table>
+            <thead><tr><th>História</th><th>Nome</th><th>Valor</th><th>Esf.</th><th>Compl.</th><th>Lacuna</th><th>Consolidado</th><th>Coluna</th><th>MVP</th></tr></thead>
+            <tbody id="calculo-linhas"></tbody>
+          </table></div>
+        </div>
+      </details>
+      <details class="fold">
+        <summary class="foldh"><span><b>Como chegamos ao MVP</b><span class="state">22 das 36 histórias, quadrante a quadrante</span></span><span class="chev" aria-hidden="true"></span></summary>
+        <div class="foldb">
+          <p>Cada quadrante da matriz valor × esforço teve uma decisão. O resultado são 22 das 36 histórias.</p>
+          <div class="tblw"><table>
+            <thead><tr><th>Quadrante</th><th style="width: 92px">Entraram</th><th>Decisão</th><th>Histórias</th></tr></thead>
+            <tbody id="funil"></tbody>
+          </table></div>
+          <p style="margin-top: 12px">Duas exceções merecem registro: o PIN caiu de esforço 3,0 para 1,0 ao adiar a senha de pétalas, e HU13 e HU15 entraram apesar do esforço alto porque, sem elas, o produto seria só uma lista de tarefas.</p>
+        </div>
+      </details>
+
+      <h2>Quadro MoSCoW</h2>
+      <p>Clique em uma história para ver o detalhe. Fundo preenchido indica que ela está no MVP.</p>
+      <div class="msc" id="moscow"></div>
+      <h2>Matriz impacto × esforço</h2>
+      <p>A matriz orienta, não decide: a escolha final considera dependências e o fluxo de valor. Clique em uma história para ver o detalhe.</p>
+      <div class="q2">
+        <span class="q2y" aria-hidden="true">Esforço</span>
+        <div class="q2g" id="matriz"></div>
+        <span></span><span class="q2x" aria-hidden="true">Impacto</span>
+      </div>
+      <h3 style="margin: 16px 0 8px">Fora do quadro</h3>
+      <div class="rfl" id="fora-da-matriz"></div>
+      <div class="legend"><span>Quadro de impacto × esforço da equipe. A composição do MVP segue a matriz valor × esforço calculada acima.</span></div>
+      <h2>Como a cliente mudou o resultado</h2>
+      <p>Na reunião de 05/10/2026, a Dra. Cláudia avaliou 13 requisitos: confirmou 8 notas e ajustou 5, todas para cima. Os demais valores seguem como hipótese da equipe até nova validação.</p>
+      <a class="go" href="https://www.youtube.com/watch?v=PKoWLngGSRg" target="_blank" rel="noopener">▶ Ver a reunião</a>
+    </main>
+
+    <footer class="foot">
+      <span>MindCycle · Requisitos de Software · 2026.2 · Turma 02</span>
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">GitHub</a>
+      <span>Theme Spectra by JoeYang1412</span>
+    </footer>
+  </div>
+
+  <script defer src="../assets/js/dados.js"></script>
+  <script defer src="../assets/js/site.js"></script>
+  <script defer src="../assets/js/priorizacao.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Engenharia de requisitos | MindCycle</title>
+  <meta name="description" content="As escolhas de processo do MindCycle e como cada requisito nasce, é declarado, verificado e validado.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <script>
+    // Antes da primeira pintura: o tema escolhido antes ou, sem escolha, o do sistema.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-pagina="er">
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+  <aside class="side">
+    <a class="brand" href="../" aria-label="Ir para a página principal">
+      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
+      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
+    </a>
+    <nav class="menu" aria-label="Páginas do site">
+      <a class="navb" href="../">◈ Requisitos</a>
+      <div class="navh">◇ Como trabalhamos</div>
+      <a class="navb" href="../visao/">Visão de produto</a>
+      <a class="navb on" href="../engenharia-de-requisitos/" aria-current="page">Engenharia de requisitos</a>
+      <a class="navb" href="../mvp/">MVP</a>
+      <a class="navb" href="../historico/">Histórico</a>
+      <a class="navb" href="../reunioes/">Reuniões</a>
+      <a class="navb" href="../cronograma/">Entregas e cronograma</a>
+      <a class="navb" href="../dor-e-dod/">DoR e DoD</a>
+      <a class="navb" href="../priorizacao/">Priorização de requisitos</a>
+      <a class="navb" href="../licoes-aprendidas/">Lições aprendidas</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div class="crumb">MindCycle / Engenharia de requisitos</div>
+      <div class="tools">
+        <button class="btn" id="tema" type="button">☾ Tema escuro</button>
+      </div>
+    </header>
+
+    <main class="content" id="conteudo">
+      <h1>Engenharia de requisitos</h1>
+      <p class="lead">Quais escolhas de processo fizemos, por que elas servem ao MindCycle e como cada requisito nasce, é declarado, verificado e validado.</p>
+
+      <h2>O que escolhemos</h2>
+      <div class="stats">
+        <div class="stat"><span>Abordagem</span><div class="val">Híbrida</div></div>
+        <div class="stat"><span>Ciclo de vida</span><div class="val">Iterativo e incremental</div></div>
+        <div class="stat"><span>Processo</span><div class="val">OpenUP</div></div>
+      </div>
+      <h2>Por que essa combinação</h2>
+      <div class="cards">
+        <div class="card"><span class="dot" style="margin-bottom: 10px">1</span><h3>Requisitos emergentes</h3><p style="margin: 0">Energia ao longo do ciclo, sobrecarga executiva e culpa são experiências sensíveis e pouco documentadas. O OpenUP detalha os requisitos aos poucos, a cada iteração.</p></div>
+        <div class="card"><span class="dot" style="margin-bottom: 10px">2</span><h3>Hipóteses de valor</h3><p style="margin: 0">Boa parte do produto é hipótese sobre o que reduz a sobrecarga sem gerar nova cobrança. As revisões testam isso em ciclos curtos, antes de investir o semestre inteiro.</p></div>
+        <div class="card"><span class="dot" style="margin-bottom: 10px">3</span><h3>Calendário da disciplina</h3><p style="margin: 0">Porte de equipe não desempata. O que decide é a aderência: as quatro fases acomodam a engenharia de requisitos nas Releases 1 e 2, antes dos incrementos da Release 3.</p></div>
+      </div>
+
+      <h2>Por que não usamos Kanban</h2>
+      <p class="band" style="text-align: left">Com a nova organização da documentação, cada requisito já mostra seu estado na própria árvore. Isso eliminou a necessidade de controlar os requisitos por meio da visualização Kanban.</p>
+
+      <h2>A alternativa que comparamos</h2>
+      <p>Comparamos o OpenUP com a combinação Scrum + XP.</p>
+      <div class="tblw"><table class="cmp">
+        <thead><tr><th>Critério</th><th>OpenUP (escolhido)</th><th>Scrum + XP</th></tr></thead>
+        <tbody>
+          <tr><td><b>Estrutura</b></td><td>Quatro fases para os marcos do projeto.</td><td>Sprints de 1 a 4 semanas, com planejamento, revisão e retrospectiva.</td></tr>
+          <tr><td><b>Arquitetura</b></td><td>Requisitos de maior risco ou prioridade nas iterações iniciais.</td><td>Evolui ao longo das sprints, conforme funcionalidades e riscos são validados.</td></tr>
+          <tr><td><b>Requisitos</b></td><td>Detalhados progressivamente, sem especificação exaustiva prematura.</td><td>Mudanças no backlog a cada sprint.</td></tr>
+          <tr><td><b>Cliente</b></td><td>Revisões, demonstrações e testes.</td><td>Feedback ao final de cada sprint e refinamento contínuo.</td></tr>
+          <tr><td><b>Complexidade</b></td><td>Governança enxuta das fases, com políticas explícitas.</td><td>Papéis, cerimônias e artefatos definidos pelo Scrum.</td></tr>
+          <tr><td><b>Qualidade técnica</b></td><td>Validação contínua, mas sem práticas técnicas prescritas.</td><td>Forte, com TDD, refatoração, integração contínua e programação em pares.</td></tr>
+          <tr><td><b>Documentação</b></td><td>Conjunto mínimo: Visão, histórias e requisitos.</td><td>Registros essenciais para rastreabilidade, backlog e aceite.</td></tr>
+          <tr><td><b>No MindCycle</b></td><td>Mitiga cedo os riscos de dados e replanejamento e absorve descobertas, mas depende de políticas explícitas de qualidade.</td><td>Permite investigar experiências sensíveis e ajustar o produto a cada ciclo.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="band" style="margin-top: 12px">O ponto fraco do OpenUP é compensado com práticas de Scrum e XP: integração contínua, testes e o DoD.</p>
+
+      <h2>As etapas</h2>
+      <p>Cada fase do OpenUP usa técnicas diferentes. O detalhe, com datas e evidências, está no painel de fases.</p>
+      <a class="go" href="../cronograma/">Abrir o painel de fases</a>
+
+      <h2>Como declaramos os requisitos</h2>
+      <p>Três níveis, cada um com sua declaração.</p>
+      <div class="cards">
+        <button class="card cardb" type="button" data-dialogo="metas"><span class="phase">Negócio</span><b class="cardt">Catálogo de Metas</b><span class="tpl">Meta · indicador · resultado esperado · prazo · objetivo</span><span class="cardd">Associa cada meta ao objetivo de origem e registra a LGPD como restrição externa.</span><span class="cardg">Ver as metas →</span></button>
+        <a class="card cardb" href="../"><span class="phase">Usuário</span><b class="cardt">Histórias de usuário</b><span class="tpl">Como usuária, quero… para…</span><span class="cardd">Cada história declara a necessidade da usuária e o benefício esperado.</span><span class="cardg">Ver em Requisitos →</span></a>
+        <a class="card cardb" href="../"><span class="phase">Produto</span><b class="cardt">Histórias com critérios de aceitação</b><span class="tpl">… só será considerado concluído quando…</span><span class="cardd">Critérios verificáveis, com privacidade, RNFs aplicáveis e ausência de linguagem punitiva.</span><span class="cardg">Ver em Requisitos →</span></a>
+        <a class="card cardb" href="../"><span class="phase">Produto</span><b class="cardt">Requisitos não funcionais</b><span class="tpl">Classificação + critério verificável</span><span class="cardd">Ligados às histórias na árvore, cada um diz como será conferido.</span><span class="cardg">Ver em Requisitos →</span></a>
+      </div>
+
+      <h2>Como garantimos que estão certos</h2>
+      <div class="two" style="margin-top: 0">
+        <div class="card"><span class="phase">Verificação</span><h3>Construímos direito?</h3><p style="margin: 0">Checklist do DoR no Planejamento e do DoD ao fim de cada história. A que não atende não entra na iteração ou volta para o desenvolvimento.</p></div>
+        <div class="card"><span class="phase">Validação</span><h3>Construímos a coisa certa?</h3><p style="margin: 0">Conferimos os critérios de aceitação da história e validamos a feature com a cliente, que faz a aceitação formal.</p></div>
+      </div>
+      <h2>Quem decide quando há conflito</h2>
+      <div class="cards">
+        <div class="card"><h3>Questão de saúde</h3><p style="margin: 0">Segue a decisão da cliente.</p></div>
+        <div class="card"><h3>Experiência de uso</h3><p style="margin: 0">Segue a avaliação da usuária representativa.</p></div>
+        <div class="card"><h3>Os dois domínios</h3><p style="margin: 0">Volta ao backlog até a decisão ser registrada.</p></div>
+      </div>
+      <h2>Como tudo se mantém ligado</h2>
+      <ol class="chain"><li>Problema</li><li>Objetivo</li><li>Característica</li><li>Requisito</li><li>História</li></ol>
+      <p style="margin-top: 12px">A matriz de rastreabilidade garante que todo objetivo tenha ao menos uma característica e toda história esteja ligada a um objetivo. É ela que alimenta a árvore da página principal.</p>
+      <a class="go" href="../">Ver a árvore</a>
+
+      <!-- Catálogo de Metas: aberto pelo cartão acima ou pelo endereço #metas. -->
+      <template id="metas" data-rotulo="Catálogo de Metas" data-largo data-fechar="Fechar metas">
+        <div class="dh"><div><span class="phase">Requisitos de negócio</span><h2 style="margin: 2px 0 12px; border: 0; padding: 0">Catálogo de Metas</h2></div><button class="x" type="button" aria-label="Fechar" data-fechar><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+        <div class="tblw"><table>
+          <thead><tr><th>ID</th><th>Meta</th><th>Indicador</th><th>Resultado esperado</th><th>Prazo</th><th>OE</th></tr></thead>
+          <tbody>
+            <tr><td class="mono"><b>RNEG-01</b></td><td>Melhorar a percepção dos sintomas durante todo o ciclo menstrual</td><td>Usuárias que, sozinhas, registram sintomas e disposição (HU04) e consultam a fase atual (HU05)</td><td>Todas as usuárias representativas da homologação, sem ajuda da equipe</td><td>Iteração 7</td><td>OE1</td></tr>
+            <tr><td class="mono"><b>RNEG-02</b></td><td>Reduzir a sobrecarga executiva causada pelo planejamento que desconsidera a fase do ciclo</td><td>Recomendação do dia (HU13) que muda a ordem das tarefas quando a disposição registrada muda</td><td>A ordem muda em todos os testes de aceitação com disposição alta e baixa</td><td>Iteração 7</td><td>OE2</td></tr>
+            <tr><td class="mono"><b>RNEG-03</b></td><td>Reduzir a sobrecarga na execução das tarefas diárias, ajustando-as à disposição real</td><td>Usuárias que adiam uma tarefa e recebem o dia reajustado (HU18, HU15) sem mensagem de cobrança</td><td>Todas as usuárias representativas da homologação, sem nenhuma mensagem de cobrança</td><td>Iteração 7</td><td>OE3</td></tr>
+            <tr><td class="mono"><b>RNEG-04</b></td><td>Atender à LGPD (Lei nº 13.709/2018) no tratamento de dados pessoais sensíveis de saúde</td><td colspan="3">Restrição externa</td><td>Todos</td></tr>
+          </tbody>
+        </table></div>
+      </template>
+    </main>
+
+    <footer class="foot">
+      <span>MindCycle · Requisitos de Software · 2026.2 · Turma 02</span>
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">GitHub</a>
+      <span>Theme Spectra by JoeYang1412</span>
+    </footer>
+  </div>
+
+  <script defer src="../assets/js/dados.js"></script>
+  <script defer src="../assets/js/site.js"></script>
+</body>
+</html>

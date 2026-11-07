@@ -1,165 +1,101 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 Page not found | MindCycle</title>
-  <meta name="description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
-  <meta name="author" content="Equipe MindCycle">
-  <meta property="og:title" content="404 Page not found">
-  <meta property="og:description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
-  <meta property="og:site_name" content="MindCycle">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página não encontrada | MindCycle</title>
+  <meta name="description" content="Página não encontrada.">
   <link rel="icon" href="/REQ-2026.2-T02-MindCycle/assets/img/favicon.svg" type="image/svg+xml">
-
-  <!-- Antes da primeira pintura: aplica o tema salvo e o sumário recolhido. -->
   <script>
+    // Antes da primeira pintura: o tema escolhido antes ou, sem escolha, o do sistema.
     (function () {
-      var d = document.documentElement;
-      var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
-      d.setAttribute('data-theme', t);
-      d.classList.add('spectra-revisit');
-      if (localStorage.getItem('sidebar-collapsed') === 'true') d.classList.add('sidebar-collapsed');
-      d.classList.add('js');
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-
   <link rel="preload" as="font" type="font/woff2" href="/REQ-2026.2-T02-MindCycle/assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
-  <link rel="stylesheet" href="/REQ-2026.2-T02-MindCycle/assets/css/spectra.css">
-  <link rel="stylesheet" href="/REQ-2026.2-T02-MindCycle/assets/css/custom.css">
+  <link rel="stylesheet" href="/REQ-2026.2-T02-MindCycle/assets/css/site.css">
 </head>
-<body>
-  <!-- Antes da primeira pintura: recolhe os grupos do sumário que o leitor deixou fechados. -->
-  <script>
-    (function () {
-      try {
-        JSON.parse(localStorage.getItem('navFechados') || '[]').forEach(function (id) {
-          document.documentElement.classList.add('nav-fechado-' + id);
-        });
-      } catch (e) {}
-    })();
-  </script>
+<body data-pagina="erro">
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
 
-  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
-
-  <noscript>
-    <div class="noscript-notice">Alguns recursos (sumário, busca e alternância de tema) precisam de JavaScript.</div>
-  </noscript>
-
-  <aside class="sidebar" id="sidebar">
-    <a class="sidebar-brand" href="/REQ-2026.2-T02-MindCycle/">
-      <span class="sidebar-brand-mark">
-        <img src="/REQ-2026.2-T02-MindCycle/assets/brand/logo/icon-lua/lua-original_transparente.svg" alt="" width="34" height="34" loading="eager" decoding="async">
-      </span>
-      <span class="sidebar-brand-text">
-        <span class="sidebar-brand-name">MindCycle</span>
-        <span class="sidebar-brand-sub">// REQ 2026.2 · T02</span>
-      </span>
+  <aside class="side">
+    <a class="brand" href="/REQ-2026.2-T02-MindCycle/" aria-label="Ir para a página principal">
+      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
+      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
     </a>
-
-    <nav class="sidebar-nav" aria-label="Sumário da documentação">
-      <!-- Os itens do sumário ficam em assets/js/sumario.js, que os escreve aqui. -->
-      <script src="/REQ-2026.2-T02-MindCycle/assets/js/sumario.js"></script>
+    <nav class="menu" aria-label="Páginas do site">
+      <a class="navb" href="/REQ-2026.2-T02-MindCycle/">◈ Requisitos</a>
+      <div class="navh">◇ Como trabalhamos</div>
+      <a class="navb" href="/REQ-2026.2-T02-MindCycle/visao/">Visão de produto</a>
+      <a class="navb" href="/REQ-2026.2-T02-MindCycle/engenharia-de-requisitos/">Engenharia de requisitos</a>
+      <a class="navb" href="/REQ-2026.2-T02-MindCycle/mvp/">MVP</a>
+      <a class="navb" href="/REQ-2026.2-T02-MindCycle/historico/">Histórico</a>
+      <a class="navb" href="/REQ-2026.2-T02-MindCycle/reunioes/">Reuniões</a>
+      <a class="navb" href="/REQ-2026.2-T02-MindCycle/cronograma/">Entregas e cronograma</a>
+      <a class="navb" href="/REQ-2026.2-T02-MindCycle/dor-e-dod/">DoR e DoD</a>
+      <a class="navb" href="/REQ-2026.2-T02-MindCycle/priorizacao/">Priorização de requisitos</a>
+      <a class="navb" href="/REQ-2026.2-T02-MindCycle/licoes-aprendidas/">Lições aprendidas</a>
     </nav>
-
-    <div class="sidebar-footer">
-      <div class="sidebar-links">
-        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>GitHub</span>
-        </a>
-      </div>
-      <div class="sidebar-copyright">&copy; 2026 Equipe MindCycle</div>
-    </div>
   </aside>
-  <button class="sidebar-collapse-btn" id="sidebarCollapse" aria-label="Recolher ou expandir o sumário">
-    <svg class="collapse-icon-collapse" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L5 8l6 6"/></svg>
-    <svg class="collapse-icon-expand" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l6 6-6 6"/></svg>
-  </button>
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <div class="site-wrapper">
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="topbar-btn topbar-menu" id="sidebarToggle" aria-label="Abrir o sumário" aria-expanded="false">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13"/></svg>
-        </button>
-
-        <nav class="breadcrumb" aria-label="Trilha de navegação">
-          <a href="/REQ-2026.2-T02-MindCycle/">MindCycle</a>
-        </nav>
-      </div>
-
-      <div class="topbar-centro">
-        <button class="busca-btn" id="searchTrigger" aria-label="Buscar">
-          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
-          <span class="busca-btn-texto">Buscar na documentação...</span>
-        </button>
-      </div>
-
-      <div class="topbar-direita">
-        <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="Alternar tema" aria-pressed="false" title="Alternar tema">
-          <span id="themeIcon" aria-hidden="true">&#9790;</span>
-          <span class="topbar-btn-label" id="themeLabel">Tema escuro</span>
-        </button>
+  <div class="main">
+    <header class="top">
+      <div class="crumb">MindCycle / Página não encontrada</div>
+      <div class="tools">
+        <button class="btn" id="tema" type="button">☾ Tema escuro</button>
       </div>
     </header>
 
-    <div class="content-area" id="main-content">
-      <main class="main-content">
-        <div class="error-page">
-          <div class="error-code">
-            <span class="error-digit">4</span>
-            <span class="error-digit accent">0</span>
-            <span class="error-digit">4</span>
-          </div>
-          <div class="error-decoration">
-            <div class="corner-brackets"><span></span></div>
-          </div>
-          <h1 class="error-title">Página não encontrada</h1>
-          <p class="error-message">A página que você procura não existe ou foi movida.</p>
-          <a href="/REQ-2026.2-T02-MindCycle/" class="error-home-link">
-            <svg class="back-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3L1 8l5 5"/><line x1="1.5" y1="8" x2="15" y2="8"/></svg>
-            Voltar ao início
-          </a>
-        </div>
-      </main>
+    <main class="content" id="conteudo">
+      <h1>Página não encontrada</h1>
+      <p class="lead">O endereço não existe ou mudou de lugar. A documentação foi reorganizada: as seções do Documento de Visão agora estão divididas pelas páginas do menu.</p>
+      <a class="go" href="/REQ-2026.2-T02-MindCycle/">Ir para Requisitos</a>
+      <script>
+        // Endereços do site antigo (Documento de Visão em seções) levam à página nova
+        // com o mesmo assunto.
+        (function () {
+          var BASE = '/REQ-2026.2-T02-MindCycle/';
+          var MAPA = {
+            'visao/01-cenario-atual/': 'visao/',
+            'visao/02-solucao-proposta/': 'visao/',
+            'visao/03-intervencao-social/': 'visao/',
+            'visao/04-estrategias-engenharia-software/': 'engenharia-de-requisitos/',
+            'visao/05-engenharia-de-requisitos/': 'engenharia-de-requisitos/',
+            'visao/06-cronograma-e-entregas/': 'cronograma/',
+            'visao/07-interacao-equipe-cliente/': 'reunioes/',
+            'visao/08-requisitos-de-software/': '',
+            'visao/09-priorizacao-de-requisitos/': 'priorizacao/',
+            'visao/10-mvp/': 'mvp/',
+            'visao/11-rastreabilidade/': '',
+            'visao/12-dor-e-dod/': 'dor-e-dod/',
+            'visao/14-licoes-aprendidas/': 'licoes-aprendidas/',
+            'visao/14-1-licoes-aprendidas-unidade-1/': 'licoes-aprendidas/',
+            'visao/14-2-licoes-aprendidas-unidade-2/': 'licoes-aprendidas/',
+            'visao/15-referencias/': 'visao/',
+            'entregas/': 'reunioes/',
+            'entregas/unidade-1/': 'reunioes/',
+            'entregas/unidade-2/': 'reunioes/'
+          };
+          var caminho = location.pathname.indexOf(BASE) === 0 ? location.pathname.slice(BASE.length) : '';
+          caminho = caminho.replace(/index\.html$/, '');
+          if (caminho && caminho.slice(-1) !== '/') caminho += '/';
+          var destino = MAPA.hasOwnProperty(caminho) ? MAPA[caminho] : (caminho.indexOf('openup/') === 0 ? 'cronograma/' : null);
+          if (destino !== null) location.replace(BASE + destino);
+        })();
+      </script>
+    </main>
 
-      <footer class="content-footer">
-        <div class="footer-deco" aria-hidden="true">
-          <span></span><span></span><span></span>
-        </div>
-        <div>MindCycle · Requisitos de Software 2026.2 · FCTE/UnB</div>
-        <div class="footer-theme-credit">Theme <a href="https://github.com/JoeYang1412/hugo-theme-spectra" target="_blank" rel="noopener noreferrer">Spectra</a> by <a href="https://github.com/JoeYang1412" target="_blank" rel="noopener noreferrer">JoeYang1412</a></div>
-      </footer>
-    </div>
+    <footer class="foot">
+      <span>MindCycle · Requisitos de Software · 2026.2 · Turma 02</span>
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">GitHub</a>
+      <span>Theme Spectra by JoeYang1412</span>
+    </footer>
   </div>
 
-  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Buscar">
-    <div class="search-container">
-      <div class="search-header">
-        <div class="search-input-wrapper">
-          <svg class="search-input-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
-          <input type="text" class="search-input" id="searchInput" placeholder="Buscar na documentação..." autocomplete="off">
-        </div>
-        <button class="search-close" id="searchClose" aria-label="Fechar busca">
-          <kbd>ESC</kbd>
-        </button>
-      </div>
-      <div class="search-results" id="searchResults">
-        <div class="search-empty" id="searchEmpty">Digite para buscar na documentação</div>
-      </div>
-    </div>
-  </div>
-
-  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14V4"/><path d="M4 8l5-5 5 5"/></svg>
-  </button>
-
-  <script defer src="/REQ-2026.2-T02-MindCycle/assets/js/theme-toggle.js"></script>
-  <script defer src="/REQ-2026.2-T02-MindCycle/assets/js/sidebar.js"></script>
-  <script defer src="/REQ-2026.2-T02-MindCycle/assets/js/nav-collapse.js"></script>
-  <script defer src="/REQ-2026.2-T02-MindCycle/assets/js/scroll-top.js"></script>
-  <script defer src="/REQ-2026.2-T02-MindCycle/assets/js/vendor/fuse.min.js"></script>
-  <script defer src="/REQ-2026.2-T02-MindCycle/assets/js/search.js"></script>
+  <script defer src="/REQ-2026.2-T02-MindCycle/assets/js/dados.js"></script>
+  <script defer src="/REQ-2026.2-T02-MindCycle/assets/js/site.js"></script>
 </body>
 </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entregas e cronograma | MindCycle</title>
+  <meta name="description" content="Releases, iterações e o painel de fases do OpenUP no MindCycle.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <script>
+    // Antes da primeira pintura: o tema escolhido antes ou, sem escolha, o do sistema.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-pagina="cronograma">
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+  <aside class="side">
+    <a class="brand" href="../" aria-label="Ir para a página principal">
+      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
+      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
+    </a>
+    <nav class="menu" aria-label="Páginas do site">
+      <a class="navb" href="../">◈ Requisitos</a>
+      <div class="navh">◇ Como trabalhamos</div>
+      <a class="navb" href="../visao/">Visão de produto</a>
+      <a class="navb" href="../engenharia-de-requisitos/">Engenharia de requisitos</a>
+      <a class="navb" href="../mvp/">MVP</a>
+      <a class="navb" href="../historico/">Histórico</a>
+      <a class="navb" href="../reunioes/">Reuniões</a>
+      <a class="navb on" href="../cronograma/" aria-current="page">Entregas e cronograma</a>
+      <a class="navb" href="../dor-e-dod/">DoR e DoD</a>
+      <a class="navb" href="../priorizacao/">Priorização de requisitos</a>
+      <a class="navb" href="../licoes-aprendidas/">Lições aprendidas</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div class="crumb">MindCycle / Entregas e cronograma</div>
+      <div class="tools">
+        <button class="btn" id="tema" type="button">☾ Tema escuro</button>
+      </div>
+    </header>
+
+    <main class="content" id="conteudo">
+      <h1>Entregas e cronograma</h1>
+      <p class="lead">Quatro releases, uma por unidade. Iterações de duas semanas, de terça a segunda; a Iteração 7 tem uma semana.</p>
+      <noscript><p class="sem-js">A linha do tempo e o painel de fases são montados por JavaScript.</p></noscript>
+      <h2>Linha do tempo</h2>
+      <div id="linha-do-tempo" style="overflow-x: auto; padding: 6px 0" role="img" aria-label="Linha do tempo de 11 de agosto a 10 de dezembro de 2026"></div>
+      <div class="legend"><span>Barra escura: iteração</span><span>Barra clara: fechamento de release</span><span id="hoje">Traço vertical: hoje</span></div>
+      <h2>Releases</h2>
+      <div class="tblw"><table>
+        <thead><tr><th>Release</th><th>Período</th><th>Entrega</th><th>Data</th></tr></thead>
+        <tbody>
+          <tr><td>Release 1</td><td>11/08 a 14/09/2026</td><td>Documento de Visão 1.0 publicado</td><td>08/09/2026</td></tr>
+          <tr><td>Release 2</td><td>15/09 a 19/10/2026</td><td>Requisitos, rastreabilidade, DoR e DoD, backlog priorizado e MVP delimitado</td><td>13/10/2026</td></tr>
+          <tr><td>Release 3</td><td>20/10 a 23/11/2026</td><td>Incrementos funcionais verificados e validados</td><td>17/11/2026</td></tr>
+          <tr><td>Release 4</td><td>24/11 a 10/12/2026</td><td>MVP integrado e homologado, Documento de Visão consolidado</td><td>01/12/2026</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Painel de fases</h2>
+      <p>Cada número é a quantidade de técnicas da atividade na fase. Escolha uma fase e abra a iteração para ver as evidências.</p>
+      <div style="overflow-x: auto">
+        <div class="mx" id="painel-fases"></div>
+      </div>
+      <div class="erpanel">
+        <h3 id="fase-nome" style="font-size: 17px; font-family: var(--disp); color: var(--head)"></h3>
+        <p id="fase-foco" style="color: var(--mut)"></p>
+        <div class="cards" id="fase-iteracoes"></div>
+      </div>
+      <h2>Cerimônias</h2>
+      <div class="tblw"><table>
+        <thead><tr><th>Cerimônia</th><th>Quando</th><th>Onde</th></tr></thead>
+        <tbody>
+          <tr><td>Planejamento da Iteração</td><td>Terças, quinzenal</td><td>Meet</td></tr>
+          <tr><td>Refinamento do Product Backlog</td><td>Quartas, 15h</td><td>Meet</td></tr>
+          <tr><td>Revisão da Iteração</td><td>Segundas, quinzenal</td><td>Meet</td></tr>
+          <tr><td>Retrospectiva</td><td>Terça seguinte, só a equipe</td><td>Meet</td></tr>
+        </tbody>
+      </table></div>
+    </main>
+
+    <footer class="foot">
+      <span>MindCycle · Requisitos de Software · 2026.2 · Turma 02</span>
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">GitHub</a>
+      <span>Theme Spectra by JoeYang1412</span>
+    </footer>
+  </div>
+
+  <script defer src="../assets/js/dados.js"></script>
+  <script defer src="../assets/js/site.js"></script>
+  <script defer src="../assets/js/cronograma.js"></script>
+</body>
+</html>

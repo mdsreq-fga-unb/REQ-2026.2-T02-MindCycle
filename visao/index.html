@@ -1,280 +1,150 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visão do Produto e Projeto | MindCycle</title>
-  <meta name="description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
-  <meta name="author" content="Equipe MindCycle">
-  <meta property="og:title" content="Visão do Produto e Projeto">
-  <meta property="og:description" content="Documentação do produto e do projeto MindCycle — aplicativo de organização de tarefas adaptado ao ciclo menstrual, desenvolvido na FCTE/UnB.">
-  <meta property="og:site_name" content="MindCycle">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visão de produto | MindCycle</title>
+  <meta name="description" content="Para quem o MindCycle é construído, com quem a equipe conversa e como se organiza.">
   <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-
-  <!-- Antes da primeira pintura: aplica o tema salvo e o sumário recolhido. -->
   <script>
+    // Antes da primeira pintura: o tema escolhido antes ou, sem escolha, o do sistema.
     (function () {
-      var d = document.documentElement;
-      var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
-      d.setAttribute('data-theme', t);
-      d.classList.add('spectra-revisit');
-      if (localStorage.getItem('sidebar-collapsed') === 'true') d.classList.add('sidebar-collapsed');
-      d.classList.add('js');
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-
   <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
-  <link rel="stylesheet" href="../assets/css/spectra.css">
-  <link rel="stylesheet" href="../assets/css/custom.css">
+  <link rel="stylesheet" href="../assets/css/site.css">
 </head>
-<body>
-  <!-- Antes da primeira pintura: recolhe os grupos do sumário que o leitor deixou fechados. -->
-  <script>
-    (function () {
-      try {
-        JSON.parse(localStorage.getItem('navFechados') || '[]').forEach(function (id) {
-          document.documentElement.classList.add('nav-fechado-' + id);
-        });
-      } catch (e) {}
-    })();
-  </script>
+<body data-pagina="visao">
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
 
-  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
-
-  <noscript>
-    <div class="noscript-notice">Alguns recursos (sumário, busca e alternância de tema) precisam de JavaScript.</div>
-  </noscript>
-
-  <aside class="sidebar" id="sidebar">
-    <a class="sidebar-brand" href="../">
-      <span class="sidebar-brand-mark">
-        <img src="../assets/brand/logo/icon-lua/lua-original_transparente.svg" alt="" width="34" height="34" loading="eager" decoding="async">
-      </span>
-      <span class="sidebar-brand-text">
-        <span class="sidebar-brand-name">MindCycle</span>
-        <span class="sidebar-brand-sub">// REQ 2026.2 · T02</span>
-      </span>
+  <aside class="side">
+    <a class="brand" href="../" aria-label="Ir para a página principal">
+      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
+      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
     </a>
-
-    <nav class="sidebar-nav" aria-label="Sumário da documentação">
-      <!-- Os itens do sumário ficam em assets/js/sumario.js, que os escreve aqui. -->
-      <script src="../assets/js/sumario.js"></script>
+    <nav class="menu" aria-label="Páginas do site">
+      <a class="navb" href="../">◈ Requisitos</a>
+      <div class="navh">◇ Como trabalhamos</div>
+      <a class="navb on" href="../visao/" aria-current="page">Visão de produto</a>
+      <a class="navb" href="../engenharia-de-requisitos/">Engenharia de requisitos</a>
+      <a class="navb" href="../mvp/">MVP</a>
+      <a class="navb" href="../historico/">Histórico</a>
+      <a class="navb" href="../reunioes/">Reuniões</a>
+      <a class="navb" href="../cronograma/">Entregas e cronograma</a>
+      <a class="navb" href="../dor-e-dod/">DoR e DoD</a>
+      <a class="navb" href="../priorizacao/">Priorização de requisitos</a>
+      <a class="navb" href="../licoes-aprendidas/">Lições aprendidas</a>
     </nav>
-
-    <div class="sidebar-footer">
-      <div class="sidebar-links">
-        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>GitHub</span>
-        </a>
-      </div>
-      <div class="sidebar-copyright">&copy; 2026 Equipe MindCycle</div>
-    </div>
   </aside>
-  <button class="sidebar-collapse-btn" id="sidebarCollapse" aria-label="Recolher ou expandir o sumário">
-    <svg class="collapse-icon-collapse" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L5 8l6 6"/></svg>
-    <svg class="collapse-icon-expand" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l6 6-6 6"/></svg>
-  </button>
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <div class="site-wrapper">
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="topbar-btn topbar-menu" id="sidebarToggle" aria-label="Abrir o sumário" aria-expanded="false">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13"/></svg>
-        </button>
-
-        <nav class="breadcrumb" aria-label="Trilha de navegação">
-          <a href="../">MindCycle</a>
-          <span class="breadcrumb-sep" aria-hidden="true">/</span>
-          <a href="./">Visão do Produto e Projeto</a>
-        </nav>
-      </div>
-
-      <div class="topbar-centro">
-        <button class="busca-btn" id="searchTrigger" aria-label="Buscar">
-          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
-          <span class="busca-btn-texto">Buscar na documentação...</span>
-        </button>
-      </div>
-
-      <div class="topbar-direita">
-        <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="Alternar tema" aria-pressed="false" title="Alternar tema">
-          <span id="themeIcon" aria-hidden="true">&#9790;</span>
-          <span class="topbar-btn-label" id="themeLabel">Tema escuro</span>
-        </button>
+  <div class="main">
+    <header class="top">
+      <div class="crumb">MindCycle / Visão de produto</div>
+      <div class="tools">
+        <button class="btn" id="tema" type="button">☾ Tema escuro</button>
       </div>
     </header>
 
-    <div class="content-area" id="main-content">
-      <main class="main-content">
-        <div class="article-header">
-          <div class="section-label">Documentação</div>
-          <h1>Visão do Produto e Projeto</h1>
-          <p class="doc-lead">Documento de Visão do Produto e Projeto do MindCycle.</p>
-        </div>
-        <article class="article-content">
-          <div class="doc-index">
-            <a class="doc-index-item" href="01-cenario-atual/">
-              <span class="doc-index-num">1</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">1. Cenário Atual do Cliente e do Negócio</span>
-                <span class="doc-index-desc">Quem é o cliente, em que contexto o problema aparece, quais são suas causas e quem é afetado por ele.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="02-solucao-proposta/">
-              <span class="doc-index-num">2</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">2. Solução Proposta</span>
-                <span class="doc-index-desc">O que o produto se propõe a fazer: objetivos, características, tecnologias, diferenciais frente aos concorrentes e viabilidade.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="03-intervencao-social/">
-              <span class="doc-index-num">3</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">3. Intervenção Social</span>
-                <span class="doc-index-desc">O que a solução muda na vida de quem a usa — impactos pretendidos, efeitos emergentes e riscos a observar.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="04-estrategias-engenharia-software/">
-              <span class="doc-index-num">4</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">4. Estratégias de Engenharia de Software</span>
-                <span class="doc-index-desc">Abordagem, ciclo de vida, processo e framework de gerenciamento escolhidos, com o comparativo que sustenta a decisão.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="05-engenharia-de-requisitos/">
-              <span class="doc-index-num">5</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">5. Engenharia de Requisitos</span>
-                <span class="doc-index-desc">Quais atividades e técnicas de ER a equipe aplica em cada fase do OpenUP, com os eventos e a cadência de cada fase, e o resultado esperado de cada uma.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="06-cronograma-e-entregas/">
-              <span class="doc-index-num">6</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">6. Cronograma e Entregas</span>
-                <span class="doc-index-desc">Iterações do projeto por fase do OpenUP, com artefatos de entrada, atividades, status e período.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="07-interacao-equipe-cliente/">
-              <span class="doc-index-num">7</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">7. Interação entre Equipe e Cliente</span>
-                <span class="doc-index-desc">Quem faz o quê na equipe, por quais canais e com que frequência o cliente participa, e como as entregas são validadas.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="08-requisitos-de-software/">
-              <span class="doc-index-num">8</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">8. Requisitos de Software</span>
-                <span class="doc-index-desc">Árvore de derivação do problema raiz aos objetivos e características, glossário do produto e os 36 requisitos funcionais e 10 requisitos não funcionais, com rastreabilidade e critérios verificáveis.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="09-priorizacao-de-requisitos/">
-              <span class="doc-index-num">9</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">9. Priorização de Requisitos</span>
-                <span class="doc-index-desc">Critérios e escalas de valor de negócio e de esforço técnico, avaliação dos 36 requisitos funcionais, tabela consolidada e matriz 4 × 4 de priorização.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="10-mvp/">
-              <span class="doc-index-num">10</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">10. Definição e Composição do MVP</span>
-                <span class="doc-index-desc">Requisitos funcionais selecionados para o MVP, classificação dos requisitos não funcionais aplicáveis, justificativas da composição e registro da validação com a cliente.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="11-rastreabilidade/">
-              <span class="doc-index-num">11</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">11. Rastreabilidade dos Requisitos</span>
-                <span class="doc-index-desc">Matriz de rastreabilidade do MindCycle: do problema raiz aos objetivos, características e requisitos, com os elos forward e backward, o catálogo de RNFs e os achados de consistência.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="12-dor-e-dod/">
-              <span class="doc-index-num">12</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">12. DoR e DoD</span>
-                <span class="doc-index-desc">Critérios para que uma história de usuário entre em uma iteração (DoR) e para que uma funcionalidade seja considerada concluída (DoD), com os quadros de aplicação por história.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="14-1-licoes-aprendidas-unidade-1/">
-              <span class="doc-index-num">14.1</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">14.1 Lições Aprendidas — Unidade 1</span>
-                <span class="doc-index-desc">Dificuldades enfrentadas pela equipe na Unidade 1 e as ações de melhoria adotadas.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="14-2-licoes-aprendidas-unidade-2/">
-              <span class="doc-index-num">14.2</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">14.2 Lições Aprendidas — Unidade 2</span>
-                <span class="doc-index-desc">Dificuldades enfrentadas pela equipe na Unidade 2 e as ações de melhoria adotadas.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a class="doc-index-item" href="15-referencias/">
-              <span class="doc-index-num">15</span>
-              <span class="doc-index-body">
-                <span class="doc-index-title">15. Referências Bibliográficas</span>
-                <span class="doc-index-desc">Fontes citadas ao longo do Documento de Visão, organizadas pela seção em que aparecem.</span>
-              </span>
-              <span class="doc-index-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        </article>
-      </main>
+    <main class="content" id="conteudo">
+      <h1>Visão de produto</h1>
+      <p class="lead">Para quem construímos, com quem conversamos e como a equipe se organiza.</p>
+      <h2>O produto</h2>
+      <p>Aplicativo de organização de tarefas que adapta o planejamento diário às variações de energia, foco e disposição ao longo do ciclo menstrual, desenvolvido na disciplina de Requisitos de Software da FCTE/UnB.</p>
+      <div class="cards" style="margin-top: 16px">
+        <div class="card"><h3>Cliente</h3><p style="margin: 0">Dra. Cláudia Araújo Bottino, ginecologista. Valida o valor de negócio e os conteúdos de saúde.</p></div>
+        <div class="card"><h3>Usuária representativa</h3><p style="margin: 0">Daniela Soares. Participa das revisões e dos testes de aceitação.</p></div>
+        <div class="card"><h3>Abordagem</h3><p style="margin: 0">Híbrida: ciclo de vida iterativo e incremental e processo OpenUP.</p></div>
+      </div>
+      <h2>O problema</h2>
+      <p>Mulheres que atuam na tecnologia organizam o trabalho em ferramentas que tratam todos os dias da mesma forma. Isso gera metas descoladas da capacidade real, sobrecarga executiva e culpa punitiva.</p>
+      <p class="band" style="text-align: left"><b>Objetivo geral:</b> reduzir a sobrecarga associada à disfunção executiva e às flutuações do ciclo menstrual na produtividade da mulher, por meio de um aplicativo de organização de tarefas que se adapta ao ciclo.</p>
+      <h2>Contexto em imagens</h2>
+      <p>Clique em uma figura para ampliar.</p>
+      <div class="cards">
+        <button class="card figc" type="button" data-dialogo="figura-1"><img class="figi" src="../assets/img/figura1-rich-picture-800.webp" srcset="../assets/img/figura1-rich-picture-480.webp 480w, ../assets/img/figura1-rich-picture-800.webp 800w" sizes="(max-width: 640px) 100vw, 400px" width="800" height="563" alt="Rich Picture do contexto atual" loading="lazy" decoding="async"><b>Rich Picture</b><span>A usuária, o gestor, o ciclo e o gerenciador de tarefas, até a culpa punitiva.</span></button>
+        <button class="card figc" type="button" data-dialogo="figura-2"><img class="figi" src="../assets/img/figura2-ishikawa-800.webp" srcset="../assets/img/figura2-ishikawa-480.webp 480w, ../assets/img/figura2-ishikawa-800.webp 800w" sizes="(max-width: 640px) 100vw, 400px" width="800" height="527" alt="Diagrama de Ishikawa das causas da sobrecarga executiva" loading="lazy" decoding="async"><b>Diagrama de Ishikawa</b><span>As causas da sobrecarga executiva pelos 6M.</span></button>
+        <button class="card figc" type="button" data-dialogo="figura-3"><img class="figi" src="../assets/img/figura3-mapa-stakeholders-800.webp" srcset="../assets/img/figura3-mapa-stakeholders-480.webp 480w, ../assets/img/figura3-mapa-stakeholders-800.webp 800w" sizes="(max-width: 640px) 100vw, 400px" width="800" height="800" alt="Mapa de stakeholders por poder decisório e interesse" loading="lazy" decoding="async"><b>Mapa de stakeholders</b><span>Poder decisório, interesse e vínculos entre os atores.</span></button>
+      </div>
+      <h2>Atores</h2>
+      <div class="tblw"><table>
+        <thead><tr><th>Ator</th><th>Relação com a solução</th><th>Interesse principal</th></tr></thead>
+        <tbody>
+          <tr><td><b>Mulher profissional de tecnologia</b></td><td>Usuária direta e principal beneficiária</td><td>Planejar tarefas considerando o ciclo, com menos sobrecarga e culpa</td></tr>
+          <tr><td><b>Dra. Cláudia Araújo Bottino</b></td><td>Cliente; define a priorização final e faz a aceitação formal</td><td>Informações e recomendações clinicamente corretas</td></tr>
+          <tr><td><b>Daniela Soares</b></td><td>Usuária representativa; pode reprovar usabilidade, linguagem e privacidade</td><td>Solução alinhada à inclusão e permanência de mulheres na tecnologia</td></tr>
+          <tr><td><b>Gestor de equipe</b></td><td>Não usa o sistema, mas define demandas e prazos</td><td>Previsibilidade de entrega</td></tr>
+          <tr><td><b>Equipe de desenvolvimento</b></td><td>Responsável pela construção</td><td>Atender às necessidades reais da cliente</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Para quem é</h2>
+      <div class="cards">
+        <div class="card"><h3>Estudantes de tecnologia</h3><span class="state">18 a 24 anos</span><p style="margin: 6px 0 0">Conciliam estudos, projetos e outras responsabilidades.</p></div>
+        <div class="card"><h3>Jovens profissionais</h3><span class="state">25 a 30 anos</span><p style="margin: 6px 0 0">Lidam com prazos e demandas simultâneas no início da carreira.</p></div>
+        <div class="card"><h3>Profissionais experientes</h3><span class="state">31 a 55 anos</span><p style="margin: 6px 0 0">Acumulam projetos, liderança, reuniões e múltiplas demandas.</p></div>
+      </div>
+      <p style="margin-top: 12px">Recortes transversais: mulheres neurodivergentes na tecnologia e mulheres em perimenopausa e menopausa.</p>
+      <h2>O mercado</h2>
+      <div class="tblw"><table>
+        <thead><tr><th>Concorrente</th><th>O que faz</th><th>Onde falha</th></tr></thead>
+        <tbody>
+          <tr><td><b>Lunar</b></td><td>Integra ciclo, energia e TDAH, com abordagem livre de culpa</td><td>Não redistribui tarefas automaticamente</td></tr>
+          <tr><td><b>Muna</b></td><td>Prevê energia e sugere reagendar no "Grace Mode"</td><td>A redistribuição depende da usuária</td></tr>
+          <tr><td><b>Tiimo</b></td><td>Rotina visual para pessoas neurodivergentes</td><td>Não considera o ciclo menstrual</td></tr>
+          <tr><td><b>SheVinci</b></td><td>Sincroniza o planejamento com o ciclo</td><td>Foco em TDPM, SOP e TPM, não em função executiva</td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin-top: 12px"><b>Nosso diferencial:</b> foco em mulheres na tecnologia, redistribuição automática das tarefas e descanso reconhecido, sem pontuação.</p>
+      <h2>Principais desafios</h2>
+      <div class="cards">
+        <div class="card"><h3>Operacional</h3><p style="margin: 0">Considerar o ciclo sem criar uma nova métrica de cobrança.</p></div>
+        <div class="card"><h3>Conhecimento</h3><p style="margin: 0">Validar com a cliente antes de assumir qualquer padrão como regra.</p></div>
+        <div class="card"><h3>Técnico</h3><p style="margin: 0">Ajustar o planejamento com dados sensíveis sob controle exclusivo da usuária.</p></div>
+      </div>
+      <h2>Ferramentas do processo</h2>
+      <p>Código e documentação no GitHub, decisões de detalhe no WhatsApp.</p>
 
-      <footer class="content-footer">
-        <div class="footer-deco" aria-hidden="true">
-          <span></span><span></span><span></span>
+      <!-- Figuras ampliadas: abertas pelos cartões acima ou pelo endereço #figura-1, #figura-2, #figura-3. -->
+      <template id="figura-1" data-rotulo="Rich Picture" data-largo data-fechar="Fechar figura">
+        <div class="dh"><div><span class="phase">Figura 1</span><h2 style="margin: 2px 0 12px; border: 0; padding: 0">Rich Picture</h2></div>
+          <button class="x" type="button" aria-label="Fechar" data-fechar><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
         </div>
-        <div>MindCycle · Requisitos de Software 2026.2 · FCTE/UnB</div>
-        <div class="footer-theme-credit">Theme <a href="https://github.com/JoeYang1412/hugo-theme-spectra" target="_blank" rel="noopener noreferrer">Spectra</a> by <a href="https://github.com/JoeYang1412" target="_blank" rel="noopener noreferrer">JoeYang1412</a></div>
-      </footer>
-    </div>
+        <img class="figb" src="../assets/img/figura1-rich-picture-1280.webp" width="1280" height="901" alt="Rich Picture do contexto atual">
+        <p style="margin: 12px 0 0">A desenvolvedora trabalha sob a influência das alterações hormonais do ciclo, que podem variar sua produtividade. O ciclo pode ser acompanhado em um calendário, mas essa informação não chega ao planejamento das tarefas.</p>
+        <p style="margin: 12px 0 0">As tarefas são organizadas sem considerar o período do ciclo, enquanto o supervisor mantém a expectativa de entrega e a cobrança diária. Quando a produtividade cai e nem tudo é cumprido, surge a culpa punitiva, que alimenta um ciclo de sobrecarga e perda oculta de produtividade.</p>
+      </template>
+
+      <template id="figura-2" data-rotulo="Diagrama de Ishikawa" data-largo data-fechar="Fechar figura">
+        <div class="dh"><div><span class="phase">Figura 2</span><h2 style="margin: 2px 0 12px; border: 0; padding: 0">Diagrama de Ishikawa</h2></div>
+          <button class="x" type="button" aria-label="Fechar" data-fechar><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+        </div>
+        <img class="figb" src="../assets/img/figura2-ishikawa-1280.webp" width="1280" height="843" alt="Diagrama de Ishikawa das causas da sobrecarga executiva">
+        <p style="margin: 12px 0 0">O efeito analisado é a sobrecarga executiva na organização do trabalho. Método: metas diárias punitivas, todo dia tratado igual e cobrança pública por resultados. Mão de obra: disfunção executiva e TDAH, esforço compensatório, autocobrança e culpa.</p>
+        <p style="margin: 12px 0 0">Máquina: sem realocação de tarefas, gamificação punitiva e interface que não se adapta ao ciclo. Materiais: dados do ciclo fora do plano, sem histórico de energia, sem correlação entre atividades e energia, informações dispersas em aplicativos.</p>
+        <p style="margin: 12px 0 0">Medida: métricas que ignoram energia e foco, sem previsão de carga cognitiva nem indicadores de bem-estar. Meio ambiente: cultura que ignora a saúde menstrual, rotinas rígidas e exposição do desempenho aos gestores.</p>
+      </template>
+
+      <template id="figura-3" data-rotulo="Mapa de stakeholders" data-largo data-fechar="Fechar figura">
+        <div class="dh"><div><span class="phase">Figura 3</span><h2 style="margin: 2px 0 12px; border: 0; padding: 0">Mapa de stakeholders</h2></div>
+          <button class="x" type="button" aria-label="Fechar" data-fechar><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+        </div>
+        <img class="figb" src="../assets/img/figura3-mapa-stakeholders-1280.webp" width="1280" height="1280" alt="Mapa de stakeholders por poder decisório e interesse">
+        <p style="margin: 12px 0 0">Os atores são posicionados por poder decisório e interesse em torno do sistema. A usuária, a usuária representativa e a cliente concentram alto poder e alto interesse; o gestor de equipe tem alto poder e menor interesse direto.</p>
+        <p style="margin: 12px 0 0">As linhas contínuas indicam vínculo forte, as tracejadas indicam dependência e a tracejada rosa marca o conflito potencial entre a usuária e o gestor, cuja expectativa de previsibilidade pode divergir da adaptação ao ciclo.</p>
+      </template>
+    </main>
+
+    <footer class="foot">
+      <span>MindCycle · Requisitos de Software · 2026.2 · Turma 02</span>
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">GitHub</a>
+      <span>Theme Spectra by JoeYang1412</span>
+    </footer>
   </div>
 
-  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Buscar">
-    <div class="search-container">
-      <div class="search-header">
-        <div class="search-input-wrapper">
-          <svg class="search-input-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
-          <input type="text" class="search-input" id="searchInput" placeholder="Buscar na documentação..." autocomplete="off">
-        </div>
-        <button class="search-close" id="searchClose" aria-label="Fechar busca">
-          <kbd>ESC</kbd>
-        </button>
-      </div>
-      <div class="search-results" id="searchResults">
-        <div class="search-empty" id="searchEmpty">Digite para buscar na documentação</div>
-      </div>
-    </div>
-  </div>
-
-  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14V4"/><path d="M4 8l5-5 5 5"/></svg>
-  </button>
-
-  <script defer src="../assets/js/theme-toggle.js"></script>
-  <script defer src="../assets/js/sidebar.js"></script>
-  <script defer src="../assets/js/nav-collapse.js"></script>
-  <script defer src="../assets/js/scroll-top.js"></script>
-  <script defer src="../assets/js/vendor/fuse.min.js"></script>
-  <script defer src="../assets/js/search.js"></script>
+  <script defer src="../assets/js/dados.js"></script>
+  <script defer src="../assets/js/site.js"></script>
 </body>
 </html>
