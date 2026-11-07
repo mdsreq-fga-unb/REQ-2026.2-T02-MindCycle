@@ -1,321 +1,105 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MindCycle</title>
-  <meta name="description" content="Documentação do produto e do projeto MindCycle — Requisitos de Software 2026.2, Turma 02, FCTE/UnB.">
-  <meta name="author" content="Equipe MindCycle">
-  <meta property="og:title" content="MindCycle">
-  <meta property="og:description" content="Documentação do produto e do projeto MindCycle — Requisitos de Software 2026.2, Turma 02, FCTE/UnB.">
-  <meta property="og:site_name" content="MindCycle">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MindCycle — Requisitos</title>
+  <meta name="description" content="Do problema à história de usuário: a árvore de requisitos do MindCycle, com as características, as histórias e os requisitos não funcionais.">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-
-  <!-- Antes da primeira pintura: aplica o tema salvo e o sumário recolhido. -->
   <script>
+    // Antes da primeira pintura: o tema escolhido antes ou, sem escolha, o do sistema.
     (function () {
-      var d = document.documentElement;
-      var t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
-      d.setAttribute('data-theme', t);
-      d.classList.add('spectra-revisit');
-      if (localStorage.getItem('sidebar-collapsed') === 'true') d.classList.add('sidebar-collapsed');
-      d.classList.add('js');
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
     })();
   </script>
-
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/spectra.css">
-  <link rel="stylesheet" href="assets/css/custom.css">
+  <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body>
-  <!-- Antes da primeira pintura: recolhe os grupos do sumário que o leitor deixou fechados. -->
-  <script>
-    (function () {
-      try {
-        JSON.parse(localStorage.getItem('navFechados') || '[]').forEach(function (id) {
-          document.documentElement.classList.add('nav-fechado-' + id);
-        });
-      } catch (e) {}
-    })();
-  </script>
+<body data-pagina="requisitos">
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
 
-  <a href="#main-content" class="skip-link">Ir para o conteúdo</a>
-
-  <noscript>
-    <div class="noscript-notice">Alguns recursos (sumário, busca e alternância de tema) precisam de JavaScript.</div>
-  </noscript>
-
-  <aside class="sidebar" id="sidebar">
-    <a class="sidebar-brand" href="">
-      <span class="sidebar-brand-mark">
-        <img src="assets/brand/logo/icon-lua/lua-original_transparente.svg" alt="" width="34" height="34" loading="eager" decoding="async">
-      </span>
-      <span class="sidebar-brand-text">
-        <span class="sidebar-brand-name">MindCycle</span>
-        <span class="sidebar-brand-sub">// REQ 2026.2 · T02</span>
-      </span>
+  <aside class="side">
+    <a class="brand" href="./" aria-label="Ir para a página principal">
+      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
+      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
     </a>
-
-    <nav class="sidebar-nav" aria-label="Sumário da documentação">
-      <!-- Os itens do sumário ficam em assets/js/sumario.js, que os escreve aqui. -->
-      <script src="assets/js/sumario.js"></script>
+    <nav class="menu" aria-label="Páginas do site">
+      <a class="navb on" href="./" aria-current="page">◈ Requisitos</a>
+      <div class="navh">◇ Como trabalhamos</div>
+      <a class="navb" href="visao/">Visão de produto</a>
+      <a class="navb" href="engenharia-de-requisitos/">Engenharia de requisitos</a>
+      <a class="navb" href="mvp/">MVP</a>
+      <a class="navb" href="historico/">Histórico</a>
+      <a class="navb" href="reunioes/">Reuniões</a>
+      <a class="navb" href="cronograma/">Entregas e cronograma</a>
+      <a class="navb" href="dor-e-dod/">DoR e DoD</a>
+      <a class="navb" href="priorizacao/">Priorização de requisitos</a>
+      <a class="navb" href="licoes-aprendidas/">Lições aprendidas</a>
     </nav>
-
-    <div class="sidebar-footer">
-      <div class="sidebar-links">
-        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>GitHub</span>
-        </a>
-      </div>
-      <div class="sidebar-copyright">&copy; 2026 Equipe MindCycle</div>
-    </div>
   </aside>
-  <button class="sidebar-collapse-btn" id="sidebarCollapse" aria-label="Recolher ou expandir o sumário">
-    <svg class="collapse-icon-collapse" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L5 8l6 6"/></svg>
-    <svg class="collapse-icon-expand" width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l6 6-6 6"/></svg>
-  </button>
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  <div class="site-wrapper">
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="topbar-btn topbar-menu" id="sidebarToggle" aria-label="Abrir o sumário" aria-expanded="false">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5h13M2.5 9h13M2.5 13.5h13"/></svg>
-        </button>
-
-        <nav class="breadcrumb" aria-label="Trilha de navegação">
-          <a href="./">MindCycle</a>
-        </nav>
-      </div>
-
-      <div class="topbar-centro">
-        <button class="busca-btn" id="searchTrigger" aria-label="Buscar">
-          <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
-          <span class="busca-btn-texto">Buscar na documentação...</span>
-        </button>
-      </div>
-
-      <div class="topbar-direita">
-        <button class="topbar-btn theme-toggle" id="themeToggle" aria-label="Alternar tema" aria-pressed="false" title="Alternar tema">
-          <span id="themeIcon" aria-hidden="true">&#9790;</span>
-          <span class="topbar-btn-label" id="themeLabel">Tema escuro</span>
-        </button>
+  <div class="main">
+    <header class="top">
+      <div class="crumb">MindCycle / Requisitos</div>
+      <div class="tools">
+        <button class="btn" id="tema" type="button">☾ Tema escuro</button>
       </div>
     </header>
 
-    <div class="content-area" id="main-content">
-      <main class="main-content">
-        <article class="article-content home-content">
-          <div class="home-hero">
-            <div class="wordmark">
-              <img class="wordmark-claro" src="assets/brand/logo/wordmark/mindcycle-wordmark_transparente.svg" width="320" height="104" alt="MindCycle" loading="eager" decoding="async">
-              <img class="wordmark-escuro" src="assets/img/marca/wordmark-escuro-sem-fundo.svg" width="320" height="104" alt="" aria-hidden="true" loading="eager" decoding="async">
-            </div>
-            <div class="home-hero-body">
-              <p class="home-hero-kicker">Requisitos de Software · 2026.2 · Turma 02</p>
-              <p class="home-hero-slogan">Produtividade no ritmo do seu ciclo.</p>
-              <p>
-                Aplicativo de organização de tarefas que adapta o planejamento diário às
-                variações de energia, foco e disposição ao longo do ciclo menstrual,
-                desenvolvido na disciplina de Requisitos de Software da FCTE/UnB.
-              </p>
-            </div>
-          </div>
-          <p>O produto endereça um problema concreto: ferramentas de produtividade tratam todos os dias
-            como iguais e transformam oscilações fisiológicas normais em percepção de baixo desempenho.
-            O MindCycle propõe o contrário — planejar a partir da capacidade real da usuária, tratando o
-            descanso como parte legítima da rotina e mantendo os dados de ciclo e sintomas sob controle
-            exclusivo de quem os registra.</p>
-          <h2 class="home-section-title">Acesso rápido</h2>
-          <div class="card-grid">
-            <a class="cartao" href="visao/">
-              <span class="cartao-icone" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d='M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z'/><path d='M13 2v7h7'/><path d='M8 13h8M8 17h6'/></svg>
-              </span>
-              <span class="cartao-texto">
-                <span class="cartao-titulo">Visão do Produto e Projeto</span><span class="cartao-desc">Documento completo: cenário, solução, estratégias, engenharia de requisitos, cronograma e equipe.</span>
-              </span>
-            </a>
-            <a class="cartao" href="visao/02-solucao-proposta/">
-              <span class="cartao-icone" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d='M8 6h13M8 12h13M8 18h13'/><circle cx='3.5' cy='6' r='1.2'/><circle cx='3.5' cy='12' r='1.2'/><circle cx='3.5' cy='18' r='1.2'/></svg>
-              </span>
-              <span class="cartao-texto">
-                <span class="cartao-titulo">Características do produto</span><span class="cartao-desc">CP1 a CP7, valores de negócio e rastreabilidade com os objetivos específicos.</span>
-              </span>
-            </a>
-            <a class="cartao" href="visao/06-cronograma-e-entregas/">
-              <span class="cartao-icone" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x='3' y='5' width='18' height='16' rx='2'/><path d='M3 10h18M8 3v4M16 3v4'/><path d='M8 14h3'/></svg>
-              </span>
-              <span class="cartao-texto">
-                <span class="cartao-titulo">Cronograma e entregas</span><span class="cartao-desc">Entregas, iterações, marcos e validação com o cliente.</span>
-              </span>
-            </a>
-            <a class="cartao" href="entregas/unidade-1/">
-              <span class="cartao-icone" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d='M21 8v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8'/><rect x='2' y='3' width='20' height='5' rx='1'/><path d='M10 12h4'/></svg>
-              </span>
-              <span class="cartao-texto">
-                <span class="cartao-titulo">Entrega da Unidade 1</span><span class="cartao-desc">Vídeo da apresentação e escopo entregue na Entrega 1.</span>
-              </span>
-            </a>
-          </div>
-          <h2 class="home-section-title">Sobre o projeto</h2>
-          <div class="table-scroll table-plain" tabindex="0" role="region" aria-label="Tabela">
-            <table>
-              <tbody>
-                <tr><td class="td-curta"><strong>Produto</strong></td><td>MindCycle — organização de tarefas adaptada ao ciclo menstrual</td>
-                </tr>
-                <tr><td class="td-curta"><strong>Cliente</strong></td><td>Dra. Cláudia Araújo Bottino — profissional de saúde (ginecologista)</td>
-                </tr>
-                <tr><td><strong>Usuária representativa</strong></td><td class="td-curta">Daniela Soares</td>
-                </tr>
-                <tr><td class="td-curta"><strong>Disciplina</strong></td><td>Requisitos de Software — 2026.2 — Turma 02</td>
-                </tr>
-                <tr><td class="td-curta"><strong>Abordagem</strong></td><td>Híbrida · ciclo de vida iterativo e incremental · processo OpenUP · framework Kanban</td>
-                </tr>
-                <tr><td class="td-curta"><strong>Repositório</strong></td><td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">mdsreq-fga-unb/REQ-2026.2-T02-MindCycle</a></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <h2 class="home-section-title">Equipe</h2>
-          <div class="equipe-grid">
-            <div class="membro">
-              <div class="membro-foto"><img src="assets/img/equipe/ananunesv.webp" width="72" height="72" loading="lazy" decoding="async" alt="Foto de perfil de Ana Luisa Vieira Nunes"></div>
-              <div class="membro-info">
-                <p class="membro-nome">Ana Luisa Vieira Nunes</p>
-                <p class="membro-papel">Gerente de Projeto · Analista de Requisitos<br>(Gestora do Fluxo Kanban)</p>
-                <a class="membro-github" href="https://github.com/ananunesv" target="_blank" rel="noopener">
-                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-                  <span>@ananunesv</span>
-                </a>
-              </div>
-            </div>
-            <div class="membro">
-              <div class="membro-foto"><span class="membro-iniciais" aria-hidden="true">AK</span></div>
-              <div class="membro-info">
-                <p class="membro-nome">Allan Kelvin Dias Gomes Monteiro</p>
-                <p class="membro-papel">Analista de Requisitos · Analista de Dados</p>
-                <span class="membro-github is-vazio">@ a preencher</span>
-              </div>
-            </div>
-            <div class="membro">
-              <div class="membro-foto"><img src="assets/img/equipe/TiagoSBittencourt.webp" width="72" height="72" loading="lazy" decoding="async" alt="Foto de perfil de Tiago Santos Bittencourt"></div>
-              <div class="membro-info">
-                <p class="membro-nome">Tiago Santos Bittencourt</p>
-                <p class="membro-papel">Gerente de Projeto · Desenvolvedor Backend<br>(Responsável pelo Backlog)</p>
-                <a class="membro-github" href="https://github.com/TiagoSBittencourt" target="_blank" rel="noopener">
-                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-                  <span>@TiagoSBittencourt</span>
-                </a>
-              </div>
-            </div>
-            <div class="membro">
-              <div class="membro-foto"><img src="assets/img/equipe/g-srodrigues.webp" width="72" height="72" loading="lazy" decoding="async" alt="Foto de perfil de Gustavo Silva Rodrigues"></div>
-              <div class="membro-info">
-                <p class="membro-nome">Gustavo Silva Rodrigues</p>
-                <p class="membro-papel">Desenvolvedor Frontend · Analista de QA</p>
-                <a class="membro-github" href="https://github.com/g-srodrigues" target="_blank" rel="noopener">
-                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-                  <span>@g-srodrigues</span>
-                </a>
-              </div>
-            </div>
-            <div class="membro">
-              <div class="membro-foto"><img src="assets/img/equipe/luanaa2005.webp" width="72" height="72" loading="lazy" decoding="async" alt="Foto de perfil de Luana Carvalho de Almeida"></div>
-              <div class="membro-info">
-                <p class="membro-nome">Luana Carvalho de Almeida</p>
-                <p class="membro-papel">Analista de Dados · Analista de Requisitos</p>
-                <a class="membro-github" href="https://github.com/luanaa2005" target="_blank" rel="noopener">
-                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-                  <span>@luanaa2005</span>
-                </a>
-              </div>
-            </div>
-            <div class="membro">
-              <div class="membro-foto"><img src="assets/img/equipe/pedroiaan.webp" width="72" height="72" loading="lazy" decoding="async" alt="Foto de perfil de Pedro Ian Guedes de Carvalho"></div>
-              <div class="membro-info">
-                <p class="membro-nome">Pedro Ian Guedes de Carvalho</p>
-                <p class="membro-papel">Analista de QA · Analista de Dados</p>
-                <a class="membro-github" href="https://github.com/pedroiaan" target="_blank" rel="noopener">
-                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-                  <span>@pedroiaan</span>
-                </a>
-              </div>
-            </div>
-            <div class="membro">
-              <div class="membro-foto"><img src="assets/img/equipe/arthurpalhares1.webp" width="72" height="72" loading="lazy" decoding="async" alt="Foto de perfil de Arthur Palhares"></div>
-              <div class="membro-info">
-                <p class="membro-nome">Arthur Palhares</p>
-                <p class="membro-papel">Desenvolvedor Frontend · Analista de Requisitos</p>
-                <a class="membro-github" href="https://github.com/arthurpalhares1" target="_blank" rel="noopener">
-                  <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-                  <span>@arthurpalhares1</span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <p>A descrição completa das responsabilidades de cada papel está na
-            <a href="visao/07-interacao-equipe-cliente/#71-composi%C3%A7%C3%A3o-da-equipe">Seção 7.1 — Composição da Equipe</a>.</p>
-          <h2 class="home-section-title">Histórico de revisão</h2>
-          <div class="table-scroll" tabindex="0" role="region" aria-label="Tabela">
-            <table style="min-width:760px">
-              <thead>
-                <tr>
-                  <th>Data</th>
-                  <th>Versão</th>
-                  <th>Descrição</th>
-                  <th>Autor</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td class="td-curta">07/09/2026</td><td class="td-curta">1.0</td><td>Publicação do Documento de Visão do Produto e Projeto no GitPages, com as Seções 1 a 7, 11.1 e 12.</td><td class="td-curta">Equipe MindCycle</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
-      </main>
+    <main class="content" id="conteudo">
+      <p class="eyebrow">Requisitos de Software · 2026.2 · Turma 02</p>
+      <h1>Requisitos do MindCycle</h1>
+      <p class="lead">Produtividade no ritmo do seu ciclo. Do problema à história de usuário: escolha uma característica e abra uma história para ver o detalhe. As mudanças ficam no Histórico.</p>
+      <div class="tools" id="ferramentas" style="margin-top: 18px">
+        <input class="inp" id="busca" type="search" aria-label="Buscar história" placeholder="Buscar história (ex.: HU13, PIN)">
+      </div>
+      <noscript><p class="sem-js">A árvore de requisitos é montada por JavaScript. Ative-o no navegador para ver as histórias.</p></noscript>
 
-      <footer class="content-footer">
-        <div class="footer-deco" aria-hidden="true">
-          <span></span><span></span><span></span>
+      <div class="treebox" id="resultados" hidden>
+        <h3 id="resultados-titulo"></h3>
+        <div class="sgrid" id="resultados-lista"></div>
+      </div>
+
+      <div id="arvore">
+        <div class="treebox">
+          <div class="tree">
+            <div class="node prob"><span class="k">Problema</span><b>Sobrecarga executiva</b><div style="font-size: 12.5px; line-height: 1.35">Ferramentas de produtividade tratam todos os dias como iguais e transformam oscilações fisiológicas normais em percepção de baixo desempenho.</div></div>
+            <svg class="w" viewBox="0 0 700 40" preserveAspectRatio="none" aria-hidden="true">
+              <path class="ln" d="M350 0V20H150V40M350 0V40M350 20H550V40"></path>
+              <path class="ln a" id="caminho-oe" d=""></path>
+            </svg>
+            <div class="g7">
+              <div class="node oe" data-oe="OE1" style="grid-column: 1 / 4"><span class="k mono">OE1</span><b>Melhorar a percepção dos sintomas durante o ciclo</b></div>
+              <div class="node oe" data-oe="OE2" style="grid-column: 4 / 5; margin: 0 2px"><span class="k mono">OE2</span><b>Reduzir a sobrecarga do planejamento</b></div>
+              <div class="node oe" data-oe="OE3" style="grid-column: 5 / 8"><span class="k mono">OE3</span><b>Reduzir a sobrecarga na execução das tarefas diárias</b></div>
+            </div>
+            <svg class="w" viewBox="0 0 700 40" preserveAspectRatio="none" aria-hidden="true">
+              <path class="ln" d="M150 0V20H50V40M150 0V40M150 20H250V40M350 0V40M550 0V20H450V40M550 0V40M550 20H650V40"></path>
+              <path class="ln a" id="caminho-cp" d=""></path>
+            </svg>
+            <div class="g7" id="caracteristicas"></div>
+            <div id="folhas"></div>
+            <div class="rail"><span class="stem2" aria-hidden="true"></span><b>Valem para todas as histórias</b><button class="rnfc mono" type="button" data-rnf="RNF10">RNF10</button><button class="rnfc mono" type="button" data-rnf="RNF11">RNF11</button></div>
+            <p id="sem-folhas" hidden style="text-align: center; padding: 28px 0 8px; color: var(--mut)">Nenhuma história desta característica nesta visão.</p>
+          </div>
         </div>
-        <div>MindCycle · Requisitos de Software 2026.2 · FCTE/UnB</div>
-        <div class="footer-theme-credit">Theme <a href="https://github.com/JoeYang1412/hugo-theme-spectra" target="_blank" rel="noopener noreferrer">Spectra</a> by <a href="https://github.com/JoeYang1412" target="_blank" rel="noopener noreferrer">JoeYang1412</a></div>
-      </footer>
-    </div>
+        <div class="legend"><span>Borda tracejada: fora do MVP</span><span><i class="rnfc mono" style="font-style: normal">RNF</i> Requisito não funcional ligado à história</span><span>Backlog: no MVP e com DoR atendido</span><span id="legenda-atual">Iteração atual: Backlog alocado à Iteração 6, de 03/11 a 16/11</span></div>
+        <p class="note" id="backlog-vazio" hidden>Nenhuma história atendeu ao DoR ainda, por isso Backlog e Iteração atual estão vazios.</p>
+      </div>
+    </main>
+
+    <footer class="foot">
+      <span>MindCycle · Requisitos de Software · 2026.2 · Turma 02</span>
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">GitHub</a>
+      <span>Theme Spectra by JoeYang1412</span>
+    </footer>
   </div>
 
-  <div class="search-overlay" id="searchOverlay" role="dialog" aria-modal="true" aria-label="Buscar">
-    <div class="search-container">
-      <div class="search-header">
-        <div class="search-input-wrapper">
-          <svg class="search-input-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg>
-          <input type="text" class="search-input" id="searchInput" placeholder="Buscar na documentação..." autocomplete="off">
-        </div>
-        <button class="search-close" id="searchClose" aria-label="Fechar busca">
-          <kbd>ESC</kbd>
-        </button>
-      </div>
-      <div class="search-results" id="searchResults">
-        <div class="search-empty" id="searchEmpty">Digite para buscar na documentação</div>
-      </div>
-    </div>
-  </div>
-
-  <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Voltar ao topo">
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14V4"/><path d="M4 8l5-5 5 5"/></svg>
-  </button>
-
-  <script defer src="assets/js/theme-toggle.js"></script>
-  <script defer src="assets/js/sidebar.js"></script>
-  <script defer src="assets/js/nav-collapse.js"></script>
-  <script defer src="assets/js/scroll-top.js"></script>
-  <script defer src="assets/js/vendor/fuse.min.js"></script>
-  <script defer src="assets/js/search.js"></script>
+  <script defer src="assets/js/dados.js"></script>
+  <script defer src="assets/js/site.js"></script>
+  <script defer src="assets/js/requisitos.js"></script>
 </body>
 </html>

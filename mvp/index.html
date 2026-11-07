@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MVP | MindCycle</title>
+  <meta name="description" content="A menor versão do MindCycle que já cumpre a promessa do produto: organizar o dia pela disposição real, sem cobrança.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <script>
+    // Antes da primeira pintura: o tema escolhido antes ou, sem escolha, o do sistema.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-pagina="mvp">
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+  <aside class="side">
+    <a class="brand" href="../" aria-label="Ir para a página principal">
+      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
+      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
+    </a>
+    <nav class="menu" aria-label="Páginas do site">
+      <a class="navb" href="../">◈ Requisitos</a>
+      <div class="navh">◇ Como trabalhamos</div>
+      <a class="navb" href="../visao/">Visão de produto</a>
+      <a class="navb" href="../engenharia-de-requisitos/">Engenharia de requisitos</a>
+      <a class="navb on" href="../mvp/" aria-current="page">MVP</a>
+      <a class="navb" href="../historico/">Histórico</a>
+      <a class="navb" href="../reunioes/">Reuniões</a>
+      <a class="navb" href="../cronograma/">Entregas e cronograma</a>
+      <a class="navb" href="../dor-e-dod/">DoR e DoD</a>
+      <a class="navb" href="../priorizacao/">Priorização de requisitos</a>
+      <a class="navb" href="../licoes-aprendidas/">Lições aprendidas</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div class="crumb">MindCycle / MVP</div>
+      <div class="tools">
+        <button class="btn" id="tema" type="button">☾ Tema escuro</button>
+      </div>
+    </header>
+
+    <main class="content" id="conteudo">
+      <h1>MVP</h1>
+      <p class="lead">A menor versão que já cumpre a promessa do produto: organizar o dia pela disposição real, sem cobrança.</p>
+      <div class="stats">
+        <div class="stat"><div class="num"><span data-conta="mvp">22</span><small> de <span data-conta="total">36</span></small></div><span>histórias de usuário no MVP</span></div>
+        <div class="stat"><div class="num"><span data-conta="validadas">10</span><small> de <span data-conta="mvp">22</span></small></div><span>com valor confirmado pela cliente</span></div>
+        <div class="stat"><div class="num">2</div><span>iterações de construção alocadas</span></div>
+        <div class="stat warn"><div class="num">Pendente</div><span>validação do MVP consolidado</span></div>
+      </div>
+
+      <h2>O fluxo que precisa funcionar de ponta a ponta</h2>
+      <ol class="jour">
+        <li><span class="dot">1</span><b>Cria uma conta protegida</b></li>
+        <li><span class="dot">2</span><b>Entende seu ciclo</b></li>
+        <li><span class="dot">3</span><b>Registra como se sente hoje</b></li>
+        <li><span class="dot">4</span><b>Recebe tarefas coerentes com a disposição</b></li>
+        <li><span class="dot">5</span><b>Vê a lista se reorganizar ao sinalizar sobrecarga</b></li>
+      </ol>
+      <p class="band">Em todo o percurso: linguagem acolhedora, sem cobrança.</p>
+
+      <h2>O que entrou, por característica</h2>
+      <p>Cada quadrado é uma história de usuário. Clique em uma linha para abri-la na árvore.</p>
+      <noscript><p class="sem-js">A cobertura por característica é montada por JavaScript.</p></noscript>
+      <div class="cov" id="cobertura"></div>
+      <div class="legend"><span><i class="sq on"></i> No MVP</span><span><i class="sq"></i> Fora do MVP</span></div>
+
+      <div class="two">
+        <section>
+          <h2>Como o recorte foi fechado</h2>
+          <div class="wf">
+            <div class="wfr"><div><b>Reunião com a cliente</b><span>05/10/2026</span><a class="time mono" style="margin-top: 4px" href="https://www.youtube.com/watch?v=PKoWLngGSRg" target="_blank" rel="noopener" aria-label="Abrir a gravação da reunião de 5 de outubro">▶ Ver reunião</a></div><div class="track"><div class="bar" style="left: 0%; width: 50%"></div></div><b class="mono">18</b></div>
+            <div class="wfr"><div><b>Revisão técnica da equipe</b><span>Decisão interna, sem gravação</span></div><div class="track"><div class="bar" style="left: 50%; width: 8.33%"></div></div><b class="mono">+3</b></div>
+            <div class="wfr"><div><b>Reavaliação</b><span>12/10/2026, sem gravação</span></div><div class="track"><div class="bar" style="left: 58.33%; width: 2.78%"></div></div><b class="mono">+1</b></div>
+            <div class="wfr tot"><div><b>MVP proposto</b><span>A barra inteira são os 36</span></div><div class="track"><div class="bar" style="left: 0%; width: 61.11%"></div></div><b class="mono">22</b></div>
+          </div>
+        </section>
+      </div>
+
+      <h2>Por que algo ficou de fora</h2>
+      <div class="chips big"><span class="chip">Conveniência de visualização</span><span class="chip">Refinamento e médio prazo</span><span class="chip">Funcionalidade nova fora do núcleo</span><span class="chip">Dado sensível sem uso no MVP</span><span class="chip">Preferência sem objeto no MVP</span></div>
+      <p style="margin-top: 12px">Nenhum requisito do MVP depende de um requisito excluído. A única redução de escopo foi adiar a senha de pétalas para depois da primeira versão.</p>
+
+      <div class="call">
+        <div><h3>Próximo passo: validar o conjunto com a cliente</h3><p style="margin: 0">A reunião de 05/10/2026 tratou requisitos individuais. O MVP consolidado ainda não foi apresentado à Dra. Cláudia.</p></div>
+        <a class="go" href="../?filtro=mvp">Ver o MVP na árvore</a>
+      </div>
+    </main>
+
+    <footer class="foot">
+      <span>MindCycle · Requisitos de Software · 2026.2 · Turma 02</span>
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">GitHub</a>
+      <span>Theme Spectra by JoeYang1412</span>
+    </footer>
+  </div>
+
+  <script defer src="../assets/js/dados.js"></script>
+  <script defer src="../assets/js/site.js"></script>
+  <script defer src="../assets/js/mvp.js"></script>
+</body>
+</html>

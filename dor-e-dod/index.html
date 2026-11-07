@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DoR e DoD | MindCycle</title>
+  <meta name="description" content="O que uma história do MindCycle precisa ter para entrar na iteração (DoR) e para ser considerada pronta (DoD).">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <script>
+    // Antes da primeira pintura: o tema escolhido antes ou, sem escolha, o do sistema.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-pagina="dod">
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+  <aside class="side">
+    <a class="brand" href="../" aria-label="Ir para a página principal">
+      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
+      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
+    </a>
+    <nav class="menu" aria-label="Páginas do site">
+      <a class="navb" href="../">◈ Requisitos</a>
+      <div class="navh">◇ Como trabalhamos</div>
+      <a class="navb" href="../visao/">Visão de produto</a>
+      <a class="navb" href="../engenharia-de-requisitos/">Engenharia de requisitos</a>
+      <a class="navb" href="../mvp/">MVP</a>
+      <a class="navb" href="../historico/">Histórico</a>
+      <a class="navb" href="../reunioes/">Reuniões</a>
+      <a class="navb" href="../cronograma/">Entregas e cronograma</a>
+      <a class="navb on" href="../dor-e-dod/" aria-current="page">DoR e DoD</a>
+      <a class="navb" href="../priorizacao/">Priorização de requisitos</a>
+      <a class="navb" href="../licoes-aprendidas/">Lições aprendidas</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div class="crumb">MindCycle / DoR e DoD</div>
+      <div class="tools">
+        <button class="btn" id="tema" type="button">☾ Tema escuro</button>
+      </div>
+    </header>
+
+    <main class="content narrow" id="conteudo">
+      <h1>DoR e DoD</h1>
+      <p class="lead">As duas portas do fluxo de trabalho: o que uma história precisa ter para entrar na iteração e para ser considerada pronta.</p>
+      <div class="tblw" style="margin-top: 20px"><table><tbody><tr>
+        <td><b>Backlog</b></td><td style="color: var(--acc)"><b>DoR →</b></td><td><b>A Fazer</b></td><td style="color: var(--acc)"><b>DoD →</b></td><td><b>Em Validação</b></td><td>→</td><td><b>Aceita na Revisão</b></td>
+      </tr></tbody></table></div>
+      <h2>Definition of Ready</h2>
+      <p>Conferido no Planejamento da Iteração. Cada critério recebe SIM, NÃO ou N/A, por história, a partir da Iteração 5.</p>
+      <ol class="ol">
+        <li><b>Rastreável:</b> deriva de um requisito funcional e está vinculada à característica e ao objetivo.</li>
+        <li><b>Confirmada pela cliente:</b> prioridade confirmada; conteúdo de saúde também revisado por ela.</li>
+        <li><b>Clara:</b> no formato "Como usuária, quero … para …", com os termos do glossário e sem dúvidas em aberto.</li>
+        <li><b>Critérios de aceitação:</b> objetivos e verificáveis, incluindo privacidade e ausência de linguagem punitiva.</li>
+        <li><b>Cabe na iteração:</b> avaliado coletivamente, com responsável definido; a que não cabe é dividida.</li>
+        <li><b>Dependências:</b> identificadas e disponíveis ou planejadas para a mesma iteração.</li>
+        <li><b>Protótipo:</b> tela nova ou alterada tem protótipo no Figma vinculado.</li>
+        <li><b>Regras de negócio:</b> identificadas e registradas junto à história.</li>
+      </ol>
+      <h2>Definition of Done</h2>
+      <p>Quem atende a todos os critérios vai para "Em Validação" e só é aceita após a Revisão da Iteração.</p>
+      <ol class="ol">
+        <li><b>Critérios atendidos:</b> aceitação cumprida, funcionalidade integrada ao incremento e demonstrável.</li>
+        <li><b>Não funcionais:</b> respeita os aplicáveis, em especial privacidade e proteção de dados sensíveis.</li>
+        <li><b>Testes:</b> unitários e de integração aprovados no GitHub Actions, com cobertura de 100%.</li>
+        <li><b>Código revisado:</b> pull request aprovado por quem não é o autor, seguindo os padrões da equipe.</li>
+        <li><b>Linguagem:</b> textos sem termos de cobrança, culpa ou contadores de falha.</li>
+        <li><b>Rastreabilidade:</b> vínculo registrado e documentação de uso atualizada quando necessário.</li>
+      </ol>
+    </main>
+
+    <footer class="foot">
+      <span>MindCycle · Requisitos de Software · 2026.2 · Turma 02</span>
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">GitHub</a>
+      <span>Theme Spectra by JoeYang1412</span>
+    </footer>
+  </div>
+
+  <script defer src="../assets/js/dados.js"></script>
+  <script defer src="../assets/js/site.js"></script>
+</body>
+</html>
