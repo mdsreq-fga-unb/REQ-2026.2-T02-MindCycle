@@ -173,6 +173,11 @@ const MC = (() => {
         (h.criterios.length
           ? '<ol class="ol">' + h.criterios.map((c) => '<li>' + esc(c) + '</li>').join('') + '</ol>'
           : '<p class="ph" style="margin: 0">Sem critérios registrados no Story Map.</p>') +
+        (h.regras
+          ? '<h3 style="margin-top: 16px">Regras de negócio</h3>' +
+            '<p class="note" style="margin: 0 0 8px">' + esc(h.regras.situacao) + '</p>' +
+            '<ol class="ol">' + h.regras.itens.map((r) => '<li>' + esc(r) + '</li>').join('') + '</ol>'
+          : '') +
       '</div>' +
       '<div class="pane" data-painel="pro"' + (aba === 'pro' ? '' : ' hidden') + '>' +
         '<dl class="dl">' +

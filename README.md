@@ -59,7 +59,7 @@ quadro *MindCycle – Figma* em 28/09/2026. Dela saem:
 | Objetivos específicos | `OE1` a `OE3` |
 | Características de produto | `CP1` a `CP7` |
 | Histórias de usuário | `HU01` a `HU36` |
-| Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** |
+| Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** (número não reaproveitado) |
 
 No site, tudo isso vive num lugar só: `assets/js/dados.js`. A árvore, o MVP, a priorização,
 as reuniões, o histórico e o detalhe de cada história leem desse arquivo, então um
@@ -74,7 +74,10 @@ sempre o próximo número livre, nunca um número já usado.
 |---|---|
 | **Validação do MVP consolidado com a cliente** | Páginas MVP e Priorização. A reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino tratou requisitos individuais; o conjunto do MVP e as notas ainda em hipótese aguardam a reunião de acompanhamento. |
 | **Backlog e Iteração atual vazios** | `dorAtendido` em `assets/js/dados.js` ainda não tem nenhuma história: nenhuma foi marcada como pronta pelo DoR. |
-| **RNF05** | Não existe no quadro: a numeração salta de RNF04 para RNF06. Confirmar se houve descarte e registrar, ou renumerar. |
+| **Regras de HU13 e HU15** | Seção *Regras de negócio* no detalhe de cada história. São proposta da equipe e aguardam validação da cliente. |
+| **Avaliação da usuária representativa** | Página Reuniões. Não há sessão registrada com Daniela Soares sobre usabilidade, linguagem, privacidade e experiência de uso; o roteiro está pronto. |
+| **Link das telas do protótipo** | Página Engenharia de requisitos. Falta publicar o endereço das telas no Figma e registrar os ajustes feitos nelas. |
+| **Personas e jornadas** | Página Histórico. Previstas na Iteração 3 e não publicadas como artefato; a equipe precisa decidir se serão produzidas. |
 
 ---
 
@@ -87,7 +90,7 @@ páginas.
 | Para mudar | Edite |
 |---|---|
 | Texto de Visão de produto, Engenharia de requisitos, DoR e DoD ou Lições aprendidas | O `index.html` da página |
-| Uma história (nome, critérios, nota MoSCoW, esforço, iteração) ou um RNF | `historias` ou `rnfs` em `assets/js/dados.js` |
+| Uma história (nome, critérios, regras de negócio, nota MoSCoW, esforço, iteração) ou um RNF | `historias` ou `rnfs` em `assets/js/dados.js` |
 | Uma reunião nova ou uma decisão | `reunioes` em `assets/js/dados.js` (código do vídeo no YouTube e o segundo de cada decisão) |
 | Uma alteração no histórico | `historico` em `assets/js/dados.js` |
 | A iteração atual ou as histórias prontas pelo DoR | `iteracaoAtual` e `dorAtendido` em `assets/js/dados.js` |
