@@ -971,6 +971,8 @@ const DADOS = {
 
   // Fases do OpenUP. praticas[].atividade é o índice em `atividades`. Os links
   // das evidências são relativos à raiz do site; vídeos, endereços completos.
+  // iteracoes[].registro: compromisso, responsaveis, resultado, pendencias e
+  // decisaoProxima. Campo sem fonte fica de fora e aparece como sem registro.
   fases: [
     {
       nome: 'Concepção',
@@ -1002,6 +1004,13 @@ const DADOS = {
           periodo: '11/08 a 24/08/2026',
           estado: 'Executada',
           objetivo: 'Compreender o negócio e caracterizar o problema.',
+          registro: {
+            compromisso: 'Caracterizar o problema com Rich Picture e Ishikawa e consolidar o PDF da proposta para avaliação do grupo.',
+            responsaveis: 'Equipe, em reunião gravada. Não há autoria individual registrada.',
+            resultado: 'Rich Picture e Diagrama de Ishikawa produzidos em sessões internas, com o escopo focado no mercado de trabalho.',
+            pendencias: ['As causas levantadas seguem como hipótese da equipe até haver confirmação externa.'],
+            decisaoProxima: 'O problema é o que o app alcança: adaptar a rotina da mulher, e não mudar o mercado.'
+          },
           evidencias: [
             { tipo: 'Figura', titulo: 'Rich Picture', link: 'visao/#figura-1' },
             { tipo: 'Figura', titulo: 'Diagrama de Ishikawa', link: 'visao/#figura-2' },
@@ -1014,6 +1023,13 @@ const DADOS = {
           periodo: '25/08 a 07/09/2026',
           estado: 'Executada',
           objetivo: 'Declarar a solução e as estratégias de engenharia de software e de requisitos.',
+          registro: {
+            compromisso: 'Publicar o Documento de Visão e fazer cada integrante listar seus requisitos a partir do Figma.',
+            responsaveis: 'Publicação do Documento de Visão: Ana Luisa. Marca: Tiago (PR 2). Comparação dos requisitos: Ana Luisa.',
+            resultado: 'Documento de Visão 1.0 publicado em 07/09/2026, com objetivos, características e estratégias.',
+            pendencias: ['O contato com a cliente só começou na Elaboração.'],
+            decisaoProxima: 'Prototipar em baixa fidelidade no Figma e derivar os requisitos do protótipo.'
+          },
           evidencias: [
             { tipo: 'Documento', titulo: 'Visão de produto', link: 'visao/' },
             { tipo: 'Documento', titulo: 'Estratégias e justificativas', link: 'engenharia-de-requisitos/' },
@@ -1071,24 +1087,48 @@ const DADOS = {
           periodo: '15/09 a 28/09/2026',
           estado: 'Executada',
           objetivo: 'Conversar com a cliente, elicitar e declarar os requisitos nos três níveis.',
+          registro: {
+            compromisso: 'Conversar com a cliente e declarar requisitos, histórias e critérios, com personas e jornadas de usuário.',
+            responsaveis: 'Seção de solução: Gustavo. Seção de ER: Pedro Ian. Seção de estratégias: Luana. Catálogo de requisitos: Ana Luisa. Lições da Unidade 1: Zaclonic.',
+            resultado: 'Requisitos e histórias com critérios declarados, e casos de uso dos requisitos de maior risco.',
+            pendencias: [
+              'A conversa com a cliente só aconteceu em 05/10/2026, na Iteração 4, por causa da agenda dela.',
+              'Personas e jornadas não foram publicadas como artefato.'
+            ],
+            decisaoProxima: 'Levar a validação com a cliente para a Iteração 4, junto com a priorização.'
+          },
           evidencias: [
             { tipo: 'Documento', titulo: 'Árvore de requisitos', link: '' },
-            { tipo: 'Documento', titulo: 'Catálogo de Metas', link: 'engenharia-de-requisitos/#metas' },
-            { tipo: 'Decisões', titulo: 'Conversa com a Dra. Cláudia', link: 'reunioes/#PKoWLngGSRg' },
-            { tipo: 'Vídeo', titulo: 'Gravação da conversa', link: 'https://www.youtube.com/watch?v=PKoWLngGSRg' }
+            { tipo: 'Documento', titulo: 'Catálogo de Metas', link: 'engenharia-de-requisitos/#metas' }
           ]
         },
         {
           nome: 'Iteração 4',
           periodo: '29/09 a 12/10/2026',
-          estado: 'Em andamento no site',
+          estado: 'Executada',
           objetivo: 'Analisar, priorizar e acordar o backlog e o escopo do MVP.',
+          registro: {
+            compromisso: 'Priorizar com a cliente, delimitar o MVP, organizar rastreabilidade, DoR e DoD e apresentar as telas do protótipo.',
+            responsaveis: 'Priorização, MVP e rastreabilidade: Tiago (PR 15) e Luana (PR 24). DoR, DoD e ER: Pedro Ian (PRs 17, 20 e 22). Estratégias: Luana (PR 14). Interação com a cliente: Arthur (PR 16). Solução: Gustavo (PR 18). Requisitos: Ana Luisa (PR 21).',
+            resultado: 'MVP de 22 histórias delimitado. Em 05/10/2026, a Dra. Cláudia avaliou 13 requisitos: confirmou 8 notas e ajustou 5, todas para cima.',
+            pendencias: [
+              'O MVP consolidado não foi apresentado à cliente.',
+              'Privacidade e conta não foram pauta da reunião de 05/10/2026.',
+              'As mudanças de alocação e as histórias HU35 e HU36 ficaram por levar ao Notion.'
+            ],
+            decisaoProxima: 'Confirmar no Planejamento da Iteração 5 as prioridades em hipótese e agendar o acompanhamento com a cliente.'
+          },
           evidencias: [
             { tipo: 'Documento', titulo: 'Priorização e cálculos', link: 'priorizacao/' },
             { tipo: 'Documento', titulo: 'Composição do MVP', link: 'mvp/' },
             { tipo: 'Documento', titulo: 'DoR e DoD', link: 'dor-e-dod/' },
+            { tipo: 'Decisões', titulo: 'Conversa com a Dra. Cláudia', link: 'reunioes/#PKoWLngGSRg' },
+            { tipo: 'Vídeo', titulo: 'Gravação da conversa', link: 'https://www.youtube.com/watch?v=PKoWLngGSRg' },
             { tipo: 'Decisões', titulo: 'Reunião de MoSCoW', link: 'reunioes/#Je44KbpoASk' },
-            { tipo: 'Vídeo', titulo: 'Gravação da reunião', link: 'https://www.youtube.com/watch?v=Je44KbpoASk' }
+            { tipo: 'Vídeo', titulo: 'Gravação da reunião', link: 'https://www.youtube.com/watch?v=Je44KbpoASk' },
+            { tipo: 'PR', titulo: 'Priorização, MVP e rastreabilidade', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/15' },
+            { tipo: 'PR', titulo: 'Validação real da cliente', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/24' },
+            { tipo: 'PR', titulo: 'Correção de inconsistências', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/30' }
           ]
         }
       ]
@@ -1145,6 +1185,9 @@ const DADOS = {
           periodo: '20/10 a 02/11/2026',
           estado: 'Encerrada no cronograma',
           objetivo: 'Entregar o primeiro incremento.',
+          registro: {
+            pendencias: ['A equipe precisa publicar as histórias selecionadas, a aplicação do DoR, os resultados e os impedimentos.']
+          },
           evidencias: []
         },
         {
@@ -1152,7 +1195,15 @@ const DADOS = {
           periodo: '03/11 a 16/11/2026',
           estado: 'Iteração atual',
           objetivo: 'Entregar o segundo incremento.',
-          evidencias: [],
+          registro: {
+            responsaveis: 'Reorganização do site: Ana Luisa (PRs 47 e 48). Histórias: sem responsável registrado.',
+            resultado: 'Em andamento. Site migrado para HTML puro e reorganizado em torno da árvore de requisitos.',
+            pendencias: ['A equipe precisa publicar as histórias selecionadas, a aplicação do DoR, os resultados e os impedimentos.']
+          },
+          evidencias: [
+            { tipo: 'PR', titulo: 'Migração para HTML puro', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/47' },
+            { tipo: 'PR', titulo: 'Novo fluxo do site', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/48' }
+          ],
           atual: true
         }
       ]

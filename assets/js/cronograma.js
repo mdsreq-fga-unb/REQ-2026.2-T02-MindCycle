@@ -1,7 +1,7 @@
 // ===== Entregas e cronograma: linha do tempo e painel de fases =====
 
 (() => {
-  const { esc, url, abrirDialogo, botaoFechar } = MC;
+  const { esc, url, abrirDialogo, botaoFechar, chipHistoria } = MC;
   const $ = (id) => document.getElementById(id);
   const dia = (iso) => Date.parse(iso + 'T00:00:00Z');
   const ini = dia(DADOS.inicioDoSemestre), fim = dia(DADOS.fimDoSemestre), total = fim - ini;
@@ -45,6 +45,27 @@
       '<span class="cardg">' + (it.evidencias.length ? it.evidencias.length + ' evidências' : 'Ver iteração') + ' →</span></button>').join('');
   }
 
+  // Planejado × realizado. Campo sem fonte aparece como sem registro, para a
+  // lacuna ficar visível. As histórias planejadas e o DoR vêm do catálogo.
+  function registro(it) {
+    const r = it.registro;
+    if (!r) return '';
+    const linha = (rotulo, valor) => '<div class="dlr"><dt>' + rotulo + '</dt><dd>' +
+      (valor || '<span class="ph">Sem registro publicado</span>') + '</dd></div>';
+    const planejadas = DADOS.historias.filter((h) => 'Iteração ' + h.iteracao === it.nome);
+    return '<h3 style="margin-top: 18px">Planejado e realizado</h3><dl class="dl">' +
+      linha('Compromisso', r.compromisso && esc(r.compromisso)) +
+      (planejadas.length
+        ? linha('Histórias planejadas', '<div class="rfl">' + planejadas.map(chipHistoria).join('') + '</div>') +
+          linha('DoR marcado', planejadas.filter((h) => DADOS.dorAtendido.includes(h.id)).length + ' de ' + planejadas.length + ' histórias')
+        : '') +
+      linha('Responsáveis', r.responsaveis && esc(r.responsaveis)) +
+      linha('Resultado', r.resultado && esc(r.resultado)) +
+      linha('Pendências', r.pendencias && r.pendencias.map(esc).join('<br>')) +
+      linha('Decisão para a próxima', r.decisaoProxima && esc(r.decisaoProxima)) +
+      '</dl>';
+  }
+
   function abrirIteracao(i) {
     const f = DADOS.fases[fase], it = f.iteracoes[i];
     const link = (e) => /^https?:/.test(e.link) ? e.link : url(e.link);
@@ -57,6 +78,7 @@
         '<h2 style="margin: 2px 0 4px; border: 0; padding: 0">' + esc(it.nome) + '</h2>' +
         '<span class="mono state">' + esc(it.periodo) + ' · ' + esc(it.estado) + '</span></div>' + botaoFechar + '</div>' +
         '<p style="margin: 14px 0 0">' + esc(it.objetivo) + '</p>' +
+        registro(it) +
         '<h3 style="margin-top: 18px">Evidências</h3>' +
         (it.evidencias.length ? '' : '<p class="ph" style="margin: 0">Sem evidência publicada ainda.</p>') +
         '<div class="evg">' + it.evidencias.map((e) =>
