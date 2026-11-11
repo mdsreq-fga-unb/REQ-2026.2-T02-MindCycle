@@ -18,6 +18,58 @@ const DADOS = {
   // como "Iteração atual". Ex.: ['HU25', 'HU12'].
   dorAtendido: [],
 
+  // Critérios gerais compartilhados pela página e pelos modais.
+  // Preserve os IDs ao editar textos ou reordenar, pois identificam resultados.
+  dodCriterios: [
+    {
+      id: '1',
+      titulo: 'Aceitação da história',
+      descricao: 'Todos os critérios de aceitação da história foram cumpridos, e a funcionalidade está integrada ao incremento da iteração e pode ser demonstrada.',
+      protocolo: 'Verificar os fluxos principais, alternativos e as exceções dos critérios de aceite.'
+    },
+    {
+      id: '2',
+      titulo: 'Requisitos não funcionais',
+      descricao: 'A funcionalidade atende a todos os requisitos não funcionais aplicáveis à história, conforme a árvore de requisitos. A conclusão técnica exige evidência de que cada requisito aplicável foi atendido.',
+      protocolo: 'Verificar os requisitos aplicáveis: {rnfs}.'
+    },
+    {
+      id: '3',
+      titulo: 'Testes e verificações',
+      descricao: 'Todos os cenários associados aos critérios de aceitação e RNFs aplicáveis foram verificados e aprovados, com evidências. Os testes unitários e de integração aplicáveis foram executados e aprovados na integração contínua do GitHub Actions; inspeções e medições complementam os testes automatizados conforme o critério.',
+      protocolo: 'Registrar as execuções automatizadas, inspeções e medições aplicáveis por cenário.'
+    },
+    {
+      id: '4',
+      titulo: 'Revisão de código',
+      descricao: 'O código passou por revisão de pelo menos um integrante que não é o autor, via pull request no GitHub, segue os padrões de codificação da equipe e foi aprovado antes da integração.',
+      protocolo: 'Registrar o PR aprovado por outro integrante da equipe.'
+    },
+    {
+      id: '5',
+      titulo: 'Linguagem acolhedora',
+      descricao: 'Os textos e as mensagens exibidos à usuária foram revisados por integrante identificado e não contêm termos de cobrança, culpa ou contadores de falha.',
+      protocolo: 'Revisar os textos e as mensagens da história.'
+    },
+    {
+      id: '6',
+      titulo: 'Rastreabilidade',
+      descricao: 'A história está vinculada ao requisito funcional na árvore de requisitos, e a documentação de uso foi atualizada quando necessário.',
+      protocolo: 'Conferir os vínculos na árvore e a documentação de uso.'
+    }
+  ],
+
+  // O modal apresenta critérios não verificados para toda história do MVP.
+  // Registre aqui os resultados reais por HU e pelo ID estável do critério.
+  // Exemplo de criterios: { '1': { resultado: 'Aprovado', executor: 'Nome',
+  // revisor: 'Nome', data: 'DD/MM/AAAA', evidencia: 'Referência da evidência' } }.
+  // Versão e avaliação externa ficam no registro da HU.
+  aplicacaoDod: {
+    HU04: { versao: '', avaliacaoExterna: 'Pendente', criterios: {} },
+    HU13: { versao: '', avaliacaoExterna: 'Pendente', criterios: {} },
+    HU15: { versao: '', avaliacaoExterna: 'Pendente', criterios: {} }
+  },
+
   // Características do produto (CP), na ordem da árvore, com o objetivo
   // específico (OE) de cada uma.
   caracteristicas: [
@@ -329,7 +381,7 @@ const DADOS = {
       esforco: { esforco: 3, complexidade: 3, lacuna: 2, consolidado: '2,7' },
       criterios: [
         'A recomendação só será considerada correta quando ordenar as tarefas do dia pelo registro de energia, pelo prazo e pela prioridade de cada tarefa.',
-        'A recomendação do dia deve ser exibida em até 3 segundos após o acesso (RNF06).'
+        'A recomendação do dia deve ser exibida em até 3 segundos após o acesso, conforme o método de medição do RNF06. O resultado é condição obrigatória de aceite da HU13.'
       ]
     },
     {
@@ -363,7 +415,7 @@ const DADOS = {
       esforco: { esforco: 3, complexidade: 3, lacuna: 2, consolidado: '2,7' },
       criterios: [
         'O ajuste só será considerado feito quando a recomendação do dia for recalculada a partir do nível de disposição registrado.',
-        'O reajuste deve aparecer em até 2 segundos após o registro de disposição (RNF07).'
+        'O reajuste deve aparecer em até 2 segundos após o registro de disposição, conforme o método de medição do RNF07. O resultado é condição obrigatória de aceite da HU15.'
       ]
     },
     {
@@ -748,6 +800,20 @@ const DADOS = {
         data: 'Sem data no site',
         alteracao: 'Escopo da v1 reduzido a PIN numérico; esforço de 3,0 → 1,0.',
         motivo: 'A senha de pétalas passou para entrega futura. É a única redução de escopo do MVP.'
+      }
+    ],
+    HU13: [
+      {
+        data: '10/11/2026',
+        alteracao: 'RNF06 passou a ser condição obrigatória de aceite da recomendação de tarefas do dia.',
+        motivo: 'Alinhar o critério de aceite ao DoD, que exige o cumprimento dos RNFs aplicáveis à história.'
+      }
+    ],
+    HU15: [
+      {
+        data: '10/11/2026',
+        alteracao: 'RNF07 passou a ser condição obrigatória de aceite do reajuste da recomendação do dia.',
+        motivo: 'Alinhar o critério de aceite ao DoD, que exige o cumprimento dos RNFs aplicáveis à história.'
       }
     ],
     HU17: [

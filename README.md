@@ -48,6 +48,36 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 └── .github/workflows/gh-pages.yml Publicação automática
 ```
 
+## Atualização do DoD
+
+Em `assets/js/dados.js`, edite `dodCriterios` para alterar o título, a descrição geral
+e o protocolo de cada critério. A página DoR e DoD e os modais usam esse cadastro.
+Preserve o `id` dos critérios existentes ao editar ou reordenar, pois ele identifica
+os resultados registrados.
+
+As histórias incluídas no MVP recebem os painéis automaticamente, com resultados
+iniciais como **Não verificado**. Os RNFs exibidos vêm dos vínculos da história e dos
+requisitos marcados com `todasAsHistorias`.
+
+Para registrar uma verificação, adicione ou atualize a HU em `aplicacaoDod`.
+Os resultados ficam em `criterios`, usando o ID do critério como chave.
+
+```js
+HU13: {
+  versao: 'commit ou versão avaliada',
+  avaliacaoExterna: 'Pendente',
+  criterios: {
+    '1': {
+      resultado: 'Aprovado',
+      executor: 'Nome',
+      revisor: 'Nome',
+      data: 'DD/MM/AAAA',
+      evidencia: 'Referência ao resultado da verificação'
+    }
+  }
+}
+```
+
 ## Sobre os identificadores do Problema, OE, CP, RF e RNF
 
 A **fonte oficial** é a **Matriz de Rastreabilidade de Requisitos v1.0**, extraída do
