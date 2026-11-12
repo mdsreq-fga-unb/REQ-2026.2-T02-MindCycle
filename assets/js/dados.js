@@ -96,7 +96,296 @@ const DADOS = {
   //   }
   // A situação da história (Pronta, Pronta com exceção, Não pronta ou Não
   // conferida) é calculada no fim deste arquivo.
-  aplicacaoDor: {},
+  aplicacaoDor: {
+    // Iteração 5
+    HU01: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe e o conteúdo de saúde não foi revisado pela cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU02: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'NÃO', motivo: 'Depende da HU15, planejada para a Iteração 6.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
+      }
+    },
+    HU04: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '3 critérios registrados.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU05: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'SIM', motivo: 'Depende de HU06 e HU07, planejadas para a mesma iteração.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'NÃO', motivo: 'A regra de cálculo da fase, inclusive para ciclo irregular, ainda não está registrada.' }
+      }
+    },
+    HU06: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '2 critérios registrados.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'NÃO', motivo: 'A regra de cálculo da fase, inclusive para ciclo irregular, ainda não está registrada.' }
+      }
+    },
+    HU07: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'NÃO', motivo: 'A regra de cálculo da fase, inclusive para ciclo irregular, ainda não está registrada.' }
+      }
+    },
+    HU11: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'NÃO', motivo: 'O critério ainda exige 6 pétalas, mas o MVP usa PIN numérico.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU12: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '2 critérios registrados.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU36: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'NÃO', motivo: 'A história não tem critérios de aceitação registrados.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU25: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
+      }
+    },
+    HU26: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    // Iteração 6
+    HU09: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade confirmada em 05/10/2026, mas o conteúdo de saúde ainda não foi revisado pela cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU28: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe e o conteúdo de saúde não foi revisado pela cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU13: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'NÃO', motivo: 'O critério depende da regra de ordenação, que ainda não está registrada.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'SIM', motivo: 'Depende de HU04 (Iteração 5) e de HU17 (mesma iteração).' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'NÃO', motivo: 'A regra de ordenação por prazo, prioridade e energia ainda não está registrada.' }
+      }
+    },
+    HU15: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'NÃO', motivo: 'O critério depende da regra de reajuste, que ainda não está registrada.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'SIM', motivo: 'Depende de HU04 (Iteração 5) e de HU13 (mesma iteração).' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'NÃO', motivo: 'A regra de reajuste da recomendação ainda não está registrada.' }
+      }
+    },
+    HU16: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
+      }
+    },
+    HU17: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'NÃO', motivo: 'O critério não inclui a energia necessária, usada por HU13 e HU15.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU18: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '2 critérios registrados.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU19: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
+      }
+    },
+    HU20: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
+      }
+    },
+    HU21: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU22: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    }
+  },
 
   // Critérios gerais compartilhados pela página e pelos modais.
   // Preserve os IDs ao editar textos ou reordenar, pois identificam resultados.
