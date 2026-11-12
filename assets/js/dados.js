@@ -13,10 +13,90 @@ const DADOS = {
   // (cronograma, abaixo) e o estado das iterações (fases[].iteracoes).
   iteracaoAtual: 6,
 
-  // Histórias que já atenderam ao DoR. Quem está aqui e no MVP aparece como
-  // "Backlog" na árvore; se também estiver planejada para a iteração atual,
-  // como "Iteração atual". Ex.: ['HU25', 'HU12'].
+  // Histórias que já atenderam ao DoR. Não edite: a lista é calculada no fim
+  // deste arquivo a partir de aplicacaoDor. Quem está aqui e no MVP aparece
+  // como "Backlog" na árvore; se também estiver planejada para a iteração
+  // atual, como "Iteração atual".
   dorAtendido: [],
+
+  // Critérios do DoR, compartilhados pela página DoR e DoD e pelos modais.
+  // Preserve os IDs ao editar textos ou reordenar, pois identificam resultados.
+  // admiteExcecao: true só no critério que pode ficar em NÃO com exceção
+  // autorizada no Planejamento.
+  dorCriterios: [
+    {
+      id: '1',
+      titulo: 'Rastreável',
+      descricao: 'Deriva de um requisito funcional e está vinculada à característica e ao objetivo.',
+      conferencia: 'A história aparece na árvore, sob uma característica ligada a um objetivo específico.',
+      admiteExcecao: false
+    },
+    {
+      id: '2',
+      titulo: 'Confirmada pela cliente',
+      descricao: 'Prioridade confirmada pela cliente; conteúdo de saúde também revisado por ela.',
+      conferencia: 'Confirmação registrada em Reuniões. Para conteúdo de saúde, revisão registrada da cliente.',
+      admiteExcecao: true
+    },
+    {
+      id: '3',
+      titulo: 'Clara',
+      descricao: 'No formato "Como usuária, quero … para …", com os termos do glossário e sem dúvidas em aberto.',
+      conferencia: 'Leitura da história pela equipe no Planejamento.',
+      admiteExcecao: false
+    },
+    {
+      id: '4',
+      titulo: 'Critérios de aceitação',
+      descricao: 'Objetivos e verificáveis, incluindo privacidade e ausência de linguagem punitiva.',
+      conferencia: 'A história tem critérios registrados e cada um pode ser verificado sem interpretação.',
+      admiteExcecao: false
+    },
+    {
+      id: '5',
+      titulo: 'Cabe na iteração',
+      descricao: 'Avaliado coletivamente, com responsável definido; a que não cabe é dividida.',
+      conferencia: 'Responsável definido e capacidade da iteração avaliada pela equipe.',
+      admiteExcecao: false
+    },
+    {
+      id: '6',
+      titulo: 'Dependências',
+      descricao: 'Identificadas e disponíveis ou planejadas para a mesma iteração.',
+      conferencia: 'Cada história de que esta depende está concluída ou planejada para a mesma iteração.',
+      admiteExcecao: false
+    },
+    {
+      id: '7',
+      titulo: 'Protótipo',
+      descricao: 'Tela nova ou alterada tem protótipo no Figma vinculado.',
+      conferencia: 'Link do protótipo no Figma vinculado à história, ou N/A quando não há tela.',
+      admiteExcecao: false
+    },
+    {
+      id: '8',
+      titulo: 'Regras de negócio',
+      descricao: 'Identificadas e registradas junto à história.',
+      conferencia: 'Regras escritas no detalhe da história, ou N/A quando ela não tem regra própria.',
+      admiteExcecao: false
+    }
+  ],
+
+  // Aplicação do DoR por história, preenchida no Planejamento da Iteração.
+  // Cada critério recebe resultado 'SIM', 'NÃO', 'N/A' ou 'Não conferido',
+  // e motivo sempre que não for SIM. A exceção só vale no critério com
+  // admiteExcecao e precisa dos três campos. Exemplo:
+  //   HU02: {
+  //     conferencia: 'Planejamento da Iteração 6, em 03/11/2026',
+  //     criterios: {
+  //       '1': { resultado: 'SIM' },
+  //       '2': { resultado: 'NÃO', motivo: 'Prioridade ainda não confirmada.',
+  //              excecao: { autorizadaPor: 'Nome', risco: 'Risco aceito', prazo: 'Revisão da Iteração 6' } }
+  //     }
+  //   }
+  // A situação da história (Pronta, Pronta com exceção, Não pronta ou Não
+  // conferida) é calculada no fim deste arquivo.
+  aplicacaoDor: {},
 
   // Critérios gerais compartilhados pela página e pelos modais.
   // Preserve os IDs ao editar textos ou reordenar, pois identificam resultados.
@@ -1348,3 +1428,33 @@ const DADOS = {
 
   foraDaMatriz: ['HU04', 'HU28', 'HU29', 'HU30', 'HU31', 'HU32', 'HU33', 'HU34', 'HU35', 'HU36']
 };
+
+// Situação de uma história no DoR, a partir de aplicacaoDor:
+//   Pronta              todos os critérios em SIM ou N/A;
+//   Pronta com exceção  o único NÃO está em critério que admite exceção,
+//                       com autorização, risco e prazo registrados;
+//   Não pronta          algum outro NÃO;
+//   Não conferida       sem registro ou com critério ainda não conferido.
+DADOS.situacaoDor = function (id) {
+  const registro = DADOS.aplicacaoDor[id];
+  if (!registro) return 'Não conferida';
+  let pendente = false;
+  let excecao = false;
+  for (const c of DADOS.dorCriterios) {
+    const r = (registro.criterios || {})[c.id] || {};
+    if (r.resultado === 'SIM' || r.resultado === 'N/A') continue;
+    if (r.resultado === 'NÃO') {
+      const e = r.excecao;
+      if (c.admiteExcecao && e && e.autorizadaPor && e.risco && e.prazo) excecao = true;
+      else return 'Não pronta';
+    } else {
+      pendente = true;
+    }
+  }
+  if (pendente) return 'Não conferida';
+  return excecao ? 'Pronta com exceção' : 'Pronta';
+};
+
+DADOS.dorAtendido = DADOS.historias
+  .filter((h) => ['Pronta', 'Pronta com exceção'].includes(DADOS.situacaoDor(h.id)))
+  .map((h) => h.id);

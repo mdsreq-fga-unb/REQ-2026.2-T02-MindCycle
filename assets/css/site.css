@@ -1808,3 +1808,22 @@ summary.foldh::-webkit-details-marker {
   color: var(--head);
   font-size: 14px;
 }
+
+/* Resultado dos critérios e situação do DoR */
+.rdor {
+  align-self: flex-start;
+  display: inline-block;
+  padding: 1px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--mut);
+  background: var(--panel);
+  white-space: nowrap;
+}
+.rdor.r-sim { background: var(--lilt); border-color: var(--lil); color: var(--lil); }
+.rdor.r-nao { background: var(--cort); border-color: var(--cor); color: var(--cor); }
+.rdor.r-exc { background: var(--soft); border-color: var(--acc); color: var(--acct); }
+.rdor.r-na { border-style: dashed; }
+.rdor.r-nc { border-style: dotted; }
