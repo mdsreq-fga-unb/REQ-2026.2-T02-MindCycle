@@ -315,6 +315,46 @@ const MC = (() => {
   }
 
   // ---------------------------------------------------------------------
+  // Página DoR e DoD: critérios do DoR e quadro de aplicação por iteração
+  // ---------------------------------------------------------------------
+  const criteriosDor = document.getElementById('criterios-dor');
+  if (criteriosDor) {
+    criteriosDor.innerHTML = DADOS.dorCriterios.map((c) =>
+      '<li><b>' + esc(c.titulo) + ':</b> ' + esc(c.descricao.charAt(0).toLowerCase() + c.descricao.slice(1)) +
+      ' <span class="state">' + (c.admiteExcecao ? 'Admite exceção autorizada.' : 'Sem exceção.') + '</span></li>').join('');
+  }
+
+  const quadroDor = document.getElementById('quadro-dor');
+  if (quadroDor) {
+    const SIGLA = { 'SIM': 'S', 'NÃO': 'N', 'N/A': 'N/A' };
+    const iteracoes = [...new Set(DADOS.historias.filter(noMvp).map((h) => h.iteracao))].sort((a, b) => a - b);
+    quadroDor.innerHTML = iteracoes.map((n) => {
+      const hs = DADOS.historias.filter((h) => h.iteracao === n);
+      const prontas = hs.filter((h) => DADOS.dorAtendido.includes(h.id)).length;
+      const conferencias = [...new Set(hs.map((h) => (DADOS.aplicacaoDor[h.id] || {}).conferencia).filter(Boolean))];
+      const linhas = hs.map((h) => {
+        const criterios = (DADOS.aplicacaoDor[h.id] || {}).criterios || {};
+        return '<tr><th scope="row">' + chipHistoria(h) + '</th>' +
+          DADOS.dorCriterios.map((c) => {
+            const r = criterios[c.id] || {};
+            const texto = r.excecao && r.resultado === 'NÃO' ? 'E' : (SIGLA[r.resultado] || '?');
+            const classe = { S: 'r-sim', N: 'r-nao', E: 'r-exc', 'N/A': 'r-na' }[texto] || 'r-nc';
+            return '<td><span class="rdor ' + classe + '" title="' + esc(c.titulo + ': ' + (r.resultado || 'Não conferido')) + '">' + texto + '</span></td>';
+          }).join('') +
+          '<td>' + resultadoDor(DADOS.situacaoDor(h.id)) + '</td></tr>';
+      }).join('');
+      return '<h4 style="margin: 18px 0 6px">Iteração ' + n + '</h4>' +
+        '<p class="state" style="margin: 0 0 8px">' + prontas + ' de ' + hs.length + ' histórias prontas' +
+        (conferencias.length ? ' · ' + esc(conferencias.join('; ')) : ' · conferência ainda não registrada') + '</p>' +
+        '<div class="tblw" tabindex="0" role="region" aria-label="Aplicação do DoR na Iteração ' + n + '"><table class="qdor">' +
+        '<thead><tr><th scope="col">HU</th>' + DADOS.dorCriterios.map((c) =>
+          '<th scope="col" title="' + esc(c.titulo) + '">' + c.id + '</th>').join('') +
+        '<th scope="col">Situação</th></tr></thead><tbody>' + linhas + '</tbody></table></div>';
+    }).join('') +
+    '<p class="state" style="margin-top: 10px">S sim · N não · E não, com exceção autorizada · N/A não se aplica · ? não conferido. Os números das colunas seguem a ordem dos critérios acima.</p>';
+  }
+
+  // ---------------------------------------------------------------------
   // Cliques e endereço
   // ---------------------------------------------------------------------
   document.addEventListener('click', (e) => {

@@ -56,8 +56,9 @@
         <td><b>Backlog</b></td><td style="color: var(--acc)"><b>DoR →</b></td><td><b>A Fazer</b></td><td style="color: var(--acc)"><b>DoD →</b></td><td><b>Em Validação</b></td><td>→</td><td><b>Aceita na Revisão</b></td>
       </tr></tbody></table></div>
       <h2>Definition of Ready</h2>
-      <p>Conferido no Planejamento da Iteração. Cada critério recebe SIM, NÃO ou N/A, por história, a partir da Iteração 5.</p>
-      <ol class="ol">
+      <p>O DoR define o que uma história precisa ter para entrar em desenvolvimento: estar clara, bem declarada e sem impedimentos. A equipe confere cada história candidata no Planejamento da Iteração, critério por critério. Cada critério recebe SIM, NÃO ou N/A, e toda resposta diferente de SIM leva o motivo. Uma história só entra na iteração quando todos os critérios estão em SIM ou N/A.</p>
+      <p>A única exceção admitida é a do critério de confirmação pela cliente, porque depende da agenda dela e não do trabalho da equipe. Nesse caso, a história pode entrar com o critério em NÃO se o responsável pelo backlog autorizar a exceção no Planejamento, com o risco aceito e o prazo para a confirmação registrados junto à história. O prazo vai no máximo até a Revisão da mesma iteração, e uma história cuja confirmação não ocorrer até lá não pode ser aceita no DoD. Os demais critérios não admitem exceção, porque sem eles não há como verificar o aceite.</p>
+      <ol class="ol" id="criterios-dor">
         <li><b>Rastreável:</b> deriva de um requisito funcional e está vinculada à característica e ao objetivo.</li>
         <li><b>Confirmada pela cliente:</b> prioridade confirmada; conteúdo de saúde também revisado por ela.</li>
         <li><b>Clara:</b> no formato "Como usuária, quero … para …", com os termos do glossário e sem dúvidas em aberto.</li>
@@ -67,6 +68,10 @@
         <li><b>Protótipo:</b> tela nova ou alterada tem protótipo no Figma vinculado.</li>
         <li><b>Regras de negócio:</b> identificadas e registradas junto à história.</li>
       </ol>
+      <h3 id="aplicacao-do-dor" style="margin: 24px 0 10px">Aplicação por iteração</h3>
+      <p>O quadro reúne a conferência das histórias planejadas para cada iteração. Selecione a história para ver o motivo de cada resposta e, quando houver, a exceção autorizada.</p>
+      <div id="quadro-dor"></div>
+      <noscript><p>Ative o JavaScript para consultar a aplicação do DoR por iteração.</p></noscript>
       <h2 id="definition-of-done">Definition of Done</h2>
       <p>O DoD define a conclusão técnica das histórias implementadas a partir da Entrega 3. Ao atender a todos os critérios, a história é verificada pela equipe e segue para <em>Em Validação</em>, aguardando avaliação externa na Revisão da Iteração. O aceite depende do registro dessa avaliação. Uma história com critérios pendentes ou reprovados permanece em desenvolvimento ou em verificação.</p>
       <ol class="ol" id="criterios-dod"></ol>
