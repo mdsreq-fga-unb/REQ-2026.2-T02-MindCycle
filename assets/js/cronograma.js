@@ -1,7 +1,7 @@
 // ===== Entregas e cronograma: linha do tempo e painel de fases =====
 
 (() => {
-  const { esc, url, abrirDialogo, botaoFechar, chipHistoria } = MC;
+  const { esc, url, video, tempo, abrirDialogo, botaoFechar, chipHistoria } = MC;
   const $ = (id) => document.getElementById(id);
   const dia = (iso) => Date.parse(iso + 'T00:00:00Z');
   const ini = dia(DADOS.inicioDoSemestre), fim = dia(DADOS.fimDoSemestre), total = fim - ini;
@@ -92,6 +92,26 @@
         '</dl>'
     });
   }
+
+  // ---- Riscos investigados ---------------------------------------------
+  // O efeito das investigações que mexeram numa história vem do histórico dela.
+  const chipRnf = (id) => '<button class="rfb mono" type="button" data-rnf="' + id + '">' + id + '</button>';
+  const celula = (texto, aberto, vazio) => texto
+    ? '<td' + (aberto ? ' class="ph"' : '') + '>' + texto + '</td>'
+    : '<td class="ph">' + vazio + '</td>';
+  $('riscos').innerHTML = DADOS.riscos.map((r) => {
+    const efeito = r.efeitoEm ? DADOS.historico[r.efeitoEm].map((e) => e.alteracao).join(' ') : r.efeito;
+    const trecho = r.video ? ' <a class="time mono" href="' + esc(video(r.video.id, r.video.tempo)) +
+      '" target="_blank" rel="noopener" aria-label="Abrir o vídeo da reunião em ' + tempo(r.video.tempo) + '">▶ ' +
+      tempo(r.video.tempo) + '</a>' : '';
+    const ligados = r.historias.map(chipHistoria).concat(r.rnfs.map(chipRnf));
+    return '<tr><td>' + esc(r.risco) + '</td>' +
+      celula(r.quando && esc(r.quando) + trecho, false, 'Sem investigação técnica registrada') +
+      celula(r.resultado && esc(r.resultado), r.aberto, 'Sem registro') +
+      celula(efeito && esc(efeito), r.aberto, 'Sem registro') +
+      '<td><span class="tag ' + (r.aberto ? 'tcor' : 'fill') + '" style="margin: 0">' + (r.aberto ? 'Aberto' : 'Encerrado') + '</span></td>' +
+      '<td>' + (ligados.length ? '<div class="rfl">' + ligados.join('') + '</div>' : '') + '</td></tr>';
+  }).join('');
 
   $('painel-fases').addEventListener('click', (e) => {
     const b = e.target.closest('[data-fase]');

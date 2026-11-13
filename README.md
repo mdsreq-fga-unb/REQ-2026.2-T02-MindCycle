@@ -95,6 +95,7 @@ páginas.
 | Uma alteração no histórico | `historico` em `assets/js/dados.js` |
 | A iteração atual ou as histórias prontas pelo DoR | `iteracaoAtual` e `dorAtendido` em `assets/js/dados.js` |
 | Iterações, planejado e realizado, evidências e técnicas de cada fase | `fases` em `assets/js/dados.js` |
+| Um risco investigado ou ainda aberto | `riscos` em `assets/js/dados.js` |
 | Riscos investigados | Tabela no `index.html` de `cronograma/` |
 | Cores e espaçamentos | As variáveis no topo de `assets/css/site.css` |
 

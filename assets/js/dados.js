@@ -1234,6 +1234,76 @@ const DADOS = {
     }
   ],
 
+  // Riscos investigados (Entregas e cronograma). As fases não isolam as
+  // disciplinas, então a tabela mostra as investigações que mudaram requisito
+  // ou escopo e os riscos ainda abertos.
+  //   quando      momento e forma da investigação; `video` aponta o trecho.
+  //               Sem `quando`, o risco aparece como sem investigação.
+  //   efeitoEm    história cujas alterações em `historico` são o efeito do
+  //               risco; a tabela lê de lá, para não repetir números.
+  //   efeito      efeito escrito à mão, quando não há história para ler.
+  //   historias, rnfs  o que o risco toca; viram os botões de "Ligados a".
+  riscos: [
+    {
+      risco: 'Senha de pétalas cara demais para o MVP',
+      quando: 'Elaboração: estimativa técnica da equipe na priorização',
+      resultado: 'O gesto de pétalas encarecia a primeira versão',
+      efeitoEm: 'HU11',
+      aberto: false,
+      historias: ['HU11'],
+      rnfs: ['RNF09']
+    },
+    {
+      risco: 'Recuperar o acesso sem violar o acesso exclusivo',
+      quando: 'Elaboração: revisão técnica da equipe',
+      resultado: 'O reset manual pela equipe contrariaria o RNF03',
+      efeitoEm: 'HU26',
+      aberto: false,
+      historias: ['HU26'],
+      rnfs: ['RNF03']
+    },
+    {
+      risco: 'Dado de saúde sem direito de exclusão',
+      quando: 'Iteração 4: conferência entre catálogo, priorização e LGPD',
+      resultado: 'Exigência legal estava fora do catálogo e do backlog',
+      efeitoEm: 'HU36',
+      aberto: false,
+      historias: ['HU36'],
+      rnfs: ['RNF02']
+    },
+    {
+      risco: 'Preferências sem requisito que as sustente',
+      quando: 'Iteração 4: análise de rastreabilidade',
+      resultado: 'O critério do RNF01 pressupunha uma configuração inexistente',
+      efeitoEm: 'HU29',
+      aberto: false,
+      historias: ['HU29'],
+      rnfs: ['RNF01']
+    },
+    {
+      risco: 'Alertas que cruzam sintomas e quadros clínicos',
+      quando: '05/10/2026: conversa com a cliente',
+      video: { id: 'PKoWLngGSRg', tempo: 1102 },
+      resultado: 'Exigem validação clínica e jurídica',
+      efeito: 'Fora do MVP, como tema de pesquisa',
+      aberto: false,
+      historias: [],
+      rnfs: []
+    },
+    {
+      risco: 'Motor de recomendação sem regras definidas',
+      quando: 'Sem investigação técnica na Elaboração. Apontado na Iteração 4 como o maior esforço técnico',
+      video: { id: 'Je44KbpoASk', tempo: 213 },
+      resultado: 'Regras tratadas na Iteração 6 (issue 36)',
+      efeito: 'A definir com a validação das regras',
+      aberto: true,
+      historias: ['HU13', 'HU15'],
+      rnfs: []
+    },
+    { risco: 'Isolamento dos dados de cada usuária', aberto: true, historias: [], rnfs: ['RNF03'] },
+    { risco: 'Escolhas de arquitetura', aberto: true, historias: [], rnfs: [] }
+  ],
+
   // Período da linha do tempo do cronograma.
   inicioDoSemestre: '2026-08-11',
 
