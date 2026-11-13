@@ -276,7 +276,7 @@ const DADOS = {
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
         '4': { resultado: 'NÃO', motivo: 'O critério depende da regra de ordenação, que ainda não está registrada.' },
         '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
-        '6': { resultado: 'SIM', motivo: 'Depende de HU04 (Iteração 5) e de HU17 (mesma iteração).' },
+        '6': { resultado: 'NÃO', motivo: 'Depende de HU17 (mesma iteração) e de HU04 (Iteração 5), que ainda não passou pelo DoD e por isso não está disponível.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
         '8': { resultado: 'NÃO', motivo: 'A regra de ordenação por prazo, prioridade e energia ainda não está registrada.' }
       }
@@ -289,7 +289,7 @@ const DADOS = {
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
         '4': { resultado: 'NÃO', motivo: 'O critério depende da regra de reajuste, que ainda não está registrada.' },
         '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
-        '6': { resultado: 'SIM', motivo: 'Depende de HU04 (Iteração 5) e de HU13 (mesma iteração).' },
+        '6': { resultado: 'NÃO', motivo: 'Depende de HU13 (mesma iteração) e de HU04 (Iteração 5), que ainda não passou pelo DoD e por isso não está disponível.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
         '8': { resultado: 'NÃO', motivo: 'A regra de reajuste da recomendação ainda não está registrada.' }
       }
