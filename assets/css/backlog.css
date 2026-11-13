@@ -9,11 +9,13 @@
 .simple-resumo dt { color: var(--mut); font-size: 12px; }
 .simple-resumo dd { margin: 2px 0 0; font-size: 14px; font-weight: 600; }
 .simple-table { min-width: 720px; table-layout: fixed; }
-.simple-table th:nth-child(1) { width: 29%; }
-.simple-table th:nth-child(2) { width: 14%; }
-.simple-table th:nth-child(3) { width: 25%; }
-.simple-table th:nth-child(4) { width: 32%; }
-.simple-table tbody th { background: var(--panel); font-family: inherit; }
+.simple-table>thead>tr>th:nth-child(1) { width: 28%; }
+.simple-table>thead>tr>th:nth-child(2) { width: 9%; }
+.simple-table>thead>tr>th:nth-child(3) { width: 15%; }
+.simple-table>thead>tr>th:nth-child(4) { width: 17%; }
+.simple-table>thead>tr>th:nth-child(5) { width: 31%; }
+.hu-esforco { white-space: nowrap; }
+.simple-table>tbody>tr>th { background: var(--panel); font-family: inherit; }
 .simple-table .demo-hu { font-size: 14px; line-height: 1.4; gap: 3px; }
 .simple-table .demo-hu .mono, .demo-refino-list .mono { color: var(--acct); font-size: 15px; font-weight: 700; }
 .simple-table .demo-hu:hover { color: var(--acct); }
@@ -25,17 +27,21 @@
 .iteration-tabs button[aria-selected="true"] { background: var(--acc); color: var(--on); border-color: var(--acc); }
 .iteration-tabs button:hover:not([aria-selected="true"]) { border-color: var(--acc); }
 .iteration-tabs button:focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; }
-.hu-planejamento { margin-top: 8px; }
+.simple-table .hu-principal>td, .simple-table .hu-principal>th { border-bottom: 0; padding-bottom: 6px; }
+.simple-table .hu-planejamento-linha>td { padding-top: 0; }
+.hu-planejamento { margin-top: 0; }
 .hu-planejamento>summary { color: var(--acct); font-size: 13px; cursor: pointer; }
 .hu-planejamento-conteudo { border-top: 1px dashed var(--line); margin-top: 10px; padding-top: 10px; display: grid; gap: 14px; }
-.hu-dados { margin: 0; display: grid; gap: 9px; align-content: start; }
-.hu-dados dt { color: var(--mut); font-size: 12px; }
-.hu-dados dd { margin: 2px 0 0; font-size: 13px; }
-.hu-etapas h4 { margin: 0 0 4px; font-size: 13px; color: var(--head); }
-.hu-etapas p { margin: 0 0 6px; }
-.hu-etapas ol { margin: 0; padding-left: 18px; font-size: 13px; }
-.hu-etapas li { padding: 2px 0; }
-.hu-etapas .mono { color: var(--acct); font-size: 11px; }
+.hu-plano-tabela { table-layout: fixed; border: 1px solid var(--line); font-size: 13px; }
+.hu-plano-tabela caption { text-align: left; font-size: 14px; font-weight: 600; color: var(--head); padding: 0 0 8px; }
+.hu-plano-tabela th, .hu-plano-tabela td { padding: 10px 12px; overflow-wrap: anywhere; }
+.hu-plano-tabela th { font-family: inherit; font-size: 12px; }
+.hu-plano-tabela th:first-child { width: 32%; }
+.hu-plano-etapas thead th:nth-child(2) { width: 68%; }
+.hu-plano-etapas tbody th { background: var(--panel); }
+.hu-tarefa-id { display: block; font-size: 11px; font-weight: 400; color: var(--acct); margin-bottom: 4px; }
+.hu-subtarefas { margin: 0; padding-left: 17px; list-style: disc; }
+.hu-subtarefas li+li { margin-top: 6px; }
 @media (max-width:640px) {
   .iteration-tabs { gap: 8px; }
   .iteration-tabs button { padding: 12px 9px; font-size: 15px; }

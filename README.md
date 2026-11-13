@@ -81,6 +81,11 @@ HU13: {
 
 ## Atualização do backlog
 
+O backlog oficial de trabalho é a página `backlog/` do GitHub Pages. A equipe
+deixou de utilizar o Notion, conforme decisão informada em 13/11/2026. As
+atualizações de responsáveis, tarefas, andamento e bloqueios são registradas no
+repositório e publicadas no Pages; não há sincronização pendente com o Notion.
+
 A página `backlog/` é montada a partir das histórias e do bloco `backlog` de
 `assets/js/dados.js`. Ela não repete descrição, benefício nem critérios: cada HU abre o
 mesmo detalhe usado na árvore de requisitos.
@@ -89,10 +94,16 @@ mesmo detalhe usado na árvore de requisitos.
   **Não atribuído**.
 - `capacidadePorIteracao` registra a capacidade disponível. Enquanto estiver nula, a carga
   planejada é exibida, mas a relação carga/capacidade permanece **Não calculável**.
-- `tarefasPadrao` mantém a decomposição operacional rastreável por HU; `itens` guarda apenas
-  bloqueios e exceções específicas, como as lacunas de HU31 e HU32.
-- A situação usa iteração, DoR e DoD já registrados. Ausência de evidência aparece como
-  **Situação não registrada**, em vez de ser interpretada como conclusão.
+- `tarefasPadrao` mantém as quatro etapas comuns. `itens[HU].tarefas` detalha o trabalho
+  específico de cada etapa pelo seu ID, sem repetir critérios e regras da história.
+  O detalhamento de construção cobre as 22 HUs do MVP. As decisões ainda pendentes
+  continuam sujeitas ao refinamento e à validação registrados no catálogo.
+- `itens[HU].bloqueios` registra as pendências documentadas de preparação ou validação.
+  `dependencias` referencia outras HUs; alocações em iteração posterior aparecem como
+  pendência de planejamento. Esses registros não alteram o andamento da implementação.
+- O andamento fica em `itens[HU].andamento`, com `andamentoPadrao` para o estado comum
+  confirmado pela equipe. Em 13/11/2026, Arthur informou que nenhuma HU havia começado:
+  o estado inicial é **Não iniciada**. A prontidão pelo DoR é apresentada separadamente.
 
 ## Sobre os identificadores do Problema, OE, CP, RF e RNF
 

@@ -74,6 +74,8 @@ const DADOS = {
   // aqui ficam apenas dados de planejamento que não pertencem ao requisito.
   backlog: {
     atualizadoEm: '13/11/2026',
+    // Andamento confirmado por Arthur em 13/11/2026; exceções futuras ficam em itens[HU].andamento.
+    andamentoPadrao: 'Não iniciada',
     responsavelPadrao: 'Não atribuído',
     responsaveis: {
       HU11: 'Pedro Ian',
@@ -100,7 +102,150 @@ const DADOS = {
       { id: 'T03', titulo: 'Verificar critérios de aceitação, RNFs e DoD', etapa: 'Verificação' },
       { id: 'T04', titulo: 'Validar o incremento com os stakeholders', etapa: 'Validação' }
     ],
+    // Subtarefas por etapa; critérios e regras continuam na própria história.
     itens: {
+      HU01: {
+        tarefas: { T02: [
+          'Preparar a consulta dos sintomas comuns por fase, com conteúdo revisado pela cliente.',
+          'Integrar a consulta à fase atual apresentada em HU05.'
+        ] }
+      },
+      HU02: {
+        dependencias: ['HU15'],
+        tarefas: { T02: [
+          'Disponibilizar a ação de sinalizar sobrecarga durante o uso do aplicativo.',
+          'Conectar a sinalização ao reajuste de HU15 e apresentar o resultado.'
+        ] }
+      },
+      HU04: {
+        bloqueios: ['Validar as regras propostas de registro e correção com a cliente.'],
+        tarefas: { T02: [
+          'Construir o formulário de sintomas, intensidades e disposição.',
+          'Integrar gravação e correção dos registros ao histórico e ao reajuste de HU15, conforme as regras acordadas.'
+        ] }
+      },
+      HU05: {
+        bloqueios: ['Validar o modelo de cálculo das fases com a cliente.'],
+        tarefas: { T02: [
+          'Integrar as entradas de HU06 e HU07 à consulta da situação do ciclo.',
+          'Apresentar a estimativa ou o motivo de indisponibilidade, aplicando o modelo de fases somente após sua validação.'
+        ] }
+      },
+      HU06: {
+        tarefas: { T02: [
+          'Construir a entrada da data de início da menstruação.',
+          'Salvar a data no histórico e disponibilizar a atualização para HU05, respeitando o aceite de HU12.'
+        ] }
+      },
+      HU07: {
+        tarefas: { T02: [
+          'Construir a entrada da duração média e a opção de ciclo irregular.',
+          'Salvar as informações e disponibilizá-las para a consulta de HU05.'
+        ] }
+      },
+      HU09: {
+        tarefas: { T02: [
+          'Organizar os conteúdos informativos revisados pela cliente por fase e sintoma.',
+          'Construir a consulta que relaciona os conteúdos à fase e aos sintomas da usuária.'
+        ] }
+      },
+      HU11: {
+        bloqueios: ['Alinhar o critério de aceite com a decisão sobre PIN numérico ou pétalas.'],
+        tarefas: { T02: [
+          'Construir o cadastro e a entrada do PIN conforme o modelo confirmado no refinamento.',
+          'Integrar a conferência do PIN ao acesso protegido da conta.'
+        ] }
+      },
+      HU12: {
+        tarefas: { T02: [
+          'Disponibilizar a leitura dos termos e o registro do aceite.',
+          'Integrar a verificação do aceite aos fluxos de coleta de ciclo, sintomas e disposição.'
+        ] }
+      },
+      HU13: {
+        bloqueios: ['Validar as regras propostas de ordenação com a cliente.'],
+        tarefas: { T02: [
+          'Integrar a consulta das tarefas cadastradas e da disposição vigente.',
+          'Implementar e exibir a ordenação conforme as regras de negócio acordadas.'
+        ] }
+      },
+      HU15: {
+        bloqueios: ['Validar as regras propostas de reajuste com a cliente.'],
+        tarefas: { T02: [
+          'Conectar os registros de disposição e a sinalização de sobrecarga ao recálculo da lista.',
+          'Integrar movimentação, retorno e desfazer das tarefas conforme as regras de reajuste acordadas.'
+        ] }
+      },
+      HU16: {
+        tarefas: { T02: [
+          'Abrir os dados da tarefa cadastrada para edição.',
+          'Salvar as alterações na mesma tarefa e atualizar sua apresentação na lista.'
+        ] }
+      },
+      HU17: {
+        tarefas: { T02: [
+          'Montar o formulário de título, prazo, prioridade e energia necessária.',
+          'Salvar a tarefa e disponibilizá-la para o planejamento de HU13.'
+        ] }
+      },
+      HU18: {
+        tarefas: { T02: [
+          'Disponibilizar a escolha da nova data de execução da tarefa.',
+          'Atualizar a data planejada e a lista, distinguindo o adiamento manual do reajuste automático de HU15.'
+        ] }
+      },
+      HU19: {
+        tarefas: { T02: [
+          'Disponibilizar a ação de excluir uma tarefa cadastrada.',
+          'Integrar a exclusão à lista de tarefas e à recomendação do dia.'
+        ] }
+      },
+      HU20: {
+        tarefas: { T02: [
+          'Disponibilizar a marcação de tarefa concluída.',
+          'Salvar o estado e a data de conclusão e atualizar a apresentação da tarefa.'
+        ] }
+      },
+      HU21: {
+        tarefas: { T02: [
+          'Organizar as práticas breves de autocuidado revisadas pela cliente.',
+          'Construir a apresentação das sugestões de acolhimento.'
+        ] }
+      },
+      HU22: {
+        tarefas: { T02: [
+          'Preparar as mensagens de acolhimento para revisão de linguagem.',
+          'Integrar a apresentação das mensagens ao fluxo acordado para a história.'
+        ] }
+      },
+      HU25: {
+        tarefas: { T02: [
+          'Construir o fluxo de criação da conta com os dados acordados no refinamento.',
+          'Integrar a criação ao acesso da conta, incluindo sair e entrar novamente.'
+        ] }
+      },
+      HU26: {
+        tarefas: { T02: [
+          'Construir o fluxo de recuperação de acesso conforme o mecanismo acordado no refinamento.',
+          'Integrar a recuperação à conta existente, preservando o histórico.'
+        ] }
+      },
+      HU28: {
+        tarefas: { T02: [
+          'Organizar o conteúdo revisado pela cliente sobre o funcionamento das quatro fases.',
+          'Construir a consulta das informações de cada fase do ciclo.'
+        ] }
+      },
+      HU36: {
+        bloqueios: ['Definir os critérios de aceitação da exclusão de conta e dados.'],
+        tarefas: {
+          T01: ['Definir os critérios de aceitação da exclusão de conta e dados antes do desenvolvimento.'],
+          T02: [
+            'Construir o fluxo de solicitação de exclusão da própria conta.',
+            'Integrar a exclusão da conta e dos dados e a revogação do consentimento conforme os critérios acordados.'
+          ]
+        }
+      },
       HU31: {
         situacao: 'Requer refinamento'
       },

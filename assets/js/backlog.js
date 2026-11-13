@@ -14,9 +14,8 @@
   }
 
   function situacao(h) {
-    if (cadastro.itens[h.id] && cadastro.itens[h.id].situacao) return cadastro.itens[h.id].situacao;
-    if (h.iteracao < DADOS.iteracaoAtual) return 'Situação não registrada';
-    return DADOS.dorAtendido.includes(h.id) ? 'A fazer' : 'Bloqueada pelo DoR';
+    const item = cadastro.itens[h.id] || {};
+    return item.andamento || cadastro.andamentoPadrao || 'Andamento ainda não informado';
   }
 
   function bloqueio(h) {
@@ -24,7 +23,7 @@
     if (especifico && especifico.length) return especifico[0];
     if (cadastro.itens[h.id] && cadastro.itens[h.id].situacao === 'Requer refinamento') return h.nota;
     if (!cadastro.responsaveis[h.id]) return 'Responsável não atribuído';
-    if (!DADOS.dorAtendido.includes(h.id)) return 'DoR não atendido';
+    if (!DADOS.dorAtendido.includes(h.id)) return 'Conferir o DoR';
     return 'Nenhum bloqueio registrado';
   }
 
@@ -35,11 +34,33 @@
   }
 
   function pendencia(h) {
-    const lista = [];
+    const item = cadastro.itens[h.id] || {};
+    const lista = [...(item.bloqueios || [])];
+    (item.dependencias || []).forEach((id) => {
+      const dependencia = DADOS.historias.find((historia) => historia.id === id);
+      if (dependencia && dependencia.iteracao > h.iteracao) {
+        lista.push('Rever alocação: depende de ' + id + ', planejada para a Iteração ' + dependencia.iteracao);
+      }
+    });
     if (!cadastro.responsaveis[h.id]) lista.push('Definir responsável');
-    if (h.iteracao < DADOS.iteracaoAtual) lista.push('Informar o resultado da iteração');
-    else if (!DADOS.dorAtendido.includes(h.id)) lista.push('Conferir o DoR');
-    return lista.length ? lista.join(' · ') + '.' : 'Nenhuma pendência registrada.';
+    if (!DADOS.dorAtendido.includes(h.id)) lista.push('Conferir o DoR');
+    return lista.length ? lista.map((texto) => texto.replace(/\.$/, '')).join(' · ') + '.' : 'Nenhuma pendência registrada.';
+  }
+
+  function tarefas(h) {
+    const detalhamento = (cadastro.itens[h.id] || {}).tarefas || {};
+    const referencias = {
+      T01: 'Conferir os critérios do DoR da história.',
+      T03: 'Aplicar os critérios de aceitação, os RNFs vinculados e o checklist do DoD.',
+      T04: 'Apresentar o incremento e registrar a avaliação dos stakeholders.'
+    };
+    return '<table class="hu-plano-tabela hu-plano-etapas"><caption>Planejamento do trabalho</caption>' +
+      '<thead><tr><th scope="col">Etapa</th><th scope="col">Trabalho previsto</th></tr></thead><tbody>' + cadastro.tarefasPadrao.map((t) => {
+      const subtarefas = detalhamento[t.id] || [];
+      return '<tr><th scope="row"><span class="hu-tarefa-id mono">' + h.id + '-' + t.id + '</span>' + esc(t.titulo) + '</th><td>' +
+        (subtarefas.length ? '<ul class="hu-subtarefas">' + subtarefas.map((s) =>
+          '<li>' + esc(s) + '</li>').join('') + '</ul>' : esc(referencias[t.id] || t.titulo)) + '</td></tr>';
+    }).join('') + '</tbody></table>';
   }
 
   function tabelaIteracao(n) {
@@ -49,23 +70,21 @@
       '<dl class="simple-resumo"><div><dt>Esforço planejado</dt><dd>' + carga + '</dd></div>' +
       '<div><dt>Disponibilidade da equipe</dt><dd>' + capacidade + '</dd></div>' +
       '<div><dt>O trabalho cabe no período?</dt><dd>Ainda não avaliado</dd></div></dl>' +
-      '<div class="tblw"><table class="simple-table"><thead><tr><th>História</th><th>Quem faz</th><th>Andamento</th><th>Pendência</th></tr></thead><tbody>' +
+      '<div class="tblw"><table class="simple-table"><thead><tr><th>História</th><th>Esforço</th><th>Quem faz</th><th>Andamento</th><th>Pendência</th></tr></thead><tbody>' +
       hs.map((h) => '<tr class="hu-principal"><th scope="row"><button type="button" class="demo-hu" data-historia="' + h.id + '"><span class="mono">' + h.id + '</span>' + esc(h.nome) + '</button></th>' +
+        '<td class="hu-esforco mono">' + esc(h.esforco.consolidado) + '</td>' +
         '<td' + (cadastro.responsaveis[h.id] ? '' : ' class="ph"') + '>' + esc(responsavel(h)) + '</td>' +
-        '<td><span class="bk-status ' + (n === DADOS.iteracaoAtual ? 'bk-bloqueio' : 'bk-atencao') + '">' +
-          esc(situacao(h) === 'Bloqueada pelo DoR' ? 'Aguardando preparação' :
-            situacao(h) === 'Situação não registrada' ? 'Andamento ainda não informado' : situacao(h)) + '</span></td>' +
-        '<td><span class="simple-pendencia">' + esc(pendencia(h)) + '</span>' +
+        '<td><span class="bk-status bk-neutra">' + esc(situacao(h)) + '</span></td>' +
+        '<td><span class="simple-pendencia">' + esc(pendencia(h)) + '</span></td></tr>' +
+        '<tr class="hu-planejamento-linha"><td colspan="5">' +
           '<details class="hu-planejamento"><summary>Ver planejamento</summary><div class="hu-planejamento-conteudo">' +
-          '<dl class="hu-dados"><div><dt>Característica</dt><dd>' + h.caracteristica + ' · ' + esc(caracteristica(h.caracteristica).nome) + '</dd></div>' +
-          '<div><dt>Esforço estimado</dt><dd>' + h.esforco.consolidado + '</dd></div>' +
-          '<div><dt>Prontidão para desenvolver</dt><dd>' + esc(prontidao(h)) +
-          ' · <a href="../dor-e-dod/#' + h.id + '">Consultar DoR e DoD</a></dd></div></dl>' +
-          (h.regras ? '<div><h4>Regras da história</h4><p>' + esc(h.regras.situacao) +
-            '</p><button type="button" class="lnk" data-historia="' + h.id + '">Consultar regras e critérios</button></div>' : '') +
-          '<div class="hu-etapas"><h4>Planejamento do trabalho</h4><p class="state">Etapas de referência; tarefas específicas ainda precisam ser definidas.</p>' +
-          '<ol>' + cadastro.tarefasPadrao.map((t) => '<li><span class="mono">' + h.id + '-' + t.id + '</span> ' + esc(t.titulo) + '</li>').join('') +
-          '</ol></div></div></details></td></tr>').join('') +
+          '<table class="hu-plano-tabela hu-plano-dados"><caption>Dados de ' + h.id + '</caption><tbody>' +
+          '<tr><th scope="row">Característica</th><td>' + h.caracteristica + ' · ' + esc(caracteristica(h.caracteristica).nome) + '</td></tr>' +
+          '<tr><th scope="row">Prontidão para desenvolver</th><td>' + esc(prontidao(h)) +
+          ' · <a href="../dor-e-dod/#' + h.id + '">Consultar DoR e DoD</a></td></tr>' +
+          (h.regras ? '<tr><th scope="row">Regras da história</th><td>' + esc(h.regras.situacao) +
+            '<br><button type="button" class="lnk" data-historia="' + h.id + '">Consultar regras e critérios</button></td></tr>' : '') +
+          '</tbody></table>' + tarefas(h) + '</div></details></td></tr>').join('') +
       '</tbody></table></div></section>';
   }
 
