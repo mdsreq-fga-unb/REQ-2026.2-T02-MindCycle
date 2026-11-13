@@ -28,6 +28,7 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 ├── visao/                         Visão de produto (figuras ampliáveis)
 ├── engenharia-de-requisitos/      Escolhas de processo e Catálogo de Metas
 ├── mvp/                           Composição do MVP por característica
+├── backlog/                       Situação operacional, carga, responsáveis e tarefas
 ├── historico/                     O que mudou em cada história e RNF
 ├── reunioes/                      Gravações, com cada decisão no momento do vídeo
 ├── cronograma/                    Linha do tempo, releases e painel de fases
@@ -40,7 +41,7 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 │   ├── js/
 │   │   ├── dados.js               Histórias, RNFs, reuniões, histórico, fases e cronograma
 │   │   ├── site.js                Tema, diálogos e o detalhe da história e do RNF
-│   │   └── requisitos.js, mvp.js, priorizacao.js, reunioes.js, historico.js, cronograma.js
+│   │   └── requisitos.js, mvp.js, backlog.js, priorizacao.js, reunioes.js, historico.js, cronograma.js
 │   │                              O que cada página monta a partir de dados.js
 │   ├── img/                       Figuras (WebP em 480, 800 e 1280 px) e favicon
 │   ├── brand/                     Marca (vem da branch main): paleta, logos, Fraunces
@@ -78,6 +79,21 @@ HU13: {
 }
 ```
 
+## Atualização do backlog
+
+A página `backlog/` é montada a partir das histórias e do bloco `backlog` de
+`assets/js/dados.js`. Ela não repete descrição, benefício nem critérios: cada HU abre o
+mesmo detalhe usado na árvore de requisitos.
+
+- `responsaveis` registra somente atribuições formalizadas; sem entrada, a HU aparece como
+  **Não atribuído**.
+- `capacidadePorIteracao` registra a capacidade disponível. Enquanto estiver nula, a carga
+  planejada é exibida, mas a relação carga/capacidade permanece **Não calculável**.
+- `tarefasPadrao` mantém a decomposição operacional rastreável por HU; `itens` guarda apenas
+  bloqueios e exceções específicas, como as lacunas de HU31 e HU32.
+- A situação usa iteração, DoR e DoD já registrados. Ausência de evidência aparece como
+  **Situação não registrada**, em vez de ser interpretada como conclusão.
+
 ## Sobre os identificadores do Problema, OE, CP, RF e RNF
 
 A **fonte oficial** é a **Matriz de Rastreabilidade de Requisitos v1.0**, extraída do
@@ -91,8 +107,8 @@ quadro *MindCycle – Figma* em 28/09/2026. Dela saem:
 | Histórias de usuário | `HU01` a `HU36` |
 | Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** |
 
-No site, tudo isso vive num lugar só: `assets/js/dados.js`. A árvore, o MVP, a priorização,
-as reuniões, o histórico e o detalhe de cada história leem desse arquivo, então um
+No site, tudo isso vive num lugar só: `assets/js/dados.js`. A árvore, o MVP, o backlog, a
+priorização, as reuniões, o histórico e o detalhe de cada história leem desse arquivo, então um
 identificador ou uma nota alterados ali mudam em todas as páginas. Uma história nova recebe
 sempre o próximo número livre, nunca um número já usado.
 
@@ -103,7 +119,7 @@ sempre o próximo número livre, nunca um número já usado.
 | O que | Onde |
 |---|---|
 | **Validação do MVP consolidado com a cliente** | Páginas MVP e Priorização. A reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino tratou requisitos individuais; o conjunto do MVP e as notas ainda em hipótese aguardam a reunião de acompanhamento. |
-| **Backlog e Iteração atual vazios** | `dorAtendido` em `assets/js/dados.js` ainda não tem nenhuma história: nenhuma foi marcada como pronta pelo DoR. |
+| **Responsáveis e capacidade ainda não formalizados** | A página Backlog torna a ausência explícita. Preencher `backlog.responsaveis` e `backlog.capacidadePorIteracao` após o acordo da equipe. |
 | **RNF05** | Não existe no quadro: a numeração salta de RNF04 para RNF06. Confirmar se houve descarte e registrar, ou renumerar. |
 
 ---
@@ -118,6 +134,7 @@ páginas.
 |---|---|
 | Texto de Visão de produto, Engenharia de requisitos, DoR e DoD ou Lições aprendidas | O `index.html` da página |
 | Uma história (nome, critérios, nota MoSCoW, esforço, iteração) ou um RNF | `historias` ou `rnfs` em `assets/js/dados.js` |
+| Responsável, capacidade, bloqueio ou exceção operacional do backlog | `backlog` em `assets/js/dados.js` |
 | Uma reunião nova ou uma decisão | `reunioes` em `assets/js/dados.js` (código do vídeo no YouTube e o segundo de cada decisão) |
 | Uma alteração no histórico | `historico` em `assets/js/dados.js` |
 | A iteração atual ou as histórias prontas pelo DoR | `iteracaoAtual` e `dorAtendido` em `assets/js/dados.js` |

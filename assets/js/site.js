@@ -27,6 +27,9 @@ const MC = (() => {
   const noMvp = (h) => h.iteracao > 0;
   const noBacklog = (h) => noMvp(h) && DADOS.dorAtendido.includes(h.id);
   const naIteracaoAtual = (h) => noBacklog(h) && h.iteracao === DADOS.iteracaoAtual;
+  const itemBacklog = (h) => ((DADOS.backlog || {}).itens || {})[h.id] || {};
+  const responsavel = (h) => ((DADOS.backlog || {}).responsaveis || {})[h.id] ||
+    (DADOS.backlog || {}).responsavelPadrao || 'Não atribuído';
   const MOSCOW = { 4: 'Must have', 3: 'Should have', 2: 'Could have', 1: "Won't have now" };
 
   const criteriosDod = document.getElementById('criterios-dod');
@@ -137,6 +140,7 @@ const MC = (() => {
     const tags = [];
     if (noBacklog(h)) tags.push(link('Backlog', 'dor-e-dod/', 't-bk'));
     if (naIteracaoAtual(h)) tags.push(link('Iteração atual', 'cronograma/', 't-cur'));
+    if (itemBacklog(h).situacao) tags.push(link(itemBacklog(h).situacao, 'backlog/', 't-out'));
     tags.push(noMvp(h) ? link('MVP', 'mvp/', 't-mvp') : link('Fora do MVP', 'mvp/', 't-out'));
     if (noMvp(h)) {
       tags.push(link('Planejada: Iteração ' + h.iteracao, 'cronograma/', 't-rel'));
@@ -208,7 +212,8 @@ const MC = (() => {
         '<dl class="dl">' +
           '<div class="dlr"><dt>Benefício</dt><dd><b>' + esc(beneficio(h)) + '</b></dd></div>' +
           '<div class="dlr"><dt>Ator</dt><dd>Usuária</dd></div>' +
-          '<div class="dlr"><dt>Responsável</dt><dd class="ph">[a definir]</dd></div>' +
+          '<div class="dlr"><dt>Responsável</dt><dd' +
+            (responsavel(h) === 'Não atribuído' ? ' class="ph"' : '') + '>' + esc(responsavel(h)) + '</dd></div>' +
           '<div class="dlr"><dt>' + (noMvp(h) ? 'Papel no MVP' : 'Por que ficou fora') + '</dt><dd>' + esc(h.nota) + '</dd></div>' +
         '</dl>' +
         '<h3 style="margin-top: 16px">Critérios de aceitação</h3>' +
@@ -298,6 +303,7 @@ const MC = (() => {
 
   return {
     RAIZ, pagina, esc, url, tempo, video, historia, rnf, caracteristica, noMvp, noBacklog, naIteracaoAtual,
+    responsavel,
     MOSCOW, abrirDialogo, fecharDialogo, abrirHistoria, abrirRnf, chipHistoria, botaoFechar
   };
 })();

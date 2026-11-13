@@ -1,0 +1,43 @@
+.simple-resumo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  margin: 0 0 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.simple-resumo dt { color: var(--mut); font-size: 12px; }
+.simple-resumo dd { margin: 2px 0 0; font-size: 14px; font-weight: 600; }
+.simple-table { min-width: 720px; table-layout: fixed; }
+.simple-table th:nth-child(1) { width: 29%; }
+.simple-table th:nth-child(2) { width: 14%; }
+.simple-table th:nth-child(3) { width: 25%; }
+.simple-table th:nth-child(4) { width: 32%; }
+.simple-table tbody th { background: var(--panel); font-family: inherit; }
+.simple-table .demo-hu { font-size: 14px; line-height: 1.4; gap: 3px; }
+.simple-table .demo-hu .mono, .demo-refino-list .mono { color: var(--acct); font-size: 15px; font-weight: 700; }
+.simple-table .demo-hu:hover { color: var(--acct); }
+.simple-table td, .simple-table th { padding: 14px; }
+.simple-pendencia { font-size: 13px; }
+.iteration-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); max-width: 780px; gap: 10px; margin: 18px 0 24px; }
+.iteration-tabs button { min-height: 74px; padding: 12px 15px; border: 1px solid var(--line); border-radius: 7px; background: var(--soft); color: var(--head); font: inherit; font-family: var(--disp); font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; transition: background .15s, border-color .15s; }
+.iteration-tabs button span { display: block; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size: 13px; font-weight: 400; margin-top: 6px; }
+.iteration-tabs button[aria-selected="true"] { background: var(--acc); color: var(--on); border-color: var(--acc); }
+.iteration-tabs button:hover:not([aria-selected="true"]) { border-color: var(--acc); }
+.iteration-tabs button:focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; }
+.hu-planejamento { margin-top: 8px; }
+.hu-planejamento>summary { color: var(--acct); font-size: 13px; cursor: pointer; }
+.hu-planejamento-conteudo { border-top: 1px dashed var(--line); margin-top: 10px; padding-top: 10px; display: grid; gap: 14px; }
+.hu-dados { margin: 0; display: grid; gap: 9px; align-content: start; }
+.hu-dados dt { color: var(--mut); font-size: 12px; }
+.hu-dados dd { margin: 2px 0 0; font-size: 13px; }
+.hu-etapas h4 { margin: 0 0 4px; font-size: 13px; color: var(--head); }
+.hu-etapas p { margin: 0 0 6px; }
+.hu-etapas ol { margin: 0; padding-left: 18px; font-size: 13px; }
+.hu-etapas li { padding: 2px 0; }
+.hu-etapas .mono { color: var(--acct); font-size: 11px; }
+@media (max-width:640px) {
+  .iteration-tabs { gap: 8px; }
+  .iteration-tabs button { padding: 12px 9px; font-size: 15px; }
+  .iteration-tabs button span { font-size: 11px; overflow-wrap: anywhere; }
+}

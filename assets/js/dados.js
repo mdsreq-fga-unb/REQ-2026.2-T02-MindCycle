@@ -2,7 +2,7 @@
 //
 // Fonte única do que as páginas mostram sobre requisitos: histórias, RNFs,
 // reuniões, histórico, fases e cronograma. A árvore, o MVP, a priorização,
-// as reuniões, o histórico e o cronograma são montados a partir daqui —
+// as reuniões, o histórico, o backlog e o cronograma são montados a partir daqui —
 // mudar um dado aqui muda todas as páginas que o usam.
 //
 // Os textos corridos de cada página (Visão de produto, Engenharia de
@@ -68,6 +68,50 @@ const DADOS = {
     HU04: { versao: '', avaliacaoExterna: 'Pendente', criterios: {} },
     HU13: { versao: '', avaliacaoExterna: 'Pendente', criterios: {} },
     HU15: { versao: '', avaliacaoExterna: 'Pendente', criterios: {} }
+  },
+
+  // Visão operacional do backlog. Os detalhes da HU continuam em `historias`;
+  // aqui ficam apenas dados de planejamento que não pertencem ao requisito.
+  backlog: {
+    atualizadoEm: '12/11/2026',
+    responsavelPadrao: 'Não atribuído',
+    responsaveis: {
+      HU11: 'Pedro Ian',
+      HU12: 'Pedro Ian',
+      HU16: 'Arthur Palhares',
+      HU17: 'Arthur Palhares',
+      HU19: 'Arthur Palhares',
+      HU20: 'Arthur Palhares',
+      HU25: 'Allan Kelvin'
+    },
+    capacidadePorIteracao: {
+      '5': {
+        disponivel: null,
+        observacao: 'A capacidade disponível da equipe não foi registrada para esta iteração.'
+      },
+      '6': {
+        disponivel: null,
+        observacao: 'A capacidade disponível da equipe não foi registrada para esta iteração.'
+      }
+    },
+    tarefasPadrao: [
+      { id: 'T01', titulo: 'Refinar a história e confirmar o DoR', etapa: 'Requisitos' },
+      { id: 'T02', titulo: 'Construir e integrar o incremento', etapa: 'Desenvolvimento' },
+      { id: 'T03', titulo: 'Verificar critérios de aceitação, RNFs e DoD', etapa: 'Verificação' },
+      { id: 'T04', titulo: 'Validar o incremento com os stakeholders', etapa: 'Validação' }
+    ],
+    itens: {
+      HU31: {
+        situacao: 'Requer refinamento',
+        bloqueios: ['A história responsável por gerar o relatório mensal ainda não foi definida.'],
+        tarefaRefinamento: 'Definir a origem, o conteúdo e os períodos comparáveis dos relatórios mensais.'
+      },
+      HU32: {
+        situacao: 'Requer refinamento',
+        bloqueios: ['A história responsável por gerar o relatório mensal ainda não foi definida.'],
+        tarefaRefinamento: 'Definir a origem do relatório mensal e o formato de arquivo da exportação.'
+      }
+    }
   },
 
   // Características do produto (CP), na ordem da árvore, com o objetivo
@@ -161,7 +205,7 @@ const DADOS = {
       id: 'HU30',
       nome: 'Gerenciar medicações',
       descricao: 'Deve ser possível à usuária cadastrar, alterar e excluir as medicações que utiliza, indicando se o uso é diário ou esporádico.',
-      historia: 'cadastrar, alterar e excluir as medicações que utilizo, indicando se o uso é diário ou esporádico, para manter minhas medicações junto ao registro do meu estado',
+      historia: 'cadastrar, alterar e excluir as medicações que utilizo, indicando se o uso é diário ou esporádico, para consultar esses dados quando precisar informar meu uso de medicação',
       caracteristica: 'CP1',
       rnfs: ['RNF02', 'RNF03'],
       valor: 2,
@@ -178,7 +222,7 @@ const DADOS = {
       id: 'HU34',
       nome: 'Registrar diagnósticos prévios',
       descricao: 'Deve ser possível à usuária registrar os diagnósticos de saúde que já possui, como diabetes, hipertensão ou enxaqueca.',
-      historia: 'registrar os diagnósticos de saúde que já possuo, como diabetes, hipertensão ou enxaqueca, para manter minhas condições de saúde junto ao registro do meu estado',
+      historia: 'registrar os diagnósticos de saúde que já possuo, como diabetes, hipertensão ou enxaqueca, para consultar essas condições ao acompanhar meus sintomas',
       caracteristica: 'CP1',
       rnfs: ['RNF02', 'RNF03'],
       valor: 2,
@@ -275,7 +319,7 @@ const DADOS = {
       id: 'HU09',
       nome: 'Recomendar conteúdos sobre o ciclo',
       descricao: 'Deve ser possível à usuária receber recomendações de conteúdos informativos sobre o ciclo menstrual, relacionados à fase atual e aos sintomas registrados.',
-      historia: 'receber recomendações de conteúdos sobre o ciclo relacionados à minha fase atual e aos sintomas registrados, para compreender melhor o que estou vivendo',
+      historia: 'receber recomendações de conteúdos sobre o ciclo relacionados à minha fase atual e aos sintomas registrados, para acessar informações relacionadas ao momento do meu ciclo',
       caracteristica: 'CP2',
       rnfs: [],
       valor: 3,
@@ -291,7 +335,7 @@ const DADOS = {
       id: 'HU28',
       nome: 'Consultar funcionamento do ciclo',
       descricao: 'Deve ser possível à usuária consultar informações sobre como o ciclo menstrual funciona e o que caracteriza cada uma de suas fases.',
-      historia: 'consultar como o ciclo menstrual funciona e o que caracteriza cada fase, para compreender o meu próprio ciclo',
+      historia: 'consultar como o ciclo menstrual funciona e o que caracteriza cada fase, para diferenciar as quatro fases e reconhecer suas mudanças',
       caracteristica: 'CP2',
       rnfs: [],
       valor: 3,
@@ -582,7 +626,7 @@ const DADOS = {
       id: 'HU31',
       nome: 'Comparar relatórios mensais',
       descricao: 'Deve ser possível à usuária comparar os relatórios mensais de meses diferentes, abrangendo ciclo, sintomas, disposição e tarefas.',
-      historia: 'comparar os relatórios mensais de meses diferentes, abrangendo ciclo, sintomas, disposição e tarefas, para perceber como meu ritmo varia',
+      historia: 'comparar os relatórios mensais de meses diferentes, abrangendo ciclo, sintomas, disposição e tarefas, para identificar mudanças e padrões entre os meses',
       caracteristica: 'CP6',
       rnfs: [],
       valor: 2,
@@ -598,7 +642,7 @@ const DADOS = {
       id: 'HU32',
       nome: 'Exportar relatório mensal',
       descricao: 'Deve ser possível à usuária exportar o relatório mensal em arquivo.',
-      historia: 'exportar o relatório mensal em arquivo, para ter meu histórico fora do aplicativo',
+      historia: 'exportar o relatório mensal em arquivo, para arquivar ou compartilhar meu histórico fora do aplicativo',
       caracteristica: 'CP6',
       rnfs: ['RNF02', 'RNF03'],
       valor: 2,
@@ -793,6 +837,11 @@ const DADOS = {
         alteracao: 'Valor: Won\'t have → Should have.',
         motivo: 'Ajuste da cliente, que validou o requisito com entusiasmo.',
         video: { id: 'PKoWLngGSRg', tempo: 748 }
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício diferenciado da consulta geral sobre o ciclo.',
+        motivo: 'Explicitar que a recomendação entrega informação contextual à fase e aos sintomas.'
       }
     ],
     HU11: [
@@ -850,6 +899,39 @@ const DADOS = {
         data: '12/10/2026',
         alteracao: 'Fora do MVP → no MVP.',
         motivo: 'Reavaliação: educação sobre regularidade pedida pela cliente. Nota ainda em hipótese.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício diferenciado da recomendação contextual de conteúdo.',
+        motivo: 'Explicitar que a consulta ensina a distinguir as quatro fases do ciclo.'
+      }
+    ],
+    HU30: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício da história tornado específico.',
+        motivo: 'Substituir a justificativa genérica de manter dados pela consulta do uso de medicação.'
+      }
+    ],
+    HU31: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício especificado e lacuna de refinamento registrada no backlog.',
+        motivo: 'Distinguir comparação de relatórios de sua exportação e tornar visível a dependência da geração mensal.'
+      }
+    ],
+    HU32: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício especificado e lacuna de refinamento registrada no backlog.',
+        motivo: 'Distinguir exportação de relatório de sua comparação e tornar visível a dependência da geração mensal.'
+      }
+    ],
+    HU34: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício da história tornado específico.',
+        motivo: 'Relacionar a consulta dos diagnósticos ao acompanhamento dos sintomas.'
       }
     ],
     HU29: [
