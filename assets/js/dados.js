@@ -971,6 +971,8 @@ const DADOS = {
 
   // Fases do OpenUP. praticas[].atividade é o índice em `atividades`. Os links
   // das evidências são relativos à raiz do site; vídeos, endereços completos.
+  // iteracoes[].numero liga a iteração às histórias (historias[].iteracao) e a
+  // iteracaoAtual; o nome é só o que aparece na página.
   // iteracoes[].registro: compromisso, responsaveis, resultado, pendencias e
   // decisaoProxima. Campo sem fonte fica de fora e aparece como sem registro.
   fases: [
@@ -1001,6 +1003,7 @@ const DADOS = {
       iteracoes: [
         {
           nome: 'Iteração 1',
+          numero: 1,
           periodo: '11/08 a 24/08/2026',
           estado: 'Executada',
           objetivo: 'Compreender o negócio e caracterizar o problema.',
@@ -1020,6 +1023,7 @@ const DADOS = {
         },
         {
           nome: 'Iteração 2',
+          numero: 2,
           periodo: '25/08 a 07/09/2026',
           estado: 'Executada',
           objetivo: 'Declarar a solução e as estratégias de engenharia de software e de requisitos.',
@@ -1084,6 +1088,7 @@ const DADOS = {
       iteracoes: [
         {
           nome: 'Iteração 3',
+          numero: 3,
           periodo: '15/09 a 28/09/2026',
           estado: 'Encerrada com pendências',
           objetivo: 'Conversar com a cliente, elicitar e declarar os requisitos nos três níveis.',
@@ -1104,6 +1109,7 @@ const DADOS = {
         },
         {
           nome: 'Iteração 4',
+          numero: 4,
           periodo: '29/09 a 12/10/2026',
           estado: 'Encerrada com pendências',
           objetivo: 'Analisar, priorizar e acordar o backlog e o escopo do MVP.',
@@ -1182,6 +1188,7 @@ const DADOS = {
       iteracoes: [
         {
           nome: 'Iteração 5',
+          numero: 5,
           periodo: '20/10 a 02/11/2026',
           estado: 'Encerrada no cronograma',
           objetivo: 'Entregar o primeiro incremento.',
@@ -1192,6 +1199,7 @@ const DADOS = {
         },
         {
           nome: 'Iteração 6',
+          numero: 6,
           periodo: '03/11 a 16/11/2026',
           estado: 'Iteração atual',
           objetivo: 'Entregar o segundo incremento.',
@@ -1229,7 +1237,7 @@ const DADOS = {
         }
       ],
       iteracoes: [
-        { nome: 'Iteração 7', periodo: '24/11 a 30/11/2026', estado: 'Prevista', objetivo: 'Fechar o MVP.', evidencias: [] }
+        { nome: 'Iteração 7', numero: 7, periodo: '24/11 a 30/11/2026', estado: 'Prevista', objetivo: 'Fechar o MVP.', evidencias: [] }
       ]
     }
   ],

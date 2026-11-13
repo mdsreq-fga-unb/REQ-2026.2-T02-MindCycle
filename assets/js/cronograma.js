@@ -54,7 +54,7 @@
     const r = it.registro || {};
     const linha = (rotulo, valor) => '<div class="dlr"><dt>' + rotulo + '</dt><dd>' +
       (valor || '<span class="ph">Sem registro publicado</span>') + '</dd></div>';
-    const planejadas = DADOS.historias.filter((h) => 'Iteração ' + h.iteracao === it.nome);
+    const planejadas = DADOS.historias.filter((h) => h.iteracao === it.numero);
     return '<h3 style="margin-top: 18px">Planejado e realizado</h3><dl class="dl">' +
       linha('Compromisso', r.compromisso && esc(r.compromisso)) +
       (planejadas.length
