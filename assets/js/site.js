@@ -144,7 +144,7 @@ const MC = (() => {
     }
     tags.push(link(MOSCOW[h.valor], 'priorizacao/', 't-p' + h.valor));
     tags.push(link('Esforço ' + h.esforco.consolidado, 'priorizacao/', 't-rel'));
-    tags.push(h.validadaCliente ? link('Validada com a cliente', 'reunioes/#PKoWLngGSRg', 't-val')
+    tags.push(h.validadaCliente ? link('Prioridade confirmada pela cliente', 'reunioes/#PKoWLngGSRg', 't-val')
       : '<span class="ptag plain">Hipótese da equipe</span>');
     if (h.rnfs.length) {
       h.rnfs.forEach((r) => tags.push('<button class="ptag t-rnf" type="button" data-rnf="' + r + '">' + r + '</button>'));
@@ -215,6 +215,19 @@ const MC = (() => {
         (h.criterios.length
           ? '<ol class="ol">' + h.criterios.map((c) => '<li>' + esc(c) + '</li>').join('') + '</ol>'
           : '<p class="ph" style="margin: 0">Sem critérios registrados no Story Map.</p>') +
+        (h.regras
+          ? '<h3 style="margin-top: 16px">Regras de negócio</h3>' +
+            '<p class="note" style="margin: 0 0 8px">' + esc(h.regras.situacao) + '</p>' +
+            (h.regras.origem ? '<p><a class="lnk" href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/' +
+              esc(h.regras.origem) + '" target="_blank" rel="noopener">Origem: PR #' + esc(h.regras.origem) + '</a></p>' : '') +
+            '<ol class="ol">' + h.regras.itens.map((r) => '<li>' + esc(r) + '</li>').join('') + '</ol>' +
+            (h.regras.pendencias
+              ? '<h3 style="margin-top: 16px">Decisões pendentes</h3><ul class="ol">' +
+                h.regras.pendencias.map((p) => '<li>' + esc(p) + '</li>').join('') + '</ul>' : '')
+          : '') +
+        (h.relacionadas && h.relacionadas.length
+          ? '<h3 style="margin-top: 16px">Histórias relacionadas</h3><div class="rfl">' +
+            h.relacionadas.map(chipHistoria).join('') + '</div>' : '') +
       '</div>' +
       '<div class="pane" data-painel="pro"' + (aba === 'pro' ? '' : ' hidden') + '>' +
         '<dl class="dl">' +
