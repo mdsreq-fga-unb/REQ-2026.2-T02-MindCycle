@@ -8,6 +8,11 @@
   const mvp = DADOS.historias.filter((h) => h.iteracao > 0);
   const refino = DADOS.historias.filter((h) => cadastro.itens[h.id] && cadastro.itens[h.id].situacao === 'Requer refinamento');
 
+  function prontidao(h) {
+    if (typeof DADOS.situacaoDor === 'function') return DADOS.situacaoDor(h.id);
+    return DADOS.dorAtendido.includes(h.id) ? 'Pronta' : 'Não conferida';
+  }
+
   function situacao(h) {
     if (cadastro.itens[h.id] && cadastro.itens[h.id].situacao) return cadastro.itens[h.id].situacao;
     if (h.iteracao < DADOS.iteracaoAtual) return 'Situação não registrada';
@@ -17,6 +22,7 @@
   function bloqueio(h) {
     const especifico = cadastro.itens[h.id] && cadastro.itens[h.id].bloqueios;
     if (especifico && especifico.length) return especifico[0];
+    if (cadastro.itens[h.id] && cadastro.itens[h.id].situacao === 'Requer refinamento') return h.nota;
     if (!cadastro.responsaveis[h.id]) return 'Responsável não atribuído';
     if (!DADOS.dorAtendido.includes(h.id)) return 'DoR não atendido';
     return 'Nenhum bloqueio registrado';
@@ -53,7 +59,10 @@
           '<details class="hu-planejamento"><summary>Ver planejamento</summary><div class="hu-planejamento-conteudo">' +
           '<dl class="hu-dados"><div><dt>Característica</dt><dd>' + h.caracteristica + ' · ' + esc(caracteristica(h.caracteristica).nome) + '</dd></div>' +
           '<div><dt>Esforço estimado</dt><dd>' + h.esforco.consolidado + '</dd></div>' +
-          '<div><dt>Prontidão para desenvolver</dt><dd>' + (DADOS.dorAtendido.includes(h.id) ? 'DoR atendido' : 'DoR ainda não confirmado') + '</dd></div></dl>' +
+          '<div><dt>Prontidão para desenvolver</dt><dd>' + esc(prontidao(h)) +
+          ' · <a href="../dor-e-dod/#' + h.id + '">Consultar DoR e DoD</a></dd></div></dl>' +
+          (h.regras ? '<div><h4>Regras da história</h4><p>' + esc(h.regras.situacao) +
+            '</p><button type="button" class="lnk" data-historia="' + h.id + '">Consultar regras e critérios</button></div>' : '') +
           '<div class="hu-etapas"><h4>Planejamento do trabalho</h4><p class="state">Etapas de referência; tarefas específicas ainda precisam ser definidas.</p>' +
           '<ol>' + cadastro.tarefasPadrao.map((t) => '<li><span class="mono">' + h.id + '-' + t.id + '</span> ' + esc(t.titulo) + '</li>').join('') +
           '</ol></div></div></details></td></tr>').join('') +
