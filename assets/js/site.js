@@ -57,18 +57,22 @@ const MC = (() => {
 
   function fecharDialogo() {
     if (!aberto) return;
-    const { el, voltarFoco, hash } = aberto;
+    const { el, voltarFoco, hash, voltar } = aberto;
     aberto = null;
     el.remove();
     document.body.classList.remove('com-dialogo');
     if (hash && location.hash === '#' + hash) history.replaceState(null, '', location.pathname + location.search);
     if (voltarFoco && document.contains(voltarFoco)) voltarFoco.focus();
+    if (voltar) voltar();
   }
 
   // conteudo: o HTML de dentro da caixa (cabeçalho com botaoFechar incluso).
-  function abrirDialogo({ rotulo, conteudo, largo, hash, fecharRotulo }) {
+  // reabrir: função que desenha este diálogo de novo. Com ela, o que for aberto
+  // de dentro dele (uma história, um RNF) volta para ele ao fechar.
+  function abrirDialogo({ rotulo, conteudo, largo, hash, fecharRotulo, reabrir }) {
     const voltarFoco = aberto ? aberto.voltarFoco : document.activeElement;
-    if (aberto) { aberto.hash = null; fecharDialogo(); }
+    const voltar = aberto ? aberto.reabrir || aberto.voltar : null;
+    if (aberto) { aberto.hash = null; aberto.voltar = null; fecharDialogo(); }
     const el = document.createElement('div');
     el.className = 'over';
     el.innerHTML = '<button class="shade" type="button" aria-label="' + esc(fecharRotulo || 'Fechar') + '" data-fechar></button>' +
@@ -76,7 +80,7 @@ const MC = (() => {
       conteudo + '</section>';
     document.body.appendChild(el);
     document.body.classList.add('com-dialogo');
-    aberto = { el, voltarFoco, hash };
+    aberto = { el, voltarFoco, hash, reabrir, voltar };
     if (hash) history.replaceState(null, '', '#' + hash);
     const x = el.querySelector('.x');
     if (x) x.focus();

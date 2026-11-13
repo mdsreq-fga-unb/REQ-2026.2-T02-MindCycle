@@ -75,6 +75,7 @@
     abrirDialogo({
       rotulo: it.nome,
       fecharRotulo: 'Fechar iteração',
+      reabrir: () => abrirIteracao(i),
       conteudo:
         '<div class="dh"><div><span class="phase">' + esc(f.nome) + '</span>' +
         '<h2 style="margin: 2px 0 4px; border: 0; padding: 0">' + esc(it.nome) + '</h2>' +
