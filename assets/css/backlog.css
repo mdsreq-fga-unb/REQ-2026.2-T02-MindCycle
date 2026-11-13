@@ -21,9 +21,9 @@
 .simple-table .demo-hu:hover { color: var(--acct); }
 .simple-table td, .simple-table th { padding: 14px; }
 .simple-pendencia { font-size: 13px; }
-.iteration-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); max-width: 780px; gap: 10px; margin: 18px 0 24px; }
-.iteration-tabs button { min-height: 74px; padding: 12px 15px; border: 1px solid var(--line); border-radius: 7px; background: var(--soft); color: var(--head); font: inherit; font-family: var(--disp); font-size: 16px; font-weight: 600; text-align: left; cursor: pointer; transition: background .15s, border-color .15s; }
-.iteration-tabs button span { display: block; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size: 13px; font-weight: 400; margin-top: 6px; }
+.iteration-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 22px; }
+.iteration-tabs button { flex: 0 1 180px; min-width: 0; min-height: 64px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 7px; background: var(--soft); color: var(--head); font: inherit; font-family: var(--disp); font-size: 15px; font-weight: 600; text-align: left; cursor: pointer; transition: background .15s, border-color .15s; }
+.iteration-tabs button span { display: block; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size: 12px; font-weight: 400; margin-top: 4px; }
 .iteration-tabs button[aria-selected="true"] { background: var(--acc); color: var(--on); border-color: var(--acc); }
 .iteration-tabs button:hover:not([aria-selected="true"]) { border-color: var(--acc); }
 .iteration-tabs button:focus-visible { outline: 3px solid var(--acc); outline-offset: 3px; }
@@ -44,6 +44,6 @@
 .hu-subtarefas li+li { margin-top: 6px; }
 @media (max-width:640px) {
   .iteration-tabs { gap: 8px; }
-  .iteration-tabs button { padding: 12px 9px; font-size: 15px; }
+  .iteration-tabs button { flex-basis: calc((100% - 16px) / 3); padding: 9px; font-size: 15px; }
   .iteration-tabs button span { font-size: 11px; overflow-wrap: anywhere; }
 }
