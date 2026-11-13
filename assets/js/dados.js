@@ -1007,9 +1007,9 @@ const DADOS = {
           registro: {
             compromisso: 'Caracterizar o problema com Rich Picture e Ishikawa e consolidar o PDF da proposta para avaliação do grupo.',
             responsaveis: 'Equipe, em reunião gravada. Não há autoria individual registrada.',
-            resultado: 'Rich Picture e Diagrama de Ishikawa produzidos em sessões internas, com o escopo focado no mercado de trabalho.',
+            resultado: 'Rich Picture e Diagrama de Ishikawa produzidos em sessões internas, com o escopo focado no mercado de trabalho. Decidido que o problema é o que o app alcança: adaptar a rotina da mulher, e não mudar o mercado.',
             pendencias: ['As causas levantadas seguem como hipótese da equipe até haver confirmação externa.'],
-            decisaoProxima: 'O problema é o que o app alcança: adaptar a rotina da mulher, e não mudar o mercado.'
+            decisaoProxima: 'Declarar a solução e as estratégias a partir desse recorte do problema.'
           },
           evidencias: [
             { tipo: 'Figura', titulo: 'Rich Picture', link: 'visao/#figura-1' },
@@ -1085,11 +1085,11 @@ const DADOS = {
         {
           nome: 'Iteração 3',
           periodo: '15/09 a 28/09/2026',
-          estado: 'Executada',
+          estado: 'Encerrada com pendências',
           objetivo: 'Conversar com a cliente, elicitar e declarar os requisitos nos três níveis.',
           registro: {
             compromisso: 'Conversar com a cliente e declarar requisitos, histórias e critérios, com personas e jornadas de usuário.',
-            responsaveis: 'Seção de solução: Gustavo. Seção de ER: Pedro Ian. Seção de estratégias: Luana. Catálogo de requisitos: Ana Luisa. Lições da Unidade 1: Zaclonic.',
+            responsaveis: 'Seção de solução: Gustavo. Seção de ER: Pedro Ian. Seção de estratégias: Luana. Cerimônias e acesso às usuárias: Tiago. Catálogo de requisitos: Ana Luisa. Lições da Unidade 1: Allan Kelvin.',
             resultado: 'Requisitos e histórias com critérios declarados, e casos de uso dos requisitos de maior risco.',
             pendencias: [
               'A conversa com a cliente só aconteceu em 05/10/2026, na Iteração 4, por causa da agenda dela.',
@@ -1105,7 +1105,7 @@ const DADOS = {
         {
           nome: 'Iteração 4',
           periodo: '29/09 a 12/10/2026',
-          estado: 'Executada',
+          estado: 'Encerrada com pendências',
           objetivo: 'Analisar, priorizar e acordar o backlog e o escopo do MVP.',
           registro: {
             compromisso: 'Priorizar com a cliente, delimitar o MVP, organizar rastreabilidade, DoR e DoD e apresentar as telas do protótipo.',
@@ -1196,13 +1196,14 @@ const DADOS = {
           estado: 'Iteração atual',
           objetivo: 'Entregar o segundo incremento.',
           registro: {
-            responsaveis: 'Reorganização do site: Ana Luisa (PRs 47 e 48). Histórias: sem responsável registrado.',
-            resultado: 'Em andamento. Site migrado para HTML puro e reorganizado em torno da árvore de requisitos.',
-            pendencias: ['A equipe precisa publicar as histórias selecionadas, a aplicação do DoR, os resultados e os impedimentos.']
+            pendencias: [
+              'A equipe precisa publicar as histórias selecionadas, a aplicação do DoR, os resultados e os impedimentos.',
+              'As PRs 47 e 48, de Ana Luisa, migraram o site de documentação e não são evidência do incremento.'
+            ]
           },
           evidencias: [
-            { tipo: 'PR', titulo: 'Migração para HTML puro', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/47' },
-            { tipo: 'PR', titulo: 'Novo fluxo do site', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/48' }
+            { tipo: 'PR do site', titulo: 'Migração para HTML puro', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/47' },
+            { tipo: 'PR do site', titulo: 'Novo fluxo do site', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/48' }
           ],
           atual: true
         }

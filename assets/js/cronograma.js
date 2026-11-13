@@ -46,10 +46,12 @@
   }
 
   // Planejado × realizado. Campo sem fonte aparece como sem registro, para a
-  // lacuna ficar visível. As histórias planejadas e o DoR vêm do catálogo.
+  // lacuna ficar visível, inclusive quando falta o registro inteiro. Só a
+  // iteração ainda prevista não tem o que registrar. As histórias planejadas e
+  // o DoR vêm do catálogo.
   function registro(it) {
-    const r = it.registro;
-    if (!r) return '';
+    if (!it.registro && it.estado === 'Prevista') return '';
+    const r = it.registro || {};
     const linha = (rotulo, valor) => '<div class="dlr"><dt>' + rotulo + '</dt><dd>' +
       (valor || '<span class="ph">Sem registro publicado</span>') + '</dd></div>';
     const planejadas = DADOS.historias.filter((h) => 'Iteração ' + h.iteracao === it.nome);
