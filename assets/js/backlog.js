@@ -1,168 +1,95 @@
-// ===== Backlog: situação operacional, carga e decomposição em tarefas =====
+// ===== Backlog por iteração =====
 
 (() => {
   const { esc, caracteristica, responsavel } = MC;
-  const cadastro = DADOS.backlog || {};
-  const itens = cadastro.itens || {};
-  const responsaveis = cadastro.responsaveis || {};
-  const capacidade = cadastro.capacidadePorIteracao || {};
-
-  const numero = (valor) => Number(String(valor).replace(',', '.'));
+  const cadastro = DADOS.backlog;
+  const numero = (valor) => Number(valor.replace(',', '.'));
   const decimal = (valor) => valor.toFixed(1).replace('.', ',');
-  const extra = (h) => itens[h.id] || {};
-  const estaAtribuida = (h) => Boolean(responsaveis[h.id]);
-
-  function situacaoDor(h) {
-    if (typeof DADOS.situacaoDor === 'function') return DADOS.situacaoDor(h.id);
-    return DADOS.dorAtendido.includes(h.id) ? 'Pronta' : 'Não pronta';
-  }
-
-  function dodConcluido(h) {
-    const registro = DADOS.aplicacaoDod[h.id];
-    if (!registro || registro.avaliacaoExterna !== 'Aceita') return false;
-    return DADOS.dodCriterios.every((c) =>
-      registro.criterios[c.id] && registro.criterios[c.id].resultado === 'Aprovado');
-  }
+  const mvp = DADOS.historias.filter((h) => h.iteracao > 0);
+  const refino = DADOS.historias.filter((h) => cadastro.itens[h.id] && cadastro.itens[h.id].situacao === 'Requer refinamento');
 
   function situacao(h) {
-    if (extra(h).situacao) return extra(h).situacao;
-    if (!h.iteracao) return 'Backlog posterior';
-    if (dodConcluido(h)) return 'Concluída';
+    if (cadastro.itens[h.id] && cadastro.itens[h.id].situacao) return cadastro.itens[h.id].situacao;
     if (h.iteracao < DADOS.iteracaoAtual) return 'Situação não registrada';
-    if (h.iteracao > DADOS.iteracaoAtual) return 'Planejada';
-    const dor = situacaoDor(h);
-    if (dor === 'Pronta') return 'A fazer';
-    if (dor === 'Pronta com exceção') return 'A fazer com exceção';
-    return 'Bloqueada pelo DoR';
+    return DADOS.dorAtendido.includes(h.id) ? 'A fazer' : 'Bloqueada pelo DoR';
   }
 
-  function bloqueios(h) {
-    const lista = [...(extra(h).bloqueios || [])];
-    if (h.iteracao && !estaAtribuida(h)) lista.push('Sem responsável atribuído.');
-    if (h.iteracao && capacidade[String(h.iteracao)] && capacidade[String(h.iteracao)].disponivel == null) {
-      lista.push('Capacidade da Iteração ' + h.iteracao + ' não registrada.');
-    }
-    if (h.iteracao === DADOS.iteracaoAtual && !DADOS.dorAtendido.includes(h.id)) {
-      lista.push('DoR ainda não atendido.');
-    }
-    if (h.iteracao && h.iteracao < DADOS.iteracaoAtual && !dodConcluido(h)) {
-      lista.push('Resultado da iteração não registrado.');
-    }
-    return [...new Set(lista)];
+  function bloqueio(h) {
+    const especifico = cadastro.itens[h.id] && cadastro.itens[h.id].bloqueios;
+    if (especifico && especifico.length) return especifico[0];
+    if (!cadastro.responsaveis[h.id]) return 'Responsável não atribuído';
+    if (!DADOS.dorAtendido.includes(h.id)) return 'DoR não atendido';
+    return 'Nenhum bloqueio registrado';
   }
 
-  function tarefas(h) {
-    const estado = situacao(h);
-    const dorPronto = DADOS.dorAtendido.includes(h.id);
-    return (cadastro.tarefasPadrao || []).map((t, indice) => {
-      let titulo = t.titulo;
-      if (indice === 0 && extra(h).tarefaRefinamento) titulo = extra(h).tarefaRefinamento;
-      let resultado = 'Bloqueada';
-      if (!h.iteracao && estado !== 'Requer refinamento') resultado = 'Não planejada';
-      else if (estado === 'Situação não registrada') resultado = 'Situação não registrada';
-      else if (estado === 'Concluída') resultado = 'Concluída';
-      else if (indice === 0) resultado = dorPronto ? 'Concluída' : 'A fazer';
-      else if (indice === 1 && dorPronto) resultado = 'A fazer';
-      return { id: h.id + '-' + t.id, titulo, etapa: t.etapa, resultado };
+  function resumoIteracao(n) {
+    const hs = mvp.filter((h) => h.iteracao === n);
+    const carga = hs.reduce((soma, h) => soma + numero(h.esforco.consolidado), 0);
+    return { hs, carga: decimal(carga), capacidade: 'Não registrada' };
+  }
+
+  function pendencia(h) {
+    const lista = [];
+    if (!cadastro.responsaveis[h.id]) lista.push('Definir responsável');
+    if (h.iteracao < DADOS.iteracaoAtual) lista.push('Informar o resultado da iteração');
+    else if (!DADOS.dorAtendido.includes(h.id)) lista.push('Conferir o DoR');
+    return lista.length ? lista.join(' · ') + '.' : 'Nenhuma pendência registrada.';
+  }
+
+  function tabelaIteracao(n) {
+    const { hs, carga, capacidade } = resumoIteracao(n);
+    return '<section class="demo-iter"><div class="demo-iter-title"><div><h3>Iteração ' + n + '</h3>' +
+      '<span>' + hs.length + ' histórias planejadas</span></div></div>' +
+      '<dl class="simple-resumo"><div><dt>Esforço planejado</dt><dd>' + carga + '</dd></div>' +
+      '<div><dt>Disponibilidade da equipe</dt><dd>' + capacidade + '</dd></div>' +
+      '<div><dt>O trabalho cabe no período?</dt><dd>Ainda não avaliado</dd></div></dl>' +
+      '<div class="tblw"><table class="simple-table"><thead><tr><th>História</th><th>Quem faz</th><th>Andamento</th><th>Pendência</th></tr></thead><tbody>' +
+      hs.map((h) => '<tr class="hu-principal"><th scope="row"><button type="button" class="demo-hu" data-historia="' + h.id + '"><span class="mono">' + h.id + '</span>' + esc(h.nome) + '</button></th>' +
+        '<td' + (cadastro.responsaveis[h.id] ? '' : ' class="ph"') + '>' + esc(responsavel(h)) + '</td>' +
+        '<td><span class="bk-status ' + (n === DADOS.iteracaoAtual ? 'bk-bloqueio' : 'bk-atencao') + '">' +
+          esc(situacao(h) === 'Bloqueada pelo DoR' ? 'Aguardando preparação' :
+            situacao(h) === 'Situação não registrada' ? 'Andamento ainda não informado' : situacao(h)) + '</span></td>' +
+        '<td><span class="simple-pendencia">' + esc(pendencia(h)) + '</span>' +
+          '<details class="hu-planejamento"><summary>Ver planejamento</summary><div class="hu-planejamento-conteudo">' +
+          '<dl class="hu-dados"><div><dt>Característica</dt><dd>' + h.caracteristica + ' · ' + esc(caracteristica(h.caracteristica).nome) + '</dd></div>' +
+          '<div><dt>Esforço estimado</dt><dd>' + h.esforco.consolidado + '</dd></div>' +
+          '<div><dt>Prontidão para desenvolver</dt><dd>' + (DADOS.dorAtendido.includes(h.id) ? 'DoR atendido' : 'DoR ainda não confirmado') + '</dd></div></dl>' +
+          '<div class="hu-etapas"><h4>Planejamento do trabalho</h4><p class="state">Etapas de referência; tarefas específicas ainda precisam ser definidas.</p>' +
+          '<ol>' + cadastro.tarefasPadrao.map((t) => '<li><span class="mono">' + h.id + '-' + t.id + '</span> ' + esc(t.titulo) + '</li>').join('') +
+          '</ol></div></div></details></td></tr>').join('') +
+      '</tbody></table></div></section>';
+  }
+
+  function blocoRefino() {
+    return '<h3>Histórias que precisam ser detalhadas</h3><div class="demo-refino-list">' + refino.map((h) =>
+      '<button type="button" data-historia="' + h.id + '"><span><b class="mono">' + h.id + '</b> ' + esc(h.nome) +
+      '</span><small>' + esc(bloqueio(h)) + '</small></button>').join('') + '</div>';
+  }
+
+  const abasIteracao = [...document.querySelectorAll('[data-iteracao]')];
+  function mostrarIteracao(valor) {
+    abasIteracao.forEach((aba) => {
+      const selecionada = aba.dataset.iteracao === valor;
+      aba.setAttribute('aria-selected', selecionada);
+      aba.tabIndex = selecionada ? 0 : -1;
     });
+    const painel = document.getElementById('iter-selected');
+    painel.setAttribute('aria-labelledby', 'iter-tab-' + valor);
+    painel.innerHTML = valor === 'refino' ? blocoRefino() : tabelaIteracao(Number(valor));
   }
-
-  function classeSituacao(texto) {
-    const classes = {
-      'A fazer': 'bk-ok',
-      'A fazer com exceção': 'bk-atencao',
-      'Concluída': 'bk-ok',
-      'Planejada': 'bk-neutra',
-      'Backlog posterior': 'bk-neutra',
-      'Situação não registrada': 'bk-atencao',
-      'Bloqueada pelo DoR': 'bk-bloqueio',
-      'Requer refinamento': 'bk-bloqueio'
-    };
-    return classes[texto] || 'bk-neutra';
-  }
-
-  function periodoDaIteracao(n) {
-    for (const fase of DADOS.fases) {
-      const encontrada = fase.iteracoes.find((i) => i.nome === 'Iteração ' + n);
-      if (encontrada) return encontrada.periodo;
-    }
-    return 'Não informado';
-  }
-
-  function renderCapacidade() {
-    document.getElementById('bk-capacidade').innerHTML = [5, 6].map((n) => {
-      const historias = DADOS.historias.filter((h) => h.iteracao === n);
-      const carga = historias.reduce((soma, h) => soma + numero(h.esforco.consolidado), 0);
-      const registro = capacidade[String(n)] || {};
-      const disponivel = registro.disponivel == null ? 'Não registrada' : decimal(registro.disponivel);
-      const relacao = registro.disponivel == null ? 'Não calculável' :
-        decimal((carga / registro.disponivel) * 100) + '%';
-      return '<tr><th scope="row">Iteração ' + n + '</th><td>' + esc(periodoDaIteracao(n)) + '</td>' +
-        '<td>' + historias.length + '</td><td>' + decimal(carga) + '</td><td>' + esc(disponivel) + '</td>' +
-        '<td><span class="bk-status ' + (registro.disponivel == null ? 'bk-atencao' : 'bk-ok') + '">' +
-        esc(relacao) + '</span></td></tr>';
-    }).join('');
-  }
-
-  function opcoes() {
-    const situacoes = [...new Set(DADOS.historias.map(situacao))].sort();
-    document.getElementById('bk-situacao').insertAdjacentHTML('beforeend', situacoes.map((s) =>
-      '<option value="' + esc(s) + '">' + esc(s) + '</option>').join(''));
-    document.getElementById('bk-cp').insertAdjacentHTML('beforeend', DADOS.caracteristicas.map((c) =>
-      '<option value="' + c.id + '">' + esc(c.id + ' · ' + c.nome) + '</option>').join(''));
-  }
-
-  function corresponde(h) {
-    const busca = document.getElementById('bk-busca').value.trim().toLocaleLowerCase('pt-BR');
-    const iteracao = document.getElementById('bk-iteracao').value;
-    const estado = document.getElementById('bk-situacao').value;
-    const cp = document.getElementById('bk-cp').value;
-    if (busca && !(h.id + ' ' + h.nome).toLocaleLowerCase('pt-BR').includes(busca)) return false;
-    if (iteracao === 'atual' && h.iteracao !== DADOS.iteracaoAtual) return false;
-    if (iteracao === 'posterior' && h.iteracao !== 0) return false;
-    if (iteracao && !['atual', 'posterior'].includes(iteracao) && h.iteracao !== Number(iteracao)) return false;
-    return (!estado || situacao(h) === estado) && (!cp || h.caracteristica === cp);
-  }
-
-  function linha(h) {
-    const cp = caracteristica(h.caracteristica);
-    const estado = situacao(h);
-    const impedimentos = bloqueios(h);
-    const listaTarefas = tarefas(h);
-    const iteracao = h.iteracao ? 'Iteração ' + h.iteracao : 'Posterior ao MVP';
-    return '<tr>' +
-      '<th scope="row"><button class="bk-hu" type="button" data-historia="' + h.id + '">' +
-        '<span class="mono">' + h.id + '</span><b>' + esc(h.nome) + '</b></button></th>' +
-      '<td><span class="mono">' + h.caracteristica + '</span><small>' + esc(cp.nome) + '</small></td>' +
-      '<td>' + esc(iteracao) + '</td><td>' + esc(h.esforco.consolidado) + '</td>' +
-      '<td><span class="bk-status ' + classeSituacao(estado) + '">' + esc(estado) + '</span></td>' +
-      '<td class="' + (estaAtribuida(h) ? '' : 'ph') + '">' + esc(responsavel(h)) + '</td>' +
-      '<td><details class="bk-detalhes"><summary>' + listaTarefas.length + ' tarefas · ' +
-        impedimentos.length + ' bloqueio' + (impedimentos.length === 1 ? '' : 's') + '</summary>' +
-        (impedimentos.length ? '<ul class="bk-bloqueios">' + impedimentos.map((b) => '<li>' + esc(b) + '</li>').join('') + '</ul>' : '') +
-        '<ol class="bk-tarefas">' + listaTarefas.map((t) => '<li><span><b class="mono">' + t.id + '</b> ' +
-          esc(t.titulo) + '<small>' + esc(t.etapa) + '</small></span><span class="bk-task-state">' +
-          esc(t.resultado) + '</span></li>').join('') + '</ol></details></td></tr>';
-  }
-
-  function renderItens() {
-    const visiveis = DADOS.historias.filter(corresponde);
-    const corpo = document.getElementById('bk-itens');
-    corpo.innerHTML = visiveis.length ? visiveis.map(linha).join('') :
-      '<tr><td colspan="7" class="bk-vazio">Nenhuma história corresponde aos filtros.</td></tr>';
-    document.getElementById('bk-contagem').textContent = visiveis.length + ' de ' +
-      DADOS.historias.length + ' histórias exibidas';
-  }
-
-  const todas = DADOS.historias;
-  document.getElementById('bk-total').textContent = todas.length;
-  document.getElementById('bk-atual').textContent = todas.filter((h) => h.iteracao === DADOS.iteracaoAtual).length;
-  document.getElementById('bk-bloqueadas').textContent = todas.filter((h) => bloqueios(h).length).length;
-  document.getElementById('bk-sem-responsavel').textContent = todas.filter((h) => h.iteracao && !estaAtribuida(h)).length;
-  document.getElementById('bk-data').textContent = cadastro.atualizadoEm || 'data não informada';
-
-  renderCapacidade();
-  opcoes();
-  renderItens();
-  document.getElementById('bk-filtros').addEventListener('input', renderItens);
+  abasIteracao.forEach((aba, indice) => {
+    aba.addEventListener('click', () => mostrarIteracao(aba.dataset.iteracao));
+    aba.addEventListener('keydown', (evento) => {
+      let destino;
+      if (evento.key === 'ArrowRight') destino = (indice + 1) % abasIteracao.length;
+      if (evento.key === 'ArrowLeft') destino = (indice + abasIteracao.length - 1) % abasIteracao.length;
+      if (evento.key === 'Home') destino = 0;
+      if (evento.key === 'End') destino = abasIteracao.length - 1;
+      if (destino === undefined) return;
+      evento.preventDefault();
+      mostrarIteracao(abasIteracao[destino].dataset.iteracao);
+      abasIteracao[destino].focus();
+    });
+  });
+  mostrarIteracao('6');
 })();

@@ -16,6 +16,7 @@
   </script>
   <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
   <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/backlog.css?v=2">
 </head>
 <body data-pagina="backlog">
   <a class="pular" href="#conteudo">Ir para o conteúdo</a>
@@ -51,48 +52,16 @@
 
     <main class="content" id="conteudo">
       <h1>Backlog do produto</h1>
-      <p class="lead">Situação operacional das histórias, com iteração, carga, responsável, bloqueios e tarefas rastreados a partir do catálogo vigente.</p>
+      <p class="lead">Histórias, responsáveis e andamento por iteração.</p>
 
-      <div class="stats">
-        <div class="stat"><div class="num" id="bk-total">36</div><span>histórias no produto</span></div>
-        <div class="stat"><div class="num" id="bk-atual">11</div><span>na iteração atual</span></div>
-        <div class="stat warn"><div class="num" id="bk-bloqueadas">0</div><span>com bloqueio explícito</span></div>
-        <div class="stat warn"><div class="num" id="bk-sem-responsavel">0</div><span>do MVP sem responsável</span></div>
-      </div>
-
-      <div class="bk-note" role="note">
-        <strong>Estado registrado em <span id="bk-data">12/11/2026</span></strong>
-        <p>Responsáveis e capacidade disponível ainda não foram formalizados. A página mantém essas ausências visíveis, sem atribuir pessoas nem estimar capacidade sem evidência.</p>
-      </div>
-
-      <h2>Carga por iteração</h2>
-      <div class="tblw">
-        <table class="bk-capacidade">
-          <thead><tr><th>Iteração</th><th>Período</th><th>Histórias</th><th>Carga planejada</th><th>Capacidade disponível</th><th>Relação carga/capacidade</th></tr></thead>
-          <tbody id="bk-capacidade"></tbody>
-        </table>
-      </div>
-
-      <h2>Características, histórias e tarefas</h2>
-      <ol class="chain bk-chain" aria-label="Hierarquia do backlog">
-        <li>Característica do produto</li><li>História de usuário</li><li>Tarefa operacional</li>
-      </ol>
-
-      <form class="bk-filtros" id="bk-filtros">
-        <label class="bk-campo"><span>Buscar</span><input class="inp" id="bk-busca" type="search" placeholder="Código ou nome"></label>
-        <label class="bk-campo"><span>Iteração</span><select class="inp" id="bk-iteracao"><option value="">Todas</option><option value="atual">Atual</option><option value="5">Iteração 5</option><option value="6">Iteração 6</option><option value="posterior">Backlog posterior</option></select></label>
-        <label class="bk-campo"><span>Situação</span><select class="inp" id="bk-situacao"><option value="">Todas</option></select></label>
-        <label class="bk-campo"><span>Característica</span><select class="inp" id="bk-cp"><option value="">Todas</option></select></label>
-      </form>
-      <p class="state bk-contagem" id="bk-contagem" aria-live="polite"></p>
-
-      <noscript><p class="sem-js">A visão operacional do backlog é montada por JavaScript.</p></noscript>
-      <div class="tblw">
-        <table class="bk-tabela">
-          <thead><tr><th>História</th><th>CP</th><th>Iteração</th><th>Esforço</th><th>Situação</th><th>Responsável</th><th>Tarefas e bloqueios</th></tr></thead>
-          <tbody id="bk-itens"></tbody>
-        </table>
-      </div>
+      <section class="demo-panel">
+        <div class="iteration-tabs" role="tablist" aria-label="Iterações do planejamento">
+          <button type="button" id="iter-tab-5" role="tab" data-iteracao="5" aria-controls="iter-selected" aria-selected="false">Iteração 5<span>20/10 a 02/11</span></button>
+          <button type="button" id="iter-tab-6" role="tab" data-iteracao="6" aria-controls="iter-selected" aria-selected="true">Iteração 6<span>03/11 a 16/11</span></button>
+          <button type="button" id="iter-tab-refino" role="tab" data-iteracao="refino" aria-controls="iter-selected" aria-selected="false">Próximas histórias<span>Precisam ser detalhadas</span></button>
+        </div>
+        <div id="iter-selected" role="tabpanel" aria-labelledby="iter-tab-6" tabindex="0"></div>
+      </section>
     </main>
 
     <footer class="foot">
@@ -104,6 +73,6 @@
 
   <script defer src="../assets/js/dados.js"></script>
   <script defer src="../assets/js/site.js"></script>
-  <script defer src="../assets/js/backlog.js"></script>
+  <script defer src="../assets/js/backlog.js?v=2"></script>
 </body>
 </html>

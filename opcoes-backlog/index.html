@@ -4,57 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Backlog do produto | MindCycle</title>
-  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-  <script>
-    (function () {
-      var t = null;
-      try { t = localStorage.getItem('tema'); } catch (e) {}
-      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', t);
-    })();
-  </script>
-  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
-  <link rel="stylesheet" href="../assets/css/site.css">
-  <link rel="stylesheet" href="../assets/css/backlog-previa.css">
+  <meta http-equiv="refresh" content="0; url=../backlog/">
+  <script>location.replace("../backlog/" + location.hash);</script>
 </head>
-<body data-pagina="opcoes-backlog">
-  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
-  <aside class="side">
-    <a class="brand" href="../" aria-label="Ir para a página principal">
-      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
-      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
-    </a>
-    <nav class="menu" aria-label="Páginas do site">
-      <a class="navb" href="../">◈ Requisitos</a>
-      <div class="navh">◇ Como trabalhamos</div>
-      <a class="navb on" href="./" aria-current="page">Backlog do produto</a>
-      <a class="navb" href="../cronograma/">Entregas e cronograma</a>
-    </nav>
-  </aside>
-
-  <div class="main">
-    <header class="top">
-      <div class="crumb">MindCycle / Backlog do produto</div>
-      <button class="btn" id="tema" type="button">☾ Tema escuro</button>
-    </header>
-    <main class="content" id="conteudo">
-      <h1>Backlog do produto</h1>
-      <p class="lead">Histórias, responsáveis e andamento por iteração.</p>
-
-      <section class="demo-panel">
-        <div class="iteration-tabs" role="tablist" aria-label="Iterações do planejamento">
-          <button type="button" id="iter-tab-5" role="tab" data-iteracao="5" aria-controls="iter-selected" aria-selected="false">Iteração 5<span>20/10 a 02/11</span></button>
-          <button type="button" id="iter-tab-6" role="tab" data-iteracao="6" aria-controls="iter-selected" aria-selected="true">Iteração 6<span>03/11 a 16/11</span></button>
-          <button type="button" id="iter-tab-refino" role="tab" data-iteracao="refino" aria-controls="iter-selected" aria-selected="false">Próximas histórias<span>Precisam ser detalhadas</span></button>
-        </div>
-        <div id="iter-selected" role="tabpanel" aria-labelledby="iter-tab-6" tabindex="0"></div>
-      </section>
-    </main>
-    <footer class="foot"><span>MindCycle · Prévia local</span><span>Issue 42</span></footer>
-  </div>
-
-  <script defer src="../assets/js/dados.js"></script>
-  <script defer src="../assets/js/site.js"></script>
-  <script defer src="../assets/js/backlog-opcoes.js"></script>
-</body>
+<body><a href="../backlog/">Abrir backlog do produto</a></body>
 </html>
