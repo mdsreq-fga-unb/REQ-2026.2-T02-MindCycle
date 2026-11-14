@@ -16,7 +16,7 @@
   </script>
   <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
   <link rel="stylesheet" href="../assets/css/site.css">
-  <link rel="stylesheet" href="../assets/css/backlog.css?v=8">
+  <link rel="stylesheet" href="../assets/css/backlog.css?v=13">
 </head>
 <body data-pagina="backlog">
   <a class="pular" href="#conteudo">Ir para o conteúdo</a>
@@ -51,7 +51,13 @@
     </header>
 
     <main class="content" id="conteudo">
-      <h1>Backlog do produto</h1>
+      <div class="backlog-cabecalho">
+        <h1>Backlog do produto</h1>
+        <div class="backlog-atualizacao">
+          <button class="btn" type="button" data-dialogo="atualizacao-backlog" aria-haspopup="dialog">Atualização do backlog</button>
+          <span id="backlog-data"></span>
+        </div>
+      </div>
       <p class="lead">Histórias, responsáveis e andamento por iteração.</p>
       <p class="state">Backlog oficial da equipe · atualizado pelo repositório do projeto.</p>
 
@@ -59,10 +65,28 @@
         <div class="iteration-tabs" role="tablist" aria-label="Iterações do planejamento">
           <button type="button" id="iter-tab-5" role="tab" data-iteracao="5" aria-controls="iter-selected" aria-selected="false">Iteração 5<span>20/10 a 02/11</span></button>
           <button type="button" id="iter-tab-6" role="tab" data-iteracao="6" aria-controls="iter-selected" aria-selected="true">Iteração 6<span>03/11 a 16/11</span></button>
-          <button type="button" id="iter-tab-refino" role="tab" data-iteracao="refino" aria-controls="iter-selected" aria-selected="false">Próximas histórias<span>Precisam ser detalhadas</span></button>
+          <button type="button" id="iter-tab-refino" role="tab" data-iteracao="refino" aria-controls="iter-selected" aria-selected="false">Próximas histórias<span>Sem iteração definida</span></button>
         </div>
         <div id="iter-selected" role="tabpanel" aria-labelledby="iter-tab-6" tabindex="0"></div>
       </section>
+      <template id="atualizacao-backlog" data-rotulo="Atualização do backlog">
+        <div class="dh">
+          <h2>Atualização do backlog</h2>
+          <button class="x" type="button" aria-label="Fechar" data-fechar>&times;</button>
+        </div>
+        <div class="backlog-rotina">
+          <p>O Pages é o backlog oficial da equipe. As alterações são registradas no repositório, sem manter outro quadro paralelo.</p>
+          <h3>No planejamento</h3>
+          <p>A equipe define as histórias da iteração, os responsáveis e o esforço, registra a disponibilidade e avalia se o trabalho cabe no período. O DoR é conferido antes do início do desenvolvimento.</p>
+          <h3>Durante a iteração</h3>
+          <p>Cada responsável registra as mudanças de andamento, tarefas e bloqueios da sua história assim que acontecerem, com a referência que sustenta a atualização.</p>
+          <h3>Na revisão</h3>
+          <p>A equipe registra os resultados, as evidências do DoD, a avaliação dos stakeholders e as pendências. Histórias não concluídas são replanejadas explicitamente, sem serem marcadas como entregues.</p>
+          <h3>Conferência e publicação</h3>
+          <p>As atualizações entram por pull request. O responsável pelo backlog confere a consistência dos registros antes do merge em <code>gh-pages</code>, que publica a nova versão no site.</p>
+          <p class="backlog-rotina-nota">A data no cabeçalho indica a última atualização dos dados do backlog, não alterações apenas visuais.</p>
+        </div>
+      </template>
     </main>
 
     <footer class="foot">
@@ -73,7 +97,7 @@
   </div>
 
   <script defer src="../assets/js/dados.js?v=5"></script>
-  <script defer src="../assets/js/site.js"></script>
-  <script defer src="../assets/js/backlog.js?v=7"></script>
+  <script defer src="../assets/js/site.js?v=12"></script>
+  <script defer src="../assets/js/backlog.js?v=13"></script>
 </body>
 </html>

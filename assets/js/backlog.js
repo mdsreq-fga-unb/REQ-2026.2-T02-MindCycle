@@ -3,10 +3,15 @@
 (() => {
   const { esc, caracteristica, responsavel } = MC;
   const cadastro = DADOS.backlog;
+  const dataAtualizacao = document.getElementById('backlog-data');
+  if (dataAtualizacao && cadastro.atualizadoEm) {
+    dataAtualizacao.textContent = 'Dados atualizados em ' + cadastro.atualizadoEm;
+  }
   const numero = (valor) => Number(valor.replace(',', '.'));
   const decimal = (valor) => valor.toFixed(1).replace('.', ',');
   const mvp = DADOS.historias.filter((h) => h.iteracao > 0);
-  const refino = DADOS.historias.filter((h) => cadastro.itens[h.id] && cadastro.itens[h.id].situacao === 'Requer refinamento');
+  const refino = DADOS.historias.filter((h) => !(h.iteracao > 0));
+  const historiaAlvo = DADOS.historias.find((h) => h.id === new URLSearchParams(location.search).get('hu'));
 
   function prontidao(h) {
     if (typeof DADOS.situacaoDor === 'function') return DADOS.situacaoDor(h.id);
@@ -30,7 +35,9 @@
   function resumoIteracao(n) {
     const hs = mvp.filter((h) => h.iteracao === n);
     const carga = hs.reduce((soma, h) => soma + numero(h.esforco.consolidado), 0);
-    return { hs, carga: decimal(carga), capacidade: 'Não registrada' };
+    const registro = cadastro.capacidadePorIteracao[n];
+    const capacidade = registro && registro.disponivel != null ? registro.disponivel + ' ' + registro.unidade + ' estimadas' : 'Não registrada';
+    return { hs, carga: decimal(carga), capacidade };
   }
 
   function pendencia(h) {
@@ -71,7 +78,7 @@
       '<div><dt>Disponibilidade da equipe</dt><dd>' + capacidade + '</dd></div>' +
       '<div><dt>O trabalho cabe no período?</dt><dd>Ainda não avaliado</dd></div></dl>' +
       '<div class="tblw"><table class="simple-table"><thead><tr><th>História</th><th>Esforço</th><th>Quem faz</th><th>Andamento</th><th>Pendência</th></tr></thead><tbody>' +
-      hs.map((h) => '<tr class="hu-principal"><th scope="row"><button type="button" class="demo-hu" data-historia="' + h.id + '"><span class="mono">' + h.id + '</span>' + esc(h.nome) + '</button></th>' +
+      hs.map((h) => '<tr class="hu-principal" data-backlog-hu="' + h.id + '"><th scope="row"><button type="button" class="demo-hu" data-historia="' + h.id + '"><span class="mono">' + h.id + '</span>' + esc(h.nome) + '</button></th>' +
         '<td class="hu-esforco mono">' + esc(h.esforco.consolidado) + '</td>' +
         '<td' + (cadastro.responsaveis[h.id] ? '' : ' class="ph"') + '>' + esc(responsavel(h)) + '</td>' +
         '<td><span class="bk-status bk-neutra">' + esc(situacao(h)) + '</span></td>' +
@@ -89,9 +96,9 @@
   }
 
   function blocoRefino() {
-    return '<h3>Histórias que precisam ser detalhadas</h3><div class="demo-refino-list">' + refino.map((h) =>
-      '<button type="button" data-historia="' + h.id + '"><span><b class="mono">' + h.id + '</b> ' + esc(h.nome) +
-      '</span><small>' + esc(bloqueio(h)) + '</small></button>').join('') + '</div>';
+    return '<h3>Histórias sem iteração definida</h3><div class="demo-refino-list">' + refino.map((h) =>
+      '<button type="button" data-backlog-hu="' + h.id + '" data-historia="' + h.id + '"><span><b class="mono">' + h.id + '</b> ' + esc(h.nome) +
+      '</span><small>' + esc((cadastro.itens[h.id] || {}).situacao === 'Requer refinamento' ? bloqueio(h) : h.nota) + '</small></button>').join('') + '</div>';
   }
 
   const abasIteracao = [...document.querySelectorAll('[data-iteracao]')];
@@ -119,5 +126,13 @@
       abasIteracao[destino].focus();
     });
   });
-  mostrarIteracao('6');
+  mostrarIteracao(historiaAlvo ? (historiaAlvo.iteracao > 0 ? String(historiaAlvo.iteracao) : 'refino') : '6');
+  if (historiaAlvo) {
+    const alvo = document.querySelector('[data-backlog-hu="' + historiaAlvo.id + '"]');
+    if (alvo) {
+      alvo.classList.add('backlog-destaque');
+      alvo.scrollIntoView({ block: 'center' });
+      window.setTimeout(() => alvo.classList.remove('backlog-destaque'), 2600);
+    }
+  }
 })();

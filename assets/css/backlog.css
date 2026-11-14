@@ -1,3 +1,14 @@
+.backlog-cabecalho { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; }
+.backlog-cabecalho h1 { margin-bottom: 0; }
+.backlog-atualizacao { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; padding-top: 6px; }
+.backlog-atualizacao .btn { background: var(--soft); border-color: var(--acc); color: var(--acct); }
+.backlog-atualizacao .btn:hover { background: var(--acc); color: var(--on); }
+.backlog-atualizacao .btn:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
+.backlog-atualizacao span { color: var(--mut); font-size: 12px; }
+.backlog-rotina { padding: 0 24px 24px; }
+.backlog-rotina h3 { margin: 20px 0 6px; font-size: 18px; }
+.backlog-rotina p { margin: 0 0 12px; }
+.backlog-rotina-nota { color: var(--mut); font-size: 13px; border-top: 1px solid var(--line); padding-top: 14px; }
 .simple-resumo {
   display: flex;
   flex-wrap: wrap;
@@ -15,6 +26,23 @@
 .simple-table>thead>tr>th:nth-child(4) { width: 17%; }
 .simple-table>thead>tr>th:nth-child(5) { width: 31%; }
 .hu-esforco { white-space: nowrap; }
+.simple-table .backlog-destaque>th, .simple-table .backlog-destaque>td,
+.demo-refino-list .backlog-destaque { background: var(--soft); }
+.backlog-destaque { outline: 2px solid var(--acc); outline-offset: -2px; scroll-margin-top: 24px; animation: backlog-realce 2.6s ease-out; }
+.simple-table .backlog-destaque>th, .simple-table .backlog-destaque>td,
+.demo-refino-list .backlog-destaque { animation: backlog-fundo 2.6s ease-out; }
+@keyframes backlog-realce {
+  0%, 45% { outline-color: var(--acc); }
+  100% { outline-color: transparent; }
+}
+@keyframes backlog-fundo {
+  0%, 45% { background: var(--soft); }
+  100% { background: var(--panel); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .backlog-destaque, .simple-table .backlog-destaque>th,
+  .simple-table .backlog-destaque>td { animation: none; }
+}
 .simple-table>tbody>tr>th { background: var(--panel); font-family: inherit; }
 .simple-table .demo-hu { font-size: 14px; line-height: 1.4; gap: 3px; }
 .simple-table .demo-hu .mono, .demo-refino-list .mono { color: var(--acct); font-size: 15px; font-weight: 700; }

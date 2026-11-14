@@ -94,6 +94,10 @@ const DADOS = {
       '6': {
         disponivel: null,
         observacao: 'A capacidade disponível da equipe não foi registrada para esta iteração.'
+      },
+      '7': {
+        disponivel: null,
+        observacao: 'A capacidade disponível da equipe não foi registrada para esta iteração.'
       }
     },
     tarefasPadrao: [

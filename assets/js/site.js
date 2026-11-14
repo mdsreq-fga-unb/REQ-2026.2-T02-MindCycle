@@ -26,7 +26,7 @@ const MC = (() => {
   const caracteristica = (id) => DADOS.caracteristicas.find((c) => c.id === id);
   const noMvp = (h) => h.iteracao > 0;
   const noBacklog = (h) => noMvp(h) && DADOS.dorAtendido.includes(h.id);
-  const naIteracaoAtual = (h) => noBacklog(h) && h.iteracao === DADOS.iteracaoAtual;
+  const naIteracaoAtual = (h) => noMvp(h) && h.iteracao === DADOS.iteracaoAtual;
   const itemBacklog = (h) => ((DADOS.backlog || {}).itens || {})[h.id] || {};
   const responsavel = (h) => ((DADOS.backlog || {}).responsaveis || {})[h.id] ||
     (DADOS.backlog || {}).responsavelPadrao || 'Não atribuído';
@@ -138,7 +138,7 @@ const MC = (() => {
   function etiquetas(h) {
     const link = (texto, caminho, classe) => '<a class="ptag ' + classe + '" href="' + esc(url(caminho)) + '">' + esc(texto) + '</a>';
     const tags = [];
-    if (noBacklog(h)) tags.push(link('Backlog', 'dor-e-dod/', 't-bk'));
+    if (noBacklog(h)) tags.push(link('DoR atendido', 'dor-e-dod/', 't-bk'));
     if (naIteracaoAtual(h)) tags.push(link('Iteração atual', 'cronograma/', 't-cur'));
     if (itemBacklog(h).situacao) tags.push(link(itemBacklog(h).situacao, 'backlog/', 't-out'));
     tags.push(noMvp(h) ? link('MVP', 'mvp/', 't-mvp') : link('Fora do MVP', 'mvp/', 't-out'));
@@ -199,6 +199,8 @@ const MC = (() => {
     if (!h) return;
     const ev = decisoes(h);
     const ABAS = [['res', 'História de usuário'], ['pro', 'DoR e DoD'], ['his', 'Decisões']];
+    const planoArvore = pagina === 'requisitos' && typeof PLANO_ARVORE !== 'undefined' && PLANO_ARVORE;
+    if (planoArvore && planoArvore.modo === '1') ABAS.splice(1, 0, ['pla', 'Planejamento']);
     aba = aba || 'res';
     const conteudo =
       '<div class="dh"><div><div class="crumbs"><span class="mono">' + h.id + '</span></div>' +
@@ -234,6 +236,7 @@ const MC = (() => {
           ? '<h3 style="margin-top: 16px">Histórias relacionadas</h3><div class="rfl">' +
             h.relacionadas.map(chipHistoria).join('') + '</div>' : '') +
       '</div>' +
+      (planoArvore && planoArvore.modo === '1' ? '<div class="pane" data-painel="pla" hidden>' + planoArvore.render(h) + '</div>' : '') +
       '<div class="pane" data-painel="pro"' + (aba === 'pro' ? '' : ' hidden') + '>' +
         '<dl class="dl">' +
           '<div class="dlr"><dt>DoR</dt><dd>' + (noBacklog(h) ? 'Atendido' : 'Não marcado') + '</dd></div>' +
@@ -250,10 +253,10 @@ const MC = (() => {
         '<div class="tools" style="margin-top: 10px"><a class="lnk" href="' + url('historico/') + '">Ver no Histórico</a>' +
         '<a class="lnk" href="' + url('reunioes/') + '">Ver em Reuniões</a></div>' +
       '</div>' +
-      // Na árvore, a história já está à vista; nas outras páginas, o botão leva até ela.
-      (pagina === 'requisitos' ? '' :
-        '<div style="margin-top: 18px; display: flex; justify-content: flex-end"><a class="go" href="' +
-        esc(url('?cp=' + h.caracteristica + '&hl=' + h.id)) + '">Ver na árvore</a></div>');
+      '<div class="tools" style="margin-top: 18px; justify-content: flex-end">' +
+        (planoArvore ? '' : '<a class="go" href="' + esc(url('backlog/?hu=' + h.id)) + '">Ver no backlog</a>') +
+        (pagina === 'requisitos' ? '' : '<a class="go" href="' +
+          esc(url('?cp=' + h.caracteristica + '&hl=' + h.id)) + '">Ver na árvore</a>') + '</div>';
 
     const dlg = abrirDialogo({ rotulo: 'Detalhes da história de usuário', conteudo, hash: h.id, fecharRotulo: 'Fechar detalhes' });
     dlg.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => {
