@@ -26,9 +26,10 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 .
 ├── index.html                     Requisitos: a árvore do problema até as histórias
 ├── visao/                         Visão de produto (figuras ampliáveis)
+├── arquitetura/                   Arquitetura: diagrama, tecnologias e decisões
 ├── engenharia-de-requisitos/      Escolhas de processo e Catálogo de Metas
 ├── mvp/                           Composição do MVP por característica
-├── backlog/                       Situação operacional, carga, responsáveis e tarefas
+├── backlog/                       Redirecionamento para o planejamento na árvore
 ├── historico/                     O que mudou em cada história e RNF
 ├── reunioes/                      Gravações, com cada decisão no momento do vídeo
 ├── cronograma/                    Linha do tempo, releases e painel de fases
@@ -107,8 +108,10 @@ mesmo detalhe usado na árvore de requisitos.
   `dependencias` referencia outras HUs; alocações em iteração posterior aparecem como
   pendência de planejamento. Esses registros não alteram o andamento da implementação.
 - O andamento fica em `itens[HU].andamento`, com `andamentoPadrao` para o estado comum
-  confirmado pela equipe. Em 13/11/2026, Arthur informou que nenhuma HU havia começado:
-  o estado inicial é **Não iniciada**. A prontidão pelo DoR é apresentada separadamente.
+  confirmado pela equipe. O estado inicial de 13/11/2026 é **Não iniciada**. Em 14/11,
+  HU12 e HU25 passaram a **Implementação integrada; verificação pendente**, com
+  `evidenciaImplementacao` apontando para o PR #57 e seu commit. Isso não comprova
+  atendimento ao DoR nem aceite pelo DoD; termos e verificações continuam pendentes.
 
 ## Sobre os identificadores do Problema, OE, CP, RF e RNF
 
@@ -124,7 +127,7 @@ Os identificadores foram preservados:
 | Objetivos específicos | `OE1` a `OE3` |
 | Características de produto | `CP1` a `CP7` |
 | Histórias de usuário | `HU01` a `HU36` |
-| Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** |
+| Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** (número não reaproveitado) |
 
 No site, tudo isso vive num lugar só: `assets/js/dados.js`. A árvore, o MVP, o backlog, a
 priorização, as reuniões, o histórico e o detalhe de cada história leem desse arquivo, então um
@@ -141,9 +144,12 @@ indicando a confirmação da prioridade, não a aprovação das novas regras.
 Nesta revisão da issue #38 foram reaproveitadas apenas as regras de HU13/HU15, a
 correção de HU17 e a apresentação das regras do PR #49. O DoD integrado pelo
 [PR #51](https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/51) foi preservado.
-Quando o [PR #52](https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/52)
-for combinado com estas alterações, seus registros de DoR devem ser conferidos de
-novo: regra documentada não significa regra validada nem história pronta.
+O [PR #52](https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/52)
+fornece os critérios, a aplicação e o cálculo da situação do DoR. O painel de
+planejamento consulta esse mesmo resultado e abre seus detalhes no modal da HU.
+Os motivos afetados pelos responsáveis e refinamentos foram atualizados em
+14/11/2026, preservando a data da conferência retroativa e a pendência de avaliação
+coletiva. Regra documentada não significa regra validada nem história pronta.
 
 ---
 
@@ -152,7 +158,9 @@ novo: regra documentada não significa regra validada nem história pronta.
 | O que | Onde |
 |---|---|
 | **Validação do MVP consolidado com a cliente** | Páginas MVP e Priorização. A reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino tratou requisitos individuais; o conjunto do MVP e as notas ainda em hipótese aguardam a reunião de acompanhamento. |
-| **Atribuições e capacidade ainda incompletas** | A página Backlog registra as atribuições informadas. Completar `backlog.responsaveis` e `backlog.capacidadePorIteracao` após o acordo da equipe. |
+| **Atribuições e capacidade ainda incompletas** | O planejamento integrado à árvore registra as atribuições informadas. Completar `backlog.responsaveis` e `backlog.capacidadePorIteracao` após o acordo da equipe. |
+| **Conferência do DoR** | `dorAtendido` em `assets/js/dados.js` ainda está vazio; a alocação e a implementação não comprovam atendimento ao DoR. |
+| **Avaliação da usuária representativa** | Página Reuniões. O teste com a Daniela Soares cobriu usabilidade, linguagem e experiência de uso. Falta avaliar privacidade com ela, e a ordem das tarefas de HU13 não foi testada. |
 | **Validação dos refinamentos da #38** | Regras nos detalhes de HU04, HU05, HU13, HU15, HU23, HU30 e HU32. A fórmula clínica e os limites das fases em HU05 continuam pendentes de revisão da cliente; a ampliação de HU23 e o formato de exportação são propostas. |
 | **RNF05** | Não existe no quadro: a numeração salta de RNF04 para RNF06. Confirmar se houve descarte e registrar, ou renumerar. |
 
@@ -176,6 +184,30 @@ páginas.
 | Cores e espaçamentos | As variáveis no topo de `assets/css/site.css` |
 
 Os comentários no topo de `assets/js/dados.js` explicam cada campo.
+
+### Revisão dos RNFs — issue #39
+
+Os detalhes dos RNFs apresentam `criterio` (resumo), `condicoes`, `verificacao`,
+`situacao` e `fontes`. São campos opcionais: os requisitos sem detalhamento continuam
+abrindo normalmente. O protocolo compartilhado de desempenho fica uma única vez em
+`protocolosRnf.desempenhoAndroid`; RNF06, RNF07 e RNF08 o referenciam por `protocoloComum`.
+Para consultar, abra os RNFs na árvore ou por links como `…/#RNF06`.
+
+Os protocolos avaliam o **aplicativo React Native para Android**. Testar este Pages
+em navegador verifica a documentação, sem comprovar desempenho, contraste ou
+compatibilidade do produto. Os resultados reais ficam no registro do DoD da respectiva história de usuário;
+documentar um protocolo não equivale a executá-lo.
+
+A meta de três toques depende de ensaio do protótipo e depois do app. A matriz de
+aparelhos/versões Android e as decisões técnicas de criptografia permanecem pendentes.
+Minimização, transparência e criptografia recuperam a proposta histórica `RNF-novo`,
+distribuída entre RNF02 e RNF03 sem criar identificador adicional, e aguardam validação.
+
+Esta revisão considera a aplicação de RNF04/RNF08 à HU02 proposta no PR #49 e
+preserva a separação dos fluxos. Os refinamentos de HU04 na #38 devem ser conferidos
+na integração. A cobertura de RNF03 também atende ao apontamento da #37; os registros
+do DoR propostos no PR #52 precisarão ser sincronizados, sem marcar histórias como
+prontas automaticamente. As mudanças por RNF e os novos vínculos das HUs constam no Histórico.
 
 Uma história ou um RNF abre de qualquer página com `#` e o código no endereço — por exemplo,
 `…/priorizacao/#HU13` ou `…/#RNF04`. Uma reunião abre com o código do vídeo

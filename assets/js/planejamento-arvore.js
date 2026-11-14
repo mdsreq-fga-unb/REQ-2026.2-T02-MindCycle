@@ -5,11 +5,15 @@ const PLANO_ARVORE = (() => {
   function render(h) {
     const b = DADOS.backlog, item = b.itens[h.id] || {};
     const dor = typeof DADOS.situacaoDor === 'function' ? DADOS.situacaoDor(h.id) : DADOS.dorAtendido.includes(h.id) ? 'Atendido' : 'Não conferido';
+    const dependenciaDor = ((DADOS.aplicacaoDor[h.id] || {}).criterios || {})['6'];
     const pendencias = [...(item.bloqueios || [])];
     (item.dependencias || []).forEach((id) => {
       const dep = DADOS.historias.find((x) => x.id === id);
       if (dep && dep.iteracao > h.iteracao) pendencias.push('Rever alocação: depende de ' + id + ' na Iteração ' + dep.iteracao);
     });
+    if (dependenciaDor && dependenciaDor.resultado === 'NÃO' && !(item.dependencias || []).length) {
+      pendencias.push(dependenciaDor.motivo);
+    }
     if (!b.responsaveis[h.id]) pendencias.push('Definir responsável');
     if (!DADOS.dorAtendido.includes(h.id) && h.iteracao > 0) pendencias.push('Conferir o DoR');
     if (!(h.iteracao > 0)) pendencias.push(h.nota);
@@ -23,7 +27,11 @@ const PLANO_ARVORE = (() => {
       campos.push(['Capacidade', 'A informar']);
     }
     const refs = { T01: 'Conferir os critérios do DoR da história.', T03: 'Aplicar os critérios de aceitação, os RNFs vinculados e o DoD.', T04: 'Apresentar o incremento e registrar a avaliação dos stakeholders.' };
-    return '<dl class="plano-campos">' + campos.map(([k, v]) => '<div><dt>' + esc(k) + '</dt><dd>' + esc(v) + '</dd></div>').join('') + '</dl>' +
+    return '<dl class="plano-campos">' + campos.map(([k, v]) => '<div><dt>' + esc(k) + '</dt><dd>' +
+      (k === 'DoR' ? '<button class="lnk" type="button" data-historia="' + h.id + '" data-dor aria-label="Consultar DoR de ' + h.id + '">' + esc(v) + '</button>' : esc(v)) + '</dd></div>').join('') + '</dl>' +
+      (item.evidenciaImplementacao ? '<p class="plano-evidencia">Implementação: <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/' +
+        esc(item.evidenciaImplementacao.pr) + '">PR #' + esc(item.evidenciaImplementacao.pr) + '</a> · <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/commit/' +
+        esc(item.evidenciaImplementacao.commit) + '">commit ' + esc(item.evidenciaImplementacao.commit.slice(0, 7)) + '</a></p>' : '') +
       '<h3>Pendências</h3><ul>' + (pendencias.length ? pendencias : ['Nenhuma pendência registrada.']).map((p) => '<li>' + esc(p) + '</li>').join('') + '</ul>' +
       (h.iteracao > 0 ? '<div class="tblw"><table class="plano-etapas"><thead><tr><th>Etapa</th><th>Trabalho previsto</th></tr></thead><tbody>' + b.tarefasPadrao.map((t) => {
         const tarefas = (item.tarefas || {})[t.id] || [refs[t.id] || t.titulo];

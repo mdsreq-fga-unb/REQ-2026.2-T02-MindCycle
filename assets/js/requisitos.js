@@ -70,7 +70,7 @@
       const todas = DADOS.historias.filter((h) => h.caracteristica === c.id);
       const on = c.id === estado.cp;
       return '<button class="node cp' + (on ? ' on' : '') + '" type="button" data-cp="' + c.id + '" aria-pressed="' + on + '">' +
-        '<span class="k mono">' + c.id + '</span><span>' + esc(c.nome) + '</span>' +
+        '<span class="k mono">' + c.id + (c.habilitadora ? ' · hab.' : '') + '</span><span>' + esc(c.nome) + '</span>' +
         '<span class="c">' + todas.filter(passa).length + ' de ' + todas.length + ' HUs</span></button>';
     }).join('');
 

@@ -30,6 +30,7 @@
       <a class="navb" href="../">◈ Requisitos</a>
       <div class="navh">◇ Como trabalhamos</div>
       <a class="navb" href="../visao/">Visão de produto</a>
+      <a class="navb" href="../arquitetura/">Arquitetura</a>
       <a class="navb" href="../engenharia-de-requisitos/">Engenharia de requisitos</a>
       <a class="navb" href="../mvp/">MVP</a>
       <a class="navb on" href="../historico/" aria-current="page">Histórico</a>
@@ -55,6 +56,34 @@
       <noscript><p class="sem-js">A lista de alterações é montada por JavaScript.</p></noscript>
       <div class="tools" id="filtros-historico" style="margin-top: 18px"></div>
       <div id="historico-lista" style="display: flex; flex-direction: column; gap: 10px; margin-top: 18px"></div>
+      <h2>Achados de verificação e decisões</h2>
+      <p>Os 13 achados da análise de consistência dos requisitos, com a decisão tomada e o que foi atualizado. Desde 08/11/2026, o catálogo publicado neste site é o vigente, e o quadro do Figma é fotografia histórica de 28/09/2026.</p>
+      <div class="tblw"><table>
+        <thead><tr><th style="width: 48px">Nº</th><th>Achado</th><th>Decisão</th><th>Situação</th><th>Atualizados</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">01</td><td>HU04 era citada por RNFs, sem card no quadro</td><td>O catálogo do site é o vigente; o card deixa de ser necessário.</td><td>Encerrado em 08/11/2026</td><td><div class="rfl"><button class="rfb mono" type="button" data-historia="HU04">HU04</button></div></td></tr>
+          <tr><td class="mono">02</td><td>RNF04 e RNF08 apontavam para HU02 nas setas e para HU04 no texto</td><td>Valem para as duas histórias: sinalizar é um registro rápido de disposição.</td><td>Encerrado em 08/11/2026</td><td><div class="rfl"><button class="rfb mono" type="button" data-rnf="RNF04">RNF04</button><button class="rfb mono" type="button" data-rnf="RNF08">RNF08</button><button class="rfb mono" type="button" data-historia="HU02">HU02</button></div></td></tr>
+          <tr><td class="mono">03</td><td>A numeração salta de RNF04 para RNF06</td><td>Não há RNF05 em nenhum artefato. O número não será reaproveitado, para não mudar o significado dos demais.</td><td>Encerrado em 08/11/2026</td><td>README</td></tr>
+          <tr><td class="mono">04</td><td>RNF10 e RNF11 presos a uma única característica</td><td>São transversais e aparecem fora das características, valendo para todas as histórias.</td><td>Encerrado em 07/11/2026</td><td><div class="rfl"><button class="rfb mono" type="button" data-rnf="RNF10">RNF10</button><button class="rfb mono" type="button" data-rnf="RNF11">RNF11</button></div></td></tr>
+          <tr><td class="mono">05</td><td>CP7 não tinha requisito de preferência</td><td>Criada a história de gerenciar notificações.</td><td>Encerrado na Iteração 4</td><td><div class="rfl"><button class="rfb mono" type="button" data-historia="HU29">HU29</button></div></td></tr>
+          <tr><td class="mono">06</td><td>Calendário do ciclo estava sob Privacidade</td><td>Movido para Acompanhamento do ciclo menstrual (CP2).</td><td>Encerrado em 08/11/2026</td><td><div class="rfl"><button class="rfb mono" type="button" data-historia="HU10">HU10</button></div></td></tr>
+          <tr><td class="mono">07</td><td>Quadro e Documento de Visão usavam objetivos e características diferentes</td><td>A Visão adotou OE1 a OE3 e CP1 a CP7.</td><td>Encerrado na Iteração 4</td><td><a class="lnk" href="../visao/">Visão de produto</a></td></tr>
+          <tr><td class="mono">08</td><td>Identificadores ausentes no quadro e em colisão com o levantamento anterior</td><td>O catálogo do site é a referência. História nova recebe sempre o próximo número livre.</td><td>Encerrado em 08/11/2026</td><td>README</td></tr>
+          <tr><td class="mono">09</td><td>Vínculos entre história e RNF só no texto, sem seta</td><td>A referência é a lista de RNFs de cada história no catálogo.</td><td>Encerrado em 08/11/2026</td><td><a class="lnk" href="../">Árvore</a></td></tr>
+          <tr><td class="mono">10</td><td>Redação sem padrão e erros de digitação no quadro</td><td>Redação padronizada no catálogo; o quadro não será corrigido.</td><td>Encerrado em 08/11/2026</td><td><a class="lnk" href="../">Árvore</a></td></tr>
+          <tr><td class="mono">11</td><td>19 histórias cobertas só por RNFs transversais</td><td>Não é erro. A cobertura do RNF03 sobre as tarefas segue na issue 37.</td><td>Aceito</td><td class="ph">Sem alteração</td></tr>
+          <tr><td class="mono">12</td><td>CP3 e CP7 são de suporte, mas aparecem como contribuição direta aos objetivos</td><td>Identificadas como habilitadoras na árvore.</td><td>Encerrado em 08/11/2026</td><td><a class="lnk" href="../?cp=CP3">CP3</a> <a class="lnk" href="../?cp=CP7">CP7</a></td></tr>
+          <tr><td class="mono">13</td><td>Mesmo número para requisitos diferentes entre catálogo e priorização</td><td>Os requisitos novos passaram a HU35 e HU36.</td><td>Encerrado em 12/10/2026</td><td><div class="rfl"><button class="rfb mono" type="button" data-historia="HU35">HU35</button><button class="rfb mono" type="button" data-historia="HU36">HU36</button></div></td></tr>
+        </tbody>
+      </table></div>
+      <h2>Artefatos previstos</h2>
+      <div class="tblw"><table>
+        <thead><tr><th>Artefato</th><th>O que aconteceu</th><th>Situação</th></tr></thead>
+        <tbody>
+          <tr><td>Personas e jornadas</td><td>Previstas no cronograma da Iteração 3, não foram publicadas como artefato consultável, e nenhuma decisão de requisito pode ser atribuída a elas. A equipe decidiu não produzi-las: os requisitos vieram dos segmentos de público, do protótipo e das conversas com a cliente e com a usuária.</td><td><span class="tag fill" style="margin: 0">Decidido: não serão produzidas</span></td></tr>
+          <tr><td>Casos de uso detalhados</td><td>Saíram do site na reorganização de 07/11/2026 e seguem na branch <code>refactor/html-puro</code>. Como diziam apenas que o sistema calcula ou reajusta, as regras que faltavam agora estão em <button class="rfb mono" type="button" data-historia="HU13">HU13</button> e <button class="rfb mono" type="button" data-historia="HU15">HU15</button>.</td><td><span class="tag fill" style="margin: 0">Substituídos pelas regras</span></td></tr>
+        </tbody>
+      </table></div>
       <h2>Versões do documento</h2>
       <div class="tblw"><table>
         <thead><tr><th>Data</th><th>Versão</th><th>Descrição</th><th>Autor</th></tr></thead>

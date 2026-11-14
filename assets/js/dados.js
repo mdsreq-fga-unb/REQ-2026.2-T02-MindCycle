@@ -13,10 +13,390 @@ const DADOS = {
   // (cronograma, abaixo) e o estado das iterações (fases[].iteracoes).
   iteracaoAtual: 6,
 
-  // Histórias que já atenderam ao DoR. Quem está aqui e no MVP aparece como
-  // "Backlog" na árvore; se também estiver planejada para a iteração atual,
-  // como "Iteração atual". Ex.: ['HU25', 'HU12'].
+  // Histórias que já atenderam ao DoR. Não edite: a lista é calculada no fim
+  // deste arquivo a partir de aplicacaoDor. Essa prontidao e independente
+  // da presenca no backlog e da alocacao a uma iteracao.
   dorAtendido: [],
+
+  // Critérios do DoR, compartilhados pela página DoR e DoD e pelos modais.
+  // Preserve os IDs ao editar textos ou reordenar, pois identificam resultados.
+  // admiteExcecao: true só no critério que pode ficar em NÃO com exceção
+  // autorizada no Planejamento.
+  dorCriterios: [
+    {
+      id: '1',
+      titulo: 'Rastreável',
+      descricao: 'Deriva de um requisito funcional e está vinculada à característica e ao objetivo.',
+      conferencia: 'A história aparece na árvore, sob uma característica ligada a um objetivo específico.',
+      admiteExcecao: false
+    },
+    {
+      id: '2',
+      titulo: 'Confirmada pela cliente',
+      descricao: 'Prioridade confirmada pela cliente; conteúdo de saúde também revisado por ela.',
+      conferencia: 'Confirmação registrada em Reuniões. Para conteúdo de saúde, revisão registrada da cliente.',
+      admiteExcecao: true
+    },
+    {
+      id: '3',
+      titulo: 'Clara',
+      descricao: 'No formato "Como usuária, quero … para …", com os termos do glossário e sem dúvidas em aberto.',
+      conferencia: 'Leitura da história pela equipe no Planejamento.',
+      admiteExcecao: false
+    },
+    {
+      id: '4',
+      titulo: 'Critérios de aceitação',
+      descricao: 'Objetivos e verificáveis, incluindo privacidade e ausência de linguagem punitiva.',
+      conferencia: 'A história tem critérios registrados e cada um pode ser verificado sem interpretação.',
+      admiteExcecao: false
+    },
+    {
+      id: '5',
+      titulo: 'Cabe na iteração',
+      descricao: 'Avaliado coletivamente, com responsável definido; a que não cabe é dividida.',
+      conferencia: 'Responsável definido e capacidade da iteração avaliada pela equipe.',
+      admiteExcecao: false
+    },
+    {
+      id: '6',
+      titulo: 'Dependências',
+      descricao: 'Identificadas e disponíveis ou planejadas para a mesma iteração.',
+      conferencia: 'Cada história de que esta depende está concluída ou planejada para a mesma iteração.',
+      admiteExcecao: false
+    },
+    {
+      id: '7',
+      titulo: 'Protótipo',
+      descricao: 'Tela nova ou alterada tem protótipo no Figma vinculado.',
+      conferencia: 'Link do protótipo no Figma vinculado à história, ou N/A quando não há tela.',
+      admiteExcecao: false
+    },
+    {
+      id: '8',
+      titulo: 'Regras de negócio',
+      descricao: 'Identificadas e registradas junto à história.',
+      conferencia: 'Regras escritas no detalhe da história, ou N/A quando ela não tem regra própria.',
+      admiteExcecao: false
+    }
+  ],
+
+  // Aplicação do DoR por história, preenchida no Planejamento da Iteração.
+  // Cada critério recebe resultado 'SIM', 'NÃO', 'N/A' ou 'Não conferido',
+  // e motivo sempre que não for SIM. A exceção só vale no critério com
+  // admiteExcecao e precisa dos três campos. Exemplo:
+  //   HU02: {
+  //     conferencia: 'Planejamento da Iteração 6, em 03/11/2026',
+  //     criterios: {
+  //       '1': { resultado: 'SIM' },
+  //       '2': { resultado: 'NÃO', motivo: 'Prioridade ainda não confirmada.',
+  //              excecao: { autorizadaPor: 'Nome', risco: 'Risco aceito', prazo: 'Revisão da Iteração 6' } }
+  //     }
+  //   }
+  // A situação da história (Pronta, Pronta com exceção, Não pronta ou Não
+  // conferida) é calculada no fim deste arquivo.
+  aplicacaoDor: {
+    // Iteração 5
+    HU01: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe e o conteúdo de saúde não foi revisado pela cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU02: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'NÃO', motivo: 'Depende da HU15, planejada para a Iteração 6.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
+      }
+    },
+    HU04: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '3 critérios registrados.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU05: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'SIM', motivo: 'Depende de HU06 e HU07, planejadas para a mesma iteração.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'O modelo está documentado em HU05 pelo PR #53; os intervalos e limites clínicos ainda dependem da cliente e a equipe precisa conferir o critério.' }
+      }
+    },
+    HU06: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '2 critérios registrados.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'O cálculo está centralizado em HU05 pelo PR #53; conferir as regras de entrada e sua relação com o modelo ainda sujeito à revisão da cliente.' }
+      }
+    },
+    HU07: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'O cálculo está centralizado em HU05 pelo PR #53; conferir as regras de duração e irregularidade junto ao modelo ainda sujeito à revisão da cliente.' }
+      }
+    },
+    HU11: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'NÃO', motivo: 'O critério ainda exige 6 pétalas, mas o MVP usa PIN numérico.' },
+        '5': { resultado: 'NÃO', motivo: 'Pedro Ian atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU12: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '2 critérios registrados.' },
+        '5': { resultado: 'NÃO', motivo: 'Pedro Ian atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas. A implementação do PR #57 não comprova esse critério.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU36: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'NÃO', motivo: 'A história não tem critérios de aceitação registrados.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU25: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Allan Kelvin atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas. A implementação do PR #57 não comprova esse critério.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
+      }
+    },
+    HU26: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    // Iteração 6
+    HU09: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade confirmada em 05/10/2026, mas o conteúdo de saúde ainda não foi revisado pela cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU28: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe e o conteúdo de saúde não foi revisado pela cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU13: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'Não conferido', motivo: 'Critérios e regras de ordenação registrados nos PRs #49 e #53; conferir a verificabilidade no Planejamento, sem presumir validação da cliente.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'NÃO', motivo: 'Depende de HU17 (mesma iteração) e de HU04 (Iteração 5), que ainda não passou pelo DoD e por isso não está disponível.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'SIM', motivo: 'Regras de ordenação registradas junto à HU nos PRs #49 e #53. O registro não representa validação da proposta pela cliente.' }
+      }
+    },
+    HU15: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'Não conferido', motivo: 'Critérios e regras de reajuste registrados nos PRs #49 e #53; conferir a verificabilidade no Planejamento, sem presumir validação da cliente.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'NÃO', motivo: 'Depende de HU13 (mesma iteração) e de HU04 (Iteração 5), que ainda não passou pelo DoD e por isso não está disponível.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'SIM', motivo: 'Regras de reajuste registradas junto à HU nos PRs #49 e #53. O registro não representa validação da proposta pela cliente.' }
+      }
+    },
+    HU16: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Arthur Palhares atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
+      }
+    },
+    HU17: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'Não conferido', motivo: 'A energia necessária já foi incluída na história e no critério pelos PRs #49 e #53; falta a conferência do conjunto dos critérios pela equipe.' },
+        '5': { resultado: 'NÃO', motivo: 'Arthur Palhares atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU18: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '2 critérios registrados.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU19: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Arthur Palhares atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
+      }
+    },
+    HU20: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Arthur Palhares atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
+      }
+    },
+    HU21: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    },
+    HU22: {
+      conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      criterios: {
+        '1': { resultado: 'SIM' },
+        '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
+        '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
+        '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
+        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
+        '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
+        '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
+      }
+    }
+  },
 
   // Critérios gerais compartilhados pela página e pelos modais.
   // Preserve os IDs ao editar textos ou reordenar, pois identificam resultados.
@@ -73,8 +453,8 @@ const DADOS = {
   // Visão operacional do backlog. Os detalhes da HU continuam em `historias`;
   // aqui ficam apenas dados de planejamento que não pertencem ao requisito.
   backlog: {
-    atualizadoEm: '13/11/2026',
-    // Andamento confirmado por Arthur em 13/11/2026; exceções futuras ficam em itens[HU].andamento.
+    atualizadoEm: '14/11/2026',
+    // Estado inicial de 13/11; implementacoes posteriores ficam em itens[HU].andamento.
     andamentoPadrao: 'Não iniciada',
     responsavelPadrao: 'Não atribuído',
     responsaveis: {
@@ -154,13 +534,16 @@ const DADOS = {
         ] }
       },
       HU11: {
-        bloqueios: ['Alinhar o critério de aceite com a decisão sobre PIN numérico ou pétalas.'],
+        bloqueios: ['Conciliar o PIN numérico do escopo da v1, as seis pétalas do critério de aceite e a trava de sessão com quatro toques em seis pétalas descrita na arquitetura (PR #56).'],
         tarefas: { T02: [
           'Construir o cadastro e a entrada do PIN conforme o modelo confirmado no refinamento.',
           'Integrar a conferência do PIN ao acesso protegido da conta.'
         ] }
       },
       HU12: {
+        andamento: 'Implementação integrada; verificação pendente',
+        evidenciaImplementacao: { pr: 57, commit: '156e7df44373d28675e6b6bbe47a607bf5af7ce1' },
+        bloqueios: ['Revisar o rascunho dos termos com a cliente e concluir as verificações do aplicativo Android e do DoD.'],
         tarefas: { T02: [
           'Disponibilizar a leitura dos termos e o registro do aceite.',
           'Integrar a verificação do aceite aos fluxos de coleta de ciclo, sintomas e disposição.'
@@ -223,6 +606,9 @@ const DADOS = {
         ] }
       },
       HU25: {
+        andamento: 'Implementação integrada; verificação pendente',
+        evidenciaImplementacao: { pr: 57, commit: '156e7df44373d28675e6b6bbe47a607bf5af7ce1' },
+        bloqueios: ['Concluir a verificação do cadastro no aplicativo Android e registrar as evidências do DoD.'],
         tarefas: { T02: [
           'Construir o fluxo de criação da conta com os dados acordados no refinamento.',
           'Integrar a criação ao acesso da conta, incluindo sair e entrar novamente.'
@@ -260,15 +646,16 @@ const DADOS = {
   },
 
   // Características do produto (CP), na ordem da árvore, com o objetivo
-  // específico (OE) de cada uma.
+  // específico (OE) de cada uma. habilitadora: sustenta as demais, sem
+  // contribuir sozinha para o resultado do objetivo.
   caracteristicas: [
     { id: 'CP1', nome: 'Registro e análise de sintomas e disposição', objetivo: 'OE1' },
     { id: 'CP2', nome: 'Acompanhamento do ciclo menstrual', objetivo: 'OE1' },
-    { id: 'CP3', nome: 'Privacidade dos dados da usuária', objetivo: 'OE1' },
+    { id: 'CP3', nome: 'Privacidade dos dados da usuária', objetivo: 'OE1', habilitadora: true },
     { id: 'CP4', nome: 'Planejamento adaptativo das tarefas', objetivo: 'OE2' },
     { id: 'CP5', nome: 'Gestão acolhedora da carga diária', objetivo: 'OE3' },
     { id: 'CP6', nome: 'Reconhecimento de ritmo sustentável', objetivo: 'OE3' },
-    { id: 'CP7', nome: 'Conta e preferências da usuária', objetivo: 'OE3' }
+    { id: 'CP7', nome: 'Conta e preferências da usuária', objetivo: 'OE3', habilitadora: true }
   ],
 
   // As 36 histórias de usuário.
@@ -305,14 +692,16 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária sinalizar, a qualquer momento do dia, que está sobrecarregada ou indisposta, para que suas tarefas do dia sejam readequadas (HU15).',
       historia: 'sinalizar, a qualquer momento do dia, que estou sobrecarregada ou indisposta, para que minhas tarefas do dia sejam readequadas',
       caracteristica: 'CP1',
-      rnfs: ['RNF04', 'RNF08'],
+      rnfs: ['RNF04', 'RNF08', 'RNF03', 'RNF07'],
       valor: 4,
       validadaCliente: true,
       iteracao: 5,
       nota: 'Resposta imediata à sobrecarga, a qualquer momento do dia.',
       esforco: { esforco: 2, complexidade: 2, lacuna: 2, consolidado: '2,0' },
       criterios: [
-        'A sinalização só será considerada concluída quando puder ser feita em qualquer horário do dia e resultar na readequação das tarefas do dia (HU15).'
+        'A sinalização só será considerada concluída quando puder ser feita em qualquer horário do dia e resultar na readequação das tarefas do dia (HU15).',
+        'A sinalização deve ser concluída em no máximo 3 toques a partir da tela inicial (RNF04).',
+        'A confirmação da sinalização deve aparecer em até 2 segundos (RNF08).'
       ]
     },
     {
@@ -425,7 +814,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária consultar a situação atual do seu ciclo menstrual.',
       historia: 'consultar a situação atual do meu ciclo menstrual, para saber em que fase estou',
       caracteristica: 'CP2',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 2,
       validadaCliente: false,
       iteracao: 5,
@@ -477,7 +866,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária informar a duração média do seu ciclo menstrual ou que seu ciclo é irregular.',
       historia: 'informar a duração média do meu ciclo ou que meu ciclo é irregular, para que o acompanhamento reflita a minha realidade',
       caracteristica: 'CP2',
-      rnfs: ['RNF02'],
+      rnfs: ['RNF02', 'RNF03'],
       valor: 3,
       validadaCliente: true,
       iteracao: 5,
@@ -495,7 +884,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária obter uma estimativa da fase atual do seu ciclo menstrual informando seus sintomas atuais.',
       historia: 'obter uma estimativa da fase atual do meu ciclo informando meus sintomas atuais, para saber em que fase provavelmente estou',
       caracteristica: 'CP2',
-      rnfs: ['RNF04'],
+      rnfs: ['RNF04', 'RNF03'],
       valor: 2,
       validadaCliente: false,
       iteracao: 0,
@@ -512,7 +901,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária receber recomendações de conteúdos informativos sobre o ciclo menstrual, relacionados à fase atual e aos sintomas registrados.',
       historia: 'receber recomendações de conteúdos sobre o ciclo relacionados à minha fase atual e aos sintomas registrados, para acessar informações relacionadas ao momento do meu ciclo',
       caracteristica: 'CP2',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 3,
       validadaCliente: true,
       iteracao: 6,
@@ -543,8 +932,8 @@ const DADOS = {
       nome: 'Visualizar calendário do ciclo',
       descricao: 'Deve ser possível à usuária visualizar as fases do seu ciclo menstrual em um calendário.',
       historia: 'visualizar as fases do meu ciclo menstrual em um calendário, para enxergar quando cada fase ocorre',
-      caracteristica: 'CP3',
-      rnfs: [],
+      caracteristica: 'CP2',
+      rnfs: ['RNF03'],
       valor: 2,
       validadaCliente: true,
       iteracao: 0,
@@ -608,7 +997,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária receber, a cada dia, a recomendação das tarefas a realizar, em ordem de precedência, com base no registro de energia, prazo e prioridade.',
       historia: 'receber, a cada dia, a recomendação das tarefas a realizar em ordem de precedência, com base no meu registro de energia, nos prazos e nas prioridades, para planejar o dia de acordo com a minha capacidade real',
       caracteristica: 'CP4',
-      rnfs: ['RNF06'],
+      rnfs: ['RNF06', 'RNF03'],
       valor: 4,
       validadaCliente: true,
       iteracao: 6,
@@ -621,7 +1010,7 @@ const DADOS = {
       ],
       regras: {
         origem: 49,
-        situacao: 'Proposta da equipe em 08/11/2026. Em 05/10 a cliente aprovou o fluxo com prioridade, prazo e energia, mas não estas regras: validar na próxima reunião.',
+        situacao: 'Proposta da equipe em 08/11/2026. No teste com usuária, Daniela Soares pediu prioridade e duração no cadastro da tarefa, mas a ordem da recomendação não foi testada com ela. Em 05/10 a Dra. Cláudia aprovou o fluxo com prioridade, prazo e energia, mas não estas regras: validar a ordem na próxima reunião.',
         itens: [
           'Disposição, energia necessária e prioridade têm três níveis: 1 baixa, 2 média e 3 alta.',
           'Entram na recomendação as tarefas não concluídas com data planejada até hoje. A data planejada nasce no dia do cadastro e só muda pelo adiamento (HU18) ou pelo reajuste (HU15).',
@@ -639,7 +1028,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária receber, a cada dia, um resumo do que está previsto para o dia.',
       historia: 'receber, a cada dia, um resumo do que está previsto para o dia, para começar o dia sabendo o que me espera',
       caracteristica: 'CP4',
-      rnfs: ['RNF01'],
+      rnfs: ['RNF01', 'RNF03'],
       valor: 2,
       validadaCliente: false,
       iteracao: 0,
@@ -656,7 +1045,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária visualizar suas tarefas do dia ajustadas ao nível de disposição registrado.',
       historia: 'visualizar minhas tarefas do dia ajustadas ao nível de disposição que registrei, para executá-las de acordo com a minha disposição real',
       caracteristica: 'CP5',
-      rnfs: ['RNF07'],
+      rnfs: ['RNF07', 'RNF03'],
       valor: 4,
       validadaCliente: true,
       iteracao: 6,
@@ -669,7 +1058,7 @@ const DADOS = {
       ],
       regras: {
         origem: 49,
-        situacao: 'Proposta da equipe em 08/11/2026. Em 05/10 a cliente endossou o reajuste automático, mas não estas regras: validar na próxima reunião.',
+        situacao: 'Proposta da equipe em 08/11/2026. No teste com usuária, Daniela Soares entendeu e aprovou o dia reajustado só com o essencial, mas as regras de quais tarefas saem do dia não foram detalhadas com ela. Em 05/10 a Dra. Cláudia endossou o reajuste automático, mas não estas regras: validar na próxima reunião.',
         itens: [
           'O reajuste dispara com um novo registro de disposição (HU04) ou com a sinalização de sobrecarga (HU02), que conta como disposição baixa até o próximo registro.',
           'A lista do dia é recalculada com as regras de ordem da HU13.',
@@ -687,7 +1076,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária alterar as informações de uma tarefa cadastrada.',
       historia: 'alterar as informações de uma tarefa cadastrada, para corrigir ou atualizar o que mudou',
       caracteristica: 'CP5',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 4,
       validadaCliente: false,
       iteracao: 6,
@@ -703,7 +1092,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária cadastrar tarefas informando título, prazo, prioridade e energia necessária.',
       historia: 'cadastrar tarefas informando título, prazo, prioridade e energia necessária, para que elas entrem no meu planejamento do dia',
       caracteristica: 'CP5',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 4,
       validadaCliente: false,
       iteracao: 6,
@@ -720,7 +1109,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária adiar uma tarefa para outra data, mantendo suas demais informações e seu prazo final, alterando apenas o dia em que essa tarefa será feita.',
       historia: 'adiar uma tarefa para outra data, mantendo suas informações e seu prazo final, para reorganizar minha rotina sem culpa',
       caracteristica: 'CP5',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 4,
       validadaCliente: true,
       iteracao: 6,
@@ -739,7 +1128,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária excluir uma tarefa cadastrada.',
       historia: 'excluir uma tarefa cadastrada, para remover o que não faz mais sentido',
       caracteristica: 'CP5',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 3,
       validadaCliente: false,
       iteracao: 6,
@@ -755,7 +1144,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária marcar uma tarefa como concluída, mantendo o registro da data de conclusão.',
       historia: 'marcar uma tarefa como concluída, mantendo a data de conclusão, para acompanhar o que realizei',
       caracteristica: 'CP5',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 4,
       validadaCliente: false,
       iteracao: 6,
@@ -801,7 +1190,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária registrar as atividades de acolhimento de sua preferência.',
       historia: 'registrar as atividades de acolhimento de minha preferência, para que minhas preferências de autocuidado fiquem guardadas',
       caracteristica: 'CP5',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 2,
       validadaCliente: false,
       iteracao: 0,
@@ -817,7 +1206,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária gerar uma retrospectiva mensal com os registros de ciclo, sintomas, disposição, tarefas concluídas e atividades de acolhimento realizadas no período.',
       historia: 'gerar uma retrospectiva mensal com meus registros de ciclo, sintomas, disposição, tarefas concluídas e atividades de acolhimento realizadas, para reconhecer meu ritmo e meu descanso',
       caracteristica: 'CP6',
-      rnfs: [],
+      rnfs: ['RNF02', 'RNF03'],
       valor: 2,
       validadaCliente: true,
       iteracao: 0,
@@ -848,7 +1237,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária registrar as atividades de acolhimento que realizou.',
       historia: 'registrar as atividades de acolhimento que realizei, para que meu autocuidado conte como parte da minha rotina',
       caracteristica: 'CP6',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 2,
       validadaCliente: false,
       iteracao: 0,
@@ -864,7 +1253,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária comparar os relatórios mensais de meses diferentes, abrangendo ciclo, sintomas, disposição e tarefas.',
       historia: 'comparar os relatórios mensais de meses diferentes, abrangendo ciclo, sintomas, disposição e tarefas, para identificar mudanças e padrões entre os meses',
       caracteristica: 'CP6',
-      rnfs: [],
+      rnfs: ['RNF02', 'RNF03'],
       valor: 2,
       validadaCliente: false,
       iteracao: 0,
@@ -906,7 +1295,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária criar sua conta.',
       historia: 'criar minha conta, para ter acesso exclusivo ao meu histórico',
       caracteristica: 'CP7',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 4,
       validadaCliente: false,
       iteracao: 5,
@@ -922,7 +1311,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária recuperar o acesso à sua conta.',
       historia: 'recuperar o acesso à minha conta, para não perder o meu histórico',
       caracteristica: 'CP7',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 3,
       validadaCliente: false,
       iteracao: 5,
@@ -954,7 +1343,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária ativar, desativar e configurar as notificações do aplicativo, inclusive a exibição de informações do ciclo nelas.',
       historia: 'ativar, desativar e configurar as notificações, inclusive a exibição de informações do ciclo, para controlar o que aparece na tela do meu aparelho',
       caracteristica: 'CP7',
-      rnfs: ['RNF01'],
+      rnfs: ['RNF01', 'RNF03'],
       valor: 3,
       validadaCliente: false,
       iteracao: 0,
@@ -967,6 +1356,19 @@ const DADOS = {
     }
   ],
 
+  // Protocolos compartilhados: definidos uma vez, exibidos nos RNFs consumidores.
+  protocolosRnf: {
+    desempenhoAndroid: [
+        'Executar no aplicativo React Native em build de release e aparelho Android físico. Fixar commit/build, modelo, versão do Android, massa de dados e estado de armazenamento antes do ensaio.',
+        'Registrar conexão, latência, limites de banda e ferramenta de controle de rede, com parâmetros reproduzíveis. Ensaiar partida fria e uso após aquecimento separadamente, sem misturar as amostras.',
+        'Realizar cinco medições por cenário e ambiente. Usar instrumentação temporal da interação até o resultado utilizável ou gravação com resolução temporal adequada; informar método, precisão e possíveis interferências da instrumentação.',
+        'Registrar início, fim, duração, resultado, data, executor, revisor e evidência no DoD da respectiva história de usuário. Emulador e build de desenvolvimento servem para diagnóstico, não para aprovação final de desempenho.',
+        'Exemplo de reprovação: 1, 1, 1, 1 e 4 segundos têm média de 1,6 s, mas reprovam os três RNFs por uma ultrapassagem individual. O ensaio descreve apenas execuções observadas, sem garantir todo aparelho ou rede.'
+      ]
+  },
+
+  // Campos opcionais dos RNFs: condicoes, verificacao, situacao, fontes e protocoloComum.
+  // Resultados de execução permanecem nos registros do DoD.
   // Requisitos não funcionais. todasAsHistorias: vale para todas (RNF10 e RNF11).
   rnfs: [
     {
@@ -981,42 +1383,108 @@ const DADOS = {
       nome: 'Conformidade com a LGPD',
       descricao: 'O tratamento dos dados deve atender à LGPD (Lei nº 13.709/2018), considerando dados de saúde como dados pessoais sensíveis.',
       classificacao: 'Externo (legislativo)',
-      criterio: 'Nenhum dado de ciclo, sintoma ou disposição é salvo antes do aceite dos termos, e os termos descrevem a finalidade de cada tipo de dado.'
+      criterio: 'Conferir todas as condições aplicáveis; aceite dos termos isolado não comprova conformidade com a LGPD.',
+      situacao: 'Proposta da equipe para a #39, pendente de validação. Transparência e minimização incorporam o RNF-novo da documentação histórica; não há verificação do produto.',
+      condicoes: [
+        'Transparência: informar dados coletados, finalidades, duração do tratamento, compartilhamentos, responsável e contato.',
+        'Consentimento: quando aplicável, registrar manifestação específica e destacada, data e versão dos termos. Bloquear coleta de dados de saúde antes do aceite previsto em HU12.',
+        'Minimização: cada campo coletado deve possuir finalidade ligada a uma funcionalidade; não exigir dados sem finalidade demonstrada.',
+        'Revogação e exclusão: oferecer procedimento facilitado e conferir HU36; distinguir revogar consentimento de eliminar dados. Impedir novos tratamentos baseados no consentimento revogado.',
+        'Retenção: documentar prazos, eliminação e tratamento de backups; exceções legais exigem fundamento registrado e comunicação à titular.'
+      ],
+      verificacao: [
+        'Inventariar campos, finalidade, base aplicável, retenção e compartilhamentos; revisar o inventário e os termos antes da aprovação.',
+        'Com contas fictícias, tentar salvar dados de saúde antes e depois do aceite e após revogação. Verificar registros de consentimento e bloqueios.',
+        'Solicitar exclusão em HU36 e conferir dados ativos, armazenamento local e política de backups. Registrar as evidências no DoD da respectiva história de usuário, sem dados pessoais reais.',
+        'Registrar resultado por condição. O checklist técnico não é comprovação integral de conformidade legal.'
+      ],
+      fontes: [{ titulo: 'LGPD — texto atualizado, arts. 6, 8, 9, 11, 15, 16 e 18', url: 'https://www2.camara.leg.br/legin/fed/lei/2018/lei-13709-14-agosto-2018-787077-normaatualizada-pl.html' }]
     },
     {
       id: 'RNF03',
       nome: 'Acesso exclusivo da usuária',
-      descricao: 'Os dados de ciclo, sintomas, disposição e tarefas devem ser acessíveis somente pela própria usuária.',
+      descricao: 'Os dados pessoais de ciclo, sintomas, disposição, tarefas e demais registros da conta devem ser acessíveis somente pela própria usuária nos fluxos que os manipulam.',
       classificacao: 'Segurança da informação',
-      criterio: 'Uma requisição aos dados de uma usuária feita com a sessão de outra conta retorna acesso negado.'
+      criterio: 'Acesso próprio permitido e acesso indevido negado em todos os fluxos aplicáveis; conferir proteção criptográfica separadamente.',
+      situacao: 'Cobertura revisada na #39; criptografia incorpora a proposta histórica RNF-novo e aguarda validação e definição técnica. Verificações do produto não executadas.',
+      condicoes: [
+        'Nos fluxos autenticados, validar a titularidade nas operações de leitura, criação, edição, exclusão e exportação. Cadastro da conta e solicitação de recuperação podem ocorrer sem sessão, mas não permitem acessar dados protegidos antes da comprovação de titularidade. Esconder controles não substitui autorização no serviço responsável.',
+        'Proteger tarefas, recomendações, históricos, relatórios, preferências e fluxos de recuperação e exclusão, conforme as histórias ligadas.',
+        'Em HU26, liberar dados somente após comprovar titularidade; conferir expiração e uso único das credenciais de recuperação. A solicitação não deve revelar se a conta existe.',
+        'Criptografia proposta: proteger dados pessoais em trânsito e em repouso, incluindo armazenamento local e backups existentes. Não guardar chaves junto de dados exportados nem expor segredos nas evidências.'
+      ],
+      verificacao: [
+        'Usar duas contas fictícias A e B. Inventariar operações por história e conferir sucesso de A nos próprios dados e negação com B, sem sessão e com sessão expirada.',
+        'Repetir operações trocando identificadores de conta, tarefa, registro e relatório. A resposta não pode revelar nem modificar dados de terceiros.',
+        'Em HU26, verificar titularidade, expiração e reutilização. Em HU36, negar exclusão por outra conta e invalidar acesso após exclusão da própria conta.',
+        'Inspecionar transporte, banco, armazenamento Android e backups. Registrar mecanismos criptográficos e gestão de chaves sem revelar segredos. A equipe deve definir a solução técnica antes de aprovar essa condição.'
+      ]
     },
     {
       id: 'RNF04',
       nome: 'Agilidade no registro',
-      descricao: 'O registro de sintomas e disposição deve exigir poucas interações.',
+      descricao: 'O registro de sintomas e disposição e a sinalização de sobrecarga devem exigir poucas interações.',
       classificacao: 'Usabilidade',
-      criterio: 'O registro é concluído em no máximo 3 toques a partir da tela inicial.'
+      criterio: 'Cada fluxo aplicável deve ser concluído em no máximo 3 toques desde a tela inicial, incluindo abertura, preenchimento e confirmação.',
+      situacao: 'Roteiro proposto; viabilidade não comprovada. Ensaio pendente de protótipo publicado e execução.',
+      condicoes: [
+        'HU04: com sessão válida, registrar dois sintomas de intensidades diferentes e a disposição, partindo da tela inicial sem dados previamente preenchidos.',
+        'HU02: sinalizar sobrecarga em ensaio separado. HU08: conferir o fluxo próprio de informe de sintomas quando for planejado, sem presumir cobertura pelo ensaio de HU04.',
+        'Contar cada seleção e confirmação; gestos adicionais devem ser identificados, sem escondê-los da avaliação do esforço de interação.'
+      ],
+      verificacao: [
+        'Publicar link e versão do protótipo clicável. Aproveitar o roteiro do PR #49 e alinhar os dados de HU04 com a #38 quando incorporada, sem duplicar suas regras.',
+        'Registrar a sequência completa e a contagem observada. Não registrar aprovação sem ensaio; se ultrapassar o limite, reprovar e submeter mudança de interface ou meta à validação.',
+        'Após implementação, repetir no app Android; aprovação do protótipo não substitui a verificação do produto.'
+      ]
     },
     {
       id: 'RNF06',
       nome: 'Tempo de exibição da recomendação',
       descricao: 'A recomendação do dia deve ser exibida em até 3 segundos após o acesso.',
       classificacao: 'Desempenho',
-      criterio: 'Média de 5 medições no DevTools, com a rede em Fast 4G, igual ou inferior a 3 s.'
+      criterio: 'Cada uma das 5 medições por cenário e ambiente deve ser menor ou igual a 3 s; qualquer ultrapassagem reprova o ensaio.',
+      situacao: 'Protocolo documentado; verificação do aplicativo não executada.',
+      condicoes: [
+        'Início: acionamento do acesso à recomendação. Fim: lista completa exibida e utilizável. Incluir comunicação, processamento e apresentação do resultado, sem incluir o tempo de preenchimento pela usuária.',
+        'A média serve apenas para diagnóstico e não compensa uma execução acima do limite. Falha de operação ou ausência de resultado não conta como aprovação.'
+      ],
+      verificacao: [
+        'Aplicar o protocolo comum de desempenho Android abaixo e registrar resultado individual para cada execução.'
+      ],
+      protocoloComum: 'desempenhoAndroid'
     },
     {
       id: 'RNF07',
       nome: 'Tempo de reajuste da recomendação',
       descricao: 'O reajuste da recomendação deve aparecer em até 2 segundos após o registro de disposição.',
       classificacao: 'Desempenho',
-      criterio: 'Média de 5 medições entre salvar o registro e a lista atualizada igual ou inferior a 2 s.'
+      criterio: 'Cada uma das 5 medições por cenário e ambiente deve ser menor ou igual a 2 s; qualquer ultrapassagem reprova o ensaio.',
+      situacao: 'Protocolo documentado; verificação do aplicativo não executada.',
+      condicoes: [
+        'Início: acionamento de salvar a disposição ou sinalizar sobrecarga, em ensaios separados. Fim: lista reajustada exibida e utilizável. Incluir comunicação, processamento e apresentação do resultado, sem incluir o tempo de preenchimento pela usuária.',
+        'A média serve apenas para diagnóstico e não compensa uma execução acima do limite. Falha de operação ou ausência de resultado não conta como aprovação.'
+      ],
+      verificacao: [
+        'Aplicar o protocolo comum de desempenho Android abaixo e registrar resultado individual para cada execução.'
+      ],
+      protocoloComum: 'desempenhoAndroid'
     },
     {
       id: 'RNF08',
       nome: 'Tempo de confirmação do registro',
-      descricao: 'A confirmação do registro de sintomas e disposição deve aparecer em até 2 segundos.',
+      descricao: 'A confirmação do registro de sintomas e disposição e da sinalização de sobrecarga deve aparecer em até 2 segundos.',
       classificacao: 'Desempenho',
-      criterio: 'Média de 5 medições no DevTools igual ou inferior a 2 s.'
+      criterio: 'Cada uma das 5 medições por cenário e ambiente deve ser menor ou igual a 2 s; qualquer ultrapassagem reprova o ensaio.',
+      situacao: 'Protocolo documentado; verificação do aplicativo não executada.',
+      condicoes: [
+        'Início: acionamento de salvar o registro ou sinalizar sobrecarga, em ensaios separados. Fim: confirmação visível da operação concluída, sem sucesso prematuro. Incluir comunicação, processamento e apresentação do resultado, sem incluir o tempo de preenchimento pela usuária.',
+        'A média serve apenas para diagnóstico e não compensa uma execução acima do limite. Falha de operação ou ausência de resultado não conta como aprovação.'
+      ],
+      verificacao: [
+        'Aplicar o protocolo comum de desempenho Android abaixo e registrar resultado individual para cada execução.'
+      ],
+      protocoloComum: 'desempenhoAndroid'
     },
     {
       id: 'RNF09',
@@ -1028,9 +1496,20 @@ const DADOS = {
     {
       id: 'RNF10',
       nome: 'Compatibilidade de telas',
-      descricao: 'A interface deve funcionar em telas de celular e de computador.',
+      descricao: 'A interface deve funcionar nos dispositivos Android suportados pelo aplicativo, adaptando-se às telas e escalas de fonte definidas na matriz de suporte.',
       classificacao: 'Suportabilidade (compatibilidade)',
-      criterio: 'No modo dispositivo do DevTools, as telas funcionam de 360 px a 1440 px de largura sem rolagem horizontal.',
+      criterio: 'Todos os fluxos devem funcionar nos aparelhos e versões Android da matriz de suporte, sem controles inacessíveis ou conteúdo cortado.',
+      situacao: 'Protocolo documentado; verificação do aplicativo não executada.',
+      condicoes: [
+        'A plataforma desta entrega é o aplicativo React Native para Android. Não exigir compatibilidade com navegador, computador ou iOS.',
+        'A matriz de suporte deve identificar versões Android, aparelhos, resolução, densidade e escalas de fonte normal e ampliada. Extrair o mínimo Android da configuração real do aplicativo, sem presumir uma versão.',
+        'Conferir telas, diálogos, listas, formulários, teclado aberto, mensagens e confirmação das ações em cada configuração da matriz.'
+      ],
+      verificacao: [
+        'Antes da execução, publicar a matriz de suporte com a build avaliada. Enquanto a matriz não estiver definida, registrar pendência e não aprovar compatibilidade.',
+        'Executar os fluxos em aparelhos Android físicos representativos. Emuladores e inspeção de layout complementam o ensaio; não substituir todos os aparelhos por emulação.',
+        'Registrar fluxo, aparelho, Android, configuração de tela/fonte, resultado e evidência conforme o DoD. Conferir ausência de sobreposição, corte e controles inacessíveis.'
+      ],
       todasAsHistorias: true
     },
     {
@@ -1038,7 +1517,18 @@ const DADOS = {
       nome: 'Contraste legível',
       descricao: 'Os textos devem ter contraste legível.',
       classificacao: 'Usabilidade (acessibilidade)',
-      criterio: 'A auditoria do Lighthouse não aponta erros de contraste (WCAG 2.1 nível AA).',
+      criterio: 'Textos devem atender ao contraste mínimo WCAG 2.1 AA, medido nas telas e estados do aplicativo Android.',
+      situacao: 'Protocolo documentado; verificação do aplicativo não executada.',
+      condicoes: [
+        'Exigir contraste de pelo menos 4,5:1 para texto comum e 3:1 para texto grande segundo o critério 1.4.3. Documentar a classificação pelo tamanho efetivo e peso, sem equiparar automaticamente sp a pt.',
+        'Conferir temas disponíveis e estados normal, foco, erro e seleção, incluindo diálogos e mensagens dinâmicas; registrar exceções previstas no critério quando aplicáveis.'
+      ],
+      verificacao: [
+        'Inspecionar as telas da build Android e medir cores de texto e fundo com ferramenta de contraste. Android Accessibility Scanner e inspeção de layout podem apoiar a avaliação, sem substituir os estados não cobertos.',
+        'Registrar elemento, tela, tema, estado, cores, tamanho efetivo, peso, razão medida, ferramenta e resultado. Conferir sobreposições e fundos variáveis.',
+        'Relatórios do Lighthouse ou testes do Pages não constituem evidência de contraste do app. Anexar medições ao registro do DoD.'
+      ],
+      fontes: [{ titulo: 'W3C — contraste mínimo, WCAG 2.1, critério 1.4.3', url: 'https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum' }],
       todasAsHistorias: true
     }
   ],
@@ -1068,6 +1558,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Benefício especificado e lacuna de refinamento registrada no backlog.',
         motivo: 'Distinguir comparação de relatórios de sua exportação e tornar visível a dependência da geração mensal.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluídos vínculos com RNF02 e RNF03 para tratamento e proteção dos dados do relatório.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU23: [
@@ -1075,6 +1570,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Proposta ampliação da retrospectiva como origem do relatório mensal.',
         motivo: 'Issue #38: consolidar as entradas consumidas por HU31 e HU32. Ampliação e reestimativa pendentes; não altera o MVP nem representa confirmação da cliente.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluídos vínculos com RNF02 e RNF03 para tratamento e proteção dos dados do relatório.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU30: [
@@ -1094,6 +1594,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Distinguido o adiamento manual da movimentação automática de HU15.',
         motivo: 'Issue #38: referenciar as regras propostas do PR #49 sem duplicá-las.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU08: [
@@ -1101,6 +1606,23 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Corrigida a justificativa de exclusão do MVP.',
         motivo: 'Issue #38: estimativa por sintomas é distinta do cálculo pelas entradas de HU06 e HU07.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU02: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Ganhou critérios explícitos de RNF04 e RNF08.',
+        motivo: 'Decisão do achado 02: os dois RNFs valem para a sinalização e para o registro.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluídos vínculos com RNF03 para proteção dos dados e RNF07 para o tempo de reajuste após sinalizar sobrecarga.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU04: [
@@ -1110,9 +1632,26 @@ const DADOS = {
         motivo: 'Era citado por esses RNFs, mas não tinha card no quadro. Card ainda pendente.'
       },
       {
+        data: '08/11/2026',
+        alteracao: 'Card no quadro deixou de ser pendência.',
+        motivo: 'Decisão do achado 01: o catálogo do site é o vigente, e o quadro do Figma é fotografia histórica de 28/09/2026.'
+      },
+      {
         data: '12/11/2026',
         alteracao: 'Detalhados campos, intensidades, frequência e correção como proposta.',
         motivo: 'Issue #38: alinhar o dado-fonte ao registro mais recente usado pelas regras do PR #49; não atribuir escalas à validação de 05/10.'
+      }
+    ],
+    HU10: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Característica: CP3 → CP2.',
+        motivo: 'Decisão do achado 06: o calendário trata de acompanhar o ciclo, não de privacidade.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU05: [
@@ -1125,6 +1664,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Explicitadas entradas, contagem do dia e situações sem estimativa; modelo clínico continua pendente.',
         motivo: 'Issue #38: HU06 e HU07 registram dados, e não definem o cálculo. Limites das fases precisam de revisão da cliente.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU06: [
@@ -1132,7 +1676,10 @@ const DADOS = {
         data: '05/10/2026',
         alteracao: 'Valor: Should have → Must have.',
         motivo: 'Ajuste da cliente na reunião de validação da priorização.',
-        video: { id: 'PKoWLngGSRg', tempo: 514 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 514
+        }
       },
       {
         data: '12/11/2026',
@@ -1145,12 +1692,20 @@ const DADOS = {
         data: '05/10/2026',
         alteracao: 'Valor: Could have → Should have.',
         motivo: 'Ajuste da cliente na reunião de validação da priorização.',
-        video: { id: 'PKoWLngGSRg', tempo: 378 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 378
+        }
       },
       {
         data: '12/11/2026',
         alteracao: 'Vinculadas duração e irregularidade à estimativa de HU05.',
         motivo: 'Issue #38: explicitar as limitações sem repetir a regra de cálculo.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU09: [
@@ -1164,6 +1719,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Benefício diferenciado da consulta geral sobre o ciclo.',
         motivo: 'Explicitar que a recomendação entrega informação contextual à fase e aos sintomas.'
+      },
+      {
+        data: '13/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteção das recomendações personalizadas.',
+        motivo: 'Sugestão de Arthur Palhares na revisão do PR #54: HU09 utiliza fase e sintomas da usuária, portanto sua personalização deve integrar a verificação de acesso no DoD. Conteúdos informativos genéricos não precisam ser privados.'
       }
     ],
     HU11: [
@@ -1175,6 +1735,11 @@ const DADOS = {
     ],
     HU13: [
       {
+        data: '08/11/2026',
+        alteracao: 'Ganhou regras de ordenação; o critério de aceitação passou a apontar para elas.',
+        motivo: 'O critério dizia apenas que a ordem usaria energia, prazo e prioridade, sem permitir conferir o resultado.'
+      },
+      {
         data: '10/11/2026',
         alteracao: 'RNF06 passou a ser condição obrigatória de aceite da recomendação de tarefas do dia.',
         motivo: 'Alinhar o critério de aceite ao DoD, que exige o cumprimento dos RNFs aplicáveis à história.'
@@ -1183,9 +1748,19 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Reaproveitadas as regras propostas de ordenação do PR #49.',
         motivo: 'Issue #38: incluir precedência, urgência, desempates e ausência de disposição, mantendo pendente a validação da cliente e preservando o critério de RNF06 do PR #51.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU15: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Ganhou regras de reajuste; o critério de aceitação passou a apontar para elas.',
+        motivo: 'O critério não dizia o que "reajustar" significa. A redistribuição automática segue o que a cliente endossou em 05/10.'
+      },
       {
         data: '10/11/2026',
         alteracao: 'RNF07 passou a ser condição obrigatória de aceite do reajuste da recomendação do dia.',
@@ -1195,14 +1770,33 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Reaproveitadas as regras propostas de reajuste automático do PR #49.',
         motivo: 'Issue #38: explicitar movimentação, desfazer e retorno das tarefas, preservando o critério de RNF07 do PR #51. Regras ainda não validadas pela cliente.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU17: [
-      { data: 'Sem data no site', alteracao: 'Passou a incluir "energia necessária".', motivo: 'Decisão da equipe; o dado é usado por HU13 e HU15.' },
+      {
+        data: 'Sem data no site',
+        alteracao: 'Passou a incluir "energia necessária".',
+        motivo: 'Decisão da equipe; o dado é usado por HU13 e HU15.'
+      },
+      {
+        data: '08/11/2026',
+        alteracao: 'História e critério de aceitação passaram a citar a energia necessária.',
+        motivo: 'Só a descrição citava o campo, e sem ele as regras de HU13 e HU15 não podem ser aplicadas.'
+      },
       {
         data: '12/11/2026',
         alteracao: 'História e critério passaram a incluir energia necessária, conforme PR #49.',
         motivo: 'Issue #38: a entrada já constava da descrição e é necessária para HU13 e HU15.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU19: [
@@ -1210,6 +1804,11 @@ const DADOS = {
         data: 'Sem data no site',
         alteracao: 'Redação padronizada a partir de "Deve ser possível o usuário deletar a tarefa criada".',
         motivo: 'Padronização da redação do catálogo.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU21: [
@@ -1217,7 +1816,10 @@ const DADOS = {
         data: '05/10/2026',
         alteracao: 'Valor: Could have → Should have.',
         motivo: 'Ajuste da cliente, que defendeu atividade física e respiração.',
-        video: { id: 'PKoWLngGSRg', tempo: 286 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 286
+        }
       }
     ],
     HU22: [
@@ -1225,11 +1827,23 @@ const DADOS = {
         data: '05/10/2026',
         alteracao: 'Valor: Should have → Must have.',
         motivo: 'Ajuste da cliente na reunião de validação da priorização.',
-        video: { id: 'PKoWLngGSRg', tempo: 661 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 661
+        }
       }
     ],
     HU26: [
-      { data: 'Sem data no site', alteracao: 'Fora do MVP → no MVP.', motivo: 'O reset manual pela equipe contrariaria o RNF03.' }
+      {
+        data: 'Sem data no site',
+        alteracao: 'Fora do MVP → no MVP.',
+        motivo: 'O reset manual pela equipe contrariaria o RNF03.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU28: [
       {
@@ -1251,14 +1865,26 @@ const DADOS = {
       }
     ],
     HU29: [
-      { data: 'Sem data no site', alteracao: 'Incluído no catálogo.', motivo: 'Faltava um requisito de preferência na CP7 (achado 05).' }
+      {
+        data: 'Sem data no site',
+        alteracao: 'Incluído no catálogo.',
+        motivo: 'Faltava um requisito de preferência na CP7 (achado 05).'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU35: [
       {
         data: '05/10/2026',
         alteracao: 'Levantado como requisito novo.',
         motivo: 'Sugestão da equipe, detalhada pela cliente: relatório para levar à consulta médica.',
-        video: { id: 'PKoWLngGSRg', tempo: 973 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 973
+        }
       },
       {
         data: '12/10/2026',
@@ -1267,7 +1893,11 @@ const DADOS = {
       }
     ],
     HU36: [
-      { data: 'Iteração 4', alteracao: 'Incluído no catálogo.', motivo: 'Exigência da LGPD que estava fora do catálogo e do backlog.' },
+      {
+        data: 'Iteração 4',
+        alteracao: 'Incluído no catálogo.',
+        motivo: 'Exigência da LGPD que estava fora do catálogo e do backlog.'
+      },
       {
         data: '12/10/2026',
         alteracao: 'Numeração anterior: 29 → 36.',
@@ -1279,11 +1909,119 @@ const DADOS = {
         motivo: 'Direito legal da titular (LGPD, art. 18), contrapartida do consentimento.'
       }
     ],
+    RNF04: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Passou a valer também para a sinalização de sobrecarga (HU02).',
+        motivo: 'Decisão do achado 02: sinalizar é um registro rápido de disposição, e o quadro apontava para as duas histórias.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF08: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Passou a valer também para a sinalização de sobrecarga (HU02).',
+        motivo: 'Decisão do achado 02: sinalizar é um registro rápido de disposição, e o quadro apontava para as duas histórias.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
     RNF09: [
       {
         data: 'Sem data no site',
         alteracao: 'Classificação no MVP: evolutivo.',
         motivo: 'A primeira versão usa PIN numérico; as pétalas ficam para depois.'
+      }
+    ],
+    HU33: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU25: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU24: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU20: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU16: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU14: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    RNF11: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF10: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF07: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF06: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF03: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF02: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
       }
     ]
   },
@@ -1414,6 +2152,25 @@ const DADOS = {
         { tempo: 856, tipo: 'Tarefa', texto: 'Mapa de stakeholders regerado após a mudança de cliente e usuária.', historias: [] },
         { tempo: 973, tipo: 'Decisão', texto: 'Toda alteração por pull request, com revisão pedida no grupo.', historias: [] }
       ]
+    },
+    {
+      id: 'YG6LqnZY8J4',
+      tipo: 'Elaboração · Teste com usuária',
+      nome: 'Teste com Usuária - MindFlow',
+      meta: 'Gravação de 14:50 · Teste de usabilidade do protótipo com Daniela Soares',
+      decisoes: [
+        { tempo: 44, tipo: 'Refinamento', texto: 'O botão de criar conta está pequeno e foi difícil de achar.', historias: ['HU11'] },
+        { tempo: 112, tipo: 'Refinamento', texto: 'Não ficou claro como encontrar e usar o PIN enviado por e-mail.', historias: ['HU12'] },
+        { tempo: 214, tipo: 'Refinamento', texto: 'O botão "Estou sobrecarregada" não foi entendido sem explicação da equipe.', historias: ['HU02'] },
+        { tempo: 256, tipo: 'Confirmado', texto: 'Entendeu e aprovou o dia reajustado só com o essencial: "coloca só as tarefas que é essencial para não me sobrecarregar".', historias: ['HU02', 'HU15'] },
+        { tempo: 270, tipo: 'Refinamento', texto: 'A opção "Fazer uma pausa / adiar / cuidar de si" confundiu; pediu para esclarecer o objetivo dela.', historias: ['HU15', 'HU18'] },
+        { tempo: 338, tipo: 'Refinamento', texto: 'Faltou um jeito de voltar da tela do dia reajustado, e a rolagem não foi percebida.', historias: ['HU15'] },
+        { tempo: 407, tipo: 'Refinamento', texto: 'Prioridade e duração ajudam a organizar o tempo e tiram a pressão de terminar; horário ficou como "talvez".', historias: ['HU13'] },
+        { tempo: 477, tipo: 'Refinamento', texto: 'Teve dúvida ao salvar a tarefa e ao marcá-la como concluída.', historias: ['HU13'] },
+        { tempo: 597, tipo: 'Confirmado', texto: 'A explicação por fase é útil, porque muitas mulheres não entendem as próprias fases do ciclo.', historias: ['HU09'] },
+        { tempo: 628, tipo: 'Refinamento', texto: 'Ao aceitar os termos e voltar, o app reiniciou a entrada e ela precisou refazer o acesso. Os termos foram aceitos sem comentário.', historias: ['HU11'] },
+        { tempo: 763, tipo: 'Refinamento', texto: 'Sugeriu dicas explicativas e um guia no primeiro acesso, especialmente para "Estou sobrecarregada".', historias: ['HU02'] }
+      ]
     }
   ],
 
@@ -1520,7 +2277,7 @@ const DADOS = {
           atividade: 4,
           pratica: 'Apresentação das telas à cliente',
           tecnicas: ['Critérios de aceitação e validação com a cliente'],
-          resultado: 'Telas validadas com a cliente, com ajustes apontados em cada uma.'
+          resultado: 'Fluxos avaliados pela cliente em 05/10/2026, com os apontamentos registrados; privacidade e conta não foram avaliadas.'
         },
         {
           atividade: 5,
@@ -1746,3 +2503,33 @@ const DADOS = {
 
   foraDaMatriz: ['HU04', 'HU28', 'HU29', 'HU30', 'HU31', 'HU32', 'HU33', 'HU34', 'HU35', 'HU36']
 };
+
+// Situação de uma história no DoR, a partir de aplicacaoDor:
+//   Pronta              todos os critérios em SIM ou N/A;
+//   Pronta com exceção  o único NÃO está em critério que admite exceção,
+//                       com autorização, risco e prazo registrados;
+//   Não pronta          algum outro NÃO;
+//   Não conferida       sem registro ou com critério ainda não conferido.
+DADOS.situacaoDor = function (id) {
+  const registro = DADOS.aplicacaoDor[id];
+  if (!registro) return 'Não conferida';
+  let pendente = false;
+  let excecao = false;
+  for (const c of DADOS.dorCriterios) {
+    const r = (registro.criterios || {})[c.id] || {};
+    if (r.resultado === 'SIM' || r.resultado === 'N/A') continue;
+    if (r.resultado === 'NÃO') {
+      const e = r.excecao;
+      if (c.admiteExcecao && e && e.autorizadaPor && e.risco && e.prazo) excecao = true;
+      else return 'Não pronta';
+    } else {
+      pendente = true;
+    }
+  }
+  if (pendente) return 'Não conferida';
+  return excecao ? 'Pronta com exceção' : 'Pronta';
+};
+
+DADOS.dorAtendido = DADOS.historias
+  .filter((h) => ['Pronta', 'Pronta com exceção'].includes(DADOS.situacaoDor(h.id)))
+  .map((h) => h.id);
