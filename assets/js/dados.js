@@ -933,20 +933,6 @@ const DADOS = {
         motivo: 'Decisão do achado 06: o calendário trata de acompanhar o ciclo, não de privacidade.'
       }
     ],
-    HU13: [
-      {
-        data: '08/11/2026',
-        alteracao: 'Ganhou regras de ordenação; o critério de aceitação passou a apontar para elas.',
-        motivo: 'O critério dizia apenas que a ordem usaria energia, prazo e prioridade, sem permitir conferir o resultado.'
-      }
-    ],
-    HU15: [
-      {
-        data: '08/11/2026',
-        alteracao: 'Ganhou regras de reajuste; o critério de aceitação passou a apontar para elas.',
-        motivo: 'O critério não dizia o que "reajustar" significa. A redistribuição automática segue o que a cliente endossou em 05/10.'
-      }
-    ],
     HU05: [
       {
         data: 'Sem data no site',
@@ -1002,6 +988,11 @@ const DADOS = {
     ],
     HU13: [
       {
+        data: '08/11/2026',
+        alteracao: 'Ganhou regras de ordenação; o critério de aceitação passou a apontar para elas.',
+        motivo: 'O critério dizia apenas que a ordem usaria energia, prazo e prioridade, sem permitir conferir o resultado.'
+      },
+      {
         data: '10/11/2026',
         alteracao: 'RNF06 passou a ser condição obrigatória de aceite da recomendação de tarefas do dia.',
         motivo: 'Alinhar o critério de aceite ao DoD, que exige o cumprimento dos RNFs aplicáveis à história.'
@@ -1013,6 +1004,11 @@ const DADOS = {
       }
     ],
     HU15: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Ganhou regras de reajuste; o critério de aceitação passou a apontar para elas.',
+        motivo: 'O critério não dizia o que "reajustar" significa. A redistribuição automática segue o que a cliente endossou em 05/10.'
+      },
       {
         data: '10/11/2026',
         alteracao: 'RNF07 passou a ser condição obrigatória de aceite do reajuste da recomendação do dia.',
