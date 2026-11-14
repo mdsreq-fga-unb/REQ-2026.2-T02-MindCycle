@@ -1,0 +1,40 @@
+name: mindcycle
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: mindcycle
+      POSTGRES_PASSWORD: mindcycle
+      POSTGRES_DB: mindcycle
+    ports:
+      # Se a 5432 já estiver em uso: POSTGRES_PORT=5434 docker compose up -d
+      - '${POSTGRES_PORT:-5432}:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U mindcycle']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # API empacotada como em produção. No dia a dia, prefira `npm run dev:api`.
+  api:
+    profiles: ['api']
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://mindcycle:mindcycle@postgres:5432/mindcycle?schema=public
+      # Obrigatório: sem ele a API não sobe.
+      JWT_SECRET: ${JWT_SECRET:-}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8081}
+      NODE_ENV: production
+    ports:
+      - '${API_PORT:-3000}:3000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres:

@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: mindcycle
+          POSTGRES_PASSWORD: mindcycle
+          POSTGRES_DB: mindcycle_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mindcycle"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL_TEST: postgresql://mindcycle:mindcycle@localhost:5432/mindcycle_test?schema=public
+      JWT_SECRET: segredo-somente-para-o-ci-com-32-bytes-ou-mais
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install -g npm@11.21.2
+      # O postinstall compila packages/shared e gera o client do Prisma.
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+      - run: npm run test:e2e
+      - name: Build da imagem da API
+        run: docker build -f apps/api/Dockerfile .
