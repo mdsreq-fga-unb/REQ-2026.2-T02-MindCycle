@@ -145,6 +145,30 @@ páginas.
 
 Os comentários no topo de `assets/js/dados.js` explicam cada campo.
 
+### Revisão dos RNFs — issue #39
+
+Os detalhes dos RNFs apresentam `criterio` (resumo), `condicoes`, `verificacao`,
+`situacao` e `fontes`. São campos opcionais: os requisitos sem detalhamento continuam
+abrindo normalmente. O protocolo compartilhado de desempenho fica uma única vez em
+`protocolosRnf.desempenhoAndroid`; RNF06, RNF07 e RNF08 o referenciam por `protocoloComum`.
+Para consultar, abra os RNFs na árvore ou por links como `…/#RNF06`.
+
+Os protocolos avaliam o **aplicativo React Native para Android**. Testar este Pages
+em navegador verifica a documentação, sem comprovar desempenho, contraste ou
+compatibilidade do produto. Os resultados reais ficam no registro do DoD da respectiva história de usuário;
+documentar um protocolo não equivale a executá-lo.
+
+A meta de três toques depende de ensaio do protótipo e depois do app. A matriz de
+aparelhos/versões Android e as decisões técnicas de criptografia permanecem pendentes.
+Minimização, transparência e criptografia recuperam a proposta histórica `RNF-novo`,
+distribuída entre RNF02 e RNF03 sem criar identificador adicional, e aguardam validação.
+
+Esta revisão considera a aplicação de RNF04/RNF08 à HU02 proposta no PR #49 e
+preserva a separação dos fluxos. Os refinamentos de HU04 na #38 devem ser conferidos
+na integração. A cobertura de RNF03 também atende ao apontamento da #37; os registros
+do DoR propostos no PR #52 precisarão ser sincronizados, sem marcar histórias como
+prontas automaticamente. As mudanças por RNF e os novos vínculos das HUs constam no Histórico.
+
 Uma história ou um RNF abre de qualquer página com `#` e o código no endereço — por exemplo,
 `…/priorizacao/#HU13` ou `…/#RNF04`. Uma reunião abre com o código do vídeo
 (`…/reunioes/#PKoWLngGSRg`); as figuras da Visão, com `#figura-1` a `#figura-3`; o Catálogo de

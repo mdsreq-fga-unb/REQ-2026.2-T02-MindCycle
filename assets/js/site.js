@@ -274,6 +274,17 @@ const MC = (() => {
       '<p class="story">' + esc(r.descricao) + '</p>' +
       '<dl class="dl"><div class="dlr"><dt>Classificação</dt><dd>' + esc(r.classificacao) + '</dd></div>' +
       '<div class="dlr"><dt>Critério verificável</dt><dd>' + esc(r.criterio) + '</dd></div></dl>' +
+      (r.situacao ? '<h3 style="margin-top: 16px">Situação da verificação</h3><p class="note">' + esc(r.situacao) + '</p>' : '') +
+      (r.condicoes ? '<h3 style="margin-top: 16px">Condições de aceitação</h3><ol class="ol">' +
+        r.condicoes.map((c) => '<li>' + esc(c) + '</li>').join('') + '</ol>' : '') +
+      (r.verificacao ? '<h3 style="margin-top: 16px">Protocolo de verificação</h3><ol class="ol">' +
+        r.verificacao.map((v) => '<li>' + esc(v) + '</li>').join('') + '</ol>' : '') +
+      (r.protocoloComum ? '<h3 style="margin-top: 16px">Protocolo comum de desempenho Android</h3><ol class="ol">' +
+        DADOS.protocolosRnf[r.protocoloComum].map((v) => '<li>' + esc(v) + '</li>').join('') + '</ol>' : '') +
+      (r.fontes ? '<h3 style="margin-top: 16px">Fontes</h3><ul class="ol">' +
+        r.fontes.map((f) => '<li><a class="lnk" href="' + esc(f.url) + '" target="_blank" rel="noopener">' +
+          esc(f.titulo) + '</a></li>').join('') + '</ul>' : '') +
+      (r.verificacao ? '<p><a class="lnk" href="' + url('dor-e-dod/#metodos-de-verificacao') + '">Consultar o registro de evidências do DoD</a></p>' : '') +
       '<h3 style="margin-top: 16px">Histórias ligadas</h3>' +
       (r.todasAsHistorias ? '<p style="margin: 0">Todas as histórias.</p>' : '') +
       '<div class="rfl">' + ligadas.map(chipHistoria).join('') + '</div>';
