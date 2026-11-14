@@ -1,0 +1,29 @@
+{
+  "name": "mindcycle",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22.18",
+    "npm": ">=11"
+  },
+  "scripts": {
+    "postinstall": "npm run build -w @mindcycle/shared && npm run prisma:generate -w @mindcycle/api",
+    "db:up": "docker compose up -d postgres",
+    "dev:api": "npm run start:dev -w @mindcycle/api",
+    "dev:app": "npm run start -w @mindcycle/app",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:e2e": "npm run test:e2e -w @mindcycle/api"
+  },
+  "packageManager": "npm@11.21.2",
+  "allowScripts": {
+    "prisma@7.10.1": true,
+    "@prisma/engines@7.10.1": true
+  }
+}
