@@ -14,9 +14,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { cores, espaco, larguraMaxima, raio } from './tema';
 
-export function Tela({ children }: PropsWithChildren) {
+// Numa aba, a barra de abas já ocupa a margem inferior do aparelho.
+export function Tela({ children, naAba }: PropsWithChildren<{ naAba?: boolean }>) {
   return (
-    <SafeAreaView style={styles.tela}>
+    <SafeAreaView
+      style={styles.tela}
+      edges={naAba ? ['top', 'left', 'right'] : undefined}>
       <ScrollView
         contentContainerStyle={styles.rolagem}
         keyboardShouldPersistTaps="handled">

@@ -5,14 +5,19 @@ import request from 'supertest';
 import type { App } from 'supertest/types.js';
 import type { Tokens } from '@mindcycle/shared';
 import { AppModule } from '../src/app.module.js';
+import { Relogio } from '../src/common/relogio.js';
 
 export async function criarApp(
-  extras: { imports?: Type[]; controllers?: Type[] } = {},
+  extras: { imports?: Type[]; controllers?: Type[]; relogio?: Relogio } = {},
 ): Promise<INestApplication<App>> {
-  const moduleRef = await Test.createTestingModule({
+  const builder = Test.createTestingModule({
     imports: [AppModule, ...(extras.imports ?? [])],
     controllers: extras.controllers ?? [],
-  }).compile();
+  });
+  if (extras.relogio) {
+    builder.overrideProvider(Relogio).useValue(extras.relogio);
+  }
+  const moduleRef = await builder.compile();
   const app = moduleRef.createNestApplication<INestApplication<App>>();
   await app.init();
   return app;

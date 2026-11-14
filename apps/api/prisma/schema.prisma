@@ -1,6 +1,9 @@
+// Imports com .js, como o ESM do Node exige depois de compilado. Sem isso o
+// client sai com .ts e a API compilada não sobe na imagem Docker.
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  importFileExtension = "js"
 }
 
 datasource db {

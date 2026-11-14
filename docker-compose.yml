@@ -9,7 +9,7 @@ services:
       POSTGRES_DB: mindcycle
     ports:
       # Se a 5432 já estiver em uso: POSTGRES_PORT=5434 docker compose up -d
-      - '${POSTGRES_PORT:-5432}:5432'
+      - '127.0.0.1:${POSTGRES_PORT:-5432}:5432'
     volumes:
       - postgres:/var/lib/postgresql/data
     healthcheck:
@@ -17,6 +17,14 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+
+  # Captura os e-mails enviados no desenvolvimento e nos testes (HU26).
+  # Caixa de entrada em http://localhost:8025.
+  mailpit:
+    image: axllent/mailpit:v1.33
+    ports:
+      - '127.0.0.1:${MAILPIT_SMTP_PORT:-1025}:1025'
+      - '127.0.0.1:${MAILPIT_WEB_PORT:-8025}:8025'
 
   # API empacotada como em produção. No dia a dia, prefira `npm run dev:api`.
   api:
@@ -28,12 +36,18 @@ services:
       DATABASE_URL: postgresql://mindcycle:mindcycle@postgres:5432/mindcycle?schema=public
       # Obrigatório: sem ele a API não sobe.
       JWT_SECRET: ${JWT_SECRET:-}
+      SMTP_URL: smtp://mailpit:1025
+      # O Mailpit não oferece STARTTLS, que produção exige por padrão.
+      SMTP_STARTTLS: opportunistic
+      EMAIL_REMETENTE: MindCycle <nao-responda@mindcycle.local>
       NODE_ENV: production
     ports:
-      - '${API_PORT:-3000}:3000'
+      - '127.0.0.1:${API_PORT:-3000}:3000'
     depends_on:
       postgres:
         condition: service_healthy
+      mailpit:
+        condition: service_started
 
 volumes:
   postgres:

@@ -1,0 +1,49 @@
+name: Publicar imagem da API
+
+# A cada push na main com mudança na API, publica a imagem no GitHub Container
+# Registry. O provedor de hospedagem puxa ghcr.io/<dono>/mindcycle-api:main
+# (veja docs/deploy.md). O CI já testou o mesmo código no PR.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/**'
+      - 'packages/shared/**'
+      - 'package-lock.json'
+      - '.github/workflows/publicar-api.yml'
+
+concurrency:
+  group: publicar-api
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/mindcycle-api
+          tags: |
+            type=raw,value=main
+            type=sha
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/api/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

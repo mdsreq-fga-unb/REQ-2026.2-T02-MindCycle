@@ -27,6 +27,9 @@ export default defineConfig({
       DATABASE_URL: urlDoBancoDeTeste(),
       JWT_SECRET:
         process.env.JWT_SECRET || 'segredo-de-teste-com-pelo-menos-32-bytes',
+      // Mailpit do docker-compose.yml (npm run db:up) e do CI.
+      SMTP_URL: process.env.SMTP_URL_TEST || 'smtp://localhost:1025',
+      MAILPIT_API_URL: process.env.MAILPIT_API_URL || 'http://localhost:8025',
     },
   },
 });

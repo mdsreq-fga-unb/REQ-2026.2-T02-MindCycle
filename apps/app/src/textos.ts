@@ -29,10 +29,32 @@ export const textos = {
     botao: 'Li e aceito',
     sair: 'Agora não, sair',
   },
+  abas: {
+    hoje: 'Hoje',
+    ciclo: 'Ciclo',
+    tarefas: 'Tarefas',
+    acolhimento: 'Acolhimento',
+    conta: 'Conta',
+  },
   hoje: {
     titulo: 'Hoje',
-    saudacao: (email: string) => `Olá, ${email}`,
     emBreve: 'Em breve, suas tarefas do dia aparecem aqui.',
+  },
+  ciclo: {
+    titulo: 'Seu ciclo',
+    emBreve: 'Em breve, você registra e acompanha seu ciclo aqui.',
+  },
+  tarefas: {
+    titulo: 'Tarefas',
+    emBreve: 'Em breve, você organiza suas tarefas aqui.',
+  },
+  acolhimento: {
+    titulo: 'Acolhimento',
+    emBreve: 'Em breve, mensagens e práticas de cuidado aparecem aqui.',
+  },
+  conta: {
+    titulo: 'Sua conta',
+    email: (email: string) => `Conta: ${email}`,
     sair: 'Sair',
   },
   conexao: {

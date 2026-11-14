@@ -26,6 +26,11 @@ jobs:
           --health-interval 5s
           --health-timeout 3s
           --health-retries 10
+      mailpit:
+        image: axllent/mailpit:v1.33
+        ports:
+          - 1025:1025
+          - 8025:8025
     env:
       DATABASE_URL_TEST: postgresql://mindcycle:mindcycle@localhost:5432/mindcycle_test?schema=public
       JWT_SECRET: segredo-somente-para-o-ci-com-32-bytes-ou-mais

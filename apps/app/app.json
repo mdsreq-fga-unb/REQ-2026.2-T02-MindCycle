@@ -8,6 +8,7 @@
     "scheme": "mindcycle",
     "userInterfaceStyle": "light",
     "android": {
+      "package": "br.unb.mindcycle",
       "predictiveBackGestureEnabled": false
     },
     "plugins": [

@@ -158,7 +158,8 @@ cp apps/api/.env.example apps/api/.env
 ```
 
 Preencha `JWT_SECRET` em `apps/api/.env` (gere com `openssl rand -base64 32`). Depois suba o
-banco, aplique as migrações e rode a API e o app, cada um num terminal:
+banco e o Mailpit (que recebe os e-mails do desenvolvimento em <http://localhost:8025>),
+aplique as migrações e rode a API e o app, cada um num terminal:
 
 ```bash
 npm run db:up
@@ -187,10 +188,16 @@ na rede, como `http://192.168.0.10:3000`. Se a porta 5432 já estiver em uso, su
 | `npm run typecheck` | Checa os tipos de todos os pacotes |
 | `npm run lint` | Lint da API (oxlint) e do app (ESLint) |
 | `npm test` | Testes unitários |
-| `npm run test:e2e` | Testes e2e da API, num banco `mindcycle_test` criado automaticamente |
+| `npm run test:e2e` | Testes e2e da API, num banco `mindcycle_test` criado automaticamente (precisa do `npm run db:up`) |
 
 O CI (`.github/workflows/ci.yml`) roda tudo isso a cada PR, além do build da imagem Docker
 da API.
+A cada push na `main`, a imagem da API é publicada no GitHub Container Registry; como
+hospedá-la está em [docs/deploy.md](docs/deploy.md).
+
+Para testar num Android físico, o workflow **APK de teste** gera um APK de release a cada
+mudança no app. Como instalar, em quais aparelhos ensaiar e como registrar as evidências do
+DoD está na [matriz de suporte Android](docs/qualidade/matriz-de-suporte-android.md) (RNF10).
 
 ## Marca
 

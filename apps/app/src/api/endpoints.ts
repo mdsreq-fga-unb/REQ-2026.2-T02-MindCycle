@@ -1,4 +1,5 @@
 import type {
+  AtualizacaoContaDto,
   CadastroDto,
   EntradaDto,
   Termos,
@@ -16,6 +17,8 @@ export const api = {
   sair: (refreshToken: string) =>
     pedir<void>('/auth/saida', { metodo: 'POST', corpo: { refreshToken }, publica: true }),
   conta: () => pedir<Usuaria>('/conta'),
+  atualizarConta: (dados: AtualizacaoContaDto) =>
+    pedir<Usuaria>('/conta', { metodo: 'PATCH', corpo: dados }),
   termos: () => pedir<Termos>('/termos', { publica: true }),
   aceitarTermos: (versao: string) =>
     pedir<void>('/termos/aceite', { metodo: 'POST', corpo: { versao } }),
