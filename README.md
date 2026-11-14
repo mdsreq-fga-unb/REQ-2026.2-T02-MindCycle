@@ -92,7 +92,7 @@ Os identificadores foram preservados:
 | Objetivos específicos | `OE1` a `OE3` |
 | Características de produto | `CP1` a `CP7` |
 | Histórias de usuário | `HU01` a `HU36` |
-| Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** |
+| Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** (número não reaproveitado) |
 
 No site, tudo isso vive num lugar só: `assets/js/dados.js`. A árvore, o MVP, a priorização,
 as reuniões, o histórico e o detalhe de cada história leem desse arquivo, então um
@@ -121,6 +121,7 @@ novo: regra documentada não significa regra validada nem história pronta.
 |---|---|
 | **Validação do MVP consolidado com a cliente** | Páginas MVP e Priorização. A reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino tratou requisitos individuais; o conjunto do MVP e as notas ainda em hipótese aguardam a reunião de acompanhamento. |
 | **Backlog e Iteração atual vazios** | `dorAtendido` em `assets/js/dados.js` ainda não tem nenhuma história: nenhuma foi marcada como pronta pelo DoR. |
+| **Avaliação da usuária representativa** | Página Reuniões. O teste com a Daniela Soares cobriu usabilidade, linguagem e experiência de uso. Falta avaliar privacidade com ela, e a ordem das tarefas de HU13 não foi testada. |
 | **Validação dos refinamentos da #38** | Regras nos detalhes de HU04, HU05, HU13, HU15, HU23, HU30 e HU32. A fórmula clínica e os limites das fases em HU05 continuam pendentes de revisão da cliente; a ampliação de HU23 e o formato de exportação são propostas. |
 | **RNF05** | Não existe no quadro: a numeração salta de RNF04 para RNF06. Confirmar se houve descarte e registrar, ou renumerar. |
 

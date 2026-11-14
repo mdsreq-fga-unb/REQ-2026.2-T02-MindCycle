@@ -71,15 +71,16 @@ const DADOS = {
   },
 
   // Características do produto (CP), na ordem da árvore, com o objetivo
-  // específico (OE) de cada uma.
+  // específico (OE) de cada uma. habilitadora: sustenta as demais, sem
+  // contribuir sozinha para o resultado do objetivo.
   caracteristicas: [
     { id: 'CP1', nome: 'Registro e análise de sintomas e disposição', objetivo: 'OE1' },
     { id: 'CP2', nome: 'Acompanhamento do ciclo menstrual', objetivo: 'OE1' },
-    { id: 'CP3', nome: 'Privacidade dos dados da usuária', objetivo: 'OE1' },
+    { id: 'CP3', nome: 'Privacidade dos dados da usuária', objetivo: 'OE1', habilitadora: true },
     { id: 'CP4', nome: 'Planejamento adaptativo das tarefas', objetivo: 'OE2' },
     { id: 'CP5', nome: 'Gestão acolhedora da carga diária', objetivo: 'OE3' },
     { id: 'CP6', nome: 'Reconhecimento de ritmo sustentável', objetivo: 'OE3' },
-    { id: 'CP7', nome: 'Conta e preferências da usuária', objetivo: 'OE3' }
+    { id: 'CP7', nome: 'Conta e preferências da usuária', objetivo: 'OE3', habilitadora: true }
   ],
 
   // As 36 histórias de usuário.
@@ -123,7 +124,9 @@ const DADOS = {
       nota: 'Resposta imediata à sobrecarga, a qualquer momento do dia.',
       esforco: { esforco: 2, complexidade: 2, lacuna: 2, consolidado: '2,0' },
       criterios: [
-        'A sinalização só será considerada concluída quando puder ser feita em qualquer horário do dia e resultar na readequação das tarefas do dia (HU15).'
+        'A sinalização só será considerada concluída quando puder ser feita em qualquer horário do dia e resultar na readequação das tarefas do dia (HU15).',
+        'A sinalização deve ser concluída em no máximo 3 toques a partir da tela inicial (RNF04).',
+        'A confirmação da sinalização deve aparecer em até 2 segundos (RNF08).'
       ]
     },
     {
@@ -354,7 +357,7 @@ const DADOS = {
       nome: 'Visualizar calendário do ciclo',
       descricao: 'Deve ser possível à usuária visualizar as fases do seu ciclo menstrual em um calendário.',
       historia: 'visualizar as fases do meu ciclo menstrual em um calendário, para enxergar quando cada fase ocorre',
-      caracteristica: 'CP3',
+      caracteristica: 'CP2',
       rnfs: [],
       valor: 2,
       validadaCliente: true,
@@ -432,7 +435,7 @@ const DADOS = {
       ],
       regras: {
         origem: 49,
-        situacao: 'Proposta da equipe em 08/11/2026. Em 05/10 a cliente aprovou o fluxo com prioridade, prazo e energia, mas não estas regras: validar na próxima reunião.',
+        situacao: 'Proposta da equipe em 08/11/2026. No teste com usuária, Daniela Soares pediu prioridade e duração no cadastro da tarefa, mas a ordem da recomendação não foi testada com ela. Em 05/10 a Dra. Cláudia aprovou o fluxo com prioridade, prazo e energia, mas não estas regras: validar a ordem na próxima reunião.',
         itens: [
           'Disposição, energia necessária e prioridade têm três níveis: 1 baixa, 2 média e 3 alta.',
           'Entram na recomendação as tarefas não concluídas com data planejada até hoje. A data planejada nasce no dia do cadastro e só muda pelo adiamento (HU18) ou pelo reajuste (HU15).',
@@ -480,7 +483,7 @@ const DADOS = {
       ],
       regras: {
         origem: 49,
-        situacao: 'Proposta da equipe em 08/11/2026. Em 05/10 a cliente endossou o reajuste automático, mas não estas regras: validar na próxima reunião.',
+        situacao: 'Proposta da equipe em 08/11/2026. No teste com usuária, Daniela Soares entendeu e aprovou o dia reajustado só com o essencial, mas as regras de quais tarefas saem do dia não foram detalhadas com ela. Em 05/10 a Dra. Cláudia endossou o reajuste automático, mas não estas regras: validar na próxima reunião.',
         itens: [
           'O reajuste dispara com um novo registro de disposição (HU04) ou com a sinalização de sobrecarga (HU02), que conta como disposição baixa até o próximo registro.',
           'A lista do dia é recalculada com as regras de ordem da HU13.',
@@ -804,9 +807,9 @@ const DADOS = {
     {
       id: 'RNF04',
       nome: 'Agilidade no registro',
-      descricao: 'O registro de sintomas e disposição deve exigir poucas interações.',
+      descricao: 'O registro de sintomas e disposição e a sinalização de sobrecarga devem exigir poucas interações.',
       classificacao: 'Usabilidade',
-      criterio: 'O registro é concluído em no máximo 3 toques a partir da tela inicial.'
+      criterio: 'O registro e a sinalização são concluídos em no máximo 3 toques a partir da tela inicial.'
     },
     {
       id: 'RNF06',
@@ -825,7 +828,7 @@ const DADOS = {
     {
       id: 'RNF08',
       nome: 'Tempo de confirmação do registro',
-      descricao: 'A confirmação do registro de sintomas e disposição deve aparecer em até 2 segundos.',
+      descricao: 'A confirmação do registro de sintomas e disposição e da sinalização de sobrecarga deve aparecer em até 2 segundos.',
       classificacao: 'Desempenho',
       criterio: 'Média de 5 medições no DevTools igual ou inferior a 2 s.'
     },
@@ -899,6 +902,13 @@ const DADOS = {
         motivo: 'Issue #38: estimativa por sintomas é distinta do cálculo pelas entradas de HU06 e HU07.'
       }
     ],
+    HU02: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Ganhou critérios explícitos de RNF04 e RNF08.',
+        motivo: 'Decisão do achado 02: os dois RNFs valem para a sinalização e para o registro.'
+      }
+    ],
     HU04: [
       {
         data: 'Sem data no site',
@@ -906,9 +916,21 @@ const DADOS = {
         motivo: 'Era citado por esses RNFs, mas não tinha card no quadro. Card ainda pendente.'
       },
       {
+        data: '08/11/2026',
+        alteracao: 'Card no quadro deixou de ser pendência.',
+        motivo: 'Decisão do achado 01: o catálogo do site é o vigente, e o quadro do Figma é fotografia histórica de 28/09/2026.'
+      },
+      {
         data: '12/11/2026',
         alteracao: 'Detalhados campos, intensidades, frequência e correção como proposta.',
         motivo: 'Issue #38: alinhar o dado-fonte ao registro mais recente usado pelas regras do PR #49; não atribuir escalas à validação de 05/10.'
+      }
+    ],
+    HU10: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Característica: CP3 → CP2.',
+        motivo: 'Decisão do achado 06: o calendário trata de acompanhar o ciclo, não de privacidade.'
       }
     ],
     HU05: [
@@ -966,6 +988,11 @@ const DADOS = {
     ],
     HU13: [
       {
+        data: '08/11/2026',
+        alteracao: 'Ganhou regras de ordenação; o critério de aceitação passou a apontar para elas.',
+        motivo: 'O critério dizia apenas que a ordem usaria energia, prazo e prioridade, sem permitir conferir o resultado.'
+      },
+      {
         data: '10/11/2026',
         alteracao: 'RNF06 passou a ser condição obrigatória de aceite da recomendação de tarefas do dia.',
         motivo: 'Alinhar o critério de aceite ao DoD, que exige o cumprimento dos RNFs aplicáveis à história.'
@@ -977,6 +1004,11 @@ const DADOS = {
       }
     ],
     HU15: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Ganhou regras de reajuste; o critério de aceitação passou a apontar para elas.',
+        motivo: 'O critério não dizia o que "reajustar" significa. A redistribuição automática segue o que a cliente endossou em 05/10.'
+      },
       {
         data: '10/11/2026',
         alteracao: 'RNF07 passou a ser condição obrigatória de aceite do reajuste da recomendação do dia.',
@@ -990,6 +1022,11 @@ const DADOS = {
     ],
     HU17: [
       { data: 'Sem data no site', alteracao: 'Passou a incluir "energia necessária".', motivo: 'Decisão da equipe; o dado é usado por HU13 e HU15.' },
+      {
+        data: '08/11/2026',
+        alteracao: 'História e critério de aceitação passaram a citar a energia necessária.',
+        motivo: 'Só a descrição citava o campo, e sem ele as regras de HU13 e HU15 não podem ser aplicadas.'
+      },
       {
         data: '12/11/2026',
         alteracao: 'História e critério passaram a incluir energia necessária, conforme PR #49.',
@@ -1056,6 +1093,20 @@ const DADOS = {
         data: 'Sem data no site',
         alteracao: 'Fora do MVP → no MVP.',
         motivo: 'Direito legal da titular (LGPD, art. 18), contrapartida do consentimento.'
+      }
+    ],
+    RNF04: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Passou a valer também para a sinalização de sobrecarga (HU02).',
+        motivo: 'Decisão do achado 02: sinalizar é um registro rápido de disposição, e o quadro apontava para as duas histórias.'
+      }
+    ],
+    RNF08: [
+      {
+        data: '08/11/2026',
+        alteracao: 'Passou a valer também para a sinalização de sobrecarga (HU02).',
+        motivo: 'Decisão do achado 02: sinalizar é um registro rápido de disposição, e o quadro apontava para as duas histórias.'
       }
     ],
     RNF09: [
@@ -1193,6 +1244,25 @@ const DADOS = {
         { tempo: 856, tipo: 'Tarefa', texto: 'Mapa de stakeholders regerado após a mudança de cliente e usuária.', historias: [] },
         { tempo: 973, tipo: 'Decisão', texto: 'Toda alteração por pull request, com revisão pedida no grupo.', historias: [] }
       ]
+    },
+    {
+      id: 'YG6LqnZY8J4',
+      tipo: 'Elaboração · Teste com usuária',
+      nome: 'Teste com Usuária - MindFlow',
+      meta: 'Gravação de 14:50 · Teste de usabilidade do protótipo com Daniela Soares',
+      decisoes: [
+        { tempo: 44, tipo: 'Refinamento', texto: 'O botão de criar conta está pequeno e foi difícil de achar.', historias: ['HU11'] },
+        { tempo: 112, tipo: 'Refinamento', texto: 'Não ficou claro como encontrar e usar o PIN enviado por e-mail.', historias: ['HU12'] },
+        { tempo: 214, tipo: 'Refinamento', texto: 'O botão "Estou sobrecarregada" não foi entendido sem explicação da equipe.', historias: ['HU02'] },
+        { tempo: 256, tipo: 'Confirmado', texto: 'Entendeu e aprovou o dia reajustado só com o essencial: "coloca só as tarefas que é essencial para não me sobrecarregar".', historias: ['HU02', 'HU15'] },
+        { tempo: 270, tipo: 'Refinamento', texto: 'A opção "Fazer uma pausa / adiar / cuidar de si" confundiu; pediu para esclarecer o objetivo dela.', historias: ['HU15', 'HU18'] },
+        { tempo: 338, tipo: 'Refinamento', texto: 'Faltou um jeito de voltar da tela do dia reajustado, e a rolagem não foi percebida.', historias: ['HU15'] },
+        { tempo: 407, tipo: 'Refinamento', texto: 'Prioridade e duração ajudam a organizar o tempo e tiram a pressão de terminar; horário ficou como "talvez".', historias: ['HU13'] },
+        { tempo: 477, tipo: 'Refinamento', texto: 'Teve dúvida ao salvar a tarefa e ao marcá-la como concluída.', historias: ['HU13'] },
+        { tempo: 597, tipo: 'Confirmado', texto: 'A explicação por fase é útil, porque muitas mulheres não entendem as próprias fases do ciclo.', historias: ['HU09'] },
+        { tempo: 628, tipo: 'Refinamento', texto: 'Ao aceitar os termos e voltar, o app reiniciou a entrada e ela precisou refazer o acesso. Os termos foram aceitos sem comentário.', historias: ['HU11'] },
+        { tempo: 763, tipo: 'Refinamento', texto: 'Sugeriu dicas explicativas e um guia no primeiro acesso, especialmente para "Estou sobrecarregada".', historias: ['HU02'] }
+      ]
     }
   ],
 
@@ -1299,7 +1369,7 @@ const DADOS = {
           atividade: 4,
           pratica: 'Apresentação das telas à cliente',
           tecnicas: ['Critérios de aceitação e validação com a cliente'],
-          resultado: 'Telas validadas com a cliente, com ajustes apontados em cada uma.'
+          resultado: 'Fluxos avaliados pela cliente em 05/10/2026, com os apontamentos registrados; privacidade e conta não foram avaliadas.'
         },
         {
           atividade: 5,
