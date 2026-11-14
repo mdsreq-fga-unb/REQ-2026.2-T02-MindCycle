@@ -1028,6 +1028,11 @@ const DADOS = {
         data: '08/11/2026',
         alteracao: 'Ganhou critérios explícitos de RNF04 e RNF08.',
         motivo: 'Decisão do achado 02: os dois RNFs valem para a sinalização e para o registro.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluídos vínculos com RNF03 para proteção dos dados e RNF07 para o tempo de reajuste após sinalizar sobrecarga.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU04: [
@@ -1052,6 +1057,11 @@ const DADOS = {
         data: '08/11/2026',
         alteracao: 'Característica: CP3 → CP2.',
         motivo: 'Decisão do achado 06: o calendário trata de acompanhar o ciclo, não de privacidade.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
     HU05: [
@@ -1300,6 +1310,11 @@ const DADOS = {
         data: '08/11/2026',
         alteracao: 'Passou a valer também para a sinalização de sobrecarga (HU02).',
         motivo: 'Decisão do achado 02: sinalizar é um registro rápido de disposição, e o quadro apontava para as duas histórias.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
       }
     ],
     RNF08: [
@@ -1307,6 +1322,11 @@ const DADOS = {
         data: '08/11/2026',
         alteracao: 'Passou a valer também para a sinalização de sobrecarga (HU02).',
         motivo: 'Decisão do achado 02: sinalizar é um registro rápido de disposição, e o quadro apontava para as duas histórias.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
       }
     ],
     RNF09: [
@@ -1358,20 +1378,6 @@ const DADOS = {
         motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
       }
     ],
-    HU10: [
-      {
-        data: '12/11/2026',
-        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
-        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
-      }
-    ],
-    HU02: [
-      {
-        data: '12/11/2026',
-        alteracao: 'Incluídos vínculos com RNF03 para proteção dos dados e RNF07 para o tempo de reajuste após sinalizar sobrecarga.',
-        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
-      }
-    ],
     RNF11: [
       {
         data: '12/11/2026',
@@ -1386,13 +1392,6 @@ const DADOS = {
         motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
       }
     ],
-    RNF08: [
-      {
-        data: '12/11/2026',
-        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
-        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
-      }
-    ],
     RNF07: [
       {
         data: '12/11/2026',
@@ -1401,13 +1400,6 @@ const DADOS = {
       }
     ],
     RNF06: [
-      {
-        data: '12/11/2026',
-        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
-        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
-      }
-    ],
-    RNF04: [
       {
         data: '12/11/2026',
         alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
