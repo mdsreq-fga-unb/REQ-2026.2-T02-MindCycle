@@ -74,7 +74,7 @@ sempre o próximo número livre, nunca um número já usado.
 |---|---|
 | **Validação do MVP consolidado com a cliente** | Páginas MVP e Priorização. A reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino tratou requisitos individuais; o conjunto do MVP e as notas ainda em hipótese aguardam a reunião de acompanhamento. |
 | **Backlog e Iteração atual vazios** | `dorAtendido` em `assets/js/dados.js` ainda não tem nenhuma história: nenhuma foi marcada como pronta pelo DoR. |
-| **Avaliação da usuária representativa** | Página Reuniões. O teste com a Daniela Soares validou as regras de HU13 e HU15; falta registrar o que ela apontou sobre usabilidade, linguagem, privacidade e experiência de uso, com os momentos do vídeo. |
+| **Avaliação da usuária representativa** | Página Reuniões. O teste com a Daniela Soares cobriu usabilidade, linguagem e experiência de uso. Falta avaliar privacidade com ela, e a ordem das tarefas de HU13 não foi testada. |
 
 ---
 
