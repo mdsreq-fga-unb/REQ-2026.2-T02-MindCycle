@@ -192,6 +192,10 @@ na rede, como `http://192.168.0.10:3000`. Se a porta 5432 já estiver em uso, su
 O CI (`.github/workflows/ci.yml`) roda tudo isso a cada PR, além do build da imagem Docker
 da API.
 
+Para testar num Android físico, o workflow **APK de teste** gera um APK de release a cada
+mudança no app. Como instalar, em quais aparelhos ensaiar e como registrar as evidências do
+DoD está na [matriz de suporte Android](docs/qualidade/matriz-de-suporte-android.md) (RNF10).
+
 ## Marca
 
 Paleta, logotipos e tipografia estão em [`assets/brand/`](assets/brand/), com um

@@ -1,0 +1,75 @@
+name: APK de teste
+
+# APK de release, instalável nos aparelhos da matriz de suporte (RNF10) e usado
+# nas medições de desempenho do DoD. Veja docs/qualidade/matriz-de-suporte-android.md.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/app/**'
+      - 'packages/shared/**'
+      - 'package-lock.json'
+      - '.github/workflows/apk.yml'
+  pull_request:
+    paths:
+      - 'apps/app/**'
+      - 'packages/shared/**'
+      - 'package-lock.json'
+      - '.github/workflows/apk.yml'
+
+# Num PR, um push novo cancela o build anterior; na main, cada commit ganha o seu APK.
+concurrency:
+  group: apk-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      # Embutida no APK durante o build. O release não aceita HTTP sem TLS,
+      # então precisa ser o endereço HTTPS da API hospedada (T4).
+      EXPO_PUBLIC_API_URL: ${{ vars.API_URL_TESTE }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - run: npm install -g npm@11.21.2
+      - run: npm ci
+      - name: Conferir a API do APK
+        # Num PR só avisa, para o build ainda checar o app; na main e no disparo
+        # manual, um APK sem API HTTPS não serve para os aparelhos, então falha.
+        env:
+          SO_AVISAR: ${{ github.event_name == 'pull_request' }}
+        run: |
+          case "$EXPO_PUBLIC_API_URL" in
+            https://*) exit 0 ;;
+          esac
+          mensagem="A variável API_URL_TESTE precisa ser o endereço HTTPS da API hospedada (docs/deploy.md); sem ela o APK não fala com a API no aparelho."
+          if [ "$SO_AVISAR" = true ]; then
+            echo "::warning::$mensagem"
+          else
+            echo "::error::$mensagem"
+            exit 1
+          fi
+      - name: Gerar o projeto Android
+        working-directory: apps/app
+        run: npx expo prebuild --platform android --no-install
+      - name: Compilar o APK de release
+        working-directory: apps/app/android
+        # Só ARM: os aparelhos físicos da matriz. Emuladores x86 usam o Expo Go.
+        run: ./gradlew assembleRelease --no-daemon -PreactNativeArchitectures=arm64-v8a,armeabi-v7a
+      - uses: actions/upload-artifact@v4
+        with:
+          # Num PR, github.sha é o commit de merge; o nome usa o commit da branch.
+          name: mindcycle-${{ github.event.pull_request.head.sha || github.sha }}
+          path: apps/app/android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 30
