@@ -67,16 +67,91 @@
         <li><b>Protótipo:</b> tela nova ou alterada tem protótipo no Figma vinculado.</li>
         <li><b>Regras de negócio:</b> identificadas e registradas junto à história.</li>
       </ol>
-      <h2>Definition of Done</h2>
-      <p>Quem atende a todos os critérios vai para "Em Validação" e só é aceita após a Revisão da Iteração.</p>
-      <ol class="ol">
-        <li><b>Critérios atendidos:</b> aceitação cumprida, funcionalidade integrada ao incremento e demonstrável.</li>
-        <li><b>Não funcionais:</b> respeita os aplicáveis, em especial privacidade e proteção de dados sensíveis.</li>
-        <li><b>Testes:</b> unitários e de integração aprovados no GitHub Actions, com cobertura de 100%.</li>
-        <li><b>Código revisado:</b> pull request aprovado por quem não é o autor, seguindo os padrões da equipe.</li>
-        <li><b>Linguagem:</b> textos sem termos de cobrança, culpa ou contadores de falha.</li>
-        <li><b>Rastreabilidade:</b> vínculo registrado e documentação de uso atualizada quando necessário.</li>
-      </ol>
+      <h2 id="definition-of-done">Definition of Done</h2>
+      <p>O DoD define a conclusão técnica das histórias implementadas a partir da Entrega 3. Ao atender a todos os critérios, a história é verificada pela equipe e segue para <em>Em Validação</em>, aguardando avaliação externa na Revisão da Iteração. O aceite depende do registro dessa avaliação. Uma história com critérios pendentes ou reprovados permanece em desenvolvimento ou em verificação.</p>
+      <ol class="ol" id="criterios-dod"></ol>
+      <noscript><p>Ative o JavaScript para consultar os critérios gerais do DoD e os registros de cada história.</p></noscript>
+      <h3 id="cobertura-dos-cenarios" style="margin: 24px 0 10px">Cobertura dos cenários e resultados</h3>
+      <p>
+      <strong>100% significa que todos os cenários associados aos critérios de aceite e RNFs aplicáveis à história foram aprovados.</strong> Antes da verificação, cada cenário deve receber um identificador, o critério de origem, o procedimento e o resultado esperado, incluindo fluxos principais, alternativos e exceções previstos. Na execução, registrar o resultado obtido e a evidência. Cenários não verificados ou reprovados impedem a conclusão técnica.</p>
+      <p>A cobertura é viável porque os cenários são definidos antes do desenvolvimento, a partir dos critérios de aceite e dos RNFs aplicáveis à história. Cada cenário terá uma forma de verificação adequada, por teste automatizado, medição ou inspeção. A equipe avalia esse trabalho no planejamento e divide histórias que excedam a capacidade da iteração.</p>
+      <p>Os resultados por critério são <strong>não verificado</strong>, <strong>aprovado</strong>, <strong>reprovado</strong> e <strong>N/A justificado</strong>. N/A exige justificativa de inaplicabilidade e revisão por outro integrante; não conta como cenário aprovado. Um critério só é aprovado quando todos os seus cenários aplicáveis passam. Cobertura de linhas e ramificações é registrada separadamente quando houver relatório, sem percentual obrigatório definido neste acordo. O indicador de cenários não mede cobertura do código.</p>
+      <h3 id="metodos-de-verificacao">Métodos de verificação e evidências</h3>
+      <p>Testes unitários e de integração não comprovam, sozinhos, todos os critérios. Cada evidência identifica a versão ou commit, cenário, ambiente/plataforma, data, executor e revisor.</p>
+      <div class="tblw" tabindex="0" role="region" aria-label="Métodos de verificação do DoD">
+      <table>
+      <thead>
+      <tr>
+      <th scope="col">Critério</th>
+      <th scope="col">Evidência exigida</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Comportamento e regras</td>
+      <td>Testes unitários, de integração e de aceite aplicáveis, com resultados e link da execução.</td>
+      </tr>
+      <tr>
+      <td>Privacidade e autorização</td>
+      <td>Cenários de acesso autorizado e negado, sem expor dados sensíveis na evidência.</td>
+      </tr>
+      <tr>
+      <td>Tempos de resposta</td>
+      <td>Medições individuais, condições de rede, aparelho/ambiente, início e fim da medição e resultado conforme o RNF vigente.</td>
+      </tr>
+      <tr>
+      <td>Quantidade de toques</td>
+      <td>Roteiro e contagem observada desde o ponto inicial definido no RNF, com gravação ou registro da observação.</td>
+      </tr>
+      <tr>
+      <td>Contraste</td>
+      <td>Elementos, cores e estados avaliados, ferramenta/procedimento e resultados comparados ao critério vigente.</td>
+      </tr>
+      <tr>
+      <td>Linguagem acolhedora</td>
+      <td>Textos e telas revisados, nome do revisor, data e correções realizadas.</td>
+      </tr>
+      <tr>
+      <td>Revisão de código</td>
+      <td>PR, commit revisado e aprovação de integrante diferente do autor.</td>
+      </tr>
+      <tr>
+      <td>Rastreabilidade e documentação</td>
+      <td>Vínculos RF -&gt; história -&gt; cenários e links da documentação atualizada.</td>
+      </tr>
+      </tbody>
+      </table>
+      </div>
+      <h3 id="situacao-das-historias" style="margin: 24px 0 10px">Situação técnica e avaliação externa</h3>
+      <div class="tblw" tabindex="0" role="region" aria-label="Estados das histórias">
+      <table>
+      <thead>
+      <tr>
+      <th scope="col">Situação</th>
+      <th scope="col">Condição e encaminhamento</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>Em verificação</td>
+      <td>Há critérios não verificados ou reprovados; registrar pendências. Falhas voltam ao desenvolvimento.</td>
+      </tr>
+      <tr>
+      <td>Verificada pela equipe / aguardando avaliação externa</td>
+      <td>Todos os critérios aplicáveis aprovados, N/A revisados e evidências disponíveis. Mover para Em Validação.</td>
+      </tr>
+      <tr>
+      <td>Aceita</td>
+      <td>Registrar responsável pela avaliação externa, data, versão avaliada, decisão e evidência da Revisão da Iteração.</td>
+      </tr>
+      <tr>
+      <td>Ajustes solicitados</td>
+      <td>Registrar a decisão externa e as correções. Retornar ao desenvolvimento e verificar novamente os critérios afetados e suas dependências na nova versão antes de reapresentar.</td>
+      </tr>
+      </tbody>
+      </table>
+      </div>
+      <p>Os registros de aplicação ficam na aba <strong>DoR e DoD</strong> de cada HU na <a href="../">árvore de rastreabilidade</a>. A partir da Iteração 5, registre por cenário o procedimento, os resultados esperado e obtido, a versão ou commit, a plataforma, a data, o executor, o revisor e a evidência. Ao aceitar uma história, registre também a decisão e a evidência da avaliação externa.</p>
     </main>
 
     <footer class="foot">

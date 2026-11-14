@@ -1634,6 +1634,8 @@ button.rnfc:hover {
   max-width: 100%;
   max-height: calc(100vh - 32px);
   overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mut) var(--panel);
   padding: 24px;
 }
 .dlg h2 {

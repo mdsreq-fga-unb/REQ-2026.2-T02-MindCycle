@@ -29,6 +29,12 @@ const MC = (() => {
   const naIteracaoAtual = (h) => noBacklog(h) && h.iteracao === DADOS.iteracaoAtual;
   const MOSCOW = { 4: 'Must have', 3: 'Should have', 2: 'Could have', 1: "Won't have now" };
 
+  const criteriosDod = document.getElementById('criterios-dod');
+  if (criteriosDod) {
+    criteriosDod.innerHTML = DADOS.dodCriterios.map((criterio) =>
+      '<li>' + esc(criterio.descricao) + '</li>').join('');
+  }
+
   // ---------------------------------------------------------------------
   // Tema
   // ---------------------------------------------------------------------
@@ -138,7 +144,7 @@ const MC = (() => {
     }
     tags.push(link(MOSCOW[h.valor], 'priorizacao/', 't-p' + h.valor));
     tags.push(link('Esforço ' + h.esforco.consolidado, 'priorizacao/', 't-rel'));
-    tags.push(h.validadaCliente ? link('Validada com a cliente', 'reunioes/#PKoWLngGSRg', 't-val')
+    tags.push(h.validadaCliente ? link('Prioridade confirmada pela cliente', 'reunioes/#PKoWLngGSRg', 't-val')
       : '<span class="ptag plain">Hipótese da equipe</span>');
     if (h.rnfs.length) {
       h.rnfs.forEach((r) => tags.push('<button class="ptag t-rnf" type="button" data-rnf="' + r + '">' + r + '</button>'));
@@ -146,6 +152,42 @@ const MC = (() => {
       tags.push('<button class="ptag t-rnf" type="button" data-rnf="RNF10">RNFs transversais</button>');
     }
     return tags.join('');
+  }
+
+  function aplicacaoDod(h) {
+    const registro = DADOS.aplicacaoDod[h.id];
+    if (!registro && !noMvp(h)) {
+      return '<p class="ph">Sem registro de aplicação do DoD para esta história.</p>';
+    }
+
+    const aplicacao = registro || {};
+    const transversais = DADOS.rnfs.filter((r) => r.todasAsHistorias).map((r) => r.id);
+    const rnfs = [...new Set([...h.rnfs, ...transversais])];
+    const itens = DADOS.dodCriterios.map((definicao) => {
+      const numero = definicao.id;
+      const criterio = (aplicacao.criterios || {})[numero] || {};
+      const titulo = definicao.titulo;
+      const protocolo = definicao.protocolo.replace('{rnfs}', rnfs.join(', '));
+      return '<details class="fold">' +
+        '<summary class="foldh"><span><b>' + esc(titulo) + '</b><span class="state">' +
+        esc(criterio.resultado || 'Não verificado') + '</span></span>' +
+        '<span class="chev" aria-hidden="true"></span></summary>' +
+        '<div class="foldb">' +
+        '<p class="ph">DOD-' + esc(h.id) + '-' + numero + '</p>' +
+        '<p>' + esc(protocolo) + '</p>' +
+        '<dl class="dl">' +
+          '<div class="dlr"><dt>Executor</dt><dd>' + esc(criterio.executor || 'Não informado') + '</dd></div>' +
+          '<div class="dlr"><dt>Revisor</dt><dd>' + esc(criterio.revisor || 'Não informado') + '</dd></div>' +
+          '<div class="dlr"><dt>Data</dt><dd>' + esc(criterio.data || 'Não informada') + '</dd></div>' +
+          '<div class="dlr"><dt>Evidência ou justificativa N/A</dt><dd>' +
+            esc(criterio.evidencia || 'Não informada') + '</dd></div>' +
+        '</dl></div></details>';
+    });
+    return '<h3 style="margin: 24px 0 12px">Aplicação do DoD</h3>' +
+      '<dl class="dl">' +
+        '<div class="dlr"><dt>Versão ou commit</dt><dd>' + esc(aplicacao.versao || 'Não informado') + '</dd></div>' +
+        '<div class="dlr"><dt>Avaliação externa</dt><dd>' + esc(aplicacao.avaliacaoExterna || 'Pendente') + '</dd></div>' +
+      '</dl>' + itens.join('');
   }
 
   function abrirHistoria(id, aba) {
@@ -176,14 +218,23 @@ const MC = (() => {
         (h.regras
           ? '<h3 style="margin-top: 16px">Regras de negócio</h3>' +
             '<p class="note" style="margin: 0 0 8px">' + esc(h.regras.situacao) + '</p>' +
-            '<ol class="ol">' + h.regras.itens.map((r) => '<li>' + esc(r) + '</li>').join('') + '</ol>'
+            (h.regras.origem ? '<p><a class="lnk" href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/' +
+              esc(h.regras.origem) + '" target="_blank" rel="noopener">Origem: PR #' + esc(h.regras.origem) + '</a></p>' : '') +
+            '<ol class="ol">' + h.regras.itens.map((r) => '<li>' + esc(r) + '</li>').join('') + '</ol>' +
+            (h.regras.pendencias
+              ? '<h3 style="margin-top: 16px">Decisões pendentes</h3><ul class="ol">' +
+                h.regras.pendencias.map((p) => '<li>' + esc(p) + '</li>').join('') + '</ul>' : '')
           : '') +
+        (h.relacionadas && h.relacionadas.length
+          ? '<h3 style="margin-top: 16px">Histórias relacionadas</h3><div class="rfl">' +
+            h.relacionadas.map(chipHistoria).join('') + '</div>' : '') +
       '</div>' +
       '<div class="pane" data-painel="pro"' + (aba === 'pro' ? '' : ' hidden') + '>' +
         '<dl class="dl">' +
-          '<div class="dlr"><dt>DoR</dt><dd><a class="lnk" href="' + url('dor-e-dod/') + '">' + (noBacklog(h) ? 'Atendido' : 'Não marcado') + '</a></dd></div>' +
-          '<div class="dlr"><dt>DoD</dt><dd><a class="lnk" href="' + url('dor-e-dod/') + '">Não marcado</a></dd></div>' +
+          '<div class="dlr"><dt>DoR</dt><dd>' + (noBacklog(h) ? 'Atendido' : 'Não marcado') + '</dd></div>' +
         '</dl>' +
+        aplicacaoDod(h) +
+        '<p><a class="lnk" href="' + url('dor-e-dod/') + '">Consultar critérios gerais de DoR e DoD</a></p>' +
       '</div>' +
       '<div class="pane" data-painel="his"' + (aba === 'his' ? '' : ' hidden') + '>' +
         (ev.length
