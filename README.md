@@ -74,10 +74,7 @@ sempre o próximo número livre, nunca um número já usado.
 |---|---|
 | **Validação do MVP consolidado com a cliente** | Páginas MVP e Priorização. A reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino tratou requisitos individuais; o conjunto do MVP e as notas ainda em hipótese aguardam a reunião de acompanhamento. |
 | **Backlog e Iteração atual vazios** | `dorAtendido` em `assets/js/dados.js` ainda não tem nenhuma história: nenhuma foi marcada como pronta pelo DoR. |
-| **Regras de HU13 e HU15** | Seção *Regras de negócio* no detalhe de cada história. São proposta da equipe e aguardam validação da cliente. |
-| **Avaliação da usuária representativa** | Página Reuniões. Não há sessão registrada com Daniela Soares sobre usabilidade, linguagem, privacidade e experiência de uso; o roteiro está pronto. |
-| **Link das telas do protótipo** | Página Engenharia de requisitos. Falta publicar o endereço das telas no Figma e registrar os ajustes feitos nelas. |
-| **Personas e jornadas** | Página Histórico. Previstas na Iteração 3 e não publicadas como artefato; a equipe precisa decidir se serão produzidas. |
+| **Avaliação da usuária representativa** | Página Reuniões. O teste com a Daniela Soares validou as regras de HU13 e HU15; falta registrar o que ela apontou sobre usabilidade, linguagem, privacidade e experiência de uso, com os momentos do vídeo. |
 
 ---
 

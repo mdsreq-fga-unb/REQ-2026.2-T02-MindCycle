@@ -337,7 +337,7 @@ const DADOS = {
         'A recomendação do dia deve ser exibida em até 3 segundos após o acesso (RNF06).'
       ],
       regras: {
-        situacao: 'Proposta da equipe em 08/11/2026. Em 05/10 a cliente aprovou o fluxo com prioridade, prazo e energia, mas não estas regras: validar na próxima reunião.',
+        situacao: 'Proposta da equipe em 08/11/2026, validada com Daniela Soares no teste com usuária. Em 05/10 a Dra. Cláudia aprovou o fluxo com prioridade, prazo e energia, mas não estas regras.',
         itens: [
           'Disposição, energia necessária e prioridade têm três níveis: 1 baixa, 2 média e 3 alta.',
           'Entram na recomendação as tarefas não concluídas com data planejada até hoje. A data planejada nasce no dia do cadastro e só muda pelo adiamento (HU18) ou pelo reajuste (HU15).',
@@ -383,7 +383,7 @@ const DADOS = {
         'O reajuste deve aparecer em até 2 segundos após o registro de disposição (RNF07).'
       ],
       regras: {
-        situacao: 'Proposta da equipe em 08/11/2026. Em 05/10 a cliente endossou o reajuste automático, mas não estas regras: validar na próxima reunião.',
+        situacao: 'Proposta da equipe em 08/11/2026, validada com Daniela Soares no teste com usuária. Em 05/10 a Dra. Cláudia endossou o reajuste automático, mas não estas regras.',
         itens: [
           'O reajuste dispara com um novo registro de disposição (HU04) ou com a sinalização de sobrecarga (HU02), que conta como disposição baixa até o próximo registro.',
           'A lista do dia é recalculada com as regras de ordem da HU13.',
