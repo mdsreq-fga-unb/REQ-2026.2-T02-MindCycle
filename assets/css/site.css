@@ -1907,3 +1907,159 @@ summary.foldh::-webkit-details-marker {
   stroke-width: 1.5;
   stroke-dasharray: 5 5;
 }
+
+/* Partes do diagrama que abrem detalhes (assets/js/arquitetura.js). A parte
+   sob o mouse, com foco ou aberta ganha a borda na cor de destaque. */
+.arq .alvo {
+  cursor: pointer;
+  outline: none;
+}
+.arq .alvo :is(.b, .g, .on, .bx, .db, .hit) {
+  transition: stroke .15s ease, fill .15s ease;
+}
+.arq .hit {
+  fill: transparent;
+  stroke: transparent;
+}
+.arq .alvo:is(:hover, :focus-visible, .ativo) :is(.b, .g, .on, .bx, .db) {
+  stroke: var(--acc);
+  stroke-width: 2;
+}
+.arq .alvo:is(:hover, :focus-visible, .ativo) .hit {
+  fill: var(--soft);
+  stroke: var(--acc);
+  stroke-dasharray: 4 4;
+}
+.arq .alvo:focus-visible :is(.b, .g, .on, .bx, .db, .hit) {
+  stroke-width: 3;
+}
+.arq .so-toque {
+  display: none;
+}
+@media (hover: none), (pointer: coarse) {
+  .arq .so-mouse { display: none; }
+  .arq .so-toque { display: inline; }
+}
+
+/* Painel de detalhes: ao lado da parte, com mouse; folha no pé da tela, no
+   toque ou abaixo de 720 px. Fica abaixo dos diálogos (.over, z-index 20). */
+.arq-det {
+  position: fixed;
+  z-index: 15;
+  width: 440px;
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mut) var(--panel);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(62,35,56,.16), 0 2px 6px rgba(62,35,56,.08);
+  padding: 16px 18px 18px;
+  font-size: 14px;
+}
+[data-theme="dark"] .arq-det {
+  box-shadow: 0 12px 32px rgba(0,0,0,.45);
+}
+.arq-det[hidden] {
+  display: none;
+}
+.arq-det.entra {
+  animation: mcPop .2s cubic-bezier(.2,.9,.3,1.1) both;
+}
+.arq-det.folha {
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  top: auto;
+  width: auto;
+  max-height: 70vh;
+}
+.arq-det:focus {
+  outline: none;
+}
+.arq-det:focus-visible {
+  box-shadow: 0 0 0 2px var(--acc);
+}
+.arq-det-h {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.arq-det-h .x {
+  width: 36px;
+  height: 36px;
+}
+.arq-det-k {
+  margin: 0 0 2px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--acct);
+}
+.arq-det h3 {
+  margin: 0;
+  font-family: var(--disp);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--head);
+}
+.arq-det-c > p {
+  margin: 0 0 10px;
+  color: var(--mut);
+}
+.arq-dl {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.arq-dl div {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 10px;
+}
+.arq-dl dt {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--head);
+  padding-top: 2px;
+}
+.arq-dl dd {
+  margin: 0;
+  line-height: 1.5;
+}
+.arq-dl .mono {
+  font-size: 12.5px;
+  overflow-wrap: anywhere;
+}
+.arq-dl .rfb {
+  min-height: 22px;
+  padding: 0 6px;
+  font-size: 11.5px;
+}
+.arq-rotas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12.5px;
+}
+.arq-rotas i {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-style: normal;
+  font-size: 11.5px;
+  color: var(--mut);
+}
+@media (max-width: 480px) {
+  .arq-dl div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .arq-det.entra { animation: none; }
+  .arq .alvo :is(.b, .g, .on, .bx, .db, .hit) { transition: none; }
+}
