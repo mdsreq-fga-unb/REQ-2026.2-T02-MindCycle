@@ -277,7 +277,7 @@ const DADOS = {
       descricao: 'Deve ser possível à usuária receber recomendações de conteúdos informativos sobre o ciclo menstrual, relacionados à fase atual e aos sintomas registrados.',
       historia: 'receber recomendações de conteúdos sobre o ciclo relacionados à minha fase atual e aos sintomas registrados, para compreender melhor o que estou vivendo',
       caracteristica: 'CP2',
-      rnfs: [],
+      rnfs: ['RNF03'],
       valor: 3,
       validadaCliente: true,
       iteracao: 6,
@@ -956,6 +956,11 @@ const DADOS = {
         alteracao: 'Valor: Won\'t have → Should have.',
         motivo: 'Ajuste da cliente, que validou o requisito com entusiasmo.',
         video: { id: 'PKoWLngGSRg', tempo: 748 }
+      },
+      {
+        data: '13/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteção das recomendações personalizadas.',
+        motivo: 'Sugestão de Arthur Palhares na revisão do PR #54: HU09 utiliza fase e sintomas da usuária, portanto sua personalização deve integrar a verificação de acesso no DoD. Conteúdos informativos genéricos não precisam ser privados.'
       }
     ],
     HU11: [
