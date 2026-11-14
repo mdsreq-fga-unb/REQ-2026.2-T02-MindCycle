@@ -26,6 +26,7 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 .
 ├── index.html                     Requisitos: a árvore do problema até as histórias
 ├── visao/                         Visão de produto (figuras ampliáveis)
+├── arquitetura/                   Arquitetura: diagrama, tecnologias e decisões
 ├── engenharia-de-requisitos/      Escolhas de processo e Catálogo de Metas
 ├── mvp/                           Composição do MVP por característica
 ├── historico/                     O que mudou em cada história e RNF
