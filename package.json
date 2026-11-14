@@ -12,7 +12,7 @@
   },
   "scripts": {
     "postinstall": "npm run build -w @mindcycle/shared && npm run prisma:generate -w @mindcycle/api",
-    "db:up": "docker compose up -d postgres",
+    "db:up": "docker compose up -d postgres mailpit",
     "dev:api": "npm run start:dev -w @mindcycle/api",
     "dev:app": "npm run start -w @mindcycle/app",
     "build": "npm run build --workspaces --if-present",

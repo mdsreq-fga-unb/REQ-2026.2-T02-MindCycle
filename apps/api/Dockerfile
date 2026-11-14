@@ -25,4 +25,5 @@ COPY --from=build /repo/apps/api apps/api
 WORKDIR /repo/apps/api
 USER node
 EXPOSE 3000
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main"]
+# Valida as variáveis antes das migrations: com algo errado, nada toca no banco.
+CMD ["sh", "-c", "node dist/verificar-ambiente.js && npx prisma migrate deploy && node dist/main"]

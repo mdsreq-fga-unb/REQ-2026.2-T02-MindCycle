@@ -39,7 +39,7 @@ apps/
       tasks/      HU16-20 HU18
       planning/   HU13 HU15          domain/ puro + service que orquestra
       content/    HU01 HU09 HU28 HU21 HU22   JSON versionado no repositório
-    src/common/                      guards, Relogio, filtro de erros, @CurrentUser
+    src/common/                      Relogio, ambiente, guards, filtro de erros, @CurrentUser
     prisma/                          schema, migrations, seed
     test/                            e2e contra Postgres
 packages/shared/                     enums (Nivel 1-3, Fase), schemas zod, tipos de resposta
