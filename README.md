@@ -64,7 +64,7 @@ traz cada iteração, as entregas esperadas e o que o cliente valida em cada cic
 
 ## Tecnologias
 
-`React Native` · `TypeScript` · `Node.js + NestJS` · `PostgreSQL` · `Docker` ·
+`React Native (Expo)` · `TypeScript` · `Node.js + NestJS` · `PostgreSQL + Prisma` · `Docker` ·
 `GitHub Actions` · `Figma` · `Hugo` + `GitHub Pages`
 
 ## Equipe
@@ -129,11 +129,65 @@ traz cada iteração, as entregas esperadas e o que o cliente valida em cada cic
 
 | Branch | Conteúdo |
 |---|---|
-| `main` | Identidade visual em `assets/brand/` (paleta, logotipos, tipografia) e este README |
+| `main` | Código do produto, identidade visual em `assets/brand/` e este README |
 | `gh-pages` | Código-fonte do site de documentação, em Hugo, publicado automaticamente pelo GitHub Actions |
 
 A documentação **não** é escrita à mão em HTML: a branch `gh-pages` guarda o fonte em
 Markdown e, a cada push, o workflow constrói e publica o site.
+
+O código é um monorepo com npm workspaces. A arquitetura e as decisões estão em
+[`docs/plans/2026-11-13-arquitetura-design.md`](docs/plans/2026-11-13-arquitetura-design.md).
+
+| Pasta | Conteúdo |
+|---|---|
+| `apps/api` | API em NestJS + Prisma (PostgreSQL), um módulo por domínio em `src/modules/` |
+| `apps/app` | App em Expo (React Native) para Android, iOS e web, com rotas em `src/app/` |
+| `packages/shared` | Schemas (Zod) e tipos usados pela API e pelo app |
+
+## Como rodar
+
+Precisa de Node 22.18+, **npm 11** (`npm install -g npm@11`) e Docker.
+
+```bash
+npm install
+```
+
+```bash
+cp apps/api/.env.example apps/api/.env
+```
+
+Preencha `JWT_SECRET` em `apps/api/.env` (gere com `openssl rand -base64 32`). Depois suba o
+banco, aplique as migrações e rode a API e o app web, cada um num terminal:
+
+```bash
+npm run db:up
+```
+
+```bash
+npm run prisma:migrate -w @mindcycle/api
+```
+
+```bash
+npm run dev:api
+```
+
+```bash
+npm run dev:app
+```
+
+O app abre em <http://localhost:8081> e a API responde em <http://localhost:3000>. Se a porta
+5432 já estiver em uso, suba o banco com `POSTGRES_PORT=5434 npm run db:up` e ajuste a porta
+em `DATABASE_URL`. No emulador Android, defina `EXPO_PUBLIC_API_URL=http://10.0.2.2:3000`.
+
+| Comando | O que faz |
+|---|---|
+| `npm run typecheck` | Checa os tipos de todos os pacotes |
+| `npm run lint` | Lint da API (oxlint) e do app (ESLint) |
+| `npm test` | Testes unitários |
+| `npm run test:e2e` | Testes e2e da API, num banco `mindcycle_test` criado automaticamente |
+
+O CI (`.github/workflows/ci.yml`) roda tudo isso a cada PR, além do build da imagem Docker
+da API.
 
 ## Marca
 
