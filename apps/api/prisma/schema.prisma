@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// HU25. Excluir a usuária apaga, em cascata, os dados de domínio dela (HU36).
+model Usuaria {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique
+  senhaHash String   @map("senha_hash")
+  /// Fuso IANA do aparelho: define o "hoje" da usuária.
+  fuso      String
+  criadaEm  DateTime @default(now()) @map("criada_em") @db.Timestamptz
+
+  consentimentos Consentimento[]
+
+  @@map("usuarias")
+}
+
+// HU12, RNF02. Um registro por aceite; revogar (HU36) preenche revogadoEm.
+model Consentimento {
+  id           String    @id @default(uuid()) @db.Uuid
+  usuariaId    String    @map("usuaria_id") @db.Uuid
+  versaoTermos String    @map("versao_termos")
+  aceitoEm     DateTime  @default(now()) @map("aceito_em") @db.Timestamptz
+  revogadoEm   DateTime? @map("revogado_em") @db.Timestamptz
+
+  usuaria Usuaria @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
+
+  @@index([usuariaId])
+  @@map("consentimentos")
+}
+
+// Estado do @nestjs/authentication (RefreshTokenStore). O id é o SHA-256 do token.
+// Sem chave estrangeira, como o contrato do pacote supõe: a exclusão da conta
+// (HU36) revoga e apaga estes registros explicitamente.
+model RefreshToken {
+  id              String    @id
+  familyId        String    @map("family_id")
+  userId          String    @map("user_id")
+  createdAt       DateTime  @map("created_at") @db.Timestamptz
+  expiresAt       DateTime  @map("expires_at") @db.Timestamptz
+  familyExpiresAt DateTime  @map("family_expires_at") @db.Timestamptz
+  usedAt          DateTime? @map("used_at") @db.Timestamptz
+  revoked         Boolean   @default(false)
+  claims          Json?
+
+  @@index([familyId])
+  @@index([userId])
+  @@index([familyExpiresAt])
+  @@map("refresh_tokens")
+}
