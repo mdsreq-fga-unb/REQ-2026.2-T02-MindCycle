@@ -8,6 +8,11 @@ const ambienteSchema = z.object({
   DATABASE_URL: z
     .string({ error: 'obrigatória' })
     .regex(/^postgres(ql)?:\/\//, { error: 'deve começar com postgresql://' }),
+  // Conexão direta, sem pooler, só para as migrations (prisma7.config.ts).
+  DATABASE_URL_UNPOOLED: z
+    .string()
+    .regex(/^postgres(ql)?:\/\//, { error: 'deve começar com postgresql://' })
+    .optional(),
   JWT_SECRET: z
     .string({ error: 'obrigatória; gere com: openssl rand -base64 32' })
     .min(32, { error: 'precisa de pelo menos 32 caracteres' }),

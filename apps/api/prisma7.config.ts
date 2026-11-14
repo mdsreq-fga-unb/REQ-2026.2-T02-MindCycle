@@ -8,7 +8,10 @@ export default defineConfig({
   migrations: {
     path: "prisma/migrations",
   },
+  // As migrations precisam da conexão direta: pelo pooler da Neon (PgBouncer em
+  // modo transação) o Prisma Migrate falha. Sem DATABASE_URL_UNPOOLED, como no
+  // banco local, usa a DATABASE_URL. A API em si sempre usa a DATABASE_URL.
   datasource: {
-    url: process.env["DATABASE_URL"],
+    url: process.env["DATABASE_URL_UNPOOLED"] || process.env["DATABASE_URL"],
   },
 });
