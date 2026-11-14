@@ -29,6 +29,7 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 ├── arquitetura/                   Arquitetura: diagrama, tecnologias e decisões
 ├── engenharia-de-requisitos/      Escolhas de processo e Catálogo de Metas
 ├── mvp/                           Composição do MVP por característica
+├── backlog/                       Redirecionamento para o planejamento na árvore
 ├── historico/                     O que mudou em cada história e RNF
 ├── reunioes/                      Gravações, com cada decisão no momento do vídeo
 ├── cronograma/                    Linha do tempo, releases e painel de fases
@@ -41,7 +42,7 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 │   ├── js/
 │   │   ├── dados.js               Histórias, RNFs, reuniões, histórico, fases e cronograma
 │   │   ├── site.js                Tema, diálogos e o detalhe da história e do RNF
-│   │   └── requisitos.js, mvp.js, priorizacao.js, reunioes.js, historico.js, cronograma.js
+│   │   └── requisitos.js, mvp.js, backlog.js, priorizacao.js, reunioes.js, historico.js, cronograma.js
 │   │                              O que cada página monta a partir de dados.js
 │   ├── img/                       Figuras (WebP em 480, 800 e 1280 px) e favicon
 │   ├── brand/                     Marca (vem da branch main): paleta, logos, Fraunces
@@ -79,6 +80,39 @@ HU13: {
 }
 ```
 
+## Atualização do backlog
+
+O planejamento fica integrado à árvore de requisitos na página inicial. Selecionar
+uma história abre seu planejamento abaixo da árvore. O endereço `backlog/`
+redireciona para essa página, sem manter uma segunda visualização.
+O acompanhamento operacional será feito no GitHub Projects, ainda pendente de
+configuração e vínculo. O Notion não será utilizado. Até essa configuração,
+os registros no site representam o estado documentado no repositório, não uma
+sincronização automática com o Projects.
+
+O planejamento é montado a partir das histórias e do bloco `backlog` de
+`assets/js/dados.js`. Ela não repete descrição, benefício nem critérios: cada HU abre o
+mesmo detalhe usado na árvore de requisitos.
+
+- `responsaveis` registra somente atribuições formalizadas; sem entrada, a HU aparece como
+  **Não atribuído**.
+- `capacidadePorIteracao` registra a capacidade disponível. Enquanto estiver nula, a carga
+  planejada é exibida, mas a relação carga/capacidade permanece **Não calculável**.
+  Disponibilidade e capacidade aparecem como **A informar** no painel da história;
+  cada responsável ainda deve avaliar sua carga total na iteração.
+- `tarefasPadrao` mantém as quatro etapas comuns. `itens[HU].tarefas` detalha o trabalho
+  específico de cada etapa pelo seu ID, sem repetir critérios e regras da história.
+  O detalhamento de construção cobre as 22 HUs do MVP. As decisões ainda pendentes
+  continuam sujeitas ao refinamento e à validação registrados no catálogo.
+- `itens[HU].bloqueios` registra as pendências documentadas de preparação ou validação.
+  `dependencias` referencia outras HUs; alocações em iteração posterior aparecem como
+  pendência de planejamento. Esses registros não alteram o andamento da implementação.
+- O andamento fica em `itens[HU].andamento`, com `andamentoPadrao` para o estado comum
+  confirmado pela equipe. O estado inicial de 13/11/2026 é **Não iniciada**. Em 14/11,
+  HU12 e HU25 passaram a **Implementação integrada; verificação pendente**, com
+  `evidenciaImplementacao` apontando para o PR #57 e seu commit. Isso não comprova
+  atendimento ao DoR nem aceite pelo DoD; termos e verificações continuam pendentes.
+
 ## Sobre os identificadores do Problema, OE, CP, RF e RNF
 
 A origem dos identificadores é a **Matriz de Rastreabilidade de Requisitos v1.0**,
@@ -95,8 +129,8 @@ Os identificadores foram preservados:
 | Histórias de usuário | `HU01` a `HU36` |
 | Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** (número não reaproveitado) |
 
-No site, tudo isso vive num lugar só: `assets/js/dados.js`. A árvore, o MVP, a priorização,
-as reuniões, o histórico e o detalhe de cada história leem desse arquivo, então um
+No site, tudo isso vive num lugar só: `assets/js/dados.js`. A árvore, o MVP, o backlog, a
+priorização, as reuniões, o histórico e o detalhe de cada história leem desse arquivo, então um
 identificador ou uma nota alterados ali mudam em todas as páginas. Uma história nova recebe
 sempre o próximo número livre, nunca um número já usado.
 
@@ -110,9 +144,12 @@ indicando a confirmação da prioridade, não a aprovação das novas regras.
 Nesta revisão da issue #38 foram reaproveitadas apenas as regras de HU13/HU15, a
 correção de HU17 e a apresentação das regras do PR #49. O DoD integrado pelo
 [PR #51](https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/51) foi preservado.
-Quando o [PR #52](https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/52)
-for combinado com estas alterações, seus registros de DoR devem ser conferidos de
-novo: regra documentada não significa regra validada nem história pronta.
+O [PR #52](https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/52)
+fornece os critérios, a aplicação e o cálculo da situação do DoR. O painel de
+planejamento consulta esse mesmo resultado e abre seus detalhes no modal da HU.
+Os motivos afetados pelos responsáveis e refinamentos foram atualizados em
+14/11/2026, preservando a data da conferência retroativa e a pendência de avaliação
+coletiva. Regra documentada não significa regra validada nem história pronta.
 
 ---
 
@@ -121,7 +158,8 @@ novo: regra documentada não significa regra validada nem história pronta.
 | O que | Onde |
 |---|---|
 | **Validação do MVP consolidado com a cliente** | Páginas MVP e Priorização. A reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino tratou requisitos individuais; o conjunto do MVP e as notas ainda em hipótese aguardam a reunião de acompanhamento. |
-| **Backlog e Iteração atual vazios** | `dorAtendido` em `assets/js/dados.js` ainda não tem nenhuma história: nenhuma foi marcada como pronta pelo DoR. |
+| **Atribuições e capacidade ainda incompletas** | O planejamento integrado à árvore registra as atribuições informadas. Completar `backlog.responsaveis` e `backlog.capacidadePorIteracao` após o acordo da equipe. |
+| **Conferência do DoR** | `dorAtendido` em `assets/js/dados.js` ainda está vazio; a alocação e a implementação não comprovam atendimento ao DoR. |
 | **Avaliação da usuária representativa** | Página Reuniões. O teste com a Daniela Soares cobriu usabilidade, linguagem e experiência de uso. Falta avaliar privacidade com ela, e a ordem das tarefas de HU13 não foi testada. |
 | **Validação dos refinamentos da #38** | Regras nos detalhes de HU04, HU05, HU13, HU15, HU23, HU30 e HU32. A fórmula clínica e os limites das fases em HU05 continuam pendentes de revisão da cliente; a ampliação de HU23 e o formato de exportação são propostas. |
 | **RNF05** | Não existe no quadro: a numeração salta de RNF04 para RNF06. Confirmar se houve descarte e registrar, ou renumerar. |
@@ -138,6 +176,7 @@ páginas.
 |---|---|
 | Texto de Visão de produto, Engenharia de requisitos, DoR e DoD ou Lições aprendidas | O `index.html` da página |
 | Uma história (nome, critérios, regras, relacionadas, nota MoSCoW, esforço, iteração) ou um RNF | `historias` ou `rnfs` em `assets/js/dados.js` |
+| Responsável, capacidade, bloqueio ou exceção operacional do backlog | `backlog` em `assets/js/dados.js` |
 | Uma reunião nova ou uma decisão | `reunioes` em `assets/js/dados.js` (código do vídeo no YouTube e o segundo de cada decisão) |
 | Uma alteração no histórico | `historico` em `assets/js/dados.js` |
 | A iteração atual ou as histórias prontas pelo DoR | `iteracaoAtual` e `dorAtendido` em `assets/js/dados.js` |

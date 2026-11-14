@@ -26,7 +26,10 @@ const MC = (() => {
   const caracteristica = (id) => DADOS.caracteristicas.find((c) => c.id === id);
   const noMvp = (h) => h.iteracao > 0;
   const noBacklog = (h) => noMvp(h) && DADOS.dorAtendido.includes(h.id);
-  const naIteracaoAtual = (h) => noBacklog(h) && h.iteracao === DADOS.iteracaoAtual;
+  const naIteracaoAtual = (h) => noMvp(h) && h.iteracao === DADOS.iteracaoAtual;
+  const itemBacklog = (h) => ((DADOS.backlog || {}).itens || {})[h.id] || {};
+  const responsavel = (h) => ((DADOS.backlog || {}).responsaveis || {})[h.id] ||
+    (DADOS.backlog || {}).responsavelPadrao || 'Não atribuído';
   const MOSCOW = { 4: 'Must have', 3: 'Should have', 2: 'Could have', 1: "Won't have now" };
 
   const criteriosDod = document.getElementById('criterios-dod');
@@ -135,8 +138,9 @@ const MC = (() => {
   function etiquetas(h) {
     const link = (texto, caminho, classe) => '<a class="ptag ' + classe + '" href="' + esc(url(caminho)) + '">' + esc(texto) + '</a>';
     const tags = [];
-    if (noBacklog(h)) tags.push(link('Backlog', 'dor-e-dod/', 't-bk'));
+    if (noBacklog(h)) tags.push(link('DoR atendido', 'dor-e-dod/', 't-bk'));
     if (naIteracaoAtual(h)) tags.push(link('Iteração atual', 'cronograma/', 't-cur'));
+    if (itemBacklog(h).situacao) tags.push(link(itemBacklog(h).situacao, 'backlog/', 't-out'));
     tags.push(noMvp(h) ? link('MVP', 'mvp/', 't-mvp') : link('Fora do MVP', 'mvp/', 't-out'));
     if (noMvp(h)) {
       tags.push(link('Planejada: Iteração ' + h.iteracao, 'cronograma/', 't-rel'));
@@ -192,6 +196,7 @@ const MC = (() => {
       '<dl class="dl">' +
         '<div class="dlr"><dt>Iteração</dt><dd>Iteração ' + h.iteracao + '</dd></div>' +
         '<div class="dlr"><dt>Conferência</dt><dd>' + esc(registro.conferencia || 'Ainda não realizada') + '</dd></div>' +
+        (registro.atualizadoEm ? '<div class="dlr"><dt>Atualização dos registros</dt><dd>' + esc(registro.atualizadoEm) + '</dd></div>' : '') +
         '<div class="dlr"><dt>Situação</dt><dd>' + resultadoDor(DADOS.situacaoDor(h.id)) + '</dd></div>' +
       '</dl>' + itens.join('');
   }
@@ -237,6 +242,7 @@ const MC = (() => {
     if (!h) return;
     const ev = decisoes(h);
     const ABAS = [['res', 'História de usuário'], ['pro', 'DoR e DoD'], ['his', 'Decisões']];
+    const planoArvore = pagina === 'requisitos' && typeof PLANO_ARVORE !== 'undefined' && PLANO_ARVORE;
     aba = aba || 'res';
     const conteudo =
       '<div class="dh"><div><div class="crumbs"><span class="mono">' + h.id + '</span></div>' +
@@ -250,7 +256,8 @@ const MC = (() => {
         '<dl class="dl">' +
           '<div class="dlr"><dt>Benefício</dt><dd><b>' + esc(beneficio(h)) + '</b></dd></div>' +
           '<div class="dlr"><dt>Ator</dt><dd>Usuária</dd></div>' +
-          '<div class="dlr"><dt>Responsável</dt><dd class="ph">[a definir]</dd></div>' +
+          '<div class="dlr"><dt>Responsável</dt><dd' +
+            (responsavel(h) === 'Não atribuído' ? ' class="ph"' : '') + '>' + esc(responsavel(h)) + '</dd></div>' +
           '<div class="dlr"><dt>' + (noMvp(h) ? 'Papel no MVP' : 'Por que ficou fora') + '</dt><dd>' + esc(h.nota) + '</dd></div>' +
         '</dl>' +
         '<h3 style="margin-top: 16px">Critérios de aceitação</h3>' +
@@ -285,10 +292,10 @@ const MC = (() => {
         '<div class="tools" style="margin-top: 10px"><a class="lnk" href="' + url('historico/') + '">Ver no Histórico</a>' +
         '<a class="lnk" href="' + url('reunioes/') + '">Ver em Reuniões</a></div>' +
       '</div>' +
-      // Na árvore, a história já está à vista; nas outras páginas, o botão leva até ela.
-      (pagina === 'requisitos' ? '' :
-        '<div style="margin-top: 18px; display: flex; justify-content: flex-end"><a class="go" href="' +
-        esc(url('?cp=' + h.caracteristica + '&hl=' + h.id)) + '">Ver na árvore</a></div>');
+      '<div class="tools" style="margin-top: 18px; justify-content: flex-end">' +
+        '<a class="go" href="' + esc(url('?cp=' + h.caracteristica + '&hl=' + h.id + '&plano=' + h.id)) + '">Ver planejamento</a>' +
+        (pagina === 'requisitos' ? '' : '<a class="go" href="' +
+          esc(url('?cp=' + h.caracteristica + '&hl=' + h.id)) + '">Ver na árvore</a>') + '</div>';
 
     const dlg = abrirDialogo({ rotulo: 'Detalhes da história de usuário', conteudo, hash: h.id, fecharRotulo: 'Fechar detalhes' });
     dlg.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => {
@@ -355,7 +362,10 @@ const MC = (() => {
     quadroDor.innerHTML = iteracoes.map((n) => {
       const hs = DADOS.historias.filter((h) => h.iteracao === n);
       const prontas = hs.filter((h) => DADOS.dorAtendido.includes(h.id)).length;
-      const conferencias = [...new Set(hs.map((h) => (DADOS.aplicacaoDor[h.id] || {}).conferencia).filter(Boolean))];
+      const conferencias = [...new Set(hs.map((h) => {
+        const registro = DADOS.aplicacaoDor[h.id] || {};
+        return registro.conferencia ? registro.conferencia + (registro.atualizadoEm ? ' · registros atualizados em ' + registro.atualizadoEm : '') : '';
+      }).filter(Boolean))];
       const linhas = hs.map((h) => {
         const criterios = (DADOS.aplicacaoDor[h.id] || {}).criterios || {};
         return '<tr><th scope="row">' + chipHistoria(h) + '</th>' +
@@ -385,7 +395,7 @@ const MC = (() => {
     const alvo = e.target.closest('[data-fechar], [data-historia], [data-rnf], [data-dialogo]');
     if (!alvo) return;
     if ('fechar' in alvo.dataset) fecharDialogo();
-    else if (alvo.dataset.historia) abrirHistoria(alvo.dataset.historia);
+    else if (alvo.dataset.historia) abrirHistoria(alvo.dataset.historia, alvo.hasAttribute('data-dor') ? 'pro' : undefined);
     else if (alvo.dataset.rnf) abrirRnf(alvo.dataset.rnf);
     else if (alvo.dataset.dialogo) abrirTemplate(alvo.dataset.dialogo);
   });
@@ -402,6 +412,7 @@ const MC = (() => {
 
   return {
     RAIZ, pagina, esc, url, tempo, video, historia, rnf, caracteristica, noMvp, noBacklog, naIteracaoAtual,
+    responsavel,
     MOSCOW, abrirDialogo, fecharDialogo, abrirHistoria, abrirRnf, chipHistoria, botaoFechar
   };
 })();
