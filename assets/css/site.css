@@ -1809,6 +1809,28 @@ summary.foldh::-webkit-details-marker {
   font-size: 14px;
 }
 
+/* Resultado dos critérios e situação do DoR */
+.rdor {
+  align-self: flex-start;
+  display: inline-block;
+  padding: 1px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--mut);
+  background: var(--panel);
+  white-space: nowrap;
+}
+.rdor.r-sim { background: var(--lilt); border-color: var(--lil); color: var(--lil); }
+.rdor.r-nao { background: var(--cort); border-color: var(--cor); color: var(--cor); }
+.rdor.r-exc { background: var(--soft); border-color: var(--acc); color: var(--acct); }
+.rdor.r-na { border-style: dashed; }
+.rdor.r-nc { border-style: dotted; }
+.qdor th, .qdor td { text-align: center; padding: 6px 4px; }
+.qdor th:first-child, .qdor td:last-child { text-align: left; }
+.qdor .rdor { min-width: 26px; padding: 1px 6px; text-align: center; }
+
 /* Diagrama da página Arquitetura: SVG inline que segue as variáveis do tema.
    Abaixo de 760 px o quadro rola para os lados, sem rolar a página. */
 .arq {
