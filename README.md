@@ -81,12 +81,15 @@ HU13: {
 
 ## Atualização do backlog
 
-O backlog oficial de trabalho é a página `backlog/` do GitHub Pages. A equipe
-deixou de utilizar o Notion, conforme decisão informada em 13/11/2026. As
-atualizações de responsáveis, tarefas, andamento e bloqueios são registradas no
-repositório e publicadas no Pages; não há sincronização pendente com o Notion.
+O planejamento fica integrado à árvore de requisitos na página inicial. Selecionar
+uma história abre seu planejamento abaixo da árvore. O endereço `backlog/`
+redireciona para essa página, sem manter uma segunda visualização.
+O acompanhamento operacional será feito no GitHub Projects, ainda pendente de
+configuração e vínculo. O Notion não será utilizado. Até essa configuração,
+os registros no site representam o estado documentado no repositório, não uma
+sincronização automática com o Projects.
 
-A página `backlog/` é montada a partir das histórias e do bloco `backlog` de
+O planejamento é montado a partir das histórias e do bloco `backlog` de
 `assets/js/dados.js`. Ela não repete descrição, benefício nem critérios: cada HU abre o
 mesmo detalhe usado na árvore de requisitos.
 
@@ -94,6 +97,8 @@ mesmo detalhe usado na árvore de requisitos.
   **Não atribuído**.
 - `capacidadePorIteracao` registra a capacidade disponível. Enquanto estiver nula, a carga
   planejada é exibida, mas a relação carga/capacidade permanece **Não calculável**.
+  Disponibilidade e capacidade aparecem como **A informar** no painel da história;
+  cada responsável ainda deve avaliar sua carga total na iteração.
 - `tarefasPadrao` mantém as quatro etapas comuns. `itens[HU].tarefas` detalha o trabalho
   específico de cada etapa pelo seu ID, sem repetir critérios e regras da história.
   O detalhamento de construção cobre as 22 HUs do MVP. As decisões ainda pendentes

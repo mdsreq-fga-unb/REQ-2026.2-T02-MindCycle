@@ -3,100 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Backlog do Produto | MindCycle</title>
-  <meta name="description" content="Visão operacional e rastreável do backlog do MindCycle, das características às histórias e tarefas.">
-  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
-  <script>
-    (function () {
-      var t = null;
-      try { t = localStorage.getItem('tema'); } catch (e) {}
-      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', t);
-    })();
-  </script>
-  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
-  <link rel="stylesheet" href="../assets/css/site.css">
-  <link rel="stylesheet" href="../assets/css/backlog.css?v=13">
+  <title>Planejamento | MindCycle</title>
 </head>
-<body data-pagina="backlog">
-  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
-
-  <aside class="side">
-    <a class="brand" href="../" aria-label="Ir para a página principal">
-      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
-      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
-    </a>
-    <nav class="menu" aria-label="Páginas do site">
-      <a class="navb" href="../">◈ Requisitos</a>
-      <div class="navh">◇ Como trabalhamos</div>
-      <a class="navb" href="../visao/">Visão de produto</a>
-      <a class="navb" href="../engenharia-de-requisitos/">Engenharia de requisitos</a>
-      <a class="navb" href="../mvp/">MVP</a>
-      <a class="navb" href="../historico/">Histórico</a>
-      <a class="navb" href="../reunioes/">Reuniões</a>
-      <a class="navb" href="../cronograma/">Entregas e cronograma</a>
-      <a class="navb" href="../dor-e-dod/">DoR e DoD</a>
-      <a class="navb" href="../priorizacao/">Priorização de requisitos</a>
-      <a class="navb" href="../licoes-aprendidas/">Lições aprendidas</a>
-    </nav>
-  </aside>
-
-  <div class="main">
-    <header class="top">
-      <div class="crumb">MindCycle / Backlog do produto</div>
-      <div class="tools">
-        <button class="btn" id="tema" type="button">☾ Tema escuro</button>
-      </div>
-    </header>
-
-    <main class="content" id="conteudo">
-      <div class="backlog-cabecalho">
-        <h1>Backlog do produto</h1>
-        <div class="backlog-atualizacao">
-          <button class="btn" type="button" data-dialogo="atualizacao-backlog" aria-haspopup="dialog">Atualização do backlog</button>
-          <span id="backlog-data"></span>
-        </div>
-      </div>
-      <p class="lead">Histórias, responsáveis e andamento por iteração.</p>
-      <p class="state">Backlog oficial da equipe · atualizado pelo repositório do projeto.</p>
-
-      <section class="demo-panel">
-        <div class="iteration-tabs" role="tablist" aria-label="Iterações do planejamento">
-          <button type="button" id="iter-tab-5" role="tab" data-iteracao="5" aria-controls="iter-selected" aria-selected="false">Iteração 5<span>20/10 a 02/11</span></button>
-          <button type="button" id="iter-tab-6" role="tab" data-iteracao="6" aria-controls="iter-selected" aria-selected="true">Iteração 6<span>03/11 a 16/11</span></button>
-          <button type="button" id="iter-tab-refino" role="tab" data-iteracao="refino" aria-controls="iter-selected" aria-selected="false">Próximas histórias<span>Sem iteração definida</span></button>
-        </div>
-        <div id="iter-selected" role="tabpanel" aria-labelledby="iter-tab-6" tabindex="0"></div>
-      </section>
-      <template id="atualizacao-backlog" data-rotulo="Atualização do backlog">
-        <div class="dh">
-          <h2>Atualização do backlog</h2>
-          <button class="x" type="button" aria-label="Fechar" data-fechar>&times;</button>
-        </div>
-        <div class="backlog-rotina">
-          <p>O Pages é o backlog oficial da equipe. As alterações são registradas no repositório, sem manter outro quadro paralelo.</p>
-          <h3>No planejamento</h3>
-          <p>A equipe define as histórias da iteração, os responsáveis e o esforço, registra a disponibilidade e avalia se o trabalho cabe no período. O DoR é conferido antes do início do desenvolvimento.</p>
-          <h3>Durante a iteração</h3>
-          <p>Cada responsável registra as mudanças de andamento, tarefas e bloqueios da sua história assim que acontecerem, com a referência que sustenta a atualização.</p>
-          <h3>Na revisão</h3>
-          <p>A equipe registra os resultados, as evidências do DoD, a avaliação dos stakeholders e as pendências. Histórias não concluídas são replanejadas explicitamente, sem serem marcadas como entregues.</p>
-          <h3>Conferência e publicação</h3>
-          <p>As atualizações entram por pull request. O responsável pelo backlog confere a consistência dos registros antes do merge em <code>gh-pages</code>, que publica a nova versão no site.</p>
-          <p class="backlog-rotina-nota">A data no cabeçalho indica a última atualização dos dados do backlog, não alterações apenas visuais.</p>
-        </div>
-      </template>
-    </main>
-
-    <footer class="foot">
-      <span>MindCycle · Requisitos de Software · 2026.2 · Turma 02</span>
-      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">GitHub</a>
-      <span>Theme Spectra by JoeYang1412</span>
-    </footer>
-  </div>
-
-  <script defer src="../assets/js/dados.js?v=5"></script>
-  <script defer src="../assets/js/site.js?v=12"></script>
-  <script defer src="../assets/js/backlog.js?v=13"></script>
+<body>
+  <p><a href="../">Ir para requisitos e planejamento</a></p>
+  <script src="../assets/js/dados.js?v=26"></script>
+  <script>
+    const parametros = new URLSearchParams(location.search);
+    const hu = DADOS.historias.find((h) => h.id === parametros.get('hu') || '#' + h.id === location.hash);
+    const destino = new URL('../', location.href);
+    if (hu) {
+      destino.searchParams.set('cp', hu.caracteristica);
+      destino.searchParams.set('hl', hu.id);
+      destino.searchParams.set('plano', hu.id);
+    }
+    location.replace(destino.href);
+  </script>
 </body>
 </html>

@@ -1,7 +1,5 @@
-// Previas isoladas por URL; ambas consultam o cadastro operacional existente.
+// Planejamento integrado a arvore, usando o cadastro operacional existente.
 const PLANO_ARVORE = (() => {
-  const modo = new URLSearchParams(location.search).get('proposta');
-  if (!['1', '2'].includes(modo)) return null;
   const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   let iteracao = 'todas';
   function render(h) {
@@ -65,7 +63,6 @@ const PLANO_ARVORE = (() => {
       }
       document.dispatchEvent(new Event('planejamento-filtro'));
     });
-    if (modo !== '2') return;
     const painel = document.createElement('section');
     painel.id = 'plano-historia';
     painel.className = 'plano-integrado';
@@ -88,5 +85,5 @@ const PLANO_ARVORE = (() => {
     }, true);
     document.addEventListener('planejamento-filtro', () => { painel.hidden = true; });
   }
-  return { modo, render, montar, passa: (h) => iteracao === 'todas' || (iteracao === 'proximas' ? !(h.iteracao > 0) : h.iteracao === Number(iteracao)) };
+  return { render, montar, passa: (h) => iteracao === 'todas' || (iteracao === 'proximas' ? !(h.iteracao > 0) : h.iteracao === Number(iteracao)) };
 })();

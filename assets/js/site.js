@@ -200,7 +200,6 @@ const MC = (() => {
     const ev = decisoes(h);
     const ABAS = [['res', 'História de usuário'], ['pro', 'DoR e DoD'], ['his', 'Decisões']];
     const planoArvore = pagina === 'requisitos' && typeof PLANO_ARVORE !== 'undefined' && PLANO_ARVORE;
-    if (planoArvore && planoArvore.modo === '1') ABAS.splice(1, 0, ['pla', 'Planejamento']);
     aba = aba || 'res';
     const conteudo =
       '<div class="dh"><div><div class="crumbs"><span class="mono">' + h.id + '</span></div>' +
@@ -236,7 +235,6 @@ const MC = (() => {
           ? '<h3 style="margin-top: 16px">Histórias relacionadas</h3><div class="rfl">' +
             h.relacionadas.map(chipHistoria).join('') + '</div>' : '') +
       '</div>' +
-      (planoArvore && planoArvore.modo === '1' ? '<div class="pane" data-painel="pla" hidden>' + planoArvore.render(h) + '</div>' : '') +
       '<div class="pane" data-painel="pro"' + (aba === 'pro' ? '' : ' hidden') + '>' +
         '<dl class="dl">' +
           '<div class="dlr"><dt>DoR</dt><dd>' + (noBacklog(h) ? 'Atendido' : 'Não marcado') + '</dd></div>' +
@@ -254,7 +252,7 @@ const MC = (() => {
         '<a class="lnk" href="' + url('reunioes/') + '">Ver em Reuniões</a></div>' +
       '</div>' +
       '<div class="tools" style="margin-top: 18px; justify-content: flex-end">' +
-        (planoArvore ? '' : '<a class="go" href="' + esc(url('backlog/?hu=' + h.id)) + '">Ver no backlog</a>') +
+        '<a class="go" href="' + esc(url('?cp=' + h.caracteristica + '&hl=' + h.id + '&plano=' + h.id)) + '">Ver planejamento</a>' +
         (pagina === 'requisitos' ? '' : '<a class="go" href="' +
           esc(url('?cp=' + h.caracteristica + '&hl=' + h.id)) + '">Ver na árvore</a>') + '</div>';
 

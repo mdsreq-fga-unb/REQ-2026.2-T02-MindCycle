@@ -100,7 +100,6 @@
 
   function atualizar() {
     const p = new URLSearchParams();
-    if (proposta) p.set('proposta', proposta.modo);
     if (estado.cp !== 'CP1') p.set('cp', estado.cp);
     if (estado.filtro !== 'all') p.set('filtro', estado.filtro);
     if (estado.destaque) p.set('hl', estado.destaque);
@@ -121,6 +120,10 @@
 
   document.addEventListener('planejamento-filtro', atualizar);
   atualizar();
+  if (params.get('plano') === estado.destaque) {
+    const alvo = document.querySelector('.leaf.hl');
+    if (alvo) alvo.click();
+  }
   if (estado.destaque) {
     const alvo = document.querySelector('.leaf.hl');
     if (alvo) alvo.scrollIntoView({ block: 'center' });
