@@ -54,6 +54,18 @@ export function SessaoProvider({ children }: PropsWithChildren) {
     enabled: autenticada,
   });
 
+  // O "hoje" da usuária segue o fuso do aparelho (T2): se ela viajou ou mudou
+  // o fuso, a conta acompanha assim que carrega. Se falhar, tenta na próxima.
+  useEffect(() => {
+    const fuso = fusoDoAparelho();
+    if (conta.data && conta.data.fuso !== fuso) {
+      api
+        .atualizarConta({ fuso })
+        .then((atualizada) => queryClient.setQueryData(['conta'], atualizada))
+        .catch(() => {});
+    }
+  }, [conta.data, queryClient]);
+
   async function iniciar(novos: Tokens) {
     queryClient.clear();
     await salvarTokens(novos);
@@ -70,7 +82,7 @@ export function SessaoProvider({ children }: PropsWithChildren) {
       iniciar(
         await api.cadastrar({
           ...dados,
-          fuso: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          fuso: fusoDoAparelho(),
         }),
       ),
     sair: async () => {
@@ -85,4 +97,8 @@ export function SessaoProvider({ children }: PropsWithChildren) {
   };
 
   return <SessaoContext value={sessao}>{children}</SessaoContext>;
+}
+
+function fusoDoAparelho(): string {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }

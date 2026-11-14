@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { fusoSchema, type DataLocal } from './datas.js';
 
 // Normaliza antes de validar: " Ana@Exemplo.com " vira "ana@exemplo.com".
 const email = z
@@ -12,7 +13,7 @@ const email = z
 export const cadastroSchema = z.object({
   email,
   senha: z.string().min(8).max(128),
-  fuso: z.string().min(1).max(64),
+  fuso: fusoSchema,
 });
 export type CadastroDto = z.infer<typeof cadastroSchema>;
 
@@ -35,10 +36,18 @@ export interface Tokens {
   expiresIn: number;
 }
 
+// O app manda o fuso do aparelho quando ele muda (viagem, ajuste manual).
+export const atualizacaoContaSchema = z.object({
+  fuso: fusoSchema,
+});
+export type AtualizacaoContaDto = z.infer<typeof atualizacaoContaSchema>;
+
 export interface Usuaria {
   id: string;
   email: string;
   fuso: string;
+  /** Data de hoje no fuso da usuária, pelo relógio da API. */
+  hoje: DataLocal;
   /** Aceitou a versão vigente dos termos (HU12, RNF02). */
   termosAceitos: boolean;
 }

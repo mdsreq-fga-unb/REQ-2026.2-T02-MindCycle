@@ -46,6 +46,14 @@ export class UsuariasRepository {
     return { usuaria: { id, email: linha.email, fuso }, senhaHash };
   }
 
+  atualizarFuso(id: string, fuso: string): Promise<UsuariaAutenticada> {
+    return this.prisma.usuaria.update({
+      where: { id },
+      data: { fuso },
+      select: publica,
+    });
+  }
+
   async atualizarSenhaHash(id: string, senhaHash: string): Promise<void> {
     await this.prisma.usuaria.update({ where: { id }, data: { senhaHash } });
   }

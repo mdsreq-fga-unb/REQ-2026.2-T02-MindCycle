@@ -2,6 +2,7 @@ import { Module, StandardSchemaValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthenticationModule } from '@nestjs/authentication';
+import { RelogioModule } from './common/relogio.js';
 import { AccountModule } from './modules/account/account.module.js';
 import { AuthModule } from './modules/auth/auth.module.js';
 import { ConsentModule } from './modules/consent/consent.module.js';
@@ -24,6 +25,7 @@ import { SaudeController } from './saude.controller.js';
       }),
     }),
     PrismaModule,
+    RelogioModule,
     AuthModule,
     AccountModule,
     ConsentModule,

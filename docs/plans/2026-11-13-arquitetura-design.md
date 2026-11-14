@@ -39,7 +39,7 @@ apps/
       tasks/      HU16-20 HU18
       planning/   HU13 HU15          domain/ puro + service que orquestra
       content/    HU01 HU09 HU28 HU21 HU22   JSON versionado no repositório
-    src/common/                      guards, Clock, filtro de erros, @CurrentUser
+    src/common/                      guards, Relogio, filtro de erros, @CurrentUser
     prisma/                          schema, migrations, seed
     test/                            e2e contra Postgres
 packages/shared/                     enums (Nivel 1-3, Fase), schemas zod, tipos de resposta
@@ -55,7 +55,7 @@ docker-compose.yml
 - **RNF02, consentimento.** `ConsentGuard` em toda rota que grava ciclo, sintoma ou
   disposição: sem aceite vigente da versão atual dos termos, responde 403 com código
   `CONSENTIMENTO_PENDENTE`, que o app usa para levar à tela de termos.
-- **Data local.** A usuária guarda seu fuso (IANA). "Hoje" é calculado por um `Clock`
+- **Data local.** A usuária guarda seu fuso (IANA). "Hoje" é calculado pelo `Relogio`
   injetável no fuso dela; dias de ciclo contam por calendário, não por horas (HU05).
 - **Linguagem acolhedora.** Nenhum texto de interface fora de `src/textos.ts`; mensagens
   de erro da API trazem só código, e o app escolhe o texto.
