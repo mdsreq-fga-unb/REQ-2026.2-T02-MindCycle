@@ -90,6 +90,9 @@ const DADOS = {
   //   iteracao     iteração planejada (5 ou 6); 0 = fora do MVP.
   //   nota         papel no MVP, ou por que ficou fora.
   //   esforco      notas da equipe (1 a 4) e a média consolidada.
+  //   relacionadas IDs de histórias referenciadas, sem repetir suas regras.
+  //   regras       situacao e itens, conforme PR #49; origem indica o PR e
+  //                pendencias explicita decisões ainda necessárias.
   historias: [
     {
       id: 'HU01',
@@ -151,11 +154,24 @@ const DADOS = {
       iteracao: 5,
       nota: 'Check-in diário; dado-fonte de HU02, HU13 e HU15.',
       esforco: { esforco: 2, complexidade: 2, lacuna: 2, consolidado: '2,0' },
+      relacionadas: ['HU13', 'HU15'],
       criterios: [
-        'O registro só será considerado concluído quando incluir cada sintoma com sua intensidade e o nível de disposição.',
+        'O registro só será considerado concluído quando incluir a disposição e, para os sintomas, a intensidade de cada um dos selecionados ou a indicação explícita de ausência de sintomas, conforme as regras desta história.',
+        'Novos registros e correções devem preservar o histórico e identificar o registro vigente conforme as regras desta história.',
         'O registro deve ser concluído em no máximo 3 toques a partir da tela inicial (RNF04).',
         'A confirmação do registro deve aparecer em até 2 segundos (RNF08).'
-      ]
+      ],
+      regras: {
+        situacao: 'Proposta de detalhamento da equipe para a issue #38, pendente de validação. Em 05/10/2026 a cliente pediu ajustes na lista de sintomas e a distinção entre cansaço e desânimo; escalas, correção e frequência abaixo não foram confirmadas naquela reunião.',
+        itens: [
+          'Cada registro reúne a data local do dia, o instante de criação, a disposição e zero ou mais sintomas distintos. A opção sem sintomas não pode ser combinada com sintomas selecionados.',
+          'Cada sintoma selecionado exige uma intensidade: 1 leve, 2 moderada ou 3 intensa. Sintomas não selecionados não recebem intensidade.',
+          'A disposição usa os níveis definidos em HU13. A lista deve distinguir cansaço de desânimo e incorporar a revisão de sintomas registrada na reunião de 05/10/2026.',
+          'Podem existir vários registros no mesmo dia. Para recomendação e reajuste vale o mais recente do dia, conforme HU13 e HU15; os anteriores permanecem no histórico.',
+          'A usuária pode corrigir sintomas, intensidades e disposição de um registro próprio. A correção substitui o conteúdo sem duplicar o registro nem mudar seu instante de criação. Corrigir a disposição do registro mais recente de hoje dispara HU15; corrigir um registro anterior não muda a disposição vigente.',
+          'A ausência de registro não significa ausência de sintomas. O comportamento da recomendação sem registro está definido em HU13.'
+        ]
+      }
     },
     {
       id: 'HU30',
@@ -170,9 +186,18 @@ const DADOS = {
       nota: 'Dado sensível sem uso no MVP.',
       esforco: { esforco: 2, complexidade: 1, lacuna: 1, consolidado: '1,3' },
       criterios: [
-        'Cada medicação só será considerada cadastrada quando indicar se o uso é diário ou esporádico.',
+        'Cadastrar: a medicação deve ficar identificada pelo nome e pelo tipo de uso diário ou esporádico.',
+        'Alterar: as novas informações devem substituir as anteriores na mesma medicação, sem criar um cadastro duplicado.',
+        'Excluir: após confirmação da usuária, a medicação deixa de constar entre as medicações cadastradas; cancelar preserva o cadastro.',
         'Uma requisição às medicações da usuária feita com a sessão de outra conta deve retornar acesso negado (RNF03).'
-      ]
+      ],
+      regras: {
+        situacao: 'Proposta da equipe para a issue #38, pendente de validação.',
+        itens: [
+          'Cadastro, alteração e exclusão permanecem em uma única história de gerenciamento, com critérios independentes por operação. A estimativa de esforço representa o conjunto das três operações, e não uma operação isolada.',
+          'A estimativa atual é provisória e deve ser revista coletivamente antes do planejamento desta história. Não comparar esse esforço com o de uma única operação sobre tarefas sem considerar essa diferença de escopo. A história continua fora do MVP.'
+        ]
+      }
     },
     {
       id: 'HU34',
@@ -215,11 +240,28 @@ const DADOS = {
       valor: 2,
       validadaCliente: false,
       iteracao: 5,
-      nota: 'Exibe a fase que HU06 e HU07 já calculam no MVP.',
+      nota: 'Apresenta a estimativa a partir das entradas de HU06 e HU07; o modelo de fases depende de revisão da cliente.',
       esforco: { esforco: 1, complexidade: 1, lacuna: 2, consolidado: '1,3' },
+      relacionadas: ['HU06', 'HU07', 'HU08', 'HU13'],
       criterios: [
-        'A consulta só será considerada atendida quando informar a fase atual entre menstrual, folicular, ovulatória e lútea.'
-      ]
+        'A consulta apresenta a fase estimada entre menstrual, folicular, ovulatória e lútea somente quando houver entradas suficientes e modelo de cálculo validado, conforme as regras desta história.',
+        'Quando não for possível estimar, a consulta informa fase não estimada e o motivo, sem atribuir uma fase por padrão.',
+        'A alteração das entradas de HU06 ou HU07 deve atualizar a consulta, sem manter uma estimativa baseada nos dados anteriores.'
+      ],
+      regras: {
+        situacao: 'Proposta da equipe para a issue #38. A regra clínica de estimativa ainda não foi validada pela cliente; a história permanece sem prontidão para implementar esse cálculo.',
+        itens: [
+          'HU06 fornece a data mais recente de início da menstruação que não esteja no futuro; HU07 fornece a duração média em dias ou a indicação de irregularidade. Essas histórias registram entradas, e o cálculo pertence a HU05.',
+          'O dia do ciclo é a diferença em dias de calendário local entre hoje e a data de início, mais um: o início é o dia 1. Não usar horas decorridas para contar dias.',
+          'Sem data válida, sem duração média válida ou com indicação de ciclo irregular, informar fase não estimada e a respectiva razão. Não presumir duração de 28 dias nem estimar por sintomas: HU08 continua fora do MVP.',
+          'Para ciclo regular, a conversão do dia do ciclo em fase exige o modelo e os intervalos revisados pela cliente. Enquanto não estiverem definidos e validados, informar fase não estimada por modelo pendente de validação, inclusive quando as entradas estiverem completas.',
+          'Se o dia calculado ultrapassar a duração informada, não reiniciar o ciclo automaticamente: informar fase não estimada e solicitar atualização dos dados.',
+          'Toda apresentação de fase deve identificá-la como estimativa. O uso direto da fase no planejamento não integra a proposta de HU13 do MVP.'
+        ],
+        pendencias: [
+          'A cliente deve revisar o método, os limites de cada fase e as durações aceitas. O registro da decisão deve incluir a fonte, exemplos nos limites dos intervalos e o comportamento para dados insuficientes; não há fórmula clínica aprovada publicada.'
+        ]
+      }
     },
     {
       id: 'HU06',
@@ -233,7 +275,9 @@ const DADOS = {
       iteracao: 5,
       nota: 'Dado objetivo que calibra a fase do ciclo.',
       esforco: { esforco: 1, complexidade: 1, lacuna: 2, consolidado: '1,3' },
+      relacionadas: ['HU05'],
       criterios: [
+        'Os dados registrados ou corrigidos são entradas da estimativa de HU05; o comportamento do cálculo e suas limitações são definidos somente naquela história.',
         'O registro só será considerado concluído quando a data de início da menstruação ficar salva no histórico da usuária.',
         'Nenhuma data pode ser salva antes do aceite dos termos (RNF02).'
       ]
@@ -250,7 +294,9 @@ const DADOS = {
       iteracao: 5,
       nota: 'Dependência estrutural do cálculo de fase.',
       esforco: { esforco: 1, complexidade: 1, lacuna: 2, consolidado: '1,3' },
+      relacionadas: ['HU05'],
       criterios: [
+        'Os dados registrados ou corrigidos são entradas da estimativa de HU05; o comportamento do cálculo e suas limitações são definidos somente naquela história.',
         'A informação só será considerada registrada quando aceitar uma duração média ou a indicação de ciclo irregular.'
       ]
     },
@@ -264,7 +310,7 @@ const DADOS = {
       valor: 2,
       validadaCliente: false,
       iteracao: 0,
-      nota: 'HU06 e HU07 cobrem a função.',
+      nota: 'Fora do MVP: a estimativa por sintomas não substitui o cálculo pelas entradas de HU06 e HU07 definido em HU05.',
       esforco: { esforco: 3, complexidade: 3, lacuna: 2, consolidado: '2,7' },
       criterios: [
         'A estimativa só será considerada entregue quando indicar uma das quatro fases do ciclo a partir dos sintomas informados.',
@@ -379,10 +425,24 @@ const DADOS = {
       iteracao: 6,
       nota: 'Promessa central do produto.',
       esforco: { esforco: 3, complexidade: 3, lacuna: 2, consolidado: '2,7' },
+      relacionadas: ['HU04', 'HU15', 'HU17', 'HU18'],
       criterios: [
-        'A recomendação só será considerada correta quando ordenar as tarefas do dia pelo registro de energia, pelo prazo e pela prioridade de cada tarefa.',
+        'A recomendação só será considerada correta quando as tarefas do dia aparecerem na ordem definida pelas regras de negócio desta história.',
         'A recomendação do dia deve ser exibida em até 3 segundos após o acesso, conforme o método de medição do RNF06. O resultado é condição obrigatória de aceite da HU13.'
-      ]
+      ],
+      regras: {
+        origem: 49,
+        situacao: 'Proposta da equipe em 08/11/2026. Em 05/10 a cliente aprovou o fluxo com prioridade, prazo e energia, mas não estas regras: validar na próxima reunião.',
+        itens: [
+          'Disposição, energia necessária e prioridade têm três níveis: 1 baixa, 2 média e 3 alta.',
+          'Entram na recomendação as tarefas não concluídas com data planejada até hoje. A data planejada nasce no dia do cadastro e só muda pelo adiamento (HU18) ou pelo reajuste (HU15).',
+          'As tarefas formam três grupos, nesta ordem: (1) prazo hoje ou vencido; (2) energia necessária menor ou igual à disposição; (3) energia necessária acima da disposição.',
+          'Dentro de cada grupo vale a primeira diferença: prazo mais próximo, prioridade maior, energia necessária menor, cadastro mais antigo.',
+          'A disposição considerada é a do registro mais recente do dia (HU04). Sem registro no dia, o cálculo assume média.',
+          'Tarefa urgente acima da disposição continua no grupo 1, com aviso sem cobrança de que pode ser adiada (HU18).',
+          'A fase do ciclo não entra no cálculo no MVP: o ciclo influencia a ordem pela disposição que a usuária registra. O uso direto da fase é hipótese a validar com a cliente.'
+        ]
+      }
     },
     {
       id: 'HU14',
@@ -413,10 +473,24 @@ const DADOS = {
       iteracao: 6,
       nota: 'Diferencial central: realocação por disposição.',
       esforco: { esforco: 3, complexidade: 3, lacuna: 2, consolidado: '2,7' },
+      relacionadas: ['HU02', 'HU04', 'HU13', 'HU18'],
       criterios: [
-        'O ajuste só será considerado feito quando a recomendação do dia for recalculada a partir do nível de disposição registrado.',
+        'O ajuste só será considerado feito quando as tarefas que ficam no dia e as que passam para o dia seguinte seguirem as regras de negócio desta história, com o prazo inalterado.',
         'O reajuste deve aparecer em até 2 segundos após o registro de disposição, conforme o método de medição do RNF07. O resultado é condição obrigatória de aceite da HU15.'
-      ]
+      ],
+      regras: {
+        origem: 49,
+        situacao: 'Proposta da equipe em 08/11/2026. Em 05/10 a cliente endossou o reajuste automático, mas não estas regras: validar na próxima reunião.',
+        itens: [
+          'O reajuste dispara com um novo registro de disposição (HU04) ou com a sinalização de sobrecarga (HU02), que conta como disposição baixa até o próximo registro.',
+          'A lista do dia é recalculada com as regras de ordem da HU13.',
+          'Tarefa com energia necessária acima da disposição e prazo depois de hoje passa para o dia seguinte: muda a data planejada, e o prazo continua o mesmo.',
+          'Tarefa com prazo hoje ou vencido nunca é movida: continua no dia, com aviso sem cobrança.',
+          'A usuária pode desfazer cada movimentação no mesmo dia; a tarefa desfeita não é movida de novo naquele dia.',
+          'Se a disposição subir no mesmo dia, as tarefas movidas hoje pelo reajuste que agora cabem voltam para hoje. As adiadas pela usuária (HU18) não voltam.',
+          'O reajuste não gera contador de falhas nem mensagem de cobrança.'
+        ]
+      }
     },
     {
       id: 'HU16',
@@ -438,7 +512,7 @@ const DADOS = {
       id: 'HU17',
       nome: 'Cadastrar tarefa',
       descricao: 'Deve ser possível à usuária cadastrar tarefas informando título, prazo, prioridade e energia necessária.',
-      historia: 'cadastrar tarefas informando título, prazo e prioridade, para que elas entrem no meu planejamento do dia',
+      historia: 'cadastrar tarefas informando título, prazo, prioridade e energia necessária, para que elas entrem no meu planejamento do dia',
       caracteristica: 'CP5',
       rnfs: ['RNF03'],
       valor: 4,
@@ -446,8 +520,9 @@ const DADOS = {
       iteracao: 6,
       nota: 'Laço mínimo de valor; registra a energia necessária usada por HU13 e HU15.',
       esforco: { esforco: 1, complexidade: 1, lacuna: 1, consolidado: '1,0' },
+      relacionadas: ['HU13'],
       criterios: [
-        'O cadastro só será considerado concluído quando a tarefa tiver título, prazo e prioridade registrados.'
+        'O cadastro só será considerado concluído quando a tarefa tiver título, prazo, prioridade e energia necessária registrados.'
       ]
     },
     {
@@ -462,9 +537,11 @@ const DADOS = {
       iteracao: 6,
       nota: 'Identidade do produto: adiar sem culpa.',
       esforco: { esforco: 1, complexidade: 1, lacuna: 1, consolidado: '1,0' },
+      relacionadas: ['HU15'],
       criterios: [
         'O adiamento só será considerado correto quando a tarefa aparecer na nova data com título, prioridade e prazo inalterados.',
-        'O adiamento não deve gerar contador de falhas nem mensagem de cobrança.'
+        'O adiamento não deve gerar contador de falhas nem mensagem de cobrança.',
+        'A mudança de data feita pela usuária deve ser distinguida de uma movimentação automática de HU15; as condições de retorno automático estão definidas em HU15.'
       ]
     },
     {
@@ -548,19 +625,33 @@ const DADOS = {
     {
       id: 'HU23',
       nome: 'Gerar retrospectiva mensal',
-      descricao: 'Deve ser possível à usuária gerar, ao final de cada mês, uma retrospectiva das tarefas concluídas e das atividades de acolhimento realizadas no período.',
-      historia: 'gerar, ao final de cada mês, uma retrospectiva das tarefas concluídas e das atividades de acolhimento realizadas, para reconhecer meu ritmo e meu descanso',
+      descricao: 'Deve ser possível à usuária gerar uma retrospectiva mensal com os registros de ciclo, sintomas, disposição, tarefas concluídas e atividades de acolhimento realizadas no período.',
+      historia: 'gerar uma retrospectiva mensal com meus registros de ciclo, sintomas, disposição, tarefas concluídas e atividades de acolhimento realizadas, para reconhecer meu ritmo e meu descanso',
       caracteristica: 'CP6',
       rnfs: ['RNF02', 'RNF03'],
       valor: 2,
       validadaCliente: true,
       iteracao: 0,
-      nota: 'Depende de histórico que o MVP não produz.',
+      nota: 'Proposta de origem do relatório usado por HU31 e HU32; ampliação pendente de validação e fora do MVP.',
       esforco: { esforco: 2, complexidade: 2, lacuna: 2, consolidado: '2,0' },
+      relacionadas: ['HU04', 'HU06', 'HU20', 'HU24', 'HU31', 'HU32', 'HU35'],
       criterios: [
-        'A retrospectiva só será considerada completa quando reunir as tarefas concluídas e as atividades de acolhimento registradas no mês.',
-        'A retrospectiva não deve apresentar escore de desempenho.'
-      ]
+        'A retrospectiva produz o relatório mensal com o conteúdo e o período definidos nas regras desta história, distinguindo dados ausentes de valores nulos ou ausência de sintomas.',
+        'O relatório usa apenas os registros da própria usuária e não apresenta escore de desempenho.',
+        'HU31 e HU32 devem utilizar o mesmo conteúdo mensal produzido por esta história, sem criar uma segunda definição do relatório.'
+      ],
+      regras: {
+        situacao: 'Proposta da equipe para a issue #38: ampliar a retrospectiva como origem do relatório mensal, pendente de validação e reestimativa. Em 05/10/2026 a cliente pediu incluir o intervalo entre ciclos; a ampliação completa abaixo não foi confirmada naquela reunião.',
+        itens: [
+          'A usuária seleciona um mês e ano já encerrados. O período vai do primeiro ao último dia desse mês no calendário local, inclusive.',
+          'O conteúdo mensal reúne datas de início da menstruação e intervalos entre inícios consecutivos (HU06), registros de sintomas com intensidade e disposição (HU04), tarefas concluídas com data de conclusão (HU20) e atividades de acolhimento realizadas (HU24).',
+          'Para o intervalo entre ciclos, pode ser usada a data de início imediatamente anterior ao mês como referência, identificada como tal. Sem duas datas, informar intervalo não disponível, sem estimar um valor.',
+          'Usar a data do registro para sintomas e disposição, a data de início para menstruação, a data de conclusão para tarefas e a data de realização para acolhimento. Vários registros de sintomas no mesmo dia permanecem identificados pelo instante de criação; uma correção usa o conteúdo atualizado.',
+          'Cada seção sem registros informa sem dados no período, sem inferir que não houve sintomas ou atividades. Um mês totalmente vazio ainda produz o relatório com suas seções vazias identificadas.',
+          'HU31 compara relatórios deste formato e HU32 exporta esse mesmo conteúdo. A retrospectiva não depende de comparação nem exportação. HU35 continua sendo o relatório específico de sintomas para consulta médica.',
+          'A ampliação continua fora do MVP e exige validação e revisão de esforço antes de entrar no planejamento.'
+        ]
+      }
     },
     {
       id: 'HU24',
@@ -588,10 +679,12 @@ const DADOS = {
       valor: 2,
       validadaCliente: false,
       iteracao: 0,
-      nota: 'Nenhuma história do MVP gera relatórios mensais ainda.',
+      nota: 'Depende do relatório mensal proposto em HU23; permanece fora do MVP e aguarda validação dessa definição.',
       esforco: { esforco: 3, complexidade: 2, lacuna: 2, consolidado: '2,3' },
+      relacionadas: ['HU23'],
       criterios: [
-        'A comparação só será considerada completa quando apresentar ciclo, sintomas, disposição e tarefas de cada mês escolhido.'
+        'A comparação apresenta lado a lado dois meses encerrados distintos escolhidos pela usuária, usando o conteúdo mensal definido em HU23.',
+        'As seções sem dados em um dos meses permanecem identificadas, sem completar valores por suposição nem impedir a comparação com o outro mês.'
       ]
     },
     {
@@ -604,12 +697,19 @@ const DADOS = {
       valor: 2,
       validadaCliente: false,
       iteracao: 0,
-      nota: 'Nenhuma história do MVP gera relatórios mensais ainda.',
+      nota: 'Depende do relatório mensal proposto em HU23; permanece fora do MVP e aguarda validação dessa definição.',
       esforco: { esforco: 3, complexidade: 2, lacuna: 2, consolidado: '2,3' },
+      relacionadas: ['HU23'],
       criterios: [
-        'A exportação só será considerada concluída quando gerar um arquivo com o relatório mensal da usuária.',
+        'A exportação gera um arquivo legível, no formato definido nas regras desta história, do relatório mensal de HU23, com mês, ano e todas as seções, inclusive as identificadas sem dados.',
         'Uma tentativa de exportar o relatório com a sessão de outra conta deve retornar acesso negado (RNF03).'
-      ]
+      ],
+      regras: {
+        situacao: 'Proposta da equipe para a issue #38, pendente de validação do relatório de HU23 e do formato de exportação.',
+        itens: [
+          'O formato proposto é PDF, com o mesmo conteúdo apresentado em HU23. Esta história não acrescenta indicadores nem redefine os campos do relatório.'
+        ]
+      }
     },
     {
       id: 'HU25',
@@ -858,71 +958,78 @@ const DADOS = {
   // Alterações em cada história ou RNF, com a data e o motivo. `video` aponta o
   // momento da reunião em que a decisão foi tomada.
   historico: {
-    HU33: [
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+    HU32: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Vinculada a exportação ao relatório de HU23; proposto formato PDF.',
+        motivo: 'Issue #38: conteúdo e formato ainda dependem de validação, permanecendo fora do MVP.'
+      }
     ],
     HU31: [
-      { data: '12/11/2026', alteracao: 'Incluídos vínculos com RNF02 e RNF03 para tratamento e proteção dos dados do relatório.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
-    ],
-    HU25: [
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
-    ],
-    HU24: [
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: '12/11/2026',
+        alteracao: 'Vinculada a comparação ao conteúdo mensal de HU23.',
+        motivo: 'Issue #38: explicitar a origem do relatório e o tratamento de meses sem dados, sem duplicar seu conteúdo.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluídos vínculos com RNF02 e RNF03 para tratamento e proteção dos dados do relatório.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU23: [
-      { data: '12/11/2026', alteracao: 'Incluídos vínculos com RNF02 e RNF03 para tratamento e proteção dos dados do relatório.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: '12/11/2026',
+        alteracao: 'Proposta ampliação da retrospectiva como origem do relatório mensal.',
+        motivo: 'Issue #38: consolidar as entradas consumidas por HU31 e HU32. Ampliação e reestimativa pendentes; não altera o MVP nem representa confirmação da cliente.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluídos vínculos com RNF02 e RNF03 para tratamento e proteção dos dados do relatório.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
-    HU20: [
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+    HU30: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Separados os critérios de cadastro, alteração e exclusão, mantendo uma única história.',
+        motivo: 'Issue #38: esforço corresponde ao conjunto das operações e aguarda reestimativa antes do planejamento.'
+      }
     ],
     HU18: [
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
-    ],
-    HU16: [
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
-    ],
-    HU14: [
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
-    ],
-    HU10: [
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: '12/11/2026',
+        alteracao: 'Distinguido o adiamento manual da movimentação automática de HU15.',
+        motivo: 'Issue #38: referenciar as regras propostas do PR #49 sem duplicá-las.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU08: [
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
-    ],
-    HU02: [
-      { data: '12/11/2026', alteracao: 'Incluídos vínculos com RNF03 para proteção dos dados e RNF07 para o tempo de reajuste após sinalizar sobrecarga.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
-    ],
-    RNF11: [
-      { data: '12/11/2026', alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.', motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.' }
-    ],
-    RNF10: [
-      { data: '12/11/2026', alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.', motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.' }
-    ],
-    RNF08: [
-      { data: '12/11/2026', alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.', motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.' }
-    ],
-    RNF07: [
-      { data: '12/11/2026', alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.', motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.' }
-    ],
-    RNF06: [
-      { data: '12/11/2026', alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.', motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.' }
-    ],
-    RNF04: [
-      { data: '12/11/2026', alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.', motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.' }
-    ],
-    RNF03: [
-      { data: '12/11/2026', alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.', motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.' }
-    ],
-    RNF02: [
-      { data: '12/11/2026', alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.', motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.' }
+      {
+        data: '12/11/2026',
+        alteracao: 'Corrigida a justificativa de exclusão do MVP.',
+        motivo: 'Issue #38: estimativa por sintomas é distinta do cálculo pelas entradas de HU06 e HU07.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU04: [
       {
         data: 'Sem data no site',
         alteracao: 'Entrou no catálogo com nome derivado do vínculo citado em RNF02, RNF03, RNF04 e RNF08.',
         motivo: 'Era citado por esses RNFs, mas não tinha card no quadro. Card ainda pendente.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Detalhados campos, intensidades, frequência e correção como proposta.',
+        motivo: 'Issue #38: alinhar o dado-fonte ao registro mais recente usado pelas regras do PR #49; não atribuir escalas à validação de 05/10.'
       }
     ],
     HU05: [
@@ -931,14 +1038,31 @@ const DADOS = {
         alteracao: 'Fora do MVP → no MVP.',
         motivo: 'Sem ele, a fase calculada não seria exibida à usuária em lugar nenhum.'
       },
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: '12/11/2026',
+        alteracao: 'Explicitadas entradas, contagem do dia e situações sem estimativa; modelo clínico continua pendente.',
+        motivo: 'Issue #38: HU06 e HU07 registram dados, e não definem o cálculo. Limites das fases precisam de revisão da cliente.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU06: [
       {
         data: '05/10/2026',
         alteracao: 'Valor: Should have → Must have.',
         motivo: 'Ajuste da cliente na reunião de validação da priorização.',
-        video: { id: 'PKoWLngGSRg', tempo: 514 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 514
+        }
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Vinculada a entrada de dados à estimativa de HU05.',
+        motivo: 'Issue #38: concentrar o cálculo em uma única história.'
       }
     ],
     HU07: [
@@ -946,16 +1070,31 @@ const DADOS = {
         data: '05/10/2026',
         alteracao: 'Valor: Could have → Should have.',
         motivo: 'Ajuste da cliente na reunião de validação da priorização.',
-        video: { id: 'PKoWLngGSRg', tempo: 378 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 378
+        }
       },
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: '12/11/2026',
+        alteracao: 'Vinculadas duração e irregularidade à estimativa de HU05.',
+        motivo: 'Issue #38: explicitar as limitações sem repetir a regra de cálculo.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU09: [
       {
         data: '05/10/2026',
         alteracao: 'Valor: Won\'t have → Should have.',
         motivo: 'Ajuste da cliente, que validou o requisito com entusiasmo.',
-        video: { id: 'PKoWLngGSRg', tempo: 748 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 748
+        }
       },
       {
         data: '13/11/2026',
@@ -976,7 +1115,16 @@ const DADOS = {
         alteracao: 'RNF06 passou a ser condição obrigatória de aceite da recomendação de tarefas do dia.',
         motivo: 'Alinhar o critério de aceite ao DoD, que exige o cumprimento dos RNFs aplicáveis à história.'
       },
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: '12/11/2026',
+        alteracao: 'Reaproveitadas as regras propostas de ordenação do PR #49.',
+        motivo: 'Issue #38: incluir precedência, urgência, desempates e ausência de disposição, mantendo pendente a validação da cliente e preservando o critério de RNF06 do PR #51.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU15: [
       {
@@ -984,11 +1132,33 @@ const DADOS = {
         alteracao: 'RNF07 passou a ser condição obrigatória de aceite do reajuste da recomendação do dia.',
         motivo: 'Alinhar o critério de aceite ao DoD, que exige o cumprimento dos RNFs aplicáveis à história.'
       },
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: '12/11/2026',
+        alteracao: 'Reaproveitadas as regras propostas de reajuste automático do PR #49.',
+        motivo: 'Issue #38: explicitar movimentação, desfazer e retorno das tarefas, preservando o critério de RNF07 do PR #51. Regras ainda não validadas pela cliente.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU17: [
-      { data: 'Sem data no site', alteracao: 'Passou a incluir "energia necessária".', motivo: 'Decisão da equipe; o dado é usado por HU13 e HU15.' },
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: 'Sem data no site',
+        alteracao: 'Passou a incluir "energia necessária".',
+        motivo: 'Decisão da equipe; o dado é usado por HU13 e HU15.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'História e critério passaram a incluir energia necessária, conforme PR #49.',
+        motivo: 'Issue #38: a entrada já constava da descrição e é necessária para HU13 e HU15.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU19: [
       {
@@ -996,14 +1166,21 @@ const DADOS = {
         alteracao: 'Redação padronizada a partir de "Deve ser possível o usuário deletar a tarefa criada".',
         motivo: 'Padronização da redação do catálogo.'
       },
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU21: [
       {
         data: '05/10/2026',
         alteracao: 'Valor: Could have → Should have.',
         motivo: 'Ajuste da cliente, que defendeu atividade física e respiração.',
-        video: { id: 'PKoWLngGSRg', tempo: 286 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 286
+        }
       }
     ],
     HU22: [
@@ -1011,12 +1188,23 @@ const DADOS = {
         data: '05/10/2026',
         alteracao: 'Valor: Should have → Must have.',
         motivo: 'Ajuste da cliente na reunião de validação da priorização.',
-        video: { id: 'PKoWLngGSRg', tempo: 661 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 661
+        }
       }
     ],
     HU26: [
-      { data: 'Sem data no site', alteracao: 'Fora do MVP → no MVP.', motivo: 'O reset manual pela equipe contrariaria o RNF03.' },
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: 'Sem data no site',
+        alteracao: 'Fora do MVP → no MVP.',
+        motivo: 'O reset manual pela equipe contrariaria o RNF03.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU28: [
       {
@@ -1026,15 +1214,26 @@ const DADOS = {
       }
     ],
     HU29: [
-      { data: 'Sem data no site', alteracao: 'Incluído no catálogo.', motivo: 'Faltava um requisito de preferência na CP7 (achado 05).' },
-      { data: '12/11/2026', alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.', motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.' }
+      {
+        data: 'Sem data no site',
+        alteracao: 'Incluído no catálogo.',
+        motivo: 'Faltava um requisito de preferência na CP7 (achado 05).'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
     ],
     HU35: [
       {
         data: '05/10/2026',
         alteracao: 'Levantado como requisito novo.',
         motivo: 'Sugestão da equipe, detalhada pela cliente: relatório para levar à consulta médica.',
-        video: { id: 'PKoWLngGSRg', tempo: 973 }
+        video: {
+          id: 'PKoWLngGSRg',
+          tempo: 973
+        }
       },
       {
         data: '12/10/2026',
@@ -1043,7 +1242,11 @@ const DADOS = {
       }
     ],
     HU36: [
-      { data: 'Iteração 4', alteracao: 'Incluído no catálogo.', motivo: 'Exigência da LGPD que estava fora do catálogo e do backlog.' },
+      {
+        data: 'Iteração 4',
+        alteracao: 'Incluído no catálogo.',
+        motivo: 'Exigência da LGPD que estava fora do catálogo e do backlog.'
+      },
       {
         data: '12/10/2026',
         alteracao: 'Numeração anterior: 29 → 36.',
@@ -1060,6 +1263,118 @@ const DADOS = {
         data: 'Sem data no site',
         alteracao: 'Classificação no MVP: evolutivo.',
         motivo: 'A primeira versão usa PIN numérico; as pétalas ficam para depois.'
+      }
+    ],
+    HU33: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU25: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU24: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU20: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU16: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU14: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU10: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    HU02: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Incluídos vínculos com RNF03 para proteção dos dados e RNF07 para o tempo de reajuste após sinalizar sobrecarga.',
+        motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      }
+    ],
+    RNF11: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF10: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF08: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF07: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF06: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF04: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF03: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
+      }
+    ],
+    RNF02: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Revisados critérios, condições e protocolo de verificação na issue #39.',
+        motivo: 'Adequação ao app Android, métricas individuais e compromissos verificáveis; propostas e ensaios pendentes estão identificados no RNF. Evidências devem ser registradas no DoD da respectiva história de usuário.'
       }
     ]
   },
