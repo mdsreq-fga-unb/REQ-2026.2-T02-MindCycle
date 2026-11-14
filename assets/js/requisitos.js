@@ -121,7 +121,7 @@
   $('busca').addEventListener('input', (e) => { estado.busca = e.target.value; desenharBusca(); });
 
   // A legenda da iteração atual acompanha DADOS.iteracaoAtual.
-  const iteracao = DADOS.fases.flatMap((f) => f.iteracoes).find((i) => i.nome === 'Iteração ' + DADOS.iteracaoAtual);
+  const iteracao = DADOS.fases.flatMap((f) => f.iteracoes).find((i) => i.numero === DADOS.iteracaoAtual);
   if (iteracao) {
     $('legenda-atual').textContent = 'Iteração atual: Backlog alocado à Iteração ' + DADOS.iteracaoAtual + ', de ' +
       iteracao.periodo.replace(/\/\d{4}$/, '');

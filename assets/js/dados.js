@@ -1284,6 +1284,10 @@ const DADOS = {
 
   // Fases do OpenUP. praticas[].atividade é o índice em `atividades`. Os links
   // das evidências são relativos à raiz do site; vídeos, endereços completos.
+  // iteracoes[].numero liga a iteração às histórias (historias[].iteracao) e a
+  // iteracaoAtual; o nome é só o que aparece na página.
+  // iteracoes[].registro: compromisso, responsaveis, resultado, pendencias e
+  // decisaoProxima. Campo sem fonte fica de fora e aparece como sem registro.
   fases: [
     {
       nome: 'Concepção',
@@ -1312,9 +1316,17 @@ const DADOS = {
       iteracoes: [
         {
           nome: 'Iteração 1',
+          numero: 1,
           periodo: '11/08 a 24/08/2026',
           estado: 'Executada',
           objetivo: 'Compreender o negócio e caracterizar o problema.',
+          registro: {
+            compromisso: 'Caracterizar o problema com Rich Picture e Ishikawa e consolidar o PDF da proposta para avaliação do grupo.',
+            responsaveis: 'Equipe, em reunião gravada. Não há autoria individual registrada.',
+            resultado: 'Rich Picture e Diagrama de Ishikawa produzidos em sessões internas, com o escopo focado no mercado de trabalho. Decidido que o problema é o que o app alcança: adaptar a rotina da mulher, e não mudar o mercado.',
+            pendencias: ['As causas levantadas seguem como hipótese da equipe até haver confirmação externa.'],
+            decisaoProxima: 'Declarar a solução e as estratégias a partir desse recorte do problema.'
+          },
           evidencias: [
             { tipo: 'Figura', titulo: 'Rich Picture', link: 'visao/#figura-1' },
             { tipo: 'Figura', titulo: 'Diagrama de Ishikawa', link: 'visao/#figura-2' },
@@ -1324,9 +1336,17 @@ const DADOS = {
         },
         {
           nome: 'Iteração 2',
+          numero: 2,
           periodo: '25/08 a 07/09/2026',
           estado: 'Executada',
           objetivo: 'Declarar a solução e as estratégias de engenharia de software e de requisitos.',
+          registro: {
+            compromisso: 'Publicar o Documento de Visão e fazer cada integrante listar seus requisitos a partir do Figma.',
+            responsaveis: 'Publicação do Documento de Visão: Ana Luisa. Marca: Tiago (PR 2). Comparação dos requisitos: Ana Luisa.',
+            resultado: 'Documento de Visão 1.0 publicado em 07/09/2026, com objetivos, características e estratégias.',
+            pendencias: ['O contato com a cliente só começou na Elaboração.'],
+            decisaoProxima: 'Prototipar em baixa fidelidade no Figma e derivar os requisitos do protótipo.'
+          },
           evidencias: [
             { tipo: 'Documento', titulo: 'Visão de produto', link: 'visao/' },
             { tipo: 'Documento', titulo: 'Estratégias e justificativas', link: 'engenharia-de-requisitos/' },
@@ -1381,27 +1401,53 @@ const DADOS = {
       iteracoes: [
         {
           nome: 'Iteração 3',
+          numero: 3,
           periodo: '15/09 a 28/09/2026',
-          estado: 'Executada',
+          estado: 'Encerrada com pendências',
           objetivo: 'Conversar com a cliente, elicitar e declarar os requisitos nos três níveis.',
+          registro: {
+            compromisso: 'Conversar com a cliente e declarar requisitos, histórias e critérios, com personas e jornadas de usuário.',
+            responsaveis: 'Seção de solução: Gustavo. Seção de ER: Pedro Ian. Seção de estratégias: Luana. Cerimônias e acesso às usuárias: Tiago. Catálogo de requisitos: Ana Luisa. Lições da Unidade 1: Allan Kelvin.',
+            resultado: 'Requisitos e histórias com critérios declarados, e casos de uso dos requisitos de maior risco.',
+            pendencias: [
+              'A conversa com a cliente só aconteceu em 05/10/2026, na Iteração 4, por causa da agenda dela.',
+              'Personas e jornadas não foram publicadas como artefato.'
+            ],
+            decisaoProxima: 'Levar a validação com a cliente para a Iteração 4, junto com a priorização.'
+          },
           evidencias: [
             { tipo: 'Documento', titulo: 'Árvore de requisitos', link: '' },
-            { tipo: 'Documento', titulo: 'Catálogo de Metas', link: 'engenharia-de-requisitos/#metas' },
-            { tipo: 'Decisões', titulo: 'Conversa com a Dra. Cláudia', link: 'reunioes/#PKoWLngGSRg' },
-            { tipo: 'Vídeo', titulo: 'Gravação da conversa', link: 'https://www.youtube.com/watch?v=PKoWLngGSRg' }
+            { tipo: 'Documento', titulo: 'Catálogo de Metas', link: 'engenharia-de-requisitos/#metas' }
           ]
         },
         {
           nome: 'Iteração 4',
+          numero: 4,
           periodo: '29/09 a 12/10/2026',
-          estado: 'Em andamento no site',
+          estado: 'Encerrada com pendências',
           objetivo: 'Analisar, priorizar e acordar o backlog e o escopo do MVP.',
+          registro: {
+            compromisso: 'Priorizar com a cliente, delimitar o MVP, organizar rastreabilidade, DoR e DoD e apresentar as telas do protótipo.',
+            responsaveis: 'Priorização, MVP e rastreabilidade: Tiago (PR 15) e Luana (PR 24). DoR, DoD e ER: Pedro Ian (PRs 17, 20 e 22). Estratégias: Luana (PR 14). Interação com a cliente: Arthur (PR 16). Solução: Gustavo (PR 18). Requisitos: Ana Luisa (PR 21).',
+            resultado: 'MVP de 22 histórias delimitado. Em 05/10/2026, a Dra. Cláudia avaliou 13 requisitos: confirmou 8 notas e ajustou 5, todas para cima.',
+            pendencias: [
+              'O MVP consolidado não foi apresentado à cliente.',
+              'Privacidade e conta não foram pauta da reunião de 05/10/2026.',
+              'As mudanças de alocação e as histórias HU35 e HU36 ficaram por levar ao Notion.'
+            ],
+            decisaoProxima: 'Confirmar no Planejamento da Iteração 5 as prioridades em hipótese e agendar o acompanhamento com a cliente.'
+          },
           evidencias: [
             { tipo: 'Documento', titulo: 'Priorização e cálculos', link: 'priorizacao/' },
             { tipo: 'Documento', titulo: 'Composição do MVP', link: 'mvp/' },
             { tipo: 'Documento', titulo: 'DoR e DoD', link: 'dor-e-dod/' },
+            { tipo: 'Decisões', titulo: 'Conversa com a Dra. Cláudia', link: 'reunioes/#PKoWLngGSRg' },
+            { tipo: 'Vídeo', titulo: 'Gravação da conversa', link: 'https://www.youtube.com/watch?v=PKoWLngGSRg' },
             { tipo: 'Decisões', titulo: 'Reunião de MoSCoW', link: 'reunioes/#Je44KbpoASk' },
-            { tipo: 'Vídeo', titulo: 'Gravação da reunião', link: 'https://www.youtube.com/watch?v=Je44KbpoASk' }
+            { tipo: 'Vídeo', titulo: 'Gravação da reunião', link: 'https://www.youtube.com/watch?v=Je44KbpoASk' },
+            { tipo: 'PR', titulo: 'Priorização, MVP e rastreabilidade', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/15' },
+            { tipo: 'PR', titulo: 'Validação real da cliente', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/24' },
+            { tipo: 'PR', titulo: 'Correção de inconsistências', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/30' }
           ]
         }
       ]
@@ -1455,17 +1501,31 @@ const DADOS = {
       iteracoes: [
         {
           nome: 'Iteração 5',
+          numero: 5,
           periodo: '20/10 a 02/11/2026',
           estado: 'Encerrada no cronograma',
           objetivo: 'Entregar o primeiro incremento.',
+          registro: {
+            pendencias: ['A equipe precisa publicar as histórias selecionadas, a aplicação do DoR, os resultados e os impedimentos.']
+          },
           evidencias: []
         },
         {
           nome: 'Iteração 6',
+          numero: 6,
           periodo: '03/11 a 16/11/2026',
           estado: 'Iteração atual',
           objetivo: 'Entregar o segundo incremento.',
-          evidencias: [],
+          registro: {
+            pendencias: [
+              'A equipe precisa publicar as histórias selecionadas, a aplicação do DoR, os resultados e os impedimentos.',
+              'As PRs 47 e 48, de Ana Luisa, migraram o site de documentação e não são evidência do incremento.'
+            ]
+          },
+          evidencias: [
+            { tipo: 'PR do site', titulo: 'Migração para HTML puro', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/47' },
+            { tipo: 'PR do site', titulo: 'Novo fluxo do site', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/48' }
+          ],
           atual: true
         }
       ]
@@ -1490,9 +1550,79 @@ const DADOS = {
         }
       ],
       iteracoes: [
-        { nome: 'Iteração 7', periodo: '24/11 a 30/11/2026', estado: 'Prevista', objetivo: 'Fechar o MVP.', evidencias: [] }
+        { nome: 'Iteração 7', numero: 7, periodo: '24/11 a 30/11/2026', estado: 'Prevista', objetivo: 'Fechar o MVP.', evidencias: [] }
       ]
     }
+  ],
+
+  // Riscos investigados (Entregas e cronograma). As fases não isolam as
+  // disciplinas, então a tabela mostra as investigações que mudaram requisito
+  // ou escopo e os riscos ainda abertos.
+  //   quando      momento e forma da investigação; `video` aponta o trecho.
+  //               Sem `quando`, o risco aparece como sem investigação.
+  //   efeitoEm    história cujas alterações em `historico` são o efeito do
+  //               risco; a tabela lê de lá, para não repetir números.
+  //   efeito      efeito escrito à mão, quando não há história para ler.
+  //   historias, rnfs  o que o risco toca; viram os botões de "Ligados a".
+  riscos: [
+    {
+      risco: 'Senha de pétalas cara demais para o MVP',
+      quando: 'Elaboração: estimativa técnica da equipe na priorização',
+      resultado: 'O gesto de pétalas encarecia a primeira versão',
+      efeitoEm: 'HU11',
+      aberto: false,
+      historias: ['HU11'],
+      rnfs: ['RNF09']
+    },
+    {
+      risco: 'Recuperar o acesso sem violar o acesso exclusivo',
+      quando: 'Elaboração: revisão técnica da equipe',
+      resultado: 'O reset manual pela equipe contrariaria o RNF03',
+      efeitoEm: 'HU26',
+      aberto: false,
+      historias: ['HU26'],
+      rnfs: ['RNF03']
+    },
+    {
+      risco: 'Dado de saúde sem direito de exclusão',
+      quando: 'Iteração 4: conferência entre catálogo, priorização e LGPD',
+      resultado: 'Exigência legal estava fora do catálogo e do backlog',
+      efeitoEm: 'HU36',
+      aberto: false,
+      historias: ['HU36'],
+      rnfs: ['RNF02']
+    },
+    {
+      risco: 'Preferências sem requisito que as sustente',
+      quando: 'Iteração 4: análise de rastreabilidade',
+      resultado: 'O critério do RNF01 pressupunha uma configuração inexistente',
+      efeitoEm: 'HU29',
+      aberto: false,
+      historias: ['HU29'],
+      rnfs: ['RNF01']
+    },
+    {
+      risco: 'Alertas que cruzam sintomas e quadros clínicos',
+      quando: '05/10/2026: conversa com a cliente',
+      video: { id: 'PKoWLngGSRg', tempo: 1102 },
+      resultado: 'Exigem validação clínica e jurídica',
+      efeito: 'Fora do MVP, como tema de pesquisa',
+      aberto: false,
+      historias: [],
+      rnfs: []
+    },
+    {
+      risco: 'Motor de recomendação sem regras definidas',
+      quando: 'Sem investigação técnica na Elaboração. Apontado na Iteração 4 como o maior esforço técnico',
+      video: { id: 'Je44KbpoASk', tempo: 213 },
+      resultado: 'Regras tratadas na Iteração 6 (issue 36)',
+      efeito: 'A definir com a validação das regras',
+      aberto: true,
+      historias: ['HU13', 'HU15'],
+      rnfs: []
+    },
+    { risco: 'Isolamento dos dados de cada usuária', aberto: true, historias: [], rnfs: ['RNF03'] },
+    { risco: 'Escolhas de arquitetura', aberto: true, historias: [], rnfs: [] }
   ],
 
   // Período da linha do tempo do cronograma.

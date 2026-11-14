@@ -119,6 +119,9 @@ novo: regra documentada não significa regra validada nem história pronta.
 
 | O que | Onde |
 |---|---|
+| **Registro das Iterações 5 e 6** | `registro` de cada iteração em `fases`, em `assets/js/dados.js`. Faltam compromissos, responsáveis, resultados e impedimentos. |
+| **Riscos sem investigação** | Página Entregas e cronograma: isolamento dos dados e arquitetura ainda não têm investigação técnica registrada. |
+| **Quadro do Notion** | Sem link publicado no site; publicar o link ou uma exportação permitiria conferir movimentações e bloqueios. |
 | **Validação do MVP consolidado com a cliente** | Páginas MVP e Priorização. A reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino tratou requisitos individuais; o conjunto do MVP e as notas ainda em hipótese aguardam a reunião de acompanhamento. |
 | **Backlog e Iteração atual vazios** | `dorAtendido` em `assets/js/dados.js` ainda não tem nenhuma história: nenhuma foi marcada como pronta pelo DoR. |
 | **Avaliação da usuária representativa** | Página Reuniões. O teste com a Daniela Soares cobriu usabilidade, linguagem e experiência de uso. Falta avaliar privacidade com ela, e a ordem das tarefas de HU13 não foi testada. |
@@ -140,7 +143,9 @@ páginas.
 | Uma reunião nova ou uma decisão | `reunioes` em `assets/js/dados.js` (código do vídeo no YouTube e o segundo de cada decisão) |
 | Uma alteração no histórico | `historico` em `assets/js/dados.js` |
 | A iteração atual ou as histórias prontas pelo DoR | `iteracaoAtual` e `dorAtendido` em `assets/js/dados.js` |
-| Iterações, evidências e técnicas de cada fase | `fases` em `assets/js/dados.js` |
+| Iterações, planejado e realizado, evidências e técnicas de cada fase | `fases` em `assets/js/dados.js` |
+| Um risco investigado ou ainda aberto | `riscos` em `assets/js/dados.js` |
+| Riscos investigados | Tabela no `index.html` de `cronograma/` |
 | Cores e espaçamentos | As variáveis no topo de `assets/css/site.css` |
 
 Os comentários no topo de `assets/js/dados.js` explicam cada campo.
