@@ -192,8 +192,9 @@ na rede, como `http://192.168.0.10:3000`. Se a porta 5432 já estiver em uso, su
 
 O CI (`.github/workflows/ci.yml`) roda tudo isso a cada PR, além do build da imagem Docker
 da API.
-A cada push na `main`, a imagem da API é publicada no GitHub Container Registry; como
-hospedá-la está em [docs/deploy.md](docs/deploy.md).
+A cada push na `main`, a imagem da API é publicada no GitHub Container Registry. A API de
+homologação roda no Render, com o banco na Neon e o e-mail pelo Brevo; como atualizá-la e
+recriá-la está em [docs/deploy.md](docs/deploy.md).
 
 Para testar num Android físico, o workflow **APK de teste** gera um APK de release a cada
 mudança no app. Como instalar, em quais aparelhos ensaiar e como registrar as evidências do

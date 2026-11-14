@@ -34,6 +34,9 @@ describe('validarAmbiente', () => {
     expect(() => validarAmbiente({ ...minimo, DATABASE_URL: 'mysql://x' })).toThrow(
       /DATABASE_URL: deve começar com postgresql/,
     );
+    expect(() => validarAmbiente({ ...minimo, DATABASE_URL_UNPOOLED: 'mysql://x' })).toThrow(
+      /DATABASE_URL_UNPOOLED: deve começar com postgresql/,
+    );
   });
 
   it('exige o e-mail configurado em produção', () => {
