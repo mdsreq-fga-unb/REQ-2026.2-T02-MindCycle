@@ -15,7 +15,6 @@
     estilo.href = 'assets/css/planejamento-arvore.css?v=22';
     document.head.appendChild(estilo);
     document.querySelector('.lead').textContent = 'Do problema ao planejamento: características, histórias e tarefas no mesmo lugar.';
-    document.querySelector('a.navb[href="backlog/"]').hidden = true;
     proposta.montar();
   }
   const FILTROS = ['all', 'mvp'];
