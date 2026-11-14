@@ -144,7 +144,7 @@ const MC = (() => {
     }
     tags.push(link(MOSCOW[h.valor], 'priorizacao/', 't-p' + h.valor));
     tags.push(link('Esforço ' + h.esforco.consolidado, 'priorizacao/', 't-rel'));
-    tags.push(h.validadaCliente ? link('Validada com a cliente', 'reunioes/#PKoWLngGSRg', 't-val')
+    tags.push(h.validadaCliente ? link('Prioridade confirmada pela cliente', 'reunioes/#PKoWLngGSRg', 't-val')
       : '<span class="ptag plain">Hipótese da equipe</span>');
     if (h.rnfs.length) {
       h.rnfs.forEach((r) => tags.push('<button class="ptag t-rnf" type="button" data-rnf="' + r + '">' + r + '</button>'));
@@ -257,6 +257,19 @@ const MC = (() => {
         (h.criterios.length
           ? '<ol class="ol">' + h.criterios.map((c) => '<li>' + esc(c) + '</li>').join('') + '</ol>'
           : '<p class="ph" style="margin: 0">Sem critérios registrados no Story Map.</p>') +
+        (h.regras
+          ? '<h3 style="margin-top: 16px">Regras de negócio</h3>' +
+            '<p class="note" style="margin: 0 0 8px">' + esc(h.regras.situacao) + '</p>' +
+            (h.regras.origem ? '<p><a class="lnk" href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/' +
+              esc(h.regras.origem) + '" target="_blank" rel="noopener">Origem: PR #' + esc(h.regras.origem) + '</a></p>' : '') +
+            '<ol class="ol">' + h.regras.itens.map((r) => '<li>' + esc(r) + '</li>').join('') + '</ol>' +
+            (h.regras.pendencias
+              ? '<h3 style="margin-top: 16px">Decisões pendentes</h3><ul class="ol">' +
+                h.regras.pendencias.map((p) => '<li>' + esc(p) + '</li>').join('') + '</ul>' : '')
+          : '') +
+        (h.relacionadas && h.relacionadas.length
+          ? '<h3 style="margin-top: 16px">Histórias relacionadas</h3><div class="rfl">' +
+            h.relacionadas.map(chipHistoria).join('') + '</div>' : '') +
       '</div>' +
       '<div class="pane" data-painel="pro"' + (aba === 'pro' ? '' : ' hidden') + '>' +
         aplicacaoDor(h) +
@@ -301,6 +314,17 @@ const MC = (() => {
       '<p class="story">' + esc(r.descricao) + '</p>' +
       '<dl class="dl"><div class="dlr"><dt>Classificação</dt><dd>' + esc(r.classificacao) + '</dd></div>' +
       '<div class="dlr"><dt>Critério verificável</dt><dd>' + esc(r.criterio) + '</dd></div></dl>' +
+      (r.situacao ? '<h3 style="margin-top: 16px">Situação da verificação</h3><p class="note">' + esc(r.situacao) + '</p>' : '') +
+      (r.condicoes ? '<h3 style="margin-top: 16px">Condições de aceitação</h3><ol class="ol">' +
+        r.condicoes.map((c) => '<li>' + esc(c) + '</li>').join('') + '</ol>' : '') +
+      (r.verificacao ? '<h3 style="margin-top: 16px">Protocolo de verificação</h3><ol class="ol">' +
+        r.verificacao.map((v) => '<li>' + esc(v) + '</li>').join('') + '</ol>' : '') +
+      (r.protocoloComum ? '<h3 style="margin-top: 16px">Protocolo comum de desempenho Android</h3><ol class="ol">' +
+        DADOS.protocolosRnf[r.protocoloComum].map((v) => '<li>' + esc(v) + '</li>').join('') + '</ol>' : '') +
+      (r.fontes ? '<h3 style="margin-top: 16px">Fontes</h3><ul class="ol">' +
+        r.fontes.map((f) => '<li><a class="lnk" href="' + esc(f.url) + '" target="_blank" rel="noopener">' +
+          esc(f.titulo) + '</a></li>').join('') + '</ul>' : '') +
+      (r.verificacao ? '<p><a class="lnk" href="' + url('dor-e-dod/#metodos-de-verificacao') + '">Consultar o registro de evidências do DoD</a></p>' : '') +
       '<h3 style="margin-top: 16px">Histórias ligadas</h3>' +
       (r.todasAsHistorias ? '<p style="margin: 0">Todas as histórias.</p>' : '') +
       '<div class="rfl">' + ligadas.map(chipHistoria).join('') + '</div>';

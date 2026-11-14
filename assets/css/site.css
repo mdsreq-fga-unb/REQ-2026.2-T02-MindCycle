@@ -1830,3 +1830,80 @@ summary.foldh::-webkit-details-marker {
 .qdor th, .qdor td { text-align: center; padding: 6px 4px; }
 .qdor th:first-child, .qdor td:last-child { text-align: left; }
 .qdor .rdor { min-width: 26px; padding: 1px 6px; text-align: center; }
+
+/* Diagrama da página Arquitetura: SVG inline que segue as variáveis do tema.
+   Abaixo de 760 px o quadro rola para os lados, sem rolar a página. */
+.arq {
+  margin: 16px 0 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  overflow-x: auto;
+}
+.arq svg {
+  display: block;
+  width: 100%;
+  min-width: 760px;
+  height: auto;
+}
+.arq figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--mut);
+}
+.arq text {
+  fill: var(--ink);
+  font-size: 13px;
+}
+.arq .t {
+  fill: var(--head);
+  font-family: var(--disp);
+  font-size: 16px;
+  font-weight: 600;
+}
+.arq .n {
+  font-weight: 700;
+}
+.arq .m {
+  fill: var(--mut);
+  font-size: 12px;
+}
+.arq .c {
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+.arq .g {
+  fill: var(--soft);
+  stroke: var(--line);
+}
+.arq .b {
+  fill: var(--panel);
+  stroke: var(--wire);
+}
+.arq .on {
+  fill: var(--lilt);
+  stroke: var(--lil);
+}
+.arq .bx {
+  fill: var(--panel);
+  stroke: var(--wire);
+  stroke-dasharray: 4 4;
+}
+.arq .db {
+  fill: var(--cort);
+  stroke: var(--cor);
+}
+.arq .seta {
+  stroke: var(--acc);
+  stroke-width: 2;
+  marker-end: url(#arqSeta);
+}
+.arq .ponta {
+  fill: var(--acc);
+}
+.arq .tr {
+  stroke: var(--wire);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+}

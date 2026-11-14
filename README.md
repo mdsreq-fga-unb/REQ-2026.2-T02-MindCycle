@@ -26,6 +26,7 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 .
 ├── index.html                     Requisitos: a árvore do problema até as histórias
 ├── visao/                         Visão de produto (figuras ampliáveis)
+├── arquitetura/                   Arquitetura: diagrama, tecnologias e decisões
 ├── engenharia-de-requisitos/      Escolhas de processo e Catálogo de Metas
 ├── mvp/                           Composição do MVP por característica
 ├── historico/                     O que mudou em cada história e RNF
@@ -80,8 +81,11 @@ HU13: {
 
 ## Sobre os identificadores do Problema, OE, CP, RF e RNF
 
-A **fonte oficial** é a **Matriz de Rastreabilidade de Requisitos v1.0**, extraída do
-quadro *MindCycle – Figma* em 28/09/2026. Dela saem:
+A origem dos identificadores é a **Matriz de Rastreabilidade de Requisitos v1.0**,
+extraída do quadro *MindCycle – Figma* em 28/09/2026. Esse quadro é uma fotografia
+histórica; o catálogo vigente fica em `assets/js/dados.js`, conforme a decisão
+proposta no [PR #49](https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/49).
+Os identificadores foram preservados:
 
 | Nível | Conjunto válido |
 |---|---|
@@ -89,12 +93,26 @@ quadro *MindCycle – Figma* em 28/09/2026. Dela saem:
 | Objetivos específicos | `OE1` a `OE3` |
 | Características de produto | `CP1` a `CP7` |
 | Histórias de usuário | `HU01` a `HU36` |
-| Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** |
+| Requisitos não funcionais | `RNF01` a `RNF11`, **sem `RNF05`** (número não reaproveitado) |
 
 No site, tudo isso vive num lugar só: `assets/js/dados.js`. A árvore, o MVP, a priorização,
 as reuniões, o histórico e o detalhe de cada história leem desse arquivo, então um
 identificador ou uma nota alterados ali mudam em todas as páginas. Uma história nova recebe
 sempre o próximo número livre, nunca um número já usado.
+
+As referências `RFxx` da avaliação correspondem às atuais `HUxx` de mesmo número.
+Regras e critérios ficam no cadastro da história responsável; `relacionadas` permite
+navegar entre elas sem copiar a especificação. `regras.situacao` distingue propostas
+de decisões validadas, `regras.origem` identifica o PR de origem e
+`regras.pendencias` lista decisões ainda necessárias. `validadaCliente` continua
+indicando a confirmação da prioridade, não a aprovação das novas regras.
+
+Nesta revisão da issue #38 foram reaproveitadas apenas as regras de HU13/HU15, a
+correção de HU17 e a apresentação das regras do PR #49. O DoD integrado pelo
+[PR #51](https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/51) foi preservado.
+Quando o [PR #52](https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/52)
+for combinado com estas alterações, seus registros de DoR devem ser conferidos de
+novo: regra documentada não significa regra validada nem história pronta.
 
 ---
 
@@ -104,6 +122,8 @@ sempre o próximo número livre, nunca um número já usado.
 |---|---|
 | **Validação do MVP consolidado com a cliente** | Páginas MVP e Priorização. A reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino tratou requisitos individuais; o conjunto do MVP e as notas ainda em hipótese aguardam a reunião de acompanhamento. |
 | **Backlog e Iteração atual vazios** | `dorAtendido` em `assets/js/dados.js` ainda não tem nenhuma história: nenhuma foi marcada como pronta pelo DoR. |
+| **Avaliação da usuária representativa** | Página Reuniões. O teste com a Daniela Soares cobriu usabilidade, linguagem e experiência de uso. Falta avaliar privacidade com ela, e a ordem das tarefas de HU13 não foi testada. |
+| **Validação dos refinamentos da #38** | Regras nos detalhes de HU04, HU05, HU13, HU15, HU23, HU30 e HU32. A fórmula clínica e os limites das fases em HU05 continuam pendentes de revisão da cliente; a ampliação de HU23 e o formato de exportação são propostas. |
 | **RNF05** | Não existe no quadro: a numeração salta de RNF04 para RNF06. Confirmar se houve descarte e registrar, ou renumerar. |
 
 ---
@@ -117,7 +137,7 @@ páginas.
 | Para mudar | Edite |
 |---|---|
 | Texto de Visão de produto, Engenharia de requisitos, DoR e DoD ou Lições aprendidas | O `index.html` da página |
-| Uma história (nome, critérios, nota MoSCoW, esforço, iteração) ou um RNF | `historias` ou `rnfs` em `assets/js/dados.js` |
+| Uma história (nome, critérios, regras, relacionadas, nota MoSCoW, esforço, iteração) ou um RNF | `historias` ou `rnfs` em `assets/js/dados.js` |
 | Uma reunião nova ou uma decisão | `reunioes` em `assets/js/dados.js` (código do vídeo no YouTube e o segundo de cada decisão) |
 | Uma alteração no histórico | `historico` em `assets/js/dados.js` |
 | A iteração atual ou as histórias prontas pelo DoR | `iteracaoAtual` e `dorAtendido` em `assets/js/dados.js` |
@@ -125,6 +145,30 @@ páginas.
 | Cores e espaçamentos | As variáveis no topo de `assets/css/site.css` |
 
 Os comentários no topo de `assets/js/dados.js` explicam cada campo.
+
+### Revisão dos RNFs — issue #39
+
+Os detalhes dos RNFs apresentam `criterio` (resumo), `condicoes`, `verificacao`,
+`situacao` e `fontes`. São campos opcionais: os requisitos sem detalhamento continuam
+abrindo normalmente. O protocolo compartilhado de desempenho fica uma única vez em
+`protocolosRnf.desempenhoAndroid`; RNF06, RNF07 e RNF08 o referenciam por `protocoloComum`.
+Para consultar, abra os RNFs na árvore ou por links como `…/#RNF06`.
+
+Os protocolos avaliam o **aplicativo React Native para Android**. Testar este Pages
+em navegador verifica a documentação, sem comprovar desempenho, contraste ou
+compatibilidade do produto. Os resultados reais ficam no registro do DoD da respectiva história de usuário;
+documentar um protocolo não equivale a executá-lo.
+
+A meta de três toques depende de ensaio do protótipo e depois do app. A matriz de
+aparelhos/versões Android e as decisões técnicas de criptografia permanecem pendentes.
+Minimização, transparência e criptografia recuperam a proposta histórica `RNF-novo`,
+distribuída entre RNF02 e RNF03 sem criar identificador adicional, e aguardam validação.
+
+Esta revisão considera a aplicação de RNF04/RNF08 à HU02 proposta no PR #49 e
+preserva a separação dos fluxos. Os refinamentos de HU04 na #38 devem ser conferidos
+na integração. A cobertura de RNF03 também atende ao apontamento da #37; os registros
+do DoR propostos no PR #52 precisarão ser sincronizados, sem marcar histórias como
+prontas automaticamente. As mudanças por RNF e os novos vínculos das HUs constam no Histórico.
 
 Uma história ou um RNF abre de qualquer página com `#` e o código no endereço — por exemplo,
 `…/priorizacao/#HU13` ou `…/#RNF04`. Uma reunião abre com o código do vídeo
