@@ -7,7 +7,7 @@ import {
 import { UsuariasRepository } from '../account/usuarias.repository.js';
 import type { UsuariaAutenticada } from '../account/usuaria.js';
 
-/** Bearer token no header Authorization: o mesmo fluxo para web e celular. */
+/** Bearer token no header Authorization, enviado pelo app a cada requisição. */
 @Injectable()
 export class JwtAuth extends JwtBearerProvider<UsuariaAutenticada> {
   constructor(

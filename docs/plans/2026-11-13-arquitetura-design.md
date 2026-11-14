@@ -9,11 +9,11 @@ Data: 13/11/2026 · Escopo: MVP (iterações 5 e 6, 21 HUs) · Fonte dos requisi
 |---|---|---|
 | Forma | Monorepo + monólito modular | Equipe pequena, PRs em fatia vertical (DoD), tipos únicos entre front e back |
 | Repositório | Este repositório, npm workspaces (npm 11) | Fica ao lado de `assets/brand/`; npm já vem com o Node, sem instalar outro gerenciador |
-| Front | Expo SDK 58 (React Native) + Expo Router, exportado também para web | RNF10 (360–1440 px) e RNF06/07/08 são medidos no DevTools |
+| Front | Expo SDK 58 (React Native) + Expo Router, só Android | RNF10 limita a entrega ao app Android, sem navegador, computador nem iOS |
 | Back | NestJS 12 (ESM, Vitest), um módulo por domínio | Stack do README |
 | Banco | PostgreSQL + Prisma 7 | Migrations versionadas e tipos gerados |
 | Conta | E-mail + senha; PIN de pétalas como trava da sessão | 4 toques em 6 pétalas = 1296 combinações, pouco para credencial única |
-| Autenticação | `@nestjs/authentication`: access token JWT (15 min) + refresh token rotativo no PostgreSQL | Mesmo fluxo bearer na web e no celular; o pacote detecta reuso de refresh token |
+| Autenticação | `@nestjs/authentication`: access token JWT (15 min) + refresh token rotativo no PostgreSQL | Tokens no SecureStore do aparelho, sem cookies; o pacote detecta reuso de refresh token |
 | Infra | Docker Compose (postgres; api no perfil `api`) + GitHub Actions | CI exigido pelo DoD (critério 3); Mailpit entra com a HU26 |
 
 Descartado: repositórios separados (duplica tipos e CI) e BaaS (contraria o stack
@@ -23,7 +23,7 @@ e o perfil de software livre do cliente).
 
 ```
 apps/
-  app/                       Expo + Expo Router (iOS/Android/Web)
+  app/                       Expo + Expo Router (Android)
     app/                     rotas: (auth) · termos · pin · (abas) hoje | ciclo | tarefas | acolhimento | conta
     src/features/            checkin · ciclo · tarefas · plano-do-dia · acolhimento · conta
     src/ui/                  design system (tokens de assets/brand, PinPetalas, ...)
@@ -113,7 +113,7 @@ bloqueado, e 404 para inexistente. O app trata pelo `codigo`.
 - Unitários: `planning/domain` e `EstimadorDeFase`, com um caso por item das regras de
   negócio, incluindo os limites (sem check-in, prazo vencido, desfazer, retorno).
 - E2E (Nest + Postgres no CI): fluxo de cada HU, RNF02 e RNF03.
-- RNF06/07/08, RNF10 e RNF11: medições manuais no DevTools/Lighthouse no build web,
+- RNF06/07/08, RNF10 e RNF11: medições manuais no app Android, em aparelhos da matriz de suporte,
   registradas como evidência do DoD.
 
 ## Ordem de construção

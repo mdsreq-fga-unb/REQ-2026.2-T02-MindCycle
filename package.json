@@ -14,7 +14,7 @@
     "postinstall": "npm run build -w @mindcycle/shared && npm run prisma:generate -w @mindcycle/api",
     "db:up": "docker compose up -d postgres",
     "dev:api": "npm run start:dev -w @mindcycle/api",
-    "dev:app": "npm run web -w @mindcycle/app",
+    "dev:app": "npm run start -w @mindcycle/app",
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",

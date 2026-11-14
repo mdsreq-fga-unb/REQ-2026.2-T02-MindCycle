@@ -10,10 +10,6 @@
     "android": {
       "predictiveBackGestureEnabled": false
     },
-    "web": {
-      "output": "single",
-      "favicon": "./assets/images/favicon.png"
-    },
     "plugins": [
       "expo-router",
       [

@@ -27,5 +27,5 @@ export const raio = {
   botao: 999,
 } as const;
 
-/** Largura máxima do conteúdo: no computador (até 1440 px, RNF10) a tela não estica. */
+/** Largura máxima do conteúdo: em telas largas, como tablets, o formulário não estica. */
 export const larguraMaxima = 480;

@@ -141,12 +141,13 @@ O código é um monorepo com npm workspaces. A arquitetura e as decisões estão
 | Pasta | Conteúdo |
 |---|---|
 | `apps/api` | API em NestJS + Prisma (PostgreSQL), um módulo por domínio em `src/modules/` |
-| `apps/app` | App em Expo (React Native) para Android, iOS e web, com rotas em `src/app/` |
+| `apps/app` | App Android em Expo (React Native), com rotas em `src/app/` |
 | `packages/shared` | Schemas (Zod) e tipos usados pela API e pelo app |
 
 ## Como rodar
 
-Precisa de Node 22.18+, **npm 11** (`npm install -g npm@11`) e Docker.
+Precisa de Node 22.18+, **npm 11** (`npm install -g npm@11`), Docker e um Android para rodar o app:
+o emulador do Android Studio ou um celular com o [Expo Go](https://expo.dev/go).
 
 ```bash
 npm install
@@ -157,7 +158,7 @@ cp apps/api/.env.example apps/api/.env
 ```
 
 Preencha `JWT_SECRET` em `apps/api/.env` (gere com `openssl rand -base64 32`). Depois suba o
-banco, aplique as migrações e rode a API e o app web, cada um num terminal:
+banco, aplique as migrações e rode a API e o app, cada um num terminal:
 
 ```bash
 npm run db:up
@@ -175,9 +176,11 @@ npm run dev:api
 npm run dev:app
 ```
 
-O app abre em <http://localhost:8081> e a API responde em <http://localhost:3000>. Se a porta
-5432 já estiver em uso, suba o banco com `POSTGRES_PORT=5434 npm run db:up` e ajuste a porta
-em `DATABASE_URL`. No emulador Android, defina `EXPO_PUBLIC_API_URL=http://10.0.2.2:3000`.
+A API responde em <http://localhost:3000>. O `npm run dev:app` sobe o Metro: aperte `a` para
+abrir o app no emulador ou leia o QR code com o Expo Go. O app procura a API em
+`EXPO_PUBLIC_API_URL`: no emulador, use `http://10.0.2.2:3000`; no celular, o IP do computador
+na rede, como `http://192.168.0.10:3000`. Se a porta 5432 já estiver em uso, suba o banco com
+`POSTGRES_PORT=5434 npm run db:up` e ajuste a porta em `DATABASE_URL`.
 
 | Comando | O que faz |
 |---|---|

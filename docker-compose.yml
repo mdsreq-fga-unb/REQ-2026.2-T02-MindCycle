@@ -28,7 +28,6 @@ services:
       DATABASE_URL: postgresql://mindcycle:mindcycle@postgres:5432/mindcycle?schema=public
       # Obrigatório: sem ele a API não sobe.
       JWT_SECRET: ${JWT_SECRET:-}
-      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8081}
       NODE_ENV: production
     ports:
       - '${API_PORT:-3000}:3000'
