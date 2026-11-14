@@ -55,12 +55,12 @@
       <p class="lead">Como o MindCycle é construído: as tecnologias, como os sistemas conversam e por que escolhemos cada uma.</p>
 
       <h2>Visão geral</h2>
-      <p>Um único aplicativo, escrito uma vez, roda no celular e no navegador e conversa com uma API. Só a API acessa o banco de dados, e é ela que decide, a cada requisição, quem é a usuária e o que ela pode ver.</p>
+      <p>O MindCycle é um aplicativo de celular, escrito uma vez para Android e iOS, que conversa com uma API. Só a API acessa o banco de dados, e é ela que decide, a cada requisição, quem é a usuária e o que ela pode ver.</p>
 
       <figure class="arq">
         <svg viewBox="0 0 960 600" role="img" aria-labelledby="arq-titulo arq-desc">
           <title id="arq-titulo">Diagrama de arquitetura do MindCycle</title>
-          <desc id="arq-desc">O app Expo, no celular e na web, chama a API NestJS por HTTPS com JSON e um token JWT no cabeçalho Authorization, e renova o token em /auth/renovacao. A API usa o Prisma para ler e gravar no PostgreSQL. O pacote compartilhado fornece os schemas ao app e à API. O GitHub Actions verifica cada pull request e o Docker empacota a API.</desc>
+          <desc id="arq-desc">O app Expo, no Android e no iOS, chama a API NestJS por HTTPS com JSON e um token JWT no cabeçalho Authorization, e renova o token em /auth/renovacao. A API usa o Prisma para ler e gravar no PostgreSQL. O pacote compartilhado fornece os schemas ao app e à API. O GitHub Actions verifica cada pull request e o Docker empacota a API.</desc>
           <defs>
             <marker id="arqSeta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ponta" d="M0 0L10 5L0 10z"></path></marker>
           </defs>
@@ -69,15 +69,15 @@
           <rect class="g" x="16" y="40" width="240" height="300" rx="16"></rect>
           <text class="t" x="32" y="68">App · Expo SDK 58</text>
           <rect class="b" x="32" y="86" width="208" height="104" rx="10"></rect>
-          <text class="n" x="48" y="112">No celular</text>
-          <text class="m" x="48" y="134">Android e iOS</text>
-          <text class="m" x="48" y="154">React Native + Expo Router</text>
-          <text class="c" x="48" y="176">tokens no SecureStore</text>
+          <text class="n" x="48" y="112">Android e iOS</text>
+          <text class="m" x="48" y="134">React Native + Expo Router</text>
+          <text class="m" x="48" y="154">TanStack Query</text>
+          <text class="c" x="48" y="176">um código, duas lojas</text>
           <rect class="b" x="32" y="210" width="208" height="110" rx="10"></rect>
-          <text class="n" x="48" y="236">Na web</text>
-          <text class="m" x="48" y="258">navegador, de 360 a 1440 px</text>
-          <text class="m" x="48" y="278">react-native-web</text>
-          <text class="c" x="48" y="300">tokens no localStorage</text>
+          <text class="n" x="48" y="236">Sessão no aparelho</text>
+          <text class="m" x="48" y="258">tokens guardados cifrados</text>
+          <text class="m" x="48" y="278">PIN trava a sessão (HU11)</text>
+          <text class="c" x="48" y="300">expo-secure-store</text>
 
           <!-- Comunicação entre app e API -->
           <text class="m" x="328" y="112" text-anchor="middle">HTTPS + JSON</text>
@@ -157,7 +157,7 @@
       <div class="tblw"><table>
         <thead><tr><th>Camada</th><th>Tecnologia</th><th>Por quê</th></tr></thead>
         <tbody>
-          <tr><td><b>App</b></td><td>Expo SDK 58 (React Native), Expo Router, TanStack Query</td><td>Um código só para Android, iOS e web. A web é exigida pelo RNF10 e é onde medimos os tempos de resposta (RNF06, RNF07 e RNF08).</td></tr>
+          <tr><td><b>App</b></td><td>Expo SDK 58 (React Native), Expo Router, TanStack Query</td><td>Um código só para Android e iOS. Durante o desenvolvimento, o Expo Go roda o app direto no celular de quem está testando.</td></tr>
           <tr><td><b>API</b></td><td>NestJS 12 em Node 22, validação com Zod</td><td>Módulos com fronteiras claras e injeção de dependências, o que facilita testar as regras do planejamento do dia isoladamente.</td></tr>
           <tr><td><b>Autenticação</b></td><td><span class="mono">@nestjs/authentication</span></td><td>Pacote oficial do Nest: hash de senha, tokens JWT e refresh tokens com detecção de reuso, sem código de segurança escrito à mão.</td></tr>
           <tr><td><b>Banco</b></td><td>PostgreSQL 17 com Prisma 7</td><td>Banco relacional para dados que se relacionam (usuária, ciclo, registros, tarefas) e migrations versionadas junto do código.</td></tr>
