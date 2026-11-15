@@ -1,0 +1,22 @@
+name: Atualizar o quadro kanban do site
+
+# O GitHub só roda agendamentos (cron) a partir da branch padrão, a main. Este
+# workflow só dispara a publicação do site (gh-pages.yml, na branch gh-pages),
+# que refaz o retrato do quadro kanban antes de publicar.
+on:
+  schedule:
+    # 8h, 11h, 14h, 17h e 20h de Brasília (UTC-3); o GitHub pode atrasar alguns minutos.
+    - cron: '0 11,14,17,20,23 * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  disparar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Disparar a publicação do site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run gh-pages.yml --ref gh-pages --repo "${{ github.repository }}"
