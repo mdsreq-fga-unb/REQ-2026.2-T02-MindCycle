@@ -41,8 +41,32 @@ export const textos = {
     emBreve: 'Em breve, suas tarefas do dia aparecem aqui.',
   },
   ciclo: {
-    titulo: 'Seu ciclo',
-    emBreve: 'Em breve, você registra e acompanha seu ciclo aqui.',
+    titulo: 'Meu ciclo',
+    subtitulo: 'Essas informações ficam só com você e ajudam a entender o seu ritmo.',
+    carregando: 'Carregando seu ciclo...',
+    inicio: {
+      titulo: 'Início da menstruação',
+      rotulo: 'Data de início (dia/mês/ano)',
+      formato: 'DD/MM/AAAA',
+      botao: 'Registrar início',
+      dataInvalida: 'Confira a data: use o formato dia/mês/ano, como 15/11/2026.',
+      registrado: (data: string) => `Início de ${data} registrado.`,
+    },
+    historico: {
+      titulo: 'Inícios registrados',
+      vazio: 'Nenhum início registrado ainda.',
+      remover: 'Remover',
+      rotuloRemover: (data: string) => `Remover o início de ${data}`,
+    },
+    caracteristicas: {
+      titulo: 'Características do ciclo',
+      duracao: 'Duração média do ciclo (em dias)',
+      irregular: 'Meu ciclo é irregular',
+      botao: 'Salvar',
+      duracaoInvalida: (minimo: number, maximo: number) =>
+        `Informe a duração em dias, entre ${minimo} e ${maximo}.`,
+      salvo: 'Informação salva.',
+    },
   },
   tarefas: {
     titulo: 'Tarefas',
@@ -71,6 +95,11 @@ export const textos = {
       'Para registrar seus dados, aceite os termos de uso.',
     [CodigoErro.VersaoTermosDesatualizada]:
       'Os termos foram atualizados. Leia a nova versão para continuar.',
+    [CodigoErro.DataNoFuturo]:
+      'Essa data ainda não chegou. Escolha hoje ou um dia que já passou.',
+    [CodigoErro.AcessoNegado]: 'Você não tem acesso a esse registro.',
+    [CodigoErro.NaoEncontrado]:
+      'Não encontramos esse registro. Ele pode já ter sido removido.',
     validacao: 'Confira os campos destacados.',
     generico: 'Algo não saiu como esperado. Tente de novo em instantes.',
   },
