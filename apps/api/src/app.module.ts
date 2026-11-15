@@ -8,6 +8,7 @@ import { RelogioModule } from './common/relogio.js';
 import { type Ambiente, validarAmbiente } from './common/ambiente.js';
 import { AccountModule } from './modules/account/account.module.js';
 import { AuthModule } from './modules/auth/auth.module.js';
+import { CheckinModule } from './modules/checkin/checkin.module.js';
 import { ConsentModule } from './modules/consent/consent.module.js';
 import { CycleModule } from './modules/cycle/cycle.module.js';
 import { TasksModule } from './modules/tasks/tasks.module.js';
@@ -49,6 +50,7 @@ import { SaudeController } from './saude.controller.js';
     AccountModule,
     ConsentModule,
     CycleModule,
+    CheckinModule,
     TasksModule,
   ],
   controllers: [SaudeController],

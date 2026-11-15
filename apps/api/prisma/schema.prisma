@@ -32,6 +32,7 @@ model Usuaria {
   perfilCiclo    PerfilCiclo?
   recuperacoes   RecuperacaoAcesso[]
   tarefas        Tarefa[]
+  checkins       Checkin[]
 
   @@map("usuarias")
 }
@@ -142,4 +143,49 @@ model Tarefa {
 
   @@index([usuariaId, dataPlanejada])
   @@map("tarefas")
+}
+
+enum OrigemCheckin {
+  registro
+  sobrecarga
+
+  @@map("origem_checkin")
+}
+
+// HU04. Vários por dia; o vigente do dia é o mais recente por criadoEm e os
+// anteriores ficam no histórico. A correção troca o conteúdo sem mudar criadoEm.
+model Checkin {
+  id           String        @id @default(uuid()) @db.Uuid
+  usuariaId    String        @map("usuaria_id") @db.Uuid
+  /// O dia no calendário da usuária, calculado pelo Relogio na criação.
+  dataLocal    DateTime      @map("data_local") @db.Date
+  criadoEm     DateTime      @default(now()) @map("criado_em") @db.Timestamptz
+  atualizadoEm DateTime      @updatedAt @map("atualizado_em") @db.Timestamptz
+  /// Níveis de HU13: 1 baixa, 2 média, 3 alta.
+  disposicao   Int
+  /// Indicação explícita de ausência de sintomas: nunca junto com sintomas.
+  semSintomas  Boolean       @map("sem_sintomas")
+  /// `sobrecarga` é do registro de sobrecarga (HU02); aqui só nasce `registro`.
+  origem       OrigemCheckin @default(registro)
+
+  usuaria  Usuaria          @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
+  sintomas CheckinSintoma[]
+
+  @@index([usuariaId, dataLocal, criadoEm])
+  @@map("checkins")
+}
+
+// HU04. Só os sintomas selecionados existem aqui, cada um com a intensidade.
+model CheckinSintoma {
+  id          String @id @default(uuid()) @db.Uuid
+  checkinId   String @map("checkin_id") @db.Uuid
+  /// Id estável da lista SINTOMAS de @mindcycle/shared.
+  sintoma     String
+  /// 1 leve, 2 moderada, 3 intensa.
+  intensidade Int
+
+  checkin Checkin @relation(fields: [checkinId], references: [id], onDelete: Cascade)
+
+  @@unique([checkinId, sintoma])
+  @@map("checkin_sintomas")
 }

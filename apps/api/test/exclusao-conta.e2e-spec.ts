@@ -43,6 +43,15 @@ const tabelasDaUsuaria: {
     contar: (prisma, usuariaId) => prisma.tarefa.count({ where: { usuariaId } }),
   },
   {
+    tabela: 'checkins',
+    contar: (prisma, usuariaId) => prisma.checkin.count({ where: { usuariaId } }),
+  },
+  {
+    tabela: 'checkin_sintomas',
+    contar: (prisma, usuariaId) =>
+      prisma.checkinSintoma.count({ where: { checkin: { usuariaId } } }),
+  },
+  {
     // Sem FK: a cascata não alcança, a exclusão apaga explicitamente.
     tabela: 'refresh_tokens',
     contar: (prisma, userId) => prisma.refreshToken.count({ where: { userId } }),
@@ -63,7 +72,7 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
     await app.close();
   });
 
-  /** Uma conta com aceite dos termos, uma sessão com refresh token, dados de ciclo e um pedido de recuperação de acesso. */
+  /** Uma conta com aceite dos termos, uma sessão com refresh token, dados de ciclo, tarefa, check-in e um pedido de recuperação de acesso. */
   async function criarContaComDados() {
     const tokens = await cadastrar(app);
     await request(servidor())
@@ -86,6 +95,15 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
       .post('/tarefas')
       .auth(tokens.accessToken, { type: 'bearer' })
       .send({ titulo: 'Regar as plantas', prazo: '2099-12-31', prioridade: 2, energia: 1 })
+      .expect(201);
+    await request(servidor())
+      .post('/checkins')
+      .auth(tokens.accessToken, { type: 'bearer' })
+      .send({
+        disposicao: 2,
+        semSintomas: false,
+        sintomas: [{ sintoma: 'cansaco', intensidade: 1 }],
+      })
       .expect(201);
     await request(servidor())
       .post('/auth/recuperacao')
