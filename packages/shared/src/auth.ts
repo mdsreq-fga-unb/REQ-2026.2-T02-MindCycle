@@ -42,6 +42,12 @@ export const atualizacaoContaSchema = z.object({
 });
 export type AtualizacaoContaDto = z.infer<typeof atualizacaoContaSchema>;
 
+// HU36: excluir é irreversível, então a usuária confirma com a senha.
+export const exclusaoContaSchema = z.object({
+  senha: z.string().min(1).max(128),
+});
+export type ExclusaoContaDto = z.infer<typeof exclusaoContaSchema>;
+
 export interface Usuaria {
   id: string;
   email: string;
