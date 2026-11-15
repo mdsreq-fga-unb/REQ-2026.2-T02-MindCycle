@@ -158,6 +158,71 @@ export const textos = {
     confirmar: 'Excluir tudo definitivamente',
     voltar: 'Voltar, quero manter minha conta',
   },
+  // HU11, RNF09
+  pin: {
+    progresso: (toques: number, total: number) => `${toques} de ${total}`,
+    petalas: {
+      flor: 'Flor com 6 pétalas',
+      petala: (numero: number) => `Pétala ${numero}`,
+      apagar: 'Apagar último toque',
+    },
+    numerico: {
+      teclado: 'Teclado numérico',
+      digito: (digito: number) => `Dígito ${digito}`,
+      apagar: 'Apagar último dígito',
+    },
+    tipos: {
+      numerico: {
+        nome: 'PIN numérico',
+        descricao: 'Quatro dígitos, de 0 a 9, num teclado.',
+      },
+      petalas: {
+        nome: 'Flor de pétalas',
+        descricao: 'Quatro toques nas pétalas de uma flor.',
+      },
+    },
+    trava: {
+      titulo: 'Digite seu PIN',
+      subtitulo: {
+        numerico: 'Digite os 4 dígitos do seu PIN.',
+        petalas: 'Toque nas pétalas da sua sequência.',
+      },
+      esqueci: 'Esqueci meu PIN',
+      esqueciDica: 'Você volta a entrar com e-mail e senha e pode trocar o PIN.',
+    },
+    senhaIncorreta: 'A senha não confere. Confira e tente de novo.',
+    definir: {
+      tituloNovo: 'Proteger com PIN',
+      tituloTroca: 'Trocar PIN ou tipo',
+      tipo: 'Escolha o tipo de PIN',
+      tipoSubtitulo: 'Você pode mudar de tipo quando quiser, na aba Conta.',
+      continuar: 'Continuar',
+      senhaSubtitulo: 'Para sua segurança, confirme a senha da conta.',
+      senha: 'Senha da conta',
+      escolher: 'Escolha seu PIN',
+      escolherSubtitulo: {
+        numerico: 'Digite 4 dígitos. Você pode repetir um dígito.',
+        petalas: 'Toque em 4 pétalas. Você pode repetir uma pétala.',
+      },
+      confirmar: 'Confirme seu PIN',
+      confirmarSubtitulo: 'Repita o mesmo PIN.',
+      diferente: 'Os dois PINs não são iguais. Vamos escolher de novo.',
+      cancelar: 'Agora não',
+    },
+    conta: {
+      semPin: 'Peça uma trava extra para abrir o app.',
+      tipoAtual: {
+        numerico: 'PIN: numérico',
+        petalas: 'PIN: flor de pétalas',
+      },
+      proteger: 'Proteger com PIN',
+      trocar: 'Trocar PIN ou tipo',
+      remover: 'Remover PIN',
+      removerSubtitulo: 'Confirme a senha da conta para remover o PIN.',
+      confirmarRemocao: 'Remover PIN',
+      cancelar: 'Cancelar',
+    },
+  },
   conexao: {
     titulo: 'Não conseguimos conectar',
     texto: 'Verifique sua internet e tente de novo quando quiser.',
@@ -181,6 +246,12 @@ export const textos = {
       'Esse código não está valendo: ele pode ter vencido ou ter algum dígito diferente. Peça um novo código e tente de novo.',
     [CodigoErro.PrazoNoPassado]:
       'Esse prazo já passou. Escolha hoje ou um dia à frente.',
+    [CodigoErro.PinIncorreto]:
+      'Essa sequência não confere. Respire e tente de novo quando quiser.',
+    [CodigoErro.PinBloqueado]:
+      'Vamos fazer uma pausa. Tente de novo em alguns minutos ou entre com seu e-mail e senha.',
+    [CodigoErro.PinNaoDefinido]:
+      'Sua conta não tem PIN. Você pode criar um na aba Conta.',
     validacao: 'Confira os campos destacados.',
     generico: 'Algo não saiu como esperado. Tente de novo em instantes.',
   },

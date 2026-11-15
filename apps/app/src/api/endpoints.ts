@@ -4,12 +4,14 @@ import type {
   CadastroTarefaDto,
   Ciclo,
   ConfirmacaoRecuperacaoDto,
+  DefinicaoPinDto,
   EntradaDto,
   ExclusaoContaDto,
   InicioMenstruacao,
   PedidoRecuperacaoDto,
   PerfilCiclo,
   PerfilCicloDto,
+  Pin,
   Tarefa,
   Termos,
   Tokens,
@@ -38,6 +40,12 @@ export const api = {
     pedir<Usuaria>('/conta', { metodo: 'PATCH', corpo: dados }),
   excluirConta: (dados: ExclusaoContaDto) =>
     pedir<void>('/conta/exclusao', { metodo: 'POST', corpo: dados }),
+  definirPin: (dados: DefinicaoPinDto) =>
+    pedir<void>('/conta/pin', { metodo: 'PUT', corpo: dados }),
+  removerPin: (senha: string) =>
+    pedir<void>('/conta/pin', { metodo: 'DELETE', corpo: { senha } }),
+  verificarPin: (pin: Pin) =>
+    pedir<void>('/conta/pin/verificacao', { metodo: 'POST', corpo: { pin } }),
   termos: () => pedir<Termos>('/termos', { publica: true }),
   aceitarTermos: (versao: string) =>
     pedir<void>('/termos/aceite', { metodo: 'POST', corpo: { versao } }),

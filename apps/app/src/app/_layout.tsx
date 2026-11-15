@@ -27,7 +27,8 @@ export default function RootLayout() {
 // Cada grupo de telas só existe no estado certo da sessão; fora dele, o
 // Expo Router leva para a primeira tela disponível.
 function Navegacao() {
-  const { carregando, autenticada, conta, erroConta, recarregarConta } = useSessao();
+  const { carregando, autenticada, conta, erroConta, recarregarConta, travada } =
+    useSessao();
 
   if (carregando) {
     return null;
@@ -60,7 +61,11 @@ function Navegacao() {
       <Stack.Protected guard={autenticada && !termosAceitos}>
         <Stack.Screen name="termos" />
       </Stack.Protected>
-      <Stack.Protected guard={autenticada && termosAceitos}>
+      {/* HU11: com PIN, o app só abre depois de a usuária digitá-lo. */}
+      <Stack.Protected guard={travada}>
+        <Stack.Screen name="pin" />
+      </Stack.Protected>
+      <Stack.Protected guard={autenticada && termosAceitos && !travada}>
         <Stack.Screen name="(app)" />
       </Stack.Protected>
     </Stack>
