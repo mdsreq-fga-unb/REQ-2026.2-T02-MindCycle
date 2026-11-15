@@ -1,5 +1,14 @@
 import { CodigoErro } from '@mindcycle/shared';
 
+function duracaoPorExtenso(minutos: number): string {
+  const horas = Math.floor(minutos / 60);
+  const resto = minutos % 60;
+  if (horas === 0) {
+    return `${resto} min`;
+  }
+  return resto === 0 ? `${horas} h` : `${horas} h ${resto} min`;
+}
+
 // Todo texto exibido à usuária mora aqui, para a revisão de linguagem
 // acolhedora do DoD (critério 5): sem cobrança, culpa ou contador de falhas.
 export const textos = {
@@ -89,7 +98,37 @@ export const textos = {
   },
   tarefas: {
     titulo: 'Tarefas',
-    emBreve: 'Em breve, você organiza suas tarefas aqui.',
+    carregando: 'Carregando suas tarefas...',
+    novaTarefa: 'Nova tarefa',
+    vazio: {
+      titulo: 'Sua lista está livre por enquanto',
+      texto: 'Quando quiser, adicione uma tarefa e ela entra no seu planejamento.',
+    },
+    item: {
+      prazo: (data: string) => `Prazo: ${data}`,
+      prioridade: (nivel: string) => `Prioridade ${nivel.toLowerCase()}`,
+      energia: (nivel: string) => `Energia ${nivel.toLowerCase()}`,
+      duracao: (minutos: number) => `Cerca de ${duracaoPorExtenso(minutos)}`,
+    },
+    niveis: { 1: 'Baixa', 2: 'Média', 3: 'Alta' },
+    nova: {
+      titulo: 'Nova tarefa',
+      subtitulo: 'Conte o que precisa ser feito e quanto esforço isso pede.',
+      campoTitulo: 'O que precisa ser feito?',
+      campoPrazo: 'Prazo (dia/mês/ano)',
+      formatoPrazo: 'DD/MM/AAAA',
+      campoPrioridade: 'Prioridade',
+      campoEnergia: 'Energia necessária',
+      campoDuracao: 'Duração estimada em minutos (opcional)',
+      botao: 'Salvar tarefa',
+      cancelar: 'Cancelar',
+      tituloVazio: 'Dê um nome para a tarefa.',
+      prazoInvalido: 'Confira o prazo: use o formato dia/mês/ano, como 15/11/2026.',
+      prioridadeVazia: 'Escolha a prioridade da tarefa.',
+      energiaVazia: 'Escolha a energia que a tarefa pede.',
+      duracaoInvalida: (minimo: number, maximo: number) =>
+        `Se for informar a duração, use minutos inteiros, entre ${minimo} e ${maximo}.`,
+    },
   },
   acolhimento: {
     titulo: 'Acolhimento',
@@ -140,6 +179,8 @@ export const textos = {
       'Não encontramos esse registro. Ele pode já ter sido removido.',
     [CodigoErro.CodigoRecuperacaoInvalido]:
       'Esse código não está valendo: ele pode ter vencido ou ter algum dígito diferente. Peça um novo código e tente de novo.',
+    [CodigoErro.PrazoNoPassado]:
+      'Esse prazo já passou. Escolha hoje ou um dia à frente.',
     validacao: 'Confira os campos destacados.',
     generico: 'Algo não saiu como esperado. Tente de novo em instantes.',
   },

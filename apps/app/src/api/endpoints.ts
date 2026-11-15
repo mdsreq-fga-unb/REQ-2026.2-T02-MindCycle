@@ -1,6 +1,7 @@
 import type {
   AtualizacaoContaDto,
   CadastroDto,
+  CadastroTarefaDto,
   Ciclo,
   ConfirmacaoRecuperacaoDto,
   EntradaDto,
@@ -9,6 +10,7 @@ import type {
   PedidoRecuperacaoDto,
   PerfilCiclo,
   PerfilCicloDto,
+  Tarefa,
   Termos,
   Tokens,
   Usuaria,
@@ -45,4 +47,7 @@ export const api = {
   removerInicio: (id: string) => pedir<void>(`/ciclo/inicios/${id}`, { metodo: 'DELETE' }),
   informarPerfil: (dados: PerfilCicloDto) =>
     pedir<PerfilCiclo>('/ciclo/perfil', { metodo: 'PUT', corpo: dados }),
+  tarefas: () => pedir<Tarefa[]>('/tarefas'),
+  cadastrarTarefa: (dados: CadastroTarefaDto) =>
+    pedir<Tarefa>('/tarefas', { metodo: 'POST', corpo: dados }),
 };
