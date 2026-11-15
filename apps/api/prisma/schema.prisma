@@ -139,6 +139,8 @@ model Tarefa {
   /// Preenchida pela conclusão (HU20).
   concluidaEm    DateTime? @map("concluida_em") @db.Timestamptz
 
+  movimentacoes MovimentacaoTarefa[]
+
   usuaria Usuaria @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
 
   @@index([usuariaId, dataPlanejada])
@@ -188,4 +190,27 @@ model CheckinSintoma {
 
   @@unique([checkinId, sintoma])
   @@map("checkin_sintomas")
+}
+
+// HU18/HU15: permite distinguir escolha da usuária de reajuste automático.
+enum OrigemMovimentacaoTarefa {
+  usuaria
+  reajuste
+
+  @@map("origem_movimentacao_tarefa")
+}
+
+model MovimentacaoTarefa {
+  id           String                   @id @default(uuid()) @db.Uuid
+  tarefaId     String                   @map("tarefa_id") @db.Uuid
+  dataAnterior DateTime                 @map("data_anterior") @db.Date
+  dataNova     DateTime                 @map("data_nova") @db.Date
+  origem       OrigemMovimentacaoTarefa
+  criadaEm     DateTime                 @map("criada_em") @db.Timestamptz
+
+  // A cascata da conta alcança o histórico pela tarefa (HU36).
+  tarefa Tarefa @relation(fields: [tarefaId], references: [id], onDelete: Cascade)
+
+  @@index([tarefaId, criadaEm])
+  @@map("movimentacoes_tarefa")
 }

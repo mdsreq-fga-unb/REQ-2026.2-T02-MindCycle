@@ -1,6 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import {
   CodigoErro,
+  type AdiamentoTarefaDto,
   type CadastroTarefaDto,
   type DataLocal,
   type Nivel,
@@ -77,5 +78,54 @@ export class TarefasService {
       throw erro(HttpStatus.FORBIDDEN, CodigoErro.AcessoNegado);
     }
     return paraResposta(tarefa);
+  }
+
+  /** HU18. Data e origem são gravadas juntas; o prazo final não é atualizado. */
+  async adiar(
+    usuaria: UsuariaAutenticada,
+    id: string,
+    dados: AdiamentoTarefaDto,
+  ): Promise<Tarefa> {
+    const hoje = this.relogio.hoje(usuaria.fuso);
+    return this.prisma.$transaction(async (tx) => {
+      const atual = await tx.tarefa.findUnique({ where: { id } });
+      if (!atual) throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+      if (atual.usuariaId !== usuaria.id) {
+        throw erro(HttpStatus.FORBIDDEN, CodigoErro.AcessoNegado);
+      }
+      if (atual.concluidaEm) {
+        throw erro(HttpStatus.CONFLICT, CodigoErro.TarefaConcluida);
+      }
+      if (
+        dados.dataPlanejada < hoje ||
+        dados.dataPlanejada <= deData(atual.dataPlanejada)
+      ) {
+        throw erro(HttpStatus.BAD_REQUEST, CodigoErro.DataAdiamentoInvalida);
+      }
+
+      // Não sobrescreve uma conclusão ou outro adiamento ocorrido durante a leitura.
+      const alteracao = await tx.tarefa.updateMany({
+        where: {
+          id,
+          usuariaId: usuaria.id,
+          concluidaEm: null,
+          dataPlanejada: atual.dataPlanejada,
+        },
+        data: { dataPlanejada: paraData(dados.dataPlanejada) },
+      });
+      if (alteracao.count !== 1) {
+        throw erro(HttpStatus.CONFLICT, CodigoErro.TarefaAlterada);
+      }
+      await tx.movimentacaoTarefa.create({
+        data: {
+          tarefaId: id,
+          dataAnterior: atual.dataPlanejada,
+          dataNova: paraData(dados.dataPlanejada),
+          origem: 'usuaria',
+          criadaEm: this.relogio.agora(),
+        },
+      });
+      return paraResposta(await tx.tarefa.findUniqueOrThrow({ where: { id } }));
+    });
   }
 }
