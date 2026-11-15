@@ -9,7 +9,16 @@ export default function AppLayout() {
       screenOptions={{
         headerShown: false,
         contentStyle: { backgroundColor: cores.ground },
-      }}
-    />
+      }}>
+      {/* HU28: a explicação da fase sobe por cima da aba Ciclo. */}
+      <Stack.Screen
+        name="fase/[fase]"
+        options={{
+          presentation: 'formSheet',
+          sheetGrabberVisible: true,
+          sheetAllowedDetents: [0.75, 1],
+        }}
+      />
+    </Stack>
   );
 }

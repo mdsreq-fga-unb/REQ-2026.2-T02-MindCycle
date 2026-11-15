@@ -17,15 +17,21 @@ import type { Nivel } from '@mindcycle/shared';
 import { cores, espaco, larguraMaxima, raio } from './tema';
 
 // Numa aba, a barra de abas já ocupa a margem inferior do aparelho.
-export function Tela({ children, naAba }: PropsWithChildren<{ naAba?: boolean }>) {
+// noTopo: o conteúdo começa no alto e ocupa a altura toda, para um bloco poder
+// ir ao rodapé (com um espaçador flex: 1); sem ele, o conteúdo fica centralizado.
+export function Tela({
+  children,
+  naAba,
+  noTopo,
+}: PropsWithChildren<{ naAba?: boolean; noTopo?: boolean }>) {
   return (
     <SafeAreaView
       style={styles.tela}
       edges={naAba ? ['top', 'left', 'right'] : undefined}>
       <ScrollView
-        contentContainerStyle={styles.rolagem}
+        contentContainerStyle={[styles.rolagem, noTopo && styles.rolagemNoTopo]}
         keyboardShouldPersistTaps="handled">
-        <View style={styles.conteudo}>{children}</View>
+        <View style={[styles.conteudo, noTopo && styles.conteudoNoTopo]}>{children}</View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -112,6 +118,91 @@ export function Interruptor({
         thumbColor={cores.white}
       />
     </View>
+  );
+}
+
+/**
+ * Número que se ajusta com "−" e "+", como os dias do ciclo. Para o leitor de
+ * tela é um controle ajustável: deslizar para cima ou para baixo muda o valor.
+ */
+export function Contador({
+  rotulo,
+  valor,
+  texto,
+  minimo,
+  maximo,
+  aoMudar,
+  rotuloDiminuir,
+  rotuloAumentar,
+}: {
+  rotulo: string;
+  valor: number;
+  /** Como o valor aparece e é lido, como "28 dias". */
+  texto: string;
+  minimo: number;
+  maximo: number;
+  aoMudar: (valor: number) => void;
+  rotuloDiminuir: string;
+  rotuloAumentar: string;
+}) {
+  const mudar = (passo: number) => aoMudar(Math.min(maximo, Math.max(minimo, valor + passo)));
+  return (
+    <View style={styles.campo}>
+      <Text style={styles.rotulo}>{rotulo}</Text>
+      <View
+        accessible
+        accessibilityRole="adjustable"
+        accessibilityLabel={rotulo}
+        accessibilityValue={{ min: minimo, max: maximo, now: valor, text: texto }}
+        accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
+        onAccessibilityAction={({ nativeEvent }) =>
+          mudar(nativeEvent.actionName === 'increment' ? 1 : -1)
+        }
+        style={styles.contador}>
+        <PassoContador
+          simbolo="−"
+          rotulo={rotuloDiminuir}
+          desativado={valor <= minimo}
+          onPress={() => mudar(-1)}
+        />
+        <Text style={styles.contadorValor}>{texto}</Text>
+        <PassoContador
+          simbolo="+"
+          rotulo={rotuloAumentar}
+          desativado={valor >= maximo}
+          onPress={() => mudar(1)}
+        />
+      </View>
+    </View>
+  );
+}
+
+function PassoContador({
+  simbolo,
+  rotulo,
+  desativado,
+  onPress,
+}: {
+  simbolo: string;
+  rotulo: string;
+  desativado: boolean;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={rotulo}
+      accessibilityState={{ disabled: desativado }}
+      disabled={desativado}
+      onPress={onPress}
+      hitSlop={espaco.xs}
+      style={({ pressed }) => [
+        styles.passo,
+        desativado && styles.passoDesativado,
+        pressed && styles.pressionado,
+      ]}>
+      <Text style={styles.passoSimbolo}>{simbolo}</Text>
+    </Pressable>
   );
 }
 
@@ -222,6 +313,8 @@ export function Aviso({ children }: PropsWithChildren) {
 const styles = StyleSheet.create({
   tela: { flex: 1, backgroundColor: cores.ground },
   rolagem: { flexGrow: 1, justifyContent: 'center', padding: espaco.lg },
+  rolagemNoTopo: { justifyContent: 'flex-start' },
+  conteudoNoTopo: { flexGrow: 1 },
   conteudo: {
     width: '100%',
     maxWidth: larguraMaxima,
@@ -257,6 +350,29 @@ const styles = StyleSheet.create({
   interruptor: { flexDirection: 'row', alignItems: 'center', gap: espaco.md },
   interruptorRotulo: { flex: 1 },
   confirmacao: { fontSize: 16, lineHeight: 24, fontWeight: '600', color: cores.plum },
+  contador: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minHeight: 64,
+    paddingHorizontal: espaco.sm,
+    borderRadius: raio.campo,
+    borderWidth: 1,
+    borderColor: cores.inkSoft,
+    backgroundColor: cores.white,
+  },
+  contadorValor: { fontSize: 20, fontWeight: '700', color: cores.ink },
+  passo: {
+    width: 48,
+    height: 48,
+    borderRadius: raio.botao,
+    backgroundColor: cores.blush,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  // No limite o botão some pela metade, e o leitor de tela anuncia "desativado".
+  passoDesativado: { opacity: 0.4 },
+  passoSimbolo: { fontSize: 24, lineHeight: 28, fontWeight: '700', color: cores.ink },
   opcoes: { flexDirection: 'row', gap: espaco.sm },
   opcao: {
     flex: 1,
