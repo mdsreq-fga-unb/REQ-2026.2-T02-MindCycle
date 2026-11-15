@@ -55,6 +55,7 @@ export class ContaController {
       termosAceitos: await this.consentService.temConsentimentoVigente(
         usuaria.id,
       ),
+      tipoPin: await this.usuarias.tipoPin(usuaria.id),
     };
   }
 }

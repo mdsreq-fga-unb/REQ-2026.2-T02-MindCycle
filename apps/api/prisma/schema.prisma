@@ -12,12 +12,20 @@ datasource db {
 
 // HU25. Excluir a usuária apaga, em cascata, os dados de domínio dela (HU36).
 model Usuaria {
-  id        String   @id @default(uuid()) @db.Uuid
-  email     String   @unique
-  senhaHash String   @map("senha_hash")
+  id              String    @id @default(uuid()) @db.Uuid
+  email           String    @unique
+  senhaHash       String    @map("senha_hash")
   /// Fuso IANA do aparelho: define o "hoje" da usuária.
-  fuso      String
-  criadaEm  DateTime @default(now()) @map("criada_em") @db.Timestamptz
+  fuso            String
+  criadaEm        DateTime  @default(now()) @map("criada_em") @db.Timestamptz
+  /// HU11: hash do tipo e da sequência digitada; nulo quando a conta não tem PIN.
+  pinHash         String?   @map("pin_hash")
+  /// Como a usuária digita o PIN; nulo quando a conta não tem PIN.
+  pinTipo         TipoPin?  @map("pin_tipo")
+  /// Erros seguidos na verificação do PIN; zera no acerto e ao bloquear.
+  pinTentativas   Int       @default(0) @map("pin_tentativas")
+  /// Enquanto no futuro, toda verificação do PIN é recusada.
+  pinBloqueadoAte DateTime? @map("pin_bloqueado_ate") @db.Timestamptz
 
   consentimentos Consentimento[]
   inicios        InicioMenstruacao[]
@@ -26,6 +34,13 @@ model Usuaria {
   tarefas        Tarefa[]
 
   @@map("usuarias")
+}
+
+enum TipoPin {
+  numerico
+  petalas
+
+  @@map("tipo_pin")
 }
 
 // HU12, RNF02. Um registro por aceite; revogar (HU36) preenche revogadoEm.
