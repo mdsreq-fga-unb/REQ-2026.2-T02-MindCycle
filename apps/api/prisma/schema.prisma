@@ -22,6 +22,7 @@ model Usuaria {
   consentimentos Consentimento[]
   inicios        InicioMenstruacao[]
   perfilCiclo    PerfilCiclo?
+  recuperacoes   RecuperacaoAcesso[]
 
   @@map("usuarias")
 }
@@ -64,6 +65,24 @@ model PerfilCiclo {
   usuaria Usuaria @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
 
   @@map("perfis_ciclo")
+}
+
+// HU26. Código de 6 dígitos enviado por e-mail para redefinir a senha; só o hash
+// fica guardado. Vale enquanto não vence, não foi usado e as tentativas não esgotam.
+model RecuperacaoAcesso {
+  id         String    @id @default(uuid()) @db.Uuid
+  usuariaId  String    @map("usuaria_id") @db.Uuid
+  codigoHash String    @map("codigo_hash")
+  criadoEm   DateTime  @map("criado_em") @db.Timestamptz
+  expiraEm   DateTime  @map("expira_em") @db.Timestamptz
+  /// Confirmações feitas com este código vigente, certas ou erradas.
+  tentativas Int       @default(0)
+  usadoEm    DateTime? @map("usado_em") @db.Timestamptz
+
+  usuaria Usuaria @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
+
+  @@index([usuariaId])
+  @@map("recuperacoes_acesso")
 }
 
 // Estado do @nestjs/authentication (RefreshTokenStore). O id é o SHA-256 do token.

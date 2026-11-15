@@ -9,10 +9,13 @@ const email = z
   .toLowerCase()
   .pipe(z.email());
 
+// A mesma regra vale no cadastro e na redefinição da senha (HU26).
+const senhaNova = z.string().min(8).max(128);
+
 // HU25: o fuso vem do aparelho e define o "hoje" da usuária (HU04, HU05, HU13).
 export const cadastroSchema = z.object({
   email,
-  senha: z.string().min(8).max(128),
+  senha: senhaNova,
   fuso: fusoSchema,
 });
 export type CadastroDto = z.infer<typeof cadastroSchema>;
@@ -28,6 +31,23 @@ export const renovacaoSchema = z.object({
   refreshToken: z.string().min(1),
 });
 export type RenovacaoDto = z.infer<typeof renovacaoSchema>;
+
+// HU26: o código de recuperação enviado por e-mail tem sempre este tamanho.
+export const TAMANHO_CODIGO_RECUPERACAO = 6;
+
+export const pedidoRecuperacaoSchema = z.object({ email });
+export type PedidoRecuperacaoDto = z.infer<typeof pedidoRecuperacaoSchema>;
+
+// O código não é validado no formato aqui: qualquer código que não confere
+// recebe a mesma resposta, sem dizer à usuária o que estava errado.
+export const confirmacaoRecuperacaoSchema = z.object({
+  email,
+  codigo: z.string().trim().min(1).max(32),
+  novaSenha: senhaNova,
+});
+export type ConfirmacaoRecuperacaoDto = z.infer<
+  typeof confirmacaoRecuperacaoSchema
+>;
 
 export interface Tokens {
   accessToken: string;
