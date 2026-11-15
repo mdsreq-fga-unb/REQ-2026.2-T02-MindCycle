@@ -20,6 +20,8 @@ model Usuaria {
   criadaEm  DateTime @default(now()) @map("criada_em") @db.Timestamptz
 
   consentimentos Consentimento[]
+  inicios        InicioMenstruacao[]
+  perfilCiclo    PerfilCiclo?
 
   @@map("usuarias")
 }
@@ -36,6 +38,32 @@ model Consentimento {
 
   @@index([usuariaId])
   @@map("consentimentos")
+}
+
+// HU06. Dia de início de uma menstruação, no calendário da usuária (sem hora).
+// Registrar de novo o mesmo dia não cria outro registro.
+model InicioMenstruacao {
+  id        String   @id @default(uuid()) @db.Uuid
+  usuariaId String   @map("usuaria_id") @db.Uuid
+  data      DateTime @db.Date
+  criadoEm  DateTime @default(now()) @map("criado_em") @db.Timestamptz
+
+  usuaria Usuaria @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
+
+  @@unique([usuariaId, data])
+  @@map("inicios_menstruacao")
+}
+
+// HU07. Um por usuária. Ciclo irregular não guarda duração média.
+model PerfilCiclo {
+  usuariaId    String   @id @map("usuaria_id") @db.Uuid
+  duracaoMedia Int?     @map("duracao_media")
+  irregular    Boolean  @default(false)
+  atualizadoEm DateTime @updatedAt @map("atualizado_em") @db.Timestamptz
+
+  usuaria Usuaria @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
+
+  @@map("perfis_ciclo")
 }
 
 // Estado do @nestjs/authentication (RefreshTokenStore). O id é o SHA-256 do token.

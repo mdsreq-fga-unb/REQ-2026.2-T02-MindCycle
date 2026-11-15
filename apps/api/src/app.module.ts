@@ -9,6 +9,7 @@ import { type Ambiente, validarAmbiente } from './common/ambiente.js';
 import { AccountModule } from './modules/account/account.module.js';
 import { AuthModule } from './modules/auth/auth.module.js';
 import { ConsentModule } from './modules/consent/consent.module.js';
+import { CycleModule } from './modules/cycle/cycle.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { SaudeController } from './saude.controller.js';
 
@@ -46,6 +47,7 @@ import { SaudeController } from './saude.controller.js';
     AuthModule,
     AccountModule,
     ConsentModule,
+    CycleModule,
   ],
   controllers: [SaudeController],
   providers: [{ provide: APP_PIPE, useClass: StandardSchemaValidationPipe }],

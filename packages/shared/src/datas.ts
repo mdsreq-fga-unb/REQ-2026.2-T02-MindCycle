@@ -63,3 +63,28 @@ function emUtc(data: DataLocal): number {
   const [ano, mes, dia] = data.split('-').map(Number);
   return Date.UTC(ano!, mes! - 1, dia!);
 }
+
+/** 2026-11-15 vira "15/11/2026", como a usuária lê. */
+export function formatarDataBr(data: DataLocal): string {
+  const [ano, mes, dia] = data.split('-');
+  return `${dia}/${mes}/${ano}`;
+}
+
+/** Lê "15/11/2026" (ou "5/11/2026") e devolve 2026-11-15; null se não for uma data real. */
+export function lerDataBr(texto: string): DataLocal | null {
+  const partes = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(texto.trim());
+  if (!partes) {
+    return null;
+  }
+  const [, dia, mes, ano] = partes;
+  const data = `${ano}-${mes!.padStart(2, '0')}-${dia!.padStart(2, '0')}`;
+  return dataLocalSchema.safeParse(data).success ? data : null;
+}
+
+/** Deixa só dígitos e põe as barras enquanto a usuária digita: "151120" vira "15/11/20". */
+export function mascararDataBr(texto: string): string {
+  const digitos = texto.replace(/\D/g, '').slice(0, 8);
+  return [digitos.slice(0, 2), digitos.slice(2, 4), digitos.slice(4)]
+    .filter(Boolean)
+    .join('/');
+}

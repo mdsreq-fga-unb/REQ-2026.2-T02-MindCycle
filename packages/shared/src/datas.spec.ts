@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { dataLocal, diasEntre, fusoValido, somarDias } from './datas.js';
+import {
+  dataLocal,
+  diasEntre,
+  formatarDataBr,
+  fusoValido,
+  lerDataBr,
+  mascararDataBr,
+  somarDias,
+} from './datas.js';
 
 describe('dataLocal', () => {
   it('usa o calendário do fuso, não o de UTC', () => {
@@ -78,5 +86,35 @@ describe('fusoValido', () => {
     expect(fusoValido('+03:00')).toBe(false);
     expect(fusoValido('EST')).toBe(false);
     expect(fusoValido('utc')).toBe(false);
+  });
+});
+
+describe('formatarDataBr e lerDataBr', () => {
+  it('vai e volta entre AAAA-MM-DD e DD/MM/AAAA', () => {
+    expect(formatarDataBr('2026-11-05')).toBe('05/11/2026');
+    expect(lerDataBr('05/11/2026')).toBe('2026-11-05');
+    expect(lerDataBr(' 5/1/2026 ')).toBe('2026-01-05');
+  });
+
+  it('recusa o que não é uma data real', () => {
+    for (const texto of ['', '31/02/2026', '29/02/2027', '2026-11-05', '5/11/26', '32/01/2026']) {
+      expect(lerDataBr(texto)).toBeNull();
+    }
+    expect(lerDataBr('29/02/2028')).toBe('2028-02-29');
+  });
+});
+
+describe('mascararDataBr', () => {
+  it('põe as barras conforme os dígitos chegam', () => {
+    expect(mascararDataBr('1')).toBe('1');
+    expect(mascararDataBr('15')).toBe('15');
+    expect(mascararDataBr('151')).toBe('15/1');
+    expect(mascararDataBr('15112')).toBe('15/11/2');
+    expect(mascararDataBr('15/11/2026')).toBe('15/11/2026');
+  });
+
+  it('ignora o que não é dígito e o que passa de oito', () => {
+    expect(mascararDataBr('1a5-11 2026999')).toBe('15/11/2026');
+    expect(mascararDataBr('')).toBe('');
   });
 });
