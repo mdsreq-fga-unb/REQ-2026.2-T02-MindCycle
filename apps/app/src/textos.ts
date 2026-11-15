@@ -202,13 +202,15 @@ export const textos = {
   },
   acolhimento: {
     titulo: 'Acolhimento',
-    // Sobrou para a HU22, que ainda não entrou: as práticas da HU21 já aparecem.
+    // Sobrou para a HU22, que ainda não entrou. Fica no rodapé: anunciar no topo
+    // o que ainda não existe empurra para baixo o que já funciona.
     emBreve: 'Em breve, mensagens de cuidado aparecem aqui.',
-    // HU21. Convite, nunca cobrança: a usuária não "deve" nada à aba.
+    // HU21. Convite, nunca cobrança: a usuária não "deve" nada à aba. O convite
+    // nomeia a seção e abre a tela numa linha só, para as práticas virem logo;
+    // o que é contexto, e não conteúdo, desceu para o rodapé.
     sugestoes: {
-      titulo: 'Para hoje',
-      convite: 'Se fizer sentido agora. Nada aqui é tarefa, e nada fica registrado.',
-      rotacao: 'As sugestões mudam a cada dia.',
+      convite: 'Práticas para hoje, se fizerem sentido agora. Nada aqui é tarefa.',
+      rodape: 'As sugestões mudam a cada dia. Nada fica registrado.',
       carregando: 'Carregando as sugestões de hoje...',
       vazio: 'Hoje não há sugestões.',
       duracao: (minutos: number) => duracaoPorExtenso(minutos),
