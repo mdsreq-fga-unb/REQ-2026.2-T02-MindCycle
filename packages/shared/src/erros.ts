@@ -9,6 +9,9 @@ export const CodigoErro = {
   NaoEncontrado: 'NAO_ENCONTRADO',
   CodigoRecuperacaoInvalido: 'CODIGO_RECUPERACAO_INVALIDO',
   PrazoNoPassado: 'PRAZO_NO_PASSADO',
+  PinIncorreto: 'PIN_INCORRETO',
+  PinBloqueado: 'PIN_BLOQUEADO',
+  PinNaoDefinido: 'PIN_NAO_DEFINIDO',
 } as const;
 export type CodigoErro = (typeof CodigoErro)[keyof typeof CodigoErro];
 

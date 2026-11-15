@@ -2,5 +2,6 @@ export * from './auth.js';
 export * from './ciclo.js';
 export * from './datas.js';
 export * from './erros.js';
+export * from './pin.js';
 export * from './tarefas.js';
 export * from './termos.js';

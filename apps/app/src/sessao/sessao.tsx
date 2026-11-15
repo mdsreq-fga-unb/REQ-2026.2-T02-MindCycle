@@ -6,6 +6,7 @@ import {
   useState,
   type PropsWithChildren,
 } from 'react';
+import { AppState } from 'react-native';
 import type {
   CadastroDto,
   ConfirmacaoRecuperacaoDto,
@@ -17,6 +18,10 @@ import type {
 import { api } from '@/api/endpoints';
 import { aoMudarTokens, carregarTokens, salvarTokens, tokensAtuais } from './tokens';
 
+// HU11. Pendência: o tempo em segundo plano que reativa a trava do PIN ainda
+// precisa de validação da equipe.
+export const TRAVA_APOS_SEGUNDO_PLANO_MS = 60_000;
+
 type Sessao = {
   /** Lendo os tokens salvos ou a conta: mantenha a splash. */
   carregando: boolean;
@@ -25,6 +30,10 @@ type Sessao = {
   /** A conta não carregou (sem rede, por exemplo). */
   erroConta: boolean;
   recarregarConta: () => void;
+  /** HU11: a conta tem PIN e a usuária ainda não o digitou nesta abertura. */
+  travada: boolean;
+  /** Marca o app como destravado, até fechar ou ficar um tempo em segundo plano. */
+  destravar: () => void;
   entrar: (dados: EntradaDto) => Promise<void>;
   cadastrar: (dados: Omit<CadastroDto, 'fuso'>) => Promise<void>;
   /** HU26: confirma o código recebido por e-mail, troca a senha e já entra. */
@@ -48,13 +57,37 @@ export function SessaoProvider({ children }: PropsWithChildren) {
   const queryClient = useQueryClient();
   const [tokensCarregados, setTokensCarregados] = useState(false);
   const [tokens, setTokens] = useState<Tokens | null>(null);
+  // Só na memória do processo (HU11): fechar o app volta a travar. Entrar com
+  // a senha, que é a credencial da conta, já conta como destravado.
+  const [destravada, setDestravada] = useState(false);
 
   useEffect(() => {
     carregarTokens().then((salvos) => {
       setTokens(salvos);
       setTokensCarregados(true);
     });
-    return aoMudarTokens(setTokens);
+    return aoMudarTokens((novos) => {
+      setTokens(novos);
+      if (!novos) {
+        setDestravada(false);
+      }
+    });
+  }, []);
+
+  // De volta do segundo plano depois do tempo combinado, a trava reativa.
+  useEffect(() => {
+    let saiuEm: number | null = null;
+    const ouvinte = AppState.addEventListener('change', (estado) => {
+      if (estado === 'background') {
+        saiuEm = Date.now();
+      } else if (estado === 'active' && saiuEm !== null) {
+        if (Date.now() - saiuEm >= TRAVA_APOS_SEGUNDO_PLANO_MS) {
+          setDestravada(false);
+        }
+        saiuEm = null;
+      }
+    });
+    return () => ouvinte.remove();
   }, []);
 
   const autenticada = tokens !== null;
@@ -78,6 +111,7 @@ export function SessaoProvider({ children }: PropsWithChildren) {
 
   async function iniciar(novos: Tokens) {
     queryClient.clear();
+    setDestravada(true);
     await salvarTokens(novos);
   }
 
@@ -87,6 +121,12 @@ export function SessaoProvider({ children }: PropsWithChildren) {
     conta: autenticada ? conta.data : undefined,
     erroConta: autenticada && conta.isError,
     recarregarConta: () => void conta.refetch(),
+    travada:
+      autenticada &&
+      !destravada &&
+      !!conta.data?.termosAceitos &&
+      !!conta.data.tipoPin,
+    destravar: () => setDestravada(true),
     entrar: async (dados) => iniciar(await api.entrar(dados)),
     cadastrar: async (dados) =>
       iniciar(

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { fusoSchema, type DataLocal } from './datas.js';
+import type { TipoPin } from './pin.js';
 
 // Normaliza antes de validar: " Ana@Exemplo.com " vira "ana@exemplo.com".
 const email = z
@@ -76,4 +77,6 @@ export interface Usuaria {
   hoje: DataLocal;
   /** Aceitou a versão vigente dos termos (HU12, RNF02). */
   termosAceitos: boolean;
+  /** Tipo do PIN que protege a conta (HU11), ou null sem PIN: o app mostra a trava ao abrir. */
+  tipoPin: TipoPin | null;
 }
