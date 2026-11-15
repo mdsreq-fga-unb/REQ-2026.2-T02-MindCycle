@@ -52,6 +52,10 @@ export const textos = {
   },
   termos: {
     titulo: 'Antes de começar',
+    consultar: 'Termos de uso',
+    versao: (versao: string) => `Versão ${versao}`,
+    voltar: 'Voltar à conta',
+    carregando: 'Carregando os termos...',
     subtitulo:
       'Leia como seus dados são usados. Nada é registrado antes do seu aceite.',
     botao: 'Li e aceito',

@@ -14,6 +14,7 @@ export default function Conta() {
       <Titulo>{textos.conta.titulo}</Titulo>
       {conta && <Texto>{textos.conta.email(conta.email)}</Texto>}
       <SecaoPin />
+      <Botao titulo={textos.termos.consultar} variante="link" onPress={() => router.push('/termos-consultar')} />
       <Botao titulo={textos.conta.sair} variante="link" onPress={sair} />
       <Botao
         titulo={textos.conta.excluir}
