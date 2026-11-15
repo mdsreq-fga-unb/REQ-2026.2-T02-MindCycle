@@ -54,6 +54,7 @@ function Navegacao() {
       <Stack.Protected guard={!autenticada}>
         <Stack.Screen name="entrar" />
         <Stack.Screen name="cadastro" />
+        <Stack.Screen name="recuperar-acesso" />
       </Stack.Protected>
       {/* HU12, RNF02: nada é registrado antes do aceite dos termos. */}
       <Stack.Protected guard={autenticada && !termosAceitos}>

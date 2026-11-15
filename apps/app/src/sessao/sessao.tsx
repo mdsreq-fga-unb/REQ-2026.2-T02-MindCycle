@@ -6,7 +6,13 @@ import {
   useState,
   type PropsWithChildren,
 } from 'react';
-import type { CadastroDto, EntradaDto, Tokens, Usuaria } from '@mindcycle/shared';
+import type {
+  CadastroDto,
+  ConfirmacaoRecuperacaoDto,
+  EntradaDto,
+  Tokens,
+  Usuaria,
+} from '@mindcycle/shared';
 
 import { api } from '@/api/endpoints';
 import { aoMudarTokens, carregarTokens, salvarTokens, tokensAtuais } from './tokens';
@@ -21,6 +27,8 @@ type Sessao = {
   recarregarConta: () => void;
   entrar: (dados: EntradaDto) => Promise<void>;
   cadastrar: (dados: Omit<CadastroDto, 'fuso'>) => Promise<void>;
+  /** HU26: confirma o código recebido por e-mail, troca a senha e já entra. */
+  recuperar: (dados: ConfirmacaoRecuperacaoDto) => Promise<void>;
   sair: () => Promise<void>;
   /** Limpa a sessão só neste aparelho, sem avisar a API: a conta já foi excluída (HU36). */
   encerrarLocalmente: () => Promise<void>;
@@ -87,6 +95,7 @@ export function SessaoProvider({ children }: PropsWithChildren) {
           fuso: fusoDoAparelho(),
         }),
       ),
+    recuperar: async (dados) => iniciar(await api.confirmarRecuperacao(dados)),
     sair: async () => {
       const refreshToken = tokensAtuais()?.refreshToken;
       await salvarTokens(null);

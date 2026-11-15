@@ -35,10 +35,9 @@ export async function pedir<T>(caminho: string, opcoes: Opcoes = {}): Promise<T>
     const corpo = (await resposta.json().catch(() => ({}))) as RespostaErro;
     throw new ErroApi(resposta.status, corpo.codigo);
   }
-  if (resposta.status === 204) {
-    return undefined as T;
-  }
-  return (await resposta.json()) as T;
+  // 202 e 204 vêm sem corpo.
+  const texto = await resposta.text();
+  return (texto ? JSON.parse(texto) : undefined) as T;
 }
 
 function enviar(caminho: string, { metodo = 'GET', corpo, publica }: Opcoes) {

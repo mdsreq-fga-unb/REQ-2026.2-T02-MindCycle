@@ -12,7 +12,26 @@ export const textos = {
     email: 'E-mail',
     senha: 'Senha',
     botao: 'Entrar',
+    esqueciSenha: 'Esqueci minha senha',
     irParaCadastro: 'Ainda não tem conta? Criar conta',
+  },
+  // HU26
+  recuperar: {
+    titulo: 'Vamos recuperar seu acesso',
+    subtitulo:
+      'Tudo bem, acontece. Enviamos um código para o seu e-mail e você escolhe uma nova senha. Seu histórico continua aqui.',
+    email: 'E-mail',
+    enviarCodigo: 'Enviar código',
+    tituloCodigo: 'Confira seu e-mail',
+    codigoEnviado: (email: string) =>
+      `Enviamos um código para ${email}, se ele estiver cadastrado.`,
+    codigo: 'Código de 6 dígitos',
+    novaSenha: 'Nova senha (mínimo de 8 caracteres)',
+    redefinir: 'Redefinir senha',
+    reenviar: 'Reenviar código',
+    reenviado:
+      'Pedido feito. O código pode levar um minutinho para chegar; olhe também o spam.',
+    voltar: 'Voltar',
   },
   cadastro: {
     titulo: 'Criar sua conta',
@@ -119,6 +138,8 @@ export const textos = {
     [CodigoErro.AcessoNegado]: 'Você não tem acesso a esse registro.',
     [CodigoErro.NaoEncontrado]:
       'Não encontramos esse registro. Ele pode já ter sido removido.',
+    [CodigoErro.CodigoRecuperacaoInvalido]:
+      'Esse código não está valendo: ele pode ter vencido ou ter algum dígito diferente. Peça um novo código e tente de novo.',
     validacao: 'Confira os campos destacados.',
     generico: 'Algo não saiu como esperado. Tente de novo em instantes.',
   },
