@@ -24,7 +24,10 @@ type Opcoes = {
 export async function pedir<T>(caminho: string, opcoes: Opcoes = {}): Promise<T> {
   let resposta = await enviar(caminho, opcoes);
   if (resposta.status === 401 && !opcoes.publica && tokensAtuais()) {
-    if (await renovar()) {
+    // Um 401 com código é recusa do próprio pedido (senha errada na exclusão da
+    // conta), não sessão vencida: renovar não ajuda.
+    const recusa = await resposta.clone().json().catch(() => ({}));
+    if (!(recusa as RespostaErro).codigo && (await renovar())) {
       resposta = await enviar(caminho, opcoes);
     }
   }

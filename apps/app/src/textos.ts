@@ -80,6 +80,25 @@ export const textos = {
     titulo: 'Sua conta',
     email: (email: string) => `Conta: ${email}`,
     sair: 'Sair',
+    excluir: 'Excluir minha conta',
+  },
+  excluirConta: {
+    titulo: 'Excluir minha conta',
+    intro:
+      'Entendemos se você quer ir embora, e a decisão é sua. Antes de confirmar, veja o que acontece:',
+    apagado: [
+      'Seu ciclo e os registros dele',
+      'Seus sintomas e a sua disposição de cada dia',
+      'Suas tarefas',
+      'O aceite dos termos de uso, que fica revogado',
+      'Seu e-mail e sua senha: a conta deixa de existir',
+    ],
+    semVolta:
+      'Não há como desfazer. Depois de excluir, nada pode ser recuperado, nem por nós. Se quiser voltar um dia, será com uma conta nova, sem histórico.',
+    senha: 'Sua senha, para confirmar que é você',
+    senhaIncorreta: 'Essa senha não confere. Confira e tente de novo.',
+    confirmar: 'Excluir tudo definitivamente',
+    voltar: 'Voltar, quero manter minha conta',
   },
   conexao: {
     titulo: 'Não conseguimos conectar',

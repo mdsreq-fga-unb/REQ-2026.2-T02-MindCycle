@@ -22,6 +22,8 @@ type Sessao = {
   entrar: (dados: EntradaDto) => Promise<void>;
   cadastrar: (dados: Omit<CadastroDto, 'fuso'>) => Promise<void>;
   sair: () => Promise<void>;
+  /** Limpa a sessão só neste aparelho, sem avisar a API: a conta já foi excluída (HU36). */
+  encerrarLocalmente: () => Promise<void>;
 };
 
 const SessaoContext = createContext<Sessao | null>(null);
@@ -93,6 +95,10 @@ export function SessaoProvider({ children }: PropsWithChildren) {
         // Revoga no servidor; se falhar, o token expira sozinho.
         await api.sair(refreshToken).catch(() => {});
       }
+    },
+    encerrarLocalmente: async () => {
+      await salvarTokens(null);
+      queryClient.clear();
     },
   };
 
