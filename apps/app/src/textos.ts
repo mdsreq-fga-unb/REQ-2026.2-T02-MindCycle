@@ -1,4 +1,4 @@
-import { CodigoErro } from '@mindcycle/shared';
+import { CodigoErro, type Sintoma } from '@mindcycle/shared';
 
 function duracaoPorExtenso(minutos: number): string {
   const horas = Math.floor(minutos / 60);
@@ -67,6 +67,76 @@ export const textos = {
   hoje: {
     titulo: 'Hoje',
     emBreve: 'Em breve, suas tarefas do dia aparecem aqui.',
+  },
+  // HU04
+  checkin: {
+    titulo: 'Como você está agora?',
+    subtitulo: 'Registre quando quiser. Se algo mudar no dia, é só fazer outro registro.',
+    carregando: 'Carregando seu registro de hoje...',
+    disposicao: {
+      rotulo: 'Sua disposição',
+      niveis: { 1: 'Baixa', 2: 'Média', 3: 'Alta' },
+    },
+    sintomas: {
+      rotulo: 'O que você está sentindo?',
+      dica: 'Um toque marca como leve. Toque de novo para moderada, intensa ou para desmarcar.',
+      semSintomas: 'Sem sintomas',
+      semSintomasDica: 'Marque se não está sentindo nenhum sintoma agora.',
+      // Lista provisória: a cliente ainda vai revisá-la (reunião de 05/10).
+      nomes: {
+        colica: 'Cólica',
+        dor_de_cabeca: 'Dor de cabeça',
+        dor_nas_costas: 'Dor nas costas',
+        sensibilidade_nos_seios: 'Sensibilidade nos seios',
+        inchaco: 'Inchaço',
+        nausea: 'Enjoo',
+        acne: 'Acne',
+        cansaco: 'Cansaço',
+        desanimo: 'Desânimo',
+        irritabilidade: 'Irritabilidade',
+        ansiedade: 'Ansiedade',
+        alteracao_do_sono: 'Alteração do sono',
+        dificuldade_de_concentracao: 'Dificuldade de concentração',
+      } satisfies Record<Sintoma, string>,
+      intensidades: { 1: 'leve', 2: 'moderada', 3: 'intensa' },
+      // Dito pelo leitor de tela depois de cada toque no sintoma.
+      anuncio: (nome: string, intensidade?: string) =>
+        intensidade ? `${nome}, ${intensidade}` : `${nome}, desmarcado`,
+    },
+    registrar: 'Registrar',
+    salvarCorrecao: 'Salvar correção',
+    cancelar: 'Cancelar',
+    disposicaoVazia: 'Escolha como está a sua disposição para registrar.',
+    sintomasVazios: 'Marque o que está sentindo ou toque em "Sem sintomas".',
+    registrado: 'Registro salvo. Obrigada por se escutar.',
+    corrigido: 'Registro corrigido.',
+    hoje: {
+      titulo: 'Seu registro de hoje',
+      registradoAs: (hora: string) => `Registrado às ${hora}`,
+      corrigir: 'Corrigir este registro',
+      novo: 'Fazer um novo registro',
+      verRegistros: 'Meus registros',
+    },
+    resumo: {
+      disposicao: (nivel: string) => `Disposição: ${nivel.toLowerCase()}`,
+      semSintomas: 'Sem sintomas',
+      sintoma: (nome: string, intensidade: string) => `${nome} (${intensidade})`,
+    },
+    corrigirTela: {
+      titulo: 'Corrigir registro',
+      subtitulo: 'Ajuste o que mudou. O horário do registro continua o mesmo.',
+      voltar: 'Voltar',
+    },
+    registros: {
+      titulo: 'Meus registros',
+      subtitulo: 'Seus registros mais recentes, do último para o primeiro.',
+      carregando: 'Carregando seus registros...',
+      vazio: 'Você ainda não fez nenhum registro. Quando quiser, ele aparece aqui.',
+      data: (data: string, hora: string) => `${data} às ${hora}`,
+      corrigir: 'Corrigir',
+      rotuloCorrigir: (data: string, hora: string) => `Corrigir o registro de ${data} às ${hora}`,
+      voltar: 'Voltar',
+    },
   },
   ciclo: {
     titulo: 'Meu ciclo',

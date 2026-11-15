@@ -4,6 +4,7 @@ import {
   diasEntre,
   formatarDataBr,
   fusoValido,
+  horaLocal,
   lerDataBr,
   mascararDataBr,
   somarDias,
@@ -116,5 +117,14 @@ describe('mascararDataBr', () => {
   it('ignora o que não é dígito e o que passa de oito', () => {
     expect(mascararDataBr('1a5-11 2026999')).toBe('15/11/2026');
     expect(mascararDataBr('')).toBe('');
+  });
+});
+
+describe('horaLocal', () => {
+  it('usa o relógio do fuso, com zero à esquerda e meia-noite como 00', () => {
+    const instante = new Date('2026-11-15T02:05:00Z');
+    expect(horaLocal(instante, 'America/Sao_Paulo')).toBe('23:05');
+    expect(horaLocal(instante, 'UTC')).toBe('02:05');
+    expect(horaLocal(new Date('2026-11-15T03:00:00Z'), 'America/Sao_Paulo')).toBe('00:00');
   });
 });

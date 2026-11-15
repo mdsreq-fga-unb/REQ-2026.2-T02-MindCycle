@@ -88,3 +88,16 @@ export function mascararDataBr(texto: string): string {
     .filter(Boolean)
     .join('/');
 }
+
+/** A hora do instante no fuso, como "08:05". */
+export function horaLocal(instante: Date, fuso: string): string {
+  const partes = new Intl.DateTimeFormat('en-US', {
+    timeZone: fuso,
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).formatToParts(instante);
+  const parte = (tipo: Intl.DateTimeFormatPartTypes) =>
+    partes.find((p) => p.type === tipo)?.value ?? '';
+  return `${parte('hour')}:${parte('minute')}`;
+}
