@@ -34,6 +34,11 @@ const tabelasDaUsuaria: {
       prisma.perfilCiclo.count({ where: { usuariaId } }),
   },
   {
+    tabela: 'recuperacoes_acesso',
+    contar: (prisma, usuariaId) =>
+      prisma.recuperacaoAcesso.count({ where: { usuariaId } }),
+  },
+  {
     // Sem FK: a cascata não alcança, a exclusão apaga explicitamente.
     tabela: 'refresh_tokens',
     contar: (prisma, userId) => prisma.refreshToken.count({ where: { userId } }),
@@ -54,7 +59,7 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
     await app.close();
   });
 
-  /** Uma conta com aceite dos termos, uma sessão com refresh token e dados de ciclo. */
+  /** Uma conta com aceite dos termos, uma sessão com refresh token, dados de ciclo e um pedido de recuperação de acesso. */
   async function criarContaComDados() {
     const tokens = await cadastrar(app);
     await request(servidor())
@@ -72,6 +77,10 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
       .auth(tokens.accessToken, { type: 'bearer' })
       .send({ irregular: false, duracaoMedia: 28 })
       .expect(200);
+    await request(servidor())
+      .post('/auth/recuperacao')
+      .send({ email: tokens.email })
+      .expect(202);
     const { body } = await request(servidor())
       .get('/conta')
       .auth(tokens.accessToken, { type: 'bearer' })

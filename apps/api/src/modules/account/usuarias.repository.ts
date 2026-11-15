@@ -34,6 +34,10 @@ export class UsuariasRepository {
     return this.prisma.usuaria.findUnique({ where: { id }, select: publica });
   }
 
+  buscarPorEmail(email: string): Promise<UsuariaAutenticada | null> {
+    return this.prisma.usuaria.findUnique({ where: { email }, select: publica });
+  }
+
   /** Só para a entrada com senha. */
   async buscarCredenciais(
     email: string,

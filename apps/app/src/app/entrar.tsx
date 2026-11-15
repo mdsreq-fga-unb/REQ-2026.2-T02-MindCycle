@@ -48,6 +48,11 @@ export default function Entrar() {
       <Aviso>{erro}</Aviso>
       <Botao titulo={textos.entrar.botao} onPress={enviar} carregando={enviando} />
       <Botao
+        titulo={textos.entrar.esqueciSenha}
+        variante="link"
+        onPress={() => router.push('/recuperar-acesso')}
+      />
+      <Botao
         titulo={textos.entrar.irParaCadastro}
         variante="link"
         onPress={() => router.replace('/cadastro')}

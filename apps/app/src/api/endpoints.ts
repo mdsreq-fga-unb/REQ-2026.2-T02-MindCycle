@@ -2,9 +2,11 @@ import type {
   AtualizacaoContaDto,
   CadastroDto,
   Ciclo,
+  ConfirmacaoRecuperacaoDto,
   EntradaDto,
   ExclusaoContaDto,
   InicioMenstruacao,
+  PedidoRecuperacaoDto,
   PerfilCiclo,
   PerfilCicloDto,
   Termos,
@@ -19,6 +21,14 @@ export const api = {
     pedir<Tokens>('/auth/cadastro', { metodo: 'POST', corpo: dados, publica: true }),
   entrar: (dados: EntradaDto) =>
     pedir<Tokens>('/auth/entrada', { metodo: 'POST', corpo: dados, publica: true }),
+  pedirRecuperacao: (dados: PedidoRecuperacaoDto) =>
+    pedir<void>('/auth/recuperacao', { metodo: 'POST', corpo: dados, publica: true }),
+  confirmarRecuperacao: (dados: ConfirmacaoRecuperacaoDto) =>
+    pedir<Tokens>('/auth/recuperacao/confirmacao', {
+      metodo: 'POST',
+      corpo: dados,
+      publica: true,
+    }),
   sair: (refreshToken: string) =>
     pedir<void>('/auth/saida', { metodo: 'POST', corpo: { refreshToken }, publica: true }),
   conta: () => pedir<Usuaria>('/conta'),
