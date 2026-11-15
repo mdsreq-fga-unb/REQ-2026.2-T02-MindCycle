@@ -140,7 +140,8 @@ const MC = (() => {
     const tags = [];
     if (noBacklog(h)) tags.push(link('DoR atendido', 'dor-e-dod/', 't-bk'));
     if (naIteracaoAtual(h)) tags.push(link('Iteração atual', 'cronograma/', 't-cur'));
-    if (itemBacklog(h).situacao) tags.push(link(itemBacklog(h).situacao, 'backlog/', 't-out'));
+    if (itemBacklog(h).situacao) tags.push(link(itemBacklog(h).situacao,
+      '?' + new URLSearchParams({ cp: h.caracteristica, hl: h.id, plano: h.id }), 't-out'));
     tags.push(noMvp(h) ? link('MVP', 'mvp/', 't-mvp') : link('Fora do MVP', 'mvp/', 't-out'));
     if (noMvp(h)) {
       tags.push(link('Planejada: Iteração ' + h.iteracao, 'cronograma/', 't-rel'));

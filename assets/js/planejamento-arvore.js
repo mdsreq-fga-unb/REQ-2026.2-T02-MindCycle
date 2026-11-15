@@ -22,10 +22,6 @@ const PLANO_ARVORE = (() => {
       ['Esforço', h.esforco.consolidado], ['Quem faz', b.responsaveis[h.id] || b.responsavelPadrao],
       ['Andamento', item.andamento || b.andamentoPadrao], ['DoR', dor]
     ];
-    if (h.iteracao > 0) {
-      campos.push(['Disponibilidade', 'A informar']);
-      campos.push(['Capacidade', 'A informar']);
-    }
     const refs = { T01: 'Conferir os critérios do DoR da história.', T03: 'Aplicar os critérios de aceitação, os RNFs vinculados e o DoD.', T04: 'Apresentar o incremento e registrar a avaliação dos stakeholders.' };
     return '<dl class="plano-campos">' + campos.map(([k, v]) => '<div><dt>' + esc(k) + '</dt><dd>' +
       (k === 'DoR' ? '<button class="lnk" type="button" data-historia="' + h.id + '" data-dor aria-label="Consultar DoR de ' + h.id + '">' + esc(v) + '</button>' : esc(v)) + '</dd></div>').join('') + '</dl>' +
@@ -66,8 +62,10 @@ const PLANO_ARVORE = (() => {
       if (numero > 0) {
         const historias = DADOS.historias.filter((h) => h.iteracao === numero);
         const esforco = historias.reduce((soma, h) => soma + Number(h.esforco.consolidado.replace(',', '.')), 0);
+        const capacidade = DADOS.backlog.capacidadePorIteracao[numero];
         resumo.innerHTML = '<dl class="plano-campos"><div><dt>Histórias alocadas</dt><dd>' + historias.length + '</dd></div>' +
-          '<div><dt>Esforço planejado (pontos)</dt><dd>' + esforco.toFixed(1).replace('.', ',') + '</dd></div></dl>';
+          '<div><dt>Esforço planejado (pontos)</dt><dd>' + esforco.toFixed(1).replace('.', ',') + '</dd></div>' +
+          '<div><dt>Capacidade disponível</dt><dd>' + esc(capacidade?.disponivel ?? 'A informar') + '</dd></div></dl>';
       }
       document.dispatchEvent(new Event('planejamento-filtro'));
     });
