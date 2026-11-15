@@ -39,6 +39,10 @@ const tabelasDaUsuaria: {
       prisma.recuperacaoAcesso.count({ where: { usuariaId } }),
   },
   {
+    tabela: 'tarefas',
+    contar: (prisma, usuariaId) => prisma.tarefa.count({ where: { usuariaId } }),
+  },
+  {
     // Sem FK: a cascata não alcança, a exclusão apaga explicitamente.
     tabela: 'refresh_tokens',
     contar: (prisma, userId) => prisma.refreshToken.count({ where: { userId } }),
@@ -77,6 +81,12 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
       .auth(tokens.accessToken, { type: 'bearer' })
       .send({ irregular: false, duracaoMedia: 28 })
       .expect(200);
+    // Prazo distante: o app usa o relógio real, e prazo no passado é recusado.
+    await request(servidor())
+      .post('/tarefas')
+      .auth(tokens.accessToken, { type: 'bearer' })
+      .send({ titulo: 'Regar as plantas', prazo: '2099-12-31', prioridade: 2, energia: 1 })
+      .expect(201);
     await request(servidor())
       .post('/auth/recuperacao')
       .send({ email: tokens.email })

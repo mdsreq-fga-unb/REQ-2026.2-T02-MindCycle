@@ -8,6 +8,7 @@ export const CodigoErro = {
   AcessoNegado: 'ACESSO_NEGADO',
   NaoEncontrado: 'NAO_ENCONTRADO',
   CodigoRecuperacaoInvalido: 'CODIGO_RECUPERACAO_INVALIDO',
+  PrazoNoPassado: 'PRAZO_NO_PASSADO',
 } as const;
 export type CodigoErro = (typeof CodigoErro)[keyof typeof CodigoErro];
 

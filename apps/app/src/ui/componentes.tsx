@@ -12,6 +12,7 @@ import {
   type TextProps,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import type { Nivel } from '@mindcycle/shared';
 
 import { cores, espaco, larguraMaxima, raio } from './tema';
 
@@ -126,6 +127,47 @@ export function Confirmacao({ children }: PropsWithChildren) {
   );
 }
 
+/** Escolha entre os três níveis (1 baixa, 2 média, 3 alta); a usuária toca em um. */
+export function SeletorNivel({
+  rotulo,
+  rotulos,
+  valor,
+  aoMudar,
+}: {
+  rotulo: string;
+  rotulos: Record<Nivel, string>;
+  valor?: Nivel;
+  aoMudar: (valor: Nivel) => void;
+}) {
+  return (
+    <View style={styles.campo}>
+      <Text style={styles.rotulo}>{rotulo}</Text>
+      <View accessibilityRole="radiogroup" accessibilityLabel={rotulo} style={styles.opcoes}>
+        {([1, 2, 3] as const).map((nivel) => {
+          const marcado = valor === nivel;
+          return (
+            <Pressable
+              key={nivel}
+              accessibilityRole="radio"
+              accessibilityLabel={rotulos[nivel]}
+              accessibilityState={{ checked: marcado }}
+              onPress={() => aoMudar(nivel)}
+              style={({ pressed }) => [
+                styles.opcao,
+                marcado && styles.opcaoMarcada,
+                pressed && styles.pressionado,
+              ]}>
+              <Text style={[styles.opcaoTexto, marcado && styles.opcaoTextoMarcado]}>
+                {rotulos[nivel]}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
 /** Mensagem de erro: borda na cor da marca e texto em ink, sem vermelho de alarme. */
 export function Aviso({ children }: PropsWithChildren) {
   if (!children) {
@@ -176,6 +218,22 @@ const styles = StyleSheet.create({
   interruptor: { flexDirection: 'row', alignItems: 'center', gap: espaco.md },
   interruptorRotulo: { flex: 1 },
   confirmacao: { fontSize: 16, lineHeight: 24, fontWeight: '600', color: cores.plum },
+  opcoes: { flexDirection: 'row', gap: espaco.sm },
+  opcao: {
+    flex: 1,
+    minHeight: 44,
+    paddingHorizontal: espaco.sm,
+    borderRadius: raio.campo,
+    borderWidth: 1,
+    borderColor: cores.inkSoft,
+    backgroundColor: cores.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  // A seleção não depende só da cor: a borda engrossa e o texto fica em negrito.
+  opcaoMarcada: { borderWidth: 3, borderColor: cores.plum, backgroundColor: cores.rose },
+  opcaoTexto: { fontSize: 16, color: cores.ink },
+  opcaoTextoMarcado: { fontWeight: '700' },
   pressionado: { opacity: 0.8 },
   aviso: {
     padding: espaco.md,
