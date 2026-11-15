@@ -3,6 +3,7 @@ import type {
   CadastroDto,
   Ciclo,
   EntradaDto,
+  ExclusaoContaDto,
   InicioMenstruacao,
   PerfilCiclo,
   PerfilCicloDto,
@@ -23,6 +24,8 @@ export const api = {
   conta: () => pedir<Usuaria>('/conta'),
   atualizarConta: (dados: AtualizacaoContaDto) =>
     pedir<Usuaria>('/conta', { metodo: 'PATCH', corpo: dados }),
+  excluirConta: (dados: ExclusaoContaDto) =>
+    pedir<void>('/conta/exclusao', { metodo: 'POST', corpo: dados }),
   termos: () => pedir<Termos>('/termos', { publica: true }),
   aceitarTermos: (versao: string) =>
     pedir<void>('/termos/aceite', { metodo: 'POST', corpo: { versao } }),

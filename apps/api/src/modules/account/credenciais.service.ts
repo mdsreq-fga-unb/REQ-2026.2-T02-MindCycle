@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PasswordHasher } from '@nestjs/authentication';
 import type { CadastroDto } from '@mindcycle/shared';
-import { UsuariasRepository } from '../account/usuarias.repository.js';
-import type { UsuariaAutenticada } from '../account/usuaria.js';
+import { UsuariasRepository } from './usuarias.repository.js';
+import type { UsuariaAutenticada } from './usuaria.js';
 
 @Injectable()
 export class CredenciaisService {

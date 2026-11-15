@@ -11,7 +11,7 @@ import {
   type Tokens,
 } from '@mindcycle/shared';
 import { erro } from '../../common/erro.js';
-import { CredenciaisService } from './credenciais.service.js';
+import { CredenciaisService } from '../account/credenciais.service.js';
 
 @Public()
 @Controller('auth')
