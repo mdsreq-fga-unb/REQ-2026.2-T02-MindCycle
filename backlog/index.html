@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Planejamento | MindCycle</title>
+</head>
+<body>
+  <p><a href="../">Ir para requisitos e planejamento</a></p>
+  <script src="../assets/js/dados.js?v=26"></script>
+  <script>
+    const parametros = new URLSearchParams(location.search);
+    const hu = DADOS.historias.find((h) => h.id === parametros.get('hu') || '#' + h.id === location.hash);
+    const destino = new URL('../', location.href);
+    if (hu) {
+      destino.searchParams.set('cp', hu.caracteristica);
+      destino.searchParams.set('hl', hu.id);
+      destino.searchParams.set('plano', hu.id);
+    }
+    location.replace(destino.href);
+  </script>
+</body>
+</html>

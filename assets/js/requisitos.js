@@ -6,9 +6,18 @@
 // a mesma visão; ?hl=HU13 destaca uma história ("Ver na árvore").
 
 (() => {
-  const { esc, noMvp, noBacklog, naIteracaoAtual } = MC;
+  const { esc, noMvp } = MC;
   const params = new URLSearchParams(location.search);
-  const FILTROS = ['all', 'mvp', 'bkl', 'cur'];
+  const proposta = typeof PLANO_ARVORE !== 'undefined' && PLANO_ARVORE;
+  if (proposta) {
+    const estilo = document.createElement('link');
+    estilo.rel = 'stylesheet';
+    estilo.href = 'assets/css/planejamento-arvore.css?v=22';
+    document.head.appendChild(estilo);
+    document.querySelector('.lead').textContent = 'Do problema ao planejamento: características, histórias e tarefas no mesmo lugar.';
+    proposta.montar();
+  }
+  const FILTROS = ['all', 'mvp'];
   const estado = {
     cp: DADOS.caracteristicas.some((c) => c.id === params.get('cp')) ? params.get('cp') : 'CP1',
     filtro: FILTROS.includes(params.get('filtro')) ? params.get('filtro') : 'all',
@@ -20,33 +29,23 @@
   const X_OE = { OE1: 150, OE2: 350, OE3: 550 };
   const xCp = (id) => 50 + 100 * DADOS.caracteristicas.findIndex((c) => c.id === id);
 
-  const passa = (h) => estado.filtro === 'mvp' ? noMvp(h)
-    : estado.filtro === 'bkl' ? noBacklog(h)
-    : estado.filtro === 'cur' ? naIteracaoAtual(h) : true;
+  const passa = (h) => (estado.filtro !== 'mvp' || noMvp(h)) && (!proposta || proposta.passa(h));
   const conta = (f) => DADOS.historias.filter(f).length;
 
   const $ = (id) => document.getElementById(id);
   const ferramentas = $('ferramentas');
 
-  function etiquetasFolha(h) {
-    return '<span class="ltags">' +
-      (noBacklog(h) ? '<span class="tag tbk">Backlog</span>' : '') +
-      (naIteracaoAtual(h) ? '<span class="tag tcur">Iteração atual</span>' : '') + '</span>';
-  }
-
   function folha(h) {
     const cls = (noMvp(h) ? '' : ' off') + (estado.destaque === h.id ? ' hl' : '');
     return '<button class="leaf' + cls + '" type="button" data-historia="' + h.id + '">' +
-      '<span class="k mono">' + h.id + '</span><span>' + esc(h.nome) + '</span>' + etiquetasFolha(h) + '</button>';
+      '<span class="k mono">' + h.id + '</span><span>' + esc(h.nome) + '</span></button>';
   }
 
   function desenharFiltros() {
     ferramentas.querySelectorAll('.btn').forEach((b) => b.remove());
     const rotulos = {
       all: 'Todas (' + DADOS.historias.length + ')',
-      mvp: 'MVP (' + conta(noMvp) + ')',
-      bkl: 'Backlog (' + conta(noBacklog) + ')',
-      cur: 'Iteração atual (' + conta(naIteracaoAtual) + ')'
+      mvp: 'MVP (' + conta(noMvp) + ')'
     };
     FILTROS.forEach((k) => {
       const b = document.createElement('button');
@@ -86,7 +85,6 @@
           h.rnfs.map((r) => '<button class="rnfc mono" type="button" data-rnf="' + r + '">' + r + '</button>').join('') + '</div>'
         : '') + '</div>').join('') + '</div>';
     $('sem-folhas').hidden = n > 0;
-    $('backlog-vazio').hidden = !((estado.filtro === 'bkl' || estado.filtro === 'cur') && conta(noBacklog) === 0);
   }
 
   function desenharBusca() {
@@ -120,14 +118,12 @@
   });
   $('busca').addEventListener('input', (e) => { estado.busca = e.target.value; desenharBusca(); });
 
-  // A legenda da iteração atual acompanha DADOS.iteracaoAtual.
-  const iteracao = DADOS.fases.flatMap((f) => f.iteracoes).find((i) => i.nome === 'Iteração ' + DADOS.iteracaoAtual);
-  if (iteracao) {
-    $('legenda-atual').textContent = 'Iteração atual: Backlog alocado à Iteração ' + DADOS.iteracaoAtual + ', de ' +
-      iteracao.periodo.replace(/\/\d{4}$/, '');
-  }
-
+  document.addEventListener('planejamento-filtro', atualizar);
   atualizar();
+  if (params.get('plano') === estado.destaque) {
+    const alvo = document.querySelector('.leaf.hl');
+    if (alvo) alvo.click();
+  }
   if (estado.destaque) {
     const alvo = document.querySelector('.leaf.hl');
     if (alvo) alvo.scrollIntoView({ block: 'center' });

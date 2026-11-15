@@ -758,6 +758,174 @@ tr:last-child td {
 .mxh:hover {
   border-color: var(--acc);
 }
+
+/* Backlog operacional */
+.bk-note {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--acc);
+  background: var(--soft);
+}
+.bk-note p {
+  margin: 3px 0 0;
+  color: var(--mut);
+}
+.bk-capacidade {
+  min-width: 760px;
+}
+.bk-chain {
+  margin: 14px 0 20px;
+}
+.bk-filtros {
+  display: grid;
+  grid-template-columns: minmax(210px,1.4fr) repeat(3,minmax(170px,1fr));
+  gap: 10px;
+  margin: 0 0 8px;
+}
+.bk-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 600;
+}
+.bk-campo .inp {
+  width: 100%;
+}
+.bk-contagem {
+  min-height: 20px;
+  margin: 0 0 8px;
+}
+.bk-tabela {
+  min-width: 1080px;
+}
+.bk-tabela th:first-child {
+  width: 230px;
+}
+.bk-tabela th:nth-child(2) {
+  width: 190px;
+}
+.bk-tabela th:nth-child(7) {
+  width: 310px;
+}
+.bk-tabela td small {
+  display: block;
+  max-width: 180px;
+  margin-top: 2px;
+  color: var(--mut);
+  font-size: 11px;
+  line-height: 1.3;
+}
+.bk-hu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.bk-hu .mono {
+  color: var(--acct);
+  font-size: 12px;
+}
+.bk-hu b {
+  font-weight: 600;
+}
+.bk-hu:hover b {
+  color: var(--acct);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.bk-status {
+  display: inline-block;
+  padding: 3px 7px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.bk-ok {
+  color: #276342;
+  border-color: #70a487;
+  background: #edf8f1;
+}
+.bk-atencao {
+  color: var(--cor);
+  border-color: #d79474;
+  background: var(--cort);
+}
+.bk-bloqueio {
+  color: var(--acct);
+  border-color: var(--acc);
+  background: var(--soft);
+}
+.bk-neutra {
+  color: var(--mut);
+  background: var(--side);
+}
+[data-theme="dark"] .bk-ok {
+  color: #a8e1be;
+  border-color: #4e8c68;
+  background: #193326;
+}
+.bk-detalhes summary {
+  min-height: 32px;
+  color: var(--acct);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.bk-bloqueios {
+  margin: 5px 0 9px;
+  padding-left: 18px;
+  color: var(--cor);
+  font-size: 12px;
+}
+.bk-tarefas {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+  padding: 9px 0 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+.bk-tarefas li {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  gap: 8px;
+  align-items: start;
+  font-size: 12px;
+}
+.bk-tarefas small {
+  max-width: none;
+}
+.bk-task-state {
+  color: var(--mut);
+  white-space: nowrap;
+}
+.bk-vazio {
+  padding: 26px;
+  color: var(--mut);
+  text-align: center;
+}
+@media (max-width:980px) {
+  .bk-filtros {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+@media (max-width:640px) {
+  .bk-filtros {
+    grid-template-columns: minmax(0,1fr);
+  }
+}
 .mxh.on {
   background: var(--acc);
   border-color: var(--acc);
@@ -845,6 +1013,95 @@ tr:last-child td {
   .two {
     grid-template-columns: minmax(0,1fr);
   }
+}
+
+/* Planejamento das histórias por iteração */
+.demo-iter {
+  margin: 0 0 26px;
+}
+.demo-iter-title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 8px;
+}
+.demo-iter-title h3 {
+  margin: 0;
+  font-family: var(--disp);
+  color: var(--head);
+  font-size: 18px;
+}
+.demo-iter-title span:not(.bk-status) {
+  color: var(--mut);
+  font-size: 12.5px;
+}
+.demo-table {
+  min-width: 980px;
+}
+.demo-table th:first-child {
+  width: 210px;
+}
+.demo-table td:nth-child(6) {
+  max-width: 190px;
+  font-size: 12.5px;
+}
+.demo-hu {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.demo-hu .mono {
+  color: var(--acct);
+  font-size: 11.5px;
+}
+.demo-tasks summary {
+  color: var(--acct);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.demo-tasks ol {
+  width: 260px;
+  margin: 7px 0 0;
+  padding-left: 18px;
+  font-size: 11.5px;
+}
+.demo-refino {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.demo-refino-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+.demo-refino-list button {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px;
+  border: 1px solid var(--acc);
+  border-radius: 7px;
+  background: var(--soft);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.demo-refino-list small {
+  color: var(--mut);
 }
 .story {
   margin: 0;

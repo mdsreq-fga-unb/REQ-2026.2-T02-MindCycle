@@ -2,7 +2,7 @@
 //
 // Fonte única do que as páginas mostram sobre requisitos: histórias, RNFs,
 // reuniões, histórico, fases e cronograma. A árvore, o MVP, a priorização,
-// as reuniões, o histórico e o cronograma são montados a partir daqui —
+// as reuniões, o histórico, o backlog e o cronograma são montados a partir daqui —
 // mudar um dado aqui muda todas as páginas que o usam.
 //
 // Os textos corridos de cada página (Visão de produto, Engenharia de
@@ -14,9 +14,8 @@ const DADOS = {
   iteracaoAtual: 6,
 
   // Histórias que já atenderam ao DoR. Não edite: a lista é calculada no fim
-  // deste arquivo a partir de aplicacaoDor. Quem está aqui e no MVP aparece
-  // como "Backlog" na árvore; se também estiver planejada para a iteração
-  // atual, como "Iteração atual".
+  // deste arquivo a partir de aplicacaoDor. Essa prontidao e independente
+  // da presenca no backlog e da alocacao a uma iteracao.
   dorAtendido: [],
 
   // Critérios do DoR, compartilhados pela página DoR e DoD e pelos modais.
@@ -139,6 +138,7 @@ const DADOS = {
     },
     HU05: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
@@ -147,11 +147,12 @@ const DADOS = {
         '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
         '6': { resultado: 'SIM', motivo: 'Depende de HU06 e HU07, planejadas para a mesma iteração.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
-        '8': { resultado: 'NÃO', motivo: 'A regra de cálculo da fase, inclusive para ciclo irregular, ainda não está registrada.' }
+        '8': { resultado: 'Não conferido', motivo: 'O modelo está documentado em HU05 pelo PR #53; os intervalos e limites clínicos ainda dependem da cliente e a equipe precisa conferir o critério.' }
       }
     },
     HU06: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
@@ -160,11 +161,12 @@ const DADOS = {
         '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
         '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
-        '8': { resultado: 'NÃO', motivo: 'A regra de cálculo da fase, inclusive para ciclo irregular, ainda não está registrada.' }
+        '8': { resultado: 'Não conferido', motivo: 'O cálculo está centralizado em HU05 pelo PR #53; conferir as regras de entrada e sua relação com o modelo ainda sujeito à revisão da cliente.' }
       }
     },
     HU07: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
@@ -173,17 +175,18 @@ const DADOS = {
         '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
         '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
-        '8': { resultado: 'NÃO', motivo: 'A regra de cálculo da fase, inclusive para ciclo irregular, ainda não está registrada.' }
+        '8': { resultado: 'Não conferido', motivo: 'O cálculo está centralizado em HU05 pelo PR #53; conferir as regras de duração e irregularidade junto ao modelo ainda sujeito à revisão da cliente.' }
       }
     },
     HU11: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
         '4': { resultado: 'NÃO', motivo: 'O critério ainda exige 6 pétalas, mas o MVP usa PIN numérico.' },
-        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '5': { resultado: 'NÃO', motivo: 'Pedro Ian atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas.' },
         '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
         '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
@@ -191,12 +194,13 @@ const DADOS = {
     },
     HU12: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
         '4': { resultado: 'SIM', motivo: '2 critérios registrados.' },
-        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '5': { resultado: 'NÃO', motivo: 'Pedro Ian atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas. A implementação do PR #57 não comprova esse critério.' },
         '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
         '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
@@ -217,12 +221,13 @@ const DADOS = {
     },
     HU25: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. Nenhuma exceção foi autorizada no Planejamento.' },
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
         '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
-        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '5': { resultado: 'NÃO', motivo: 'Allan Kelvin atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas. A implementação do PR #57 não comprova esse critério.' },
         '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
         '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
@@ -270,38 +275,41 @@ const DADOS = {
     },
     HU13: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
-        '4': { resultado: 'NÃO', motivo: 'O critério depende da regra de ordenação, que ainda não está registrada.' },
+        '4': { resultado: 'Não conferido', motivo: 'Critérios e regras de ordenação registrados nos PRs #49 e #53; conferir a verificabilidade no Planejamento, sem presumir validação da cliente.' },
         '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
         '6': { resultado: 'NÃO', motivo: 'Depende de HU17 (mesma iteração) e de HU04 (Iteração 5), que ainda não passou pelo DoD e por isso não está disponível.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
-        '8': { resultado: 'NÃO', motivo: 'A regra de ordenação por prazo, prioridade e energia ainda não está registrada.' }
+        '8': { resultado: 'SIM', motivo: 'Regras de ordenação registradas junto à HU nos PRs #49 e #53. O registro não representa validação da proposta pela cliente.' }
       }
     },
     HU15: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'SIM', motivo: 'Prioridade confirmada na reunião de 05/10/2026.' },
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
-        '4': { resultado: 'NÃO', motivo: 'O critério depende da regra de reajuste, que ainda não está registrada.' },
+        '4': { resultado: 'Não conferido', motivo: 'Critérios e regras de reajuste registrados nos PRs #49 e #53; conferir a verificabilidade no Planejamento, sem presumir validação da cliente.' },
         '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
         '6': { resultado: 'NÃO', motivo: 'Depende de HU13 (mesma iteração) e de HU04 (Iteração 5), que ainda não passou pelo DoD e por isso não está disponível.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
-        '8': { resultado: 'NÃO', motivo: 'A regra de reajuste da recomendação ainda não está registrada.' }
+        '8': { resultado: 'SIM', motivo: 'Regras de reajuste registradas junto à HU nos PRs #49 e #53. O registro não representa validação da proposta pela cliente.' }
       }
     },
     HU16: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
         '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
-        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '5': { resultado: 'NÃO', motivo: 'Arthur Palhares atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas.' },
         '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
         '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
@@ -309,12 +317,13 @@ const DADOS = {
     },
     HU17: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
-        '4': { resultado: 'NÃO', motivo: 'O critério não inclui a energia necessária, usada por HU13 e HU15.' },
-        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '4': { resultado: 'Não conferido', motivo: 'A energia necessária já foi incluída na história e no critério pelos PRs #49 e #53; falta a conferência do conjunto dos critérios pela equipe.' },
+        '5': { resultado: 'NÃO', motivo: 'Arthur Palhares atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas.' },
         '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
         '8': { resultado: 'Não conferido', motivo: 'Ainda não avaliado pela equipe.' }
@@ -335,12 +344,13 @@ const DADOS = {
     },
     HU19: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
         '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
-        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '5': { resultado: 'NÃO', motivo: 'Arthur Palhares atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas.' },
         '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
         '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
@@ -348,12 +358,13 @@ const DADOS = {
     },
     HU20: {
       conferencia: 'Retroativa, feita em 12/11/2026 a partir dos dados do site',
+      atualizadoEm: '14/11/2026',
       criterios: {
         '1': { resultado: 'SIM' },
         '2': { resultado: 'NÃO', motivo: 'Prioridade ainda é hipótese da equipe, sem confirmação da cliente. A exceção ainda não foi avaliada pelo responsável pelo backlog.' },
         '3': { resultado: 'Não conferido', motivo: 'Depende da leitura da história pela equipe.' },
         '4': { resultado: 'SIM', motivo: '1 critério registrado.' },
-        '5': { resultado: 'NÃO', motivo: 'Responsável ainda não definido e capacidade da iteração sem registro.' },
+        '5': { resultado: 'NÃO', motivo: 'Arthur Palhares atribuído no planejamento; disponibilidade e avaliação da carga da iteração ainda não informadas.' },
         '6': { resultado: 'Não conferido', motivo: 'Dependências ainda não mapeadas pela equipe.' },
         '7': { resultado: 'NÃO', motivo: 'Sem protótipo no Figma vinculado à história.' },
         '8': { resultado: 'N/A', motivo: 'Sem regra de negócio própria além dos critérios de aceitação.' }
@@ -437,6 +448,201 @@ const DADOS = {
     HU04: { versao: '', avaliacaoExterna: 'Pendente', criterios: {} },
     HU13: { versao: '', avaliacaoExterna: 'Pendente', criterios: {} },
     HU15: { versao: '', avaliacaoExterna: 'Pendente', criterios: {} }
+  },
+
+  // Visão operacional do backlog. Os detalhes da HU continuam em `historias`;
+  // aqui ficam apenas dados de planejamento que não pertencem ao requisito.
+  backlog: {
+    atualizadoEm: '14/11/2026',
+    // Estado inicial de 13/11; implementacoes posteriores ficam em itens[HU].andamento.
+    andamentoPadrao: 'Não iniciada',
+    responsavelPadrao: 'Não atribuído',
+    responsaveis: {
+      HU11: 'Pedro Ian',
+      HU12: 'Pedro Ian',
+      HU16: 'Arthur Palhares',
+      HU17: 'Arthur Palhares',
+      HU19: 'Arthur Palhares',
+      HU20: 'Arthur Palhares',
+      HU25: 'Allan Kelvin'
+    },
+    capacidadePorIteracao: {
+      '5': {
+        disponivel: null,
+        observacao: 'A capacidade disponível da equipe não foi registrada para esta iteração.'
+      },
+      '6': {
+        disponivel: null,
+        observacao: 'A capacidade disponível da equipe não foi registrada para esta iteração.'
+      },
+      '7': {
+        disponivel: null,
+        observacao: 'A capacidade disponível da equipe não foi registrada para esta iteração.'
+      }
+    },
+    tarefasPadrao: [
+      { id: 'T01', titulo: 'Refinar a história e confirmar o DoR', etapa: 'Requisitos' },
+      { id: 'T02', titulo: 'Construir e integrar o incremento', etapa: 'Desenvolvimento' },
+      { id: 'T03', titulo: 'Verificar critérios de aceitação, RNFs e DoD', etapa: 'Verificação' },
+      { id: 'T04', titulo: 'Validar o incremento com os stakeholders', etapa: 'Validação' }
+    ],
+    // Subtarefas por etapa; critérios e regras continuam na própria história.
+    itens: {
+      HU01: {
+        tarefas: { T02: [
+          'Preparar a consulta dos sintomas comuns por fase, com conteúdo revisado pela cliente.',
+          'Integrar a consulta à fase atual apresentada em HU05.'
+        ] }
+      },
+      HU02: {
+        dependencias: ['HU15'],
+        tarefas: { T02: [
+          'Disponibilizar a ação de sinalizar sobrecarga durante o uso do aplicativo.',
+          'Conectar a sinalização ao reajuste de HU15 e apresentar o resultado.'
+        ] }
+      },
+      HU04: {
+        bloqueios: ['Validar as regras propostas de registro e correção com a cliente.'],
+        tarefas: { T02: [
+          'Construir o formulário de sintomas, intensidades e disposição.',
+          'Integrar gravação e correção dos registros ao histórico e ao reajuste de HU15, conforme as regras acordadas.'
+        ] }
+      },
+      HU05: {
+        bloqueios: ['Validar o modelo de cálculo das fases com a cliente.'],
+        tarefas: { T02: [
+          'Integrar as entradas de HU06 e HU07 à consulta da situação do ciclo.',
+          'Apresentar a estimativa ou o motivo de indisponibilidade, aplicando o modelo de fases somente após sua validação.'
+        ] }
+      },
+      HU06: {
+        tarefas: { T02: [
+          'Construir a entrada da data de início da menstruação.',
+          'Salvar a data no histórico e disponibilizar a atualização para HU05, respeitando o aceite de HU12.'
+        ] }
+      },
+      HU07: {
+        tarefas: { T02: [
+          'Construir a entrada da duração média e a opção de ciclo irregular.',
+          'Salvar as informações e disponibilizá-las para a consulta de HU05.'
+        ] }
+      },
+      HU09: {
+        tarefas: { T02: [
+          'Organizar os conteúdos informativos revisados pela cliente por fase e sintoma.',
+          'Construir a consulta que relaciona os conteúdos à fase e aos sintomas da usuária.'
+        ] }
+      },
+      HU11: {
+        bloqueios: ['Conciliar o PIN numérico do escopo da v1, as seis pétalas do critério de aceite e a trava de sessão com quatro toques em seis pétalas descrita na arquitetura (PR #56).'],
+        tarefas: { T02: [
+          'Construir o cadastro e a entrada do PIN conforme o modelo confirmado no refinamento.',
+          'Integrar a conferência do PIN ao acesso protegido da conta.'
+        ] }
+      },
+      HU12: {
+        andamento: 'Implementação integrada; verificação pendente',
+        evidenciaImplementacao: { pr: 57, commit: '156e7df44373d28675e6b6bbe47a607bf5af7ce1' },
+        bloqueios: ['Revisar o rascunho dos termos com a cliente e concluir as verificações do aplicativo Android e do DoD.'],
+        tarefas: { T02: [
+          'Disponibilizar a leitura dos termos e o registro do aceite.',
+          'Integrar a verificação do aceite aos fluxos de coleta de ciclo, sintomas e disposição.'
+        ] }
+      },
+      HU13: {
+        bloqueios: ['Validar as regras propostas de ordenação com a cliente.'],
+        tarefas: { T02: [
+          'Integrar a consulta das tarefas cadastradas e da disposição vigente.',
+          'Implementar e exibir a ordenação conforme as regras de negócio acordadas.'
+        ] }
+      },
+      HU15: {
+        bloqueios: ['Validar as regras propostas de reajuste com a cliente.'],
+        tarefas: { T02: [
+          'Conectar os registros de disposição e a sinalização de sobrecarga ao recálculo da lista.',
+          'Integrar movimentação, retorno e desfazer das tarefas conforme as regras de reajuste acordadas.'
+        ] }
+      },
+      HU16: {
+        tarefas: { T02: [
+          'Abrir os dados da tarefa cadastrada para edição.',
+          'Salvar as alterações na mesma tarefa e atualizar sua apresentação na lista.'
+        ] }
+      },
+      HU17: {
+        tarefas: { T02: [
+          'Montar o formulário de título, prazo, prioridade e energia necessária.',
+          'Salvar a tarefa e disponibilizá-la para o planejamento de HU13.'
+        ] }
+      },
+      HU18: {
+        tarefas: { T02: [
+          'Disponibilizar a escolha da nova data de execução da tarefa.',
+          'Atualizar a data planejada e a lista, distinguindo o adiamento manual do reajuste automático de HU15.'
+        ] }
+      },
+      HU19: {
+        tarefas: { T02: [
+          'Disponibilizar a ação de excluir uma tarefa cadastrada.',
+          'Integrar a exclusão à lista de tarefas e à recomendação do dia.'
+        ] }
+      },
+      HU20: {
+        tarefas: { T02: [
+          'Disponibilizar a marcação de tarefa concluída.',
+          'Salvar o estado e a data de conclusão e atualizar a apresentação da tarefa.'
+        ] }
+      },
+      HU21: {
+        tarefas: { T02: [
+          'Organizar as práticas breves de autocuidado revisadas pela cliente.',
+          'Construir a apresentação das sugestões de acolhimento.'
+        ] }
+      },
+      HU22: {
+        tarefas: { T02: [
+          'Preparar as mensagens de acolhimento para revisão de linguagem.',
+          'Integrar a apresentação das mensagens ao fluxo acordado para a história.'
+        ] }
+      },
+      HU25: {
+        andamento: 'Implementação integrada; verificação pendente',
+        evidenciaImplementacao: { pr: 57, commit: '156e7df44373d28675e6b6bbe47a607bf5af7ce1' },
+        bloqueios: ['Concluir a verificação do cadastro no aplicativo Android e registrar as evidências do DoD.'],
+        tarefas: { T02: [
+          'Construir o fluxo de criação da conta com os dados acordados no refinamento.',
+          'Integrar a criação ao acesso da conta, incluindo sair e entrar novamente.'
+        ] }
+      },
+      HU26: {
+        tarefas: { T02: [
+          'Construir o fluxo de recuperação de acesso conforme o mecanismo acordado no refinamento.',
+          'Integrar a recuperação à conta existente, preservando o histórico.'
+        ] }
+      },
+      HU28: {
+        tarefas: { T02: [
+          'Organizar o conteúdo revisado pela cliente sobre o funcionamento das quatro fases.',
+          'Construir a consulta das informações de cada fase do ciclo.'
+        ] }
+      },
+      HU36: {
+        bloqueios: ['Definir os critérios de aceitação da exclusão de conta e dados.'],
+        tarefas: {
+          T01: ['Definir os critérios de aceitação da exclusão de conta e dados antes do desenvolvimento.'],
+          T02: [
+            'Construir o fluxo de solicitação de exclusão da própria conta.',
+            'Integrar a exclusão da conta e dos dados e a revogação do consentimento conforme os critérios acordados.'
+          ]
+        }
+      },
+      HU31: {
+        situacao: 'Requer refinamento'
+      },
+      HU32: {
+        situacao: 'Requer refinamento'
+      }
+    }
   },
 
   // Características do produto (CP), na ordem da árvore, com o objetivo
@@ -549,7 +755,7 @@ const DADOS = {
       id: 'HU30',
       nome: 'Gerenciar medicações',
       descricao: 'Deve ser possível à usuária cadastrar, alterar e excluir as medicações que utiliza, indicando se o uso é diário ou esporádico.',
-      historia: 'cadastrar, alterar e excluir as medicações que utilizo, indicando se o uso é diário ou esporádico, para manter minhas medicações junto ao registro do meu estado',
+      historia: 'cadastrar, alterar e excluir as medicações que utilizo, indicando se o uso é diário ou esporádico, para consultar esses dados quando precisar informar meu uso de medicação',
       caracteristica: 'CP1',
       rnfs: ['RNF02', 'RNF03'],
       valor: 2,
@@ -575,7 +781,7 @@ const DADOS = {
       id: 'HU34',
       nome: 'Registrar diagnósticos prévios',
       descricao: 'Deve ser possível à usuária registrar os diagnósticos de saúde que já possui, como diabetes, hipertensão ou enxaqueca.',
-      historia: 'registrar os diagnósticos de saúde que já possuo, como diabetes, hipertensão ou enxaqueca, para manter minhas condições de saúde junto ao registro do meu estado',
+      historia: 'registrar os diagnósticos de saúde que já possuo, como diabetes, hipertensão ou enxaqueca, para consultar essas condições ao acompanhar meus sintomas',
       caracteristica: 'CP1',
       rnfs: ['RNF02', 'RNF03'],
       valor: 2,
@@ -693,7 +899,7 @@ const DADOS = {
       id: 'HU09',
       nome: 'Recomendar conteúdos sobre o ciclo',
       descricao: 'Deve ser possível à usuária receber recomendações de conteúdos informativos sobre o ciclo menstrual, relacionados à fase atual e aos sintomas registrados.',
-      historia: 'receber recomendações de conteúdos sobre o ciclo relacionados à minha fase atual e aos sintomas registrados, para compreender melhor o que estou vivendo',
+      historia: 'receber recomendações de conteúdos sobre o ciclo relacionados à minha fase atual e aos sintomas registrados, para acessar informações relacionadas ao momento do meu ciclo',
       caracteristica: 'CP2',
       rnfs: ['RNF03'],
       valor: 3,
@@ -709,7 +915,7 @@ const DADOS = {
       id: 'HU28',
       nome: 'Consultar funcionamento do ciclo',
       descricao: 'Deve ser possível à usuária consultar informações sobre como o ciclo menstrual funciona e o que caracteriza cada uma de suas fases.',
-      historia: 'consultar como o ciclo menstrual funciona e o que caracteriza cada fase, para compreender o meu próprio ciclo',
+      historia: 'consultar como o ciclo menstrual funciona e o que caracteriza cada fase, para diferenciar as quatro fases e reconhecer suas mudanças',
       caracteristica: 'CP2',
       rnfs: [],
       valor: 3,
@@ -1045,7 +1251,7 @@ const DADOS = {
       id: 'HU31',
       nome: 'Comparar relatórios mensais',
       descricao: 'Deve ser possível à usuária comparar os relatórios mensais de meses diferentes, abrangendo ciclo, sintomas, disposição e tarefas.',
-      historia: 'comparar os relatórios mensais de meses diferentes, abrangendo ciclo, sintomas, disposição e tarefas, para perceber como meu ritmo varia',
+      historia: 'comparar os relatórios mensais de meses diferentes, abrangendo ciclo, sintomas, disposição e tarefas, para identificar mudanças e padrões entre os meses',
       caracteristica: 'CP6',
       rnfs: ['RNF02', 'RNF03'],
       valor: 2,
@@ -1063,7 +1269,7 @@ const DADOS = {
       id: 'HU32',
       nome: 'Exportar relatório mensal',
       descricao: 'Deve ser possível à usuária exportar o relatório mensal em arquivo.',
-      historia: 'exportar o relatório mensal em arquivo, para ter meu histórico fora do aplicativo',
+      historia: 'exportar o relatório mensal em arquivo, para arquivar ou compartilhar meu histórico fora do aplicativo',
       caracteristica: 'CP6',
       rnfs: ['RNF02', 'RNF03'],
       valor: 2,
@@ -1335,6 +1541,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Vinculada a exportação ao relatório de HU23; proposto formato PDF.',
         motivo: 'Issue #38: conteúdo e formato ainda dependem de validação, permanecendo fora do MVP.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício especificado e lacuna de refinamento registrada no backlog.',
+        motivo: 'Distinguir exportação de relatório de sua comparação e tornar visível a dependência da geração mensal.'
       }
     ],
     HU31: [
@@ -1342,6 +1553,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Vinculada a comparação ao conteúdo mensal de HU23.',
         motivo: 'Issue #38: explicitar a origem do relatório e o tratamento de meses sem dados, sem duplicar seu conteúdo.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício especificado e lacuna de refinamento registrada no backlog.',
+        motivo: 'Distinguir comparação de relatórios de sua exportação e tornar visível a dependência da geração mensal.'
       },
       {
         data: '12/11/2026',
@@ -1366,6 +1582,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Separados os critérios de cadastro, alteração e exclusão, mantendo uma única história.',
         motivo: 'Issue #38: esforço corresponde ao conjunto das operações e aguarda reestimativa antes do planejamento.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício da história tornado específico.',
+        motivo: 'Substituir a justificativa genérica de manter dados pela consulta do uso de medicação.'
       }
     ],
     HU18: [
@@ -1492,10 +1713,12 @@ const DADOS = {
         data: '05/10/2026',
         alteracao: 'Valor: Won\'t have → Should have.',
         motivo: 'Ajuste da cliente, que validou o requisito com entusiasmo.',
-        video: {
-          id: 'PKoWLngGSRg',
-          tempo: 748
-        }
+        video: { id: 'PKoWLngGSRg', tempo: 748 }
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício diferenciado da consulta geral sobre o ciclo.',
+        motivo: 'Explicitar que a recomendação entrega informação contextual à fase e aos sintomas.'
       },
       {
         data: '13/11/2026',
@@ -1627,6 +1850,18 @@ const DADOS = {
         data: '12/10/2026',
         alteracao: 'Fora do MVP → no MVP.',
         motivo: 'Reavaliação: educação sobre regularidade pedida pela cliente. Nota ainda em hipótese.'
+      },
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício diferenciado da recomendação contextual de conteúdo.',
+        motivo: 'Explicitar que a consulta ensina a distinguir as quatro fases do ciclo.'
+      }
+    ],
+    HU34: [
+      {
+        data: '12/11/2026',
+        alteracao: 'Benefício da história tornado específico.',
+        motivo: 'Relacionar a consulta dos diagnósticos ao acompanhamento dos sintomas.'
       }
     ],
     HU29: [
