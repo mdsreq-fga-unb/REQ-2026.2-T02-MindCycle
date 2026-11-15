@@ -175,12 +175,23 @@ export const textos = {
       texto: 'Quando quiser, adicione uma tarefa e ela entra no seu planejamento.',
     },
     item: {
+      dataPlanejada: (data: string) => `Planejada para ${data}`,
       prazo: (data: string) => `Prazo: ${data}`,
       prioridade: (nivel: string) => `Prioridade ${nivel.toLowerCase()}`,
       energia: (nivel: string) => `Energia ${nivel.toLowerCase()}`,
       duracao: (minutos: number) => `Cerca de ${duracaoPorExtenso(minutos)}`,
     },
     niveis: { 1: 'Baixa', 2: 'Média', 3: 'Alta' },
+    adiamento: {
+      abrir: 'Adiar',
+      rotuloAbrir: (titulo: string) => `Adiar a tarefa ${titulo}`,
+      campoData: 'Nova data (dia/mês/ano)',
+      formatoData: 'DD/MM/AAAA',
+      salvar: 'Confirmar nova data',
+      cancelar: 'Cancelar',
+      dataInvalida: 'Confira a data: use o formato dia/mês/ano.',
+      confirmado: (data: string) => `Tarefa planejada para ${data}.`,
+    },
     nova: {
       titulo: 'Nova tarefa',
       subtitulo: 'Conte o que precisa ser feito e quanto esforço isso pede.',
@@ -316,6 +327,11 @@ export const textos = {
       'Esse código não está valendo: ele pode ter vencido ou ter algum dígito diferente. Peça um novo código e tente de novo.',
     [CodigoErro.PrazoNoPassado]:
       'Esse prazo já passou. Escolha hoje ou um dia à frente.',
+    [CodigoErro.DataAdiamentoInvalida]:
+      'Escolha uma data posterior ao dia planejado, a partir de hoje.',
+    [CodigoErro.TarefaConcluida]: 'Essa tarefa já foi concluída. Sua lista será atualizada.',
+    [CodigoErro.TarefaAlterada]:
+      'Essa tarefa mudou enquanto você escolhia a data. Atualize a lista e tente de novo.',
     [CodigoErro.PinIncorreto]:
       'Essa sequência não confere. Respire e tente de novo quando quiser.',
     [CodigoErro.PinBloqueado]:

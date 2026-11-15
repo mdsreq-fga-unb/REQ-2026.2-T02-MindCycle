@@ -4,13 +4,15 @@ import { View } from 'react-native';
 import { mensagemDeErro } from '@/api/mensagem-de-erro';
 import { ListaTarefas } from '@/features/tarefas/lista-tarefas';
 import { useTarefas } from '@/features/tarefas/consulta';
+import { useSessao } from '@/sessao/sessao';
 import { textos } from '@/textos';
 import { Aviso, Botao, Tela, Texto, Titulo } from '@/ui/componentes';
 import { espaco } from '@/ui/tema';
 
-// HU17. Editar (HU16), concluir (HU20), adiar (HU18) e excluir (HU19) entram nesta lista depois.
+// HU17/HU18. Editar, concluir e excluir entram nas respectivas histórias.
 export default function Tarefas() {
   const tarefas = useTarefas();
+  const { conta } = useSessao();
 
   return (
     <Tela naAba>
@@ -27,7 +29,7 @@ export default function Tarefas() {
           />
         </View>
       )}
-      {tarefas.data && <ListaTarefas tarefas={tarefas.data} />}
+      {tarefas.data && conta && <ListaTarefas tarefas={tarefas.data} hoje={conta.hoje} />}
     </Tela>
   );
 }

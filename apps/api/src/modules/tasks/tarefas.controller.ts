@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CurrentUser } from '@nestjs/authentication';
 import { z } from 'zod';
 import {
   cadastroTarefaSchema,
+  adiamentoTarefaSchema,
+  type AdiamentoTarefaDto,
   type CadastroTarefaDto,
   type Tarefa,
 } from '@mindcycle/shared';
@@ -33,5 +35,14 @@ export class TarefasController {
     @Param('id', { schema: z.uuid() }) id: string,
   ): Promise<Tarefa> {
     return this.tarefas.consultar(usuaria.id, id);
+  }
+
+  @Patch(':id/adiamento')
+  adiar(
+    @CurrentUser() usuaria: UsuariaAutenticada,
+    @Param('id', { schema: z.uuid() }) id: string,
+    @Body({ schema: adiamentoTarefaSchema }) dados: AdiamentoTarefaDto,
+  ): Promise<Tarefa> {
+    return this.tarefas.adiar(usuaria, id, dados);
   }
 }

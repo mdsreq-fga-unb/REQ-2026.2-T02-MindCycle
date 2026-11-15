@@ -25,6 +25,14 @@ export const cadastroTarefaSchema = z.object({
 });
 export type CadastroTarefaDto = z.infer<typeof cadastroTarefaSchema>;
 
+/** HU18: o adiamento manual altera somente o dia de execução, nunca o prazo. */
+export const adiamentoTarefaSchema = z
+  .object({
+    dataPlanejada: dataLocalSchema,
+  })
+  .strict();
+export type AdiamentoTarefaDto = z.infer<typeof adiamentoTarefaSchema>;
+
 export interface Tarefa {
   id: string;
   titulo: string;

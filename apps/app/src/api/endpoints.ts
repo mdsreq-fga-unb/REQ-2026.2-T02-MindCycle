@@ -1,4 +1,5 @@
 import type {
+  AdiamentoTarefaDto,
   AtualizacaoContaDto,
   CadastroDto,
   CadastroTarefaDto,
@@ -67,4 +68,9 @@ export const api = {
     pedir<Checkin>('/checkins', { metodo: 'POST', corpo: dados }),
   corrigirCheckin: (id: string, dados: RegistroCheckinDto) =>
     pedir<Checkin>(`/checkins/${id}`, { metodo: 'PUT', corpo: dados }),
+  adiarTarefa: (id: string, dados: AdiamentoTarefaDto) =>
+    pedir<Tarefa>(`/tarefas/${id}/adiamento`, {
+      metodo: 'PATCH',
+      corpo: dados,
+    }),
 };

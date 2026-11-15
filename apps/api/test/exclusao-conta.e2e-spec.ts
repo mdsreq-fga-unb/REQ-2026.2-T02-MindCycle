@@ -40,7 +40,13 @@ const tabelasDaUsuaria: {
   },
   {
     tabela: 'tarefas',
-    contar: (prisma, usuariaId) => prisma.tarefa.count({ where: { usuariaId } }),
+    contar: (prisma, usuariaId) =>
+      prisma.tarefa.count({ where: { usuariaId } }),
+  },
+  {
+    tabela: 'movimentacoes_tarefa',
+    contar: (prisma, usuariaId) =>
+      prisma.movimentacaoTarefa.count({ where: { tarefa: { usuariaId } } }),
   },
   {
     tabela: 'checkins',
@@ -54,7 +60,8 @@ const tabelasDaUsuaria: {
   {
     // Sem FK: a cascata não alcança, a exclusão apaga explicitamente.
     tabela: 'refresh_tokens',
-    contar: (prisma, userId) => prisma.refreshToken.count({ where: { userId } }),
+    contar: (prisma, userId) =>
+      prisma.refreshToken.count({ where: { userId } }),
   },
 ];
 
@@ -91,10 +98,15 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
       .send({ irregular: false, duracaoMedia: 28 })
       .expect(200);
     // Prazo distante: o app usa o relógio real, e prazo no passado é recusado.
-    await request(servidor())
+    const { body: tarefa } = await request(servidor())
       .post('/tarefas')
       .auth(tokens.accessToken, { type: 'bearer' })
-      .send({ titulo: 'Regar as plantas', prazo: '2099-12-31', prioridade: 2, energia: 1 })
+      .send({
+        titulo: 'Regar as plantas',
+        prazo: '2099-12-31',
+        prioridade: 2,
+        energia: 1,
+      })
       .expect(201);
     await request(servidor())
       .post('/checkins')
@@ -105,6 +117,11 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
         sintomas: [{ sintoma: 'cansaco', intensidade: 1 }],
       })
       .expect(201);
+    await request(servidor())
+      .patch(`/tarefas/${tarefa.id}/adiamento`)
+      .auth(tokens.accessToken, { type: 'bearer' })
+      .send({ dataPlanejada: '2099-12-31' })
+      .expect(200);
     await request(servidor())
       .post('/auth/recuperacao')
       .send({ email: tokens.email })
@@ -140,7 +157,9 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
     beforeAll(async () => {
       conta = await criarContaComDados();
       // Sem dado em todas as tabelas, "nada sobrou" seria uma verificação vazia.
-      for (const [tabela, linhas] of Object.entries(await linhasPorTabela(conta.id))) {
+      for (const [tabela, linhas] of Object.entries(
+        await linhasPorTabela(conta.id),
+      )) {
         expect(linhas, tabela).toBeGreaterThan(0);
       }
       await excluir(conta.accessToken).expect(204);
@@ -231,7 +250,9 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
       const antesDeB = await linhasPorTabela(b.id);
 
       // O corpo não tem como apontar para outra conta: um id a mais é ignorado.
-      await excluir(a.accessToken, { senha: SENHA, usuariaId: b.id }).expect(204);
+      await excluir(a.accessToken, { senha: SENHA, usuariaId: b.id }).expect(
+        204,
+      );
 
       expect(await linhasPorTabela(a.id)).toEqual(
         Object.fromEntries(tabelasDaUsuaria.map(({ tabela }) => [tabela, 0])),
