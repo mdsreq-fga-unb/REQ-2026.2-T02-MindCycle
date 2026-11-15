@@ -23,6 +23,7 @@ model Usuaria {
   inicios        InicioMenstruacao[]
   perfilCiclo    PerfilCiclo?
   recuperacoes   RecuperacaoAcesso[]
+  tarefas        Tarefa[]
 
   @@map("usuarias")
 }
@@ -103,4 +104,27 @@ model RefreshToken {
   @@index([userId])
   @@index([familyExpiresAt])
   @@map("refresh_tokens")
+}
+
+// HU17. A data planejada nasce no dia do cadastro e só muda pelo adiamento (HU18)
+// ou pelo reajuste (HU15); o prazo final não muda com ela.
+model Tarefa {
+  id             String    @id @default(uuid()) @db.Uuid
+  usuariaId      String    @map("usuaria_id") @db.Uuid
+  titulo         String
+  prazo          DateTime  @db.Date
+  /// 1 baixa, 2 média, 3 alta.
+  prioridade     Int
+  /// Energia necessária: 1 baixa, 2 média, 3 alta.
+  energia        Int
+  duracaoMinutos Int?      @map("duracao_minutos")
+  dataPlanejada  DateTime  @map("data_planejada") @db.Date
+  criadaEm       DateTime  @default(now()) @map("criada_em") @db.Timestamptz
+  /// Preenchida pela conclusão (HU20).
+  concluidaEm    DateTime? @map("concluida_em") @db.Timestamptz
+
+  usuaria Usuaria @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
+
+  @@index([usuariaId, dataPlanejada])
+  @@map("tarefas")
 }
