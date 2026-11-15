@@ -9,7 +9,7 @@ import { textos } from '@/textos';
 import { Aviso, Botao, Tela, Texto, Titulo } from '@/ui/componentes';
 import { espaco } from '@/ui/tema';
 
-// HU17/HU18. Editar, concluir e excluir entram nas respectivas histórias.
+// HU16/HU19: o detalhe edita e exclui; a lista mantém o adiamento.
 export default function Tarefas() {
   const tarefas = useTarefas();
   const { conta } = useSessao();

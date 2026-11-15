@@ -1,5 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { useState } from 'react';
+import { router } from 'expo-router';
 import { formatarDataBr, type Tarefa } from '@mindcycle/shared';
 
 import { textos } from '@/textos';
@@ -43,6 +44,12 @@ export function ListaTarefas({ tarefas, hoje }: { tarefas: Tarefa[]; hoje: strin
             <Texto suave>{textos.tarefas.item.duracao(tarefa.duracaoMinutos)}</Texto>
           )}
           {confirmacao?.id === tarefa.id && <Confirmacao>{confirmacao.texto}</Confirmacao>}
+          <Botao
+            titulo={textos.tarefas.detalhe.abrir}
+            rotuloAcessivel={textos.tarefas.detalhe.rotuloAbrir(tarefa.titulo)}
+            variante="link"
+            onPress={() => router.push({ pathname: '/tarefa-detalhe', params: { id: tarefa.id } })}
+          />
           {adiando === tarefa.id ? (
             <FormularioAdiamento
               tarefa={tarefa}
