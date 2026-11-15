@@ -142,6 +142,7 @@ páginas.
 | Uma alteração no histórico | `historico` em `assets/js/dados.js` |
 | A iteração atual ou as histórias prontas pelo DoR | `iteracaoAtual` e `dorAtendido` em `assets/js/dados.js` |
 | Iterações, evidências e técnicas de cada fase | `fases` em `assets/js/dados.js` |
+| O quadro kanban da página Entregas e cronograma | Nada à mão: mude o [Project](https://github.com/orgs/mdsreq-fga-unb/projects/120). O site refaz o retrato sozinho (veja [Quadro kanban automático](#quadro-kanban-automático)); para ver localmente, rode `python3 .github/scripts/atualizar_kanban.py` (com o `gh` autenticado com o escopo `project`), que regrava `assets/js/kanban.js` |
 | Cores e espaçamentos | As variáveis no topo de `assets/css/site.css` |
 
 Os comentários no topo de `assets/js/dados.js` explicam cada campo.
@@ -201,6 +202,22 @@ sob demanda (*Run workflow*).
 
 > **Configuração necessária uma única vez:** em **Settings → Pages**, definir
 > **Source: GitHub Actions**.
+
+### Quadro kanban automático
+
+O quadro da página Entregas e cronograma é um retrato do
+[Project](https://github.com/orgs/mdsreq-fga-unb/projects/120). Como o Project é privado, a
+publicação lê o quadro com um token guardado no segredo `KANBAN_TOKEN` e refaz o retrato antes
+de publicar. Isso acontece a cada publicação e, pelo workflow
+`.github/workflows/atualizar-quadro-kanban.yml` da branch `main`, às 8h, 11h, 14h, 17h e 20h
+(o GitHub só roda agendamentos a partir da branch padrão). Sem o segredo, ou se a leitura falhar,
+o site sai com o retrato que está no repositório.
+
+> **Configuração necessária uma única vez:** criar um token *classic* em
+> **Settings → Developer settings → Personal access tokens** só com o escopo `read:project` e
+> salvá-lo em **Settings → Secrets and variables → Actions** do repositório como
+> `KANBAN_TOKEN`. O token é de uma pessoa: se ele expirar ou for revogado, o quadro para de
+> atualizar até que outro seja salvo.
 
 ---
 
