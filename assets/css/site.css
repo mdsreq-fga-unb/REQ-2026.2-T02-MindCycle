@@ -2063,3 +2063,125 @@ summary.foldh::-webkit-details-marker {
   .arq-det.entra { animation: none; }
   .arq .alvo :is(.b, .g, .on, .bx, .db, .hit) { transition: none; }
 }
+
+/* ---------------------------------------------------------------------
+   Quadro kanban (Entregas e cronograma)
+   --------------------------------------------------------------------- */
+.kb-fonte {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  color: var(--mut);
+}
+.kb-rolagem {
+  overflow-x: auto;
+  margin-top: 12px;
+  padding-bottom: 6px;
+}
+.kb {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(200px, 1fr));
+  gap: 10px;
+  min-width: 1040px;
+}
+.kb-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--side);
+}
+.kb-cab {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--disp);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--head);
+}
+.kb-qtd {
+  padding: 1px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mut);
+}
+.kb-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding: 8px;
+}
+.kb-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.3;
+  text-decoration: none;
+  transition: border-color .16s ease, transform .16s ease;
+}
+.kb-card:hover {
+  border-color: var(--acc);
+  transform: translateY(-1px);
+}
+.kb-topo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--mut);
+}
+.kb-cod {
+  font-weight: 600;
+  color: var(--acct);
+}
+.kb-num {
+  margin-left: auto;
+}
+.kb-rodape {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+  font-size: 11.5px;
+  color: var(--mut);
+}
+.kb-rodape .tag {
+  margin: 0;
+  padding: 0 5px;
+  font-size: 10.5px;
+}
+.kb-vazio {
+  margin: 0;
+  padding: 14px 4px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--mut);
+}
+.kb-ponto {
+  display: inline-block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+.kb-ponto.historia { background: var(--acc); }
+.kb-ponto.tecnica { background: var(--lil); }
+.kb-ponto.caracteristica { background: var(--head); }
+.kb-ponto.documentacao { background: var(--wire); }
+@media (prefers-reduced-motion: reduce) {
+  .kb-card { transition: none; }
+}

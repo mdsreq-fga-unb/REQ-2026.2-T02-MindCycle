@@ -18,8 +18,25 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Token que lê o quadro kanban (GitHub Project, privado). Ver o README.
+      KANBAN_TOKEN: ${{ secrets.KANBAN_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+
+      # O retrato do quadro da página Entregas e cronograma é refeito a cada
+      # publicação. Sem o segredo, ou se a leitura falhar, vai o retrato que
+      # está no repositório e a publicação segue normalmente.
+      - name: Atualizar o retrato do quadro kanban
+        if: env.KANBAN_TOKEN != ''
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ env.KANBAN_TOKEN }}
+        run: python3 .github/scripts/atualizar_kanban.py
+
+      - name: Avisar que o quadro não foi atualizado
+        if: env.KANBAN_TOKEN == ''
+        run: echo "::notice::Sem o segredo KANBAN_TOKEN, o quadro kanban vai com o retrato do repositório."
 
       # `enablement: true` liga o GitHub Pages na primeira execução, usando o
       # GITHUB_TOKEN (permissão `pages: write` acima). Sem isso a ação falha
