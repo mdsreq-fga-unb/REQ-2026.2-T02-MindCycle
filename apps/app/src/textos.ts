@@ -1,4 +1,4 @@
-import { CodigoErro, type Sintoma } from '@mindcycle/shared';
+import { CodigoErro, type PraticaAcolhimento, type Sintoma } from '@mindcycle/shared';
 
 function duracaoPorExtenso(minutos: number): string {
   const horas = Math.floor(minutos / 60);
@@ -213,7 +213,44 @@ export const textos = {
   },
   acolhimento: {
     titulo: 'Acolhimento',
-    emBreve: 'Em breve, mensagens e práticas de cuidado aparecem aqui.',
+    // Sobrou para a HU22, que ainda não entrou. Fica no rodapé: anunciar no topo
+    // o que ainda não existe empurra para baixo o que já funciona.
+    emBreve: 'Em breve, mensagens de cuidado aparecem aqui.',
+    // HU21. Convite, nunca cobrança: a usuária não "deve" nada à aba. O convite
+    // nomeia a seção e abre a tela numa linha só, para as práticas virem logo;
+    // o que é contexto, e não conteúdo, desceu para o rodapé.
+    sugestoes: {
+      convite: 'Práticas para hoje, se fizerem sentido agora. Nada aqui é tarefa.',
+      rodape: 'As sugestões mudam a cada dia. Nada fica registrado.',
+      carregando: 'Carregando as sugestões de hoje...',
+      vazio: 'Hoje não há sugestões.',
+      duracao: (minutos: number) => duracaoPorExtenso(minutos),
+      // Lido pelo leitor de tela: o nome sozinho não diz quanto tempo leva.
+      rotuloAcessivel: (nome: string, minutos: number) =>
+        `${nome}, ${duracaoPorExtenso(minutos)}`,
+      // Lista provisória, junto com PRATICAS_ACOLHIMENTO: a cliente ainda vai
+      // entregar as práticas dela. Convites curtos, sem recomendação de saúde.
+      nomes: {
+        respiracao_lenta: 'Respiração lenta',
+        alongamento_curto: 'Alongamento curto',
+        pausa_sem_tela: 'Pausa sem tela',
+        beber_agua: 'Um copo de água',
+        caminhada_curta: 'Caminhada curta',
+        musica_calma: 'Música calma',
+        anotar_tres_coisas: 'Anotar três coisas',
+        compressa_morna: 'Compressa morna',
+      } satisfies Record<PraticaAcolhimento, string>,
+      comoFazer: {
+        respiracao_lenta: 'Inspire contando até quatro e solte contando até seis.',
+        alongamento_curto: 'Alongue ombros, pescoço e costas, sem forçar.',
+        pausa_sem_tela: 'Deixe o celular de lado e olhe para longe um pouco.',
+        beber_agua: 'Beba devagar, sem fazer outra coisa ao mesmo tempo.',
+        caminhada_curta: 'Dê uma volta curta, na rua ou dentro de casa.',
+        musica_calma: 'Escolha uma música que te acalme e ouça até o fim.',
+        anotar_tres_coisas: 'Escreva três coisas boas de hoje, mesmo pequenas.',
+        compressa_morna: 'Deixe uma bolsa ou toalha morna onde o corpo pedir.',
+      } satisfies Record<PraticaAcolhimento, string>,
+    },
   },
   conta: {
     titulo: 'Sua conta',
