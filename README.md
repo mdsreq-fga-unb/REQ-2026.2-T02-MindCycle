@@ -29,7 +29,6 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 ├── arquitetura/                   Arquitetura: diagrama, tecnologias e decisões
 ├── engenharia-de-requisitos/      Escolhas de processo e Catálogo de Metas
 ├── mvp/                           Composição do MVP por característica
-├── backlog/                       Redirecionamento para o planejamento na árvore
 ├── historico/                     O que mudou em cada história e RNF
 ├── reunioes/                      Gravações, com cada decisão no momento do vídeo
 ├── cronograma/                    Linha do tempo, releases e painel de fases
@@ -42,7 +41,7 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 │   ├── js/
 │   │   ├── dados.js               Histórias, RNFs, reuniões, histórico, fases e cronograma
 │   │   ├── site.js                Tema, diálogos e o detalhe da história e do RNF
-│   │   └── requisitos.js, mvp.js, backlog.js, priorizacao.js, reunioes.js, historico.js, cronograma.js
+│   │   └── requisitos.js, planejamento-arvore.js, mvp.js, priorizacao.js, reunioes.js, historico.js, cronograma.js
 │   │                              O que cada página monta a partir de dados.js
 │   ├── img/                       Figuras (WebP em 480, 800 e 1280 px) e favicon
 │   ├── brand/                     Marca (vem da branch main): paleta, logos, Fraunces
@@ -83,8 +82,8 @@ HU13: {
 ## Atualização do backlog
 
 O planejamento fica integrado à árvore de requisitos na página inicial. Selecionar
-uma história abre seu planejamento abaixo da árvore. O endereço `backlog/`
-redireciona para essa página, sem manter uma segunda visualização.
+uma história abre seu planejamento abaixo da árvore, sem uma segunda visualização.
+Links diretos usam `?cp=CP6&hl=HU31&plano=HU31`, preservando a característica e a HU.
 O acompanhamento operacional será feito no GitHub Projects, ainda pendente de
 configuração e vínculo. O Notion não será utilizado. Até essa configuração,
 os registros no site representam o estado documentado no repositório, não uma
@@ -96,10 +95,11 @@ mesmo detalhe usado na árvore de requisitos.
 
 - `responsaveis` registra somente atribuições formalizadas; sem entrada, a HU aparece como
   **Não atribuído**.
-- `capacidadePorIteracao` registra a capacidade disponível. Enquanto estiver nula, a carga
-  planejada é exibida, mas a relação carga/capacidade permanece **Não calculável**.
-  Disponibilidade e capacidade aparecem como **A informar** no painel da história;
-  cada responsável ainda deve avaliar sua carga total na iteração.
+- `capacidadePorIteracao[iteracao].disponivel` registra a capacidade disponível, com a
+  unidade acordada pela equipe (por exemplo, `28 h`). O resumo da iteração mostra esse
+  valor uma única vez, junto da quantidade de histórias e do esforço em pontos.
+  Enquanto estiver nulo, aparece **A informar**. Horas não são comparadas diretamente
+  com pontos de esforço.
 - `tarefasPadrao` mantém as quatro etapas comuns. `itens[HU].tarefas` detalha o trabalho
   específico de cada etapa pelo seu ID, sem repetir critérios e regras da história.
   O detalhamento de construção cobre as 22 HUs do MVP. As decisões ainda pendentes
@@ -108,10 +108,9 @@ mesmo detalhe usado na árvore de requisitos.
   `dependencias` referencia outras HUs; alocações em iteração posterior aparecem como
   pendência de planejamento. Esses registros não alteram o andamento da implementação.
 - O andamento fica em `itens[HU].andamento`, com `andamentoPadrao` para o estado comum
-  confirmado pela equipe. O estado inicial de 13/11/2026 é **Não iniciada**. Em 14/11,
-  HU12 e HU25 passaram a **Implementação integrada; verificação pendente**, com
-  `evidenciaImplementacao` apontando para o PR #57 e seu commit. Isso não comprova
-  atendimento ao DoR nem aceite pelo DoD; termos e verificações continuam pendentes.
+  confirmado pela equipe. `evidenciaImplementacao` referencia o PR e o commit que
+  sustentam o registro. Esses dados ficam somente em `dados.js`; implementação
+  integrada não comprova atendimento ao DoR nem aceite pelo DoD.
 
 ## Sobre os identificadores do Problema, OE, CP, RF e RNF
 
