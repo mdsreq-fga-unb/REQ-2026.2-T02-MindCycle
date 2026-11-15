@@ -168,6 +168,45 @@ export function SeletorNivel({
   );
 }
 
+/**
+ * Opção que se marca e desmarca, como um sintoma. O estado marcado aparece na
+ * borda e no `detalhe` (texto), nunca só na cor.
+ */
+export function Chip({
+  rotulo,
+  detalhe,
+  marcado,
+  onPress,
+  rotuloAcessivel,
+  dica,
+}: {
+  rotulo: string;
+  /** Texto sob o rótulo quando marcado, como a intensidade do sintoma. */
+  detalhe?: string;
+  marcado: boolean;
+  onPress: () => void;
+  /** O que o leitor de tela lê, quando difere de "rótulo" + estado. */
+  rotuloAcessivel?: string;
+  dica?: string;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="checkbox"
+      accessibilityLabel={rotuloAcessivel ?? rotulo}
+      accessibilityHint={dica}
+      accessibilityState={{ checked: marcado }}
+      onPress={onPress}
+      style={({ pressed }) => [
+        styles.chip,
+        marcado && styles.opcaoMarcada,
+        pressed && styles.pressionado,
+      ]}>
+      <Text style={[styles.opcaoTexto, marcado && styles.opcaoTextoMarcado]}>{rotulo}</Text>
+      {marcado && detalhe ? <Text style={styles.chipDetalhe}>{detalhe}</Text> : null}
+    </Pressable>
+  );
+}
+
 /** Mensagem de erro: borda na cor da marca e texto em ink, sem vermelho de alarme. */
 export function Aviso({ children }: PropsWithChildren) {
   if (!children) {
@@ -234,6 +273,18 @@ const styles = StyleSheet.create({
   opcaoMarcada: { borderWidth: 3, borderColor: cores.plum, backgroundColor: cores.rose },
   opcaoTexto: { fontSize: 16, color: cores.ink },
   opcaoTextoMarcado: { fontWeight: '700' },
+  chip: {
+    minHeight: 48,
+    paddingHorizontal: espaco.md,
+    paddingVertical: espaco.sm,
+    borderRadius: raio.campo,
+    borderWidth: 1,
+    borderColor: cores.inkSoft,
+    backgroundColor: cores.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  chipDetalhe: { fontSize: 14, fontWeight: '700', color: cores.ink },
   pressionado: { opacity: 0.8 },
   aviso: {
     padding: espaco.md,

@@ -2,6 +2,8 @@ import type {
   AtualizacaoContaDto,
   CadastroDto,
   CadastroTarefaDto,
+  Checkin,
+  CheckinsDoDia,
   Ciclo,
   ConfirmacaoRecuperacaoDto,
   DefinicaoPinDto,
@@ -12,6 +14,7 @@ import type {
   PerfilCiclo,
   PerfilCicloDto,
   Pin,
+  RegistroCheckinDto,
   Tarefa,
   Termos,
   Tokens,
@@ -58,4 +61,10 @@ export const api = {
   tarefas: () => pedir<Tarefa[]>('/tarefas'),
   cadastrarTarefa: (dados: CadastroTarefaDto) =>
     pedir<Tarefa>('/tarefas', { metodo: 'POST', corpo: dados }),
+  checkinsDeHoje: () => pedir<CheckinsDoDia>('/checkins/hoje'),
+  historicoCheckins: () => pedir<Checkin[]>('/checkins'),
+  registrarCheckin: (dados: RegistroCheckinDto) =>
+    pedir<Checkin>('/checkins', { metodo: 'POST', corpo: dados }),
+  corrigirCheckin: (id: string, dados: RegistroCheckinDto) =>
+    pedir<Checkin>(`/checkins/${id}`, { metodo: 'PUT', corpo: dados }),
 };
