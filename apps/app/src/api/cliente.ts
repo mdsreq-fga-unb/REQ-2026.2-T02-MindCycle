@@ -15,7 +15,7 @@ export class ErroApi extends Error {
 }
 
 type Opcoes = {
-  metodo?: 'GET' | 'POST' | 'PATCH' | 'DELETE';
+  metodo?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   corpo?: unknown;
   /** Rotas sem autenticação: não envia token nem tenta renovar. */
   publica?: boolean;

@@ -4,6 +4,7 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   TextInput,
   View,
@@ -60,16 +61,20 @@ export function Botao({
   onPress,
   carregando,
   variante = 'primario',
+  rotuloAcessivel,
 }: {
   titulo: string;
   onPress: () => void;
   carregando?: boolean;
   variante?: 'primario' | 'link';
+  /** Quando só o título não diz a que o botão se refere, como "Remover" numa lista. */
+  rotuloAcessivel?: string;
 }) {
   const primario = variante === 'primario';
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={rotuloAcessivel}
       accessibilityState={{ busy: carregando, disabled: carregando }}
       disabled={carregando}
       onPress={onPress}
@@ -83,6 +88,41 @@ export function Botao({
         <Text style={primario ? styles.botaoTexto : styles.linkTexto}>{titulo}</Text>
       )}
     </Pressable>
+  );
+}
+
+export function Interruptor({
+  rotulo,
+  valor,
+  aoMudar,
+}: {
+  rotulo: string;
+  valor: boolean;
+  aoMudar: (valor: boolean) => void;
+}) {
+  return (
+    <View style={styles.interruptor}>
+      <Text style={[styles.texto, styles.interruptorRotulo]}>{rotulo}</Text>
+      <Switch
+        accessibilityLabel={rotulo}
+        value={valor}
+        onValueChange={aoMudar}
+        trackColor={{ false: cores.inkSoft, true: cores.roseDeep }}
+        thumbColor={cores.white}
+      />
+    </View>
+  );
+}
+
+/** Confirmação de uma ação que deu certo: em plum, sem alarde, e lida pelo leitor de tela. */
+export function Confirmacao({ children }: PropsWithChildren) {
+  if (!children) {
+    return null;
+  }
+  return (
+    <Text accessibilityLiveRegion="polite" style={styles.confirmacao}>
+      {children}
+    </Text>
   );
 }
 
@@ -133,6 +173,9 @@ const styles = StyleSheet.create({
   botaoTexto: { fontSize: 16, fontWeight: '700', color: cores.ink },
   link: { minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   linkTexto: { fontSize: 16, fontWeight: '600', color: cores.plum },
+  interruptor: { flexDirection: 'row', alignItems: 'center', gap: espaco.md },
+  interruptorRotulo: { flex: 1 },
+  confirmacao: { fontSize: 16, lineHeight: 24, fontWeight: '600', color: cores.plum },
   pressionado: { opacity: 0.8 },
   aviso: {
     padding: espaco.md,

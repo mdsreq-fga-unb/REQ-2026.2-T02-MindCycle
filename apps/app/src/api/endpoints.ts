@@ -1,7 +1,11 @@
 import type {
   AtualizacaoContaDto,
   CadastroDto,
+  Ciclo,
   EntradaDto,
+  InicioMenstruacao,
+  PerfilCiclo,
+  PerfilCicloDto,
   Termos,
   Tokens,
   Usuaria,
@@ -22,4 +26,10 @@ export const api = {
   termos: () => pedir<Termos>('/termos', { publica: true }),
   aceitarTermos: (versao: string) =>
     pedir<void>('/termos/aceite', { metodo: 'POST', corpo: { versao } }),
+  ciclo: () => pedir<Ciclo>('/ciclo'),
+  registrarInicio: (data: string) =>
+    pedir<InicioMenstruacao>('/ciclo/inicios', { metodo: 'POST', corpo: { data } }),
+  removerInicio: (id: string) => pedir<void>(`/ciclo/inicios/${id}`, { metodo: 'DELETE' }),
+  informarPerfil: (dados: PerfilCicloDto) =>
+    pedir<PerfilCiclo>('/ciclo/perfil', { metodo: 'PUT', corpo: dados }),
 };

@@ -4,6 +4,9 @@ export const CodigoErro = {
   EmailJaCadastrado: 'EMAIL_JA_CADASTRADO',
   ConsentimentoPendente: 'CONSENTIMENTO_PENDENTE',
   VersaoTermosDesatualizada: 'VERSAO_TERMOS_DESATUALIZADA',
+  DataNoFuturo: 'DATA_NO_FUTURO',
+  AcessoNegado: 'ACESSO_NEGADO',
+  NaoEncontrado: 'NAO_ENCONTRADO',
 } as const;
 export type CodigoErro = (typeof CodigoErro)[keyof typeof CodigoErro];
 
