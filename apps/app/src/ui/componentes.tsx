@@ -61,12 +61,14 @@ export function Botao({
   titulo,
   onPress,
   carregando,
+  desabilitado = false,
   variante = 'primario',
   rotuloAcessivel,
 }: {
   titulo: string;
   onPress: () => void;
   carregando?: boolean;
+  desabilitado?: boolean;
   variante?: 'primario' | 'link';
   /** Quando só o título não diz a que o botão se refere, como "Remover" numa lista. */
   rotuloAcessivel?: string;
@@ -76,12 +78,13 @@ export function Botao({
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={rotuloAcessivel}
-      accessibilityState={{ busy: carregando, disabled: carregando }}
-      disabled={carregando}
+      accessibilityState={{ busy: carregando, disabled: carregando || desabilitado }}
+      disabled={carregando || desabilitado}
       onPress={onPress}
       style={({ pressed }) => [
         primario ? styles.botao : styles.link,
         pressed && styles.pressionado,
+        desabilitado && styles.desabilitado,
       ]}>
       {carregando ? (
         <ActivityIndicator color={cores.ink} />
@@ -286,6 +289,7 @@ const styles = StyleSheet.create({
   },
   chipDetalhe: { fontSize: 14, fontWeight: '700', color: cores.ink },
   pressionado: { opacity: 0.8 },
+  desabilitado: { opacity: 0.55 },
   aviso: {
     padding: espaco.md,
     borderRadius: raio.campo,
