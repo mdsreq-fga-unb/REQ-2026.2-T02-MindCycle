@@ -52,6 +52,7 @@ export const textos = {
   },
   termos: {
     titulo: 'Antes de começar',
+    carregando: 'Carregando os termos...',
     subtitulo:
       'Leia como seus dados são usados. Nada é registrado antes do seu aceite.',
     botao: 'Li e aceito',
@@ -168,6 +169,26 @@ export const textos = {
   },
   tarefas: {
     titulo: 'Tarefas',
+    abertas: 'Em aberto',
+    concluidas: 'Concluídas',
+    concluidaEm: (data: string) => `Concluída em ${data}`,
+    concluidasVazias: 'Nenhuma tarefa concluída por enquanto.',
+    detalhe: {
+      titulo: 'Sua tarefa',
+      abrir: 'Ver tarefa',
+      rotuloAbrir: (titulo: string) => `Ver a tarefa ${titulo}`,
+      editar: 'Editar',
+      salvar: 'Salvar alterações',
+      salvo: 'Alterações salvas.',
+      concluir: 'Concluir tarefa',
+      concluida: 'Tarefa concluída.',
+      excluir: 'Excluir tarefa',
+      confirmarExclusao: 'Confirmar exclusão',
+      avisoExclusao: 'Excluir esta tarefa e seu histórico? Não é possível desfazer.',
+      cancelar: 'Cancelar',
+      voltar: 'Voltar às tarefas',
+      idInvalido: 'Não foi possível identificar a tarefa.',
+    },
     carregando: 'Carregando suas tarefas...',
     novaTarefa: 'Nova tarefa',
     vazio: {

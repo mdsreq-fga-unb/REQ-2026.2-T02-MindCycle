@@ -1,7 +1,7 @@
 import type { Termos } from '@mindcycle/shared';
 
 // HU12, RNF02: os termos descrevem a finalidade de cada tipo de dado.
-// RASCUNHO da equipe: o texto precisa de revisão da cliente antes da homologação.
+// Revisão e aprovação pela cliente registradas na issue #69.
 // Mudar o texto exige nova versão, e quem aceitou a anterior aceita de novo.
 export const TERMOS: Termos = {
   versao: '2026-11-13',

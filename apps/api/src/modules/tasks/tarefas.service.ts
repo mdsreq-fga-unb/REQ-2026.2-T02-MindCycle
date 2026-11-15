@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import {
   CodigoErro,
   type AdiamentoTarefaDto,
+  type AtualizacaoTarefaDto,
   type CadastroTarefaDto,
   type DataLocal,
   type Nivel,
@@ -27,6 +28,7 @@ function paraResposta(tarefa: LinhaTarefa): Tarefa {
     duracaoMinutos: tarefa.duracaoMinutos,
     dataPlanejada: deData(tarefa.dataPlanejada),
     criadaEm: tarefa.criadaEm.toISOString(),
+    concluidaEm: tarefa.concluidaEm?.toISOString() ?? null,
   };
 }
 
@@ -78,6 +80,73 @@ export class TarefasService {
       throw erro(HttpStatus.FORBIDDEN, CodigoErro.AcessoNegado);
     }
     return paraResposta(tarefa);
+  }
+
+  async listarConcluidas(usuariaId: string): Promise<Tarefa[]> {
+    const tarefas = await this.prisma.tarefa.findMany({
+      where: { usuariaId, concluidaEm: { not: null } },
+      orderBy: [{ concluidaEm: 'desc' }, { criadaEm: 'desc' }],
+    });
+    return tarefas.map(paraResposta);
+  }
+
+  async editar(
+    usuariaId: string,
+    id: string,
+    dados: AtualizacaoTarefaDto,
+  ): Promise<Tarefa> {
+    return this.prisma.$transaction(async (tx) => {
+      const atual = await tx.tarefa.findUnique({ where: { id } });
+      this.exigirDona(atual, usuariaId);
+      const { count } = await tx.tarefa.updateMany({
+        where: { id, usuariaId },
+        data: {
+          titulo: dados.titulo,
+          prazo: paraData(dados.prazo),
+          prioridade: dados.prioridade,
+          energia: dados.energia,
+          duracaoMinutos: dados.duracaoMinutos ?? null,
+        },
+      });
+      if (count !== 1)
+        throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+      return paraResposta(await tx.tarefa.findUniqueOrThrow({ where: { id } }));
+    });
+  }
+
+  async excluir(usuariaId: string, id: string): Promise<void> {
+    await this.prisma.$transaction(async (tx) => {
+      const atual = await tx.tarefa.findUnique({ where: { id } });
+      this.exigirDona(atual, usuariaId);
+      const { count } = await tx.tarefa.deleteMany({
+        where: { id, usuariaId },
+      });
+      if (count !== 1)
+        throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+    });
+  }
+
+  /** HU20: repetir a requisição preserva o primeiro instante de conclusão. */
+  async concluir(usuariaId: string, id: string): Promise<Tarefa> {
+    return this.prisma.$transaction(async (tx) => {
+      const atual = await tx.tarefa.findUnique({ where: { id } });
+      this.exigirDona(atual, usuariaId);
+      await tx.tarefa.updateMany({
+        where: { id, usuariaId, concluidaEm: null },
+        data: { concluidaEm: this.relogio.agora() },
+      });
+      const concluida = await tx.tarefa.findUnique({ where: { id } });
+      if (!concluida)
+        throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+      return paraResposta(concluida);
+    });
+  }
+
+  private exigirDona(tarefa: LinhaTarefa | null, usuariaId: string): void {
+    if (!tarefa) throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+    if (tarefa.usuariaId !== usuariaId) {
+      throw erro(HttpStatus.FORBIDDEN, CodigoErro.AcessoNegado);
+    }
   }
 
   /** HU18. Data e origem são gravadas juntas; o prazo final não é atualizado. */

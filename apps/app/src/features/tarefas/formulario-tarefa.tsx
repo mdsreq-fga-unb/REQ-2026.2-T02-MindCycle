@@ -8,7 +8,9 @@ import {
   formatarDataBr,
   lerDataBr,
   mascararDataBr,
+  type CadastroTarefaDto,
   type Nivel,
+  type Tarefa,
 } from '@mindcycle/shared';
 
 import { api } from '@/api/endpoints';
@@ -19,18 +21,38 @@ import { Aviso, Botao, Campo, SeletorNivel } from '@/ui/componentes';
 import { chaveTarefas } from './consulta';
 
 /** HU17. O prazo começa em hoje; prioridade e energia a usuária escolhe. */
-export function FormularioTarefa({ hoje }: { hoje: string }) {
+export function FormularioTarefa({
+  hoje,
+  tarefa,
+  aoConcluir,
+  aoCancelar,
+}: {
+  hoje: string;
+  tarefa?: Tarefa;
+  aoConcluir?: (tarefa: Tarefa) => void;
+  aoCancelar?: () => void;
+}) {
   const queryClient = useQueryClient();
-  const [titulo, setTitulo] = useState('');
-  const [prazo, setPrazo] = useState(formatarDataBr(hoje));
-  const [prioridade, setPrioridade] = useState<Nivel>();
-  const [energia, setEnergia] = useState<Nivel>();
-  const [duracao, setDuracao] = useState('');
+  const [titulo, setTitulo] = useState(tarefa?.titulo ?? '');
+  const [prazo, setPrazo] = useState(formatarDataBr(tarefa?.prazo ?? hoje));
+  const [prioridade, setPrioridade] = useState<Nivel | undefined>(tarefa?.prioridade);
+  const [energia, setEnergia] = useState<Nivel | undefined>(tarefa?.energia);
+  const [duracao, setDuracao] = useState(tarefa?.duracaoMinutos?.toString() ?? '');
   const [erroLocal, setErroLocal] = useState<string>();
   const cadastro = useMutation({
-    mutationFn: api.cadastrarTarefa,
-    onSuccess: async () => {
+    mutationFn: (dados: CadastroTarefaDto) =>
+      tarefa
+        ? api.editarTarefa(tarefa.id, { ...dados, duracaoMinutos: dados.duracaoMinutos ?? null })
+        : api.cadastrarTarefa(dados),
+    onSuccess: async (salva) => {
+      if (tarefa) {
+        queryClient.setQueryData([...chaveTarefas, 'detalhe', tarefa.id], salva);
+      }
       await queryClient.invalidateQueries({ queryKey: chaveTarefas });
+      if (aoConcluir) {
+        aoConcluir(salva);
+        return;
+      }
       if (router.canGoBack()) {
         router.back();
       } else {
@@ -40,6 +62,7 @@ export function FormularioTarefa({ hoje }: { hoje: string }) {
   });
 
   function salvar() {
+    if (cadastro.isPending) return;
     const dados = validar();
     if (typeof dados === 'string') {
       setErroLocal(dados);
@@ -59,7 +82,7 @@ export function FormularioTarefa({ hoje }: { hoje: string }) {
       return textos.tarefas.nova.prazoInvalido;
     }
     // A API também recusa; conferir aqui poupa a ida e volta.
-    if (prazoLido < hoje) {
+    if (!tarefa && prazoLido < hoje) {
       return textos.erros[CodigoErro.PrazoNoPassado];
     }
     if (prioridade === undefined) {
@@ -83,11 +106,14 @@ export function FormularioTarefa({ hoje }: { hoje: string }) {
   }
 
   // Corrigir qualquer campo apaga o aviso anterior.
-  const editando = <T,>(definir: (valor: T) => void) => (valor: T) => {
-    definir(valor);
-    setErroLocal(undefined);
-    cadastro.reset();
-  };
+  const editando =
+    <T,>(definir: (valor: T) => void) =>
+    (valor: T) => {
+      if (cadastro.isPending) return;
+      definir(valor);
+      setErroLocal(undefined);
+      cadastro.reset();
+    };
 
   return (
     <>
@@ -96,6 +122,7 @@ export function FormularioTarefa({ hoje }: { hoje: string }) {
         value={titulo}
         onChangeText={editando(setTitulo)}
         maxLength={120}
+        editable={!cadastro.isPending}
         autoCapitalize="sentences"
       />
       <Campo
@@ -104,6 +131,7 @@ export function FormularioTarefa({ hoje }: { hoje: string }) {
         onChangeText={editando((novo: string) => setPrazo(mascararDataBr(novo)))}
         keyboardType="number-pad"
         maxLength={10}
+        editable={!cadastro.isPending}
         placeholder={textos.tarefas.nova.formatoPrazo}
       />
       <SeletorNivel
@@ -124,17 +152,23 @@ export function FormularioTarefa({ hoje }: { hoje: string }) {
         onChangeText={editando(setDuracao)}
         keyboardType="number-pad"
         maxLength={3}
+        editable={!cadastro.isPending}
       />
       <Aviso>{erroLocal ?? (cadastro.isError && mensagemDeErro(cadastro.error))}</Aviso>
       <Botao
-        titulo={textos.tarefas.nova.botao}
+        titulo={tarefa ? textos.tarefas.detalhe.salvar : textos.tarefas.nova.botao}
         carregando={cadastro.isPending}
         onPress={salvar}
       />
       <Botao
         titulo={textos.tarefas.nova.cancelar}
         variante="link"
-        onPress={() => router.back()}
+        onPress={() => {
+          if (!cadastro.isPending) {
+            if (aoCancelar) aoCancelar();
+            else router.back();
+          }
+        }}
       />
     </>
   );

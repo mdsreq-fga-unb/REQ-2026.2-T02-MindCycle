@@ -1,6 +1,7 @@
 import type {
   AdiamentoTarefaDto,
   AtualizacaoContaDto,
+  AtualizacaoTarefaDto,
   CadastroDto,
   CadastroTarefaDto,
   Checkin,
@@ -60,6 +61,13 @@ export const api = {
   informarPerfil: (dados: PerfilCicloDto) =>
     pedir<PerfilCiclo>('/ciclo/perfil', { metodo: 'PUT', corpo: dados }),
   tarefas: () => pedir<Tarefa[]>('/tarefas'),
+  tarefasConcluidas: () => pedir<Tarefa[]>('/tarefas/concluidas'),
+  tarefa: (id: string) => pedir<Tarefa>(`/tarefas/${id}`),
+  editarTarefa: (id: string, dados: AtualizacaoTarefaDto) =>
+    pedir<Tarefa>(`/tarefas/${id}`, { metodo: 'PUT', corpo: dados }),
+  excluirTarefa: (id: string) => pedir<void>(`/tarefas/${id}`, { metodo: 'DELETE' }),
+  concluirTarefa: (id: string) =>
+    pedir<Tarefa>(`/tarefas/${id}/conclusao`, { metodo: 'POST', corpo: {} }),
   cadastrarTarefa: (dados: CadastroTarefaDto) =>
     pedir<Tarefa>('/tarefas', { metodo: 'POST', corpo: dados }),
   checkinsDeHoje: () => pedir<CheckinsDoDia>('/checkins/hoje'),
