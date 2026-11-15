@@ -27,6 +27,10 @@ const CONTRATO = 'test/prisma-refresh-token.store.e2e-spec.ts';
 // cada project rodaria o seu e as migrações correriam três vezes.
 const comum = {
   globals: true,
+  // Senha e PIN passam pelo hash lento de propósito, e um caso de bloqueio do
+  // PIN faz uns 12 deles em série. No runner do CI, com os arquivos em
+  // paralelo, isso passa dos 5 s padrão do Vitest.
+  testTimeout: 30_000,
   env: {
     DATABASE_URL: urlDoBancoDeTeste(),
     JWT_SECRET:
