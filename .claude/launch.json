@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start:dev", "-w", "@mindcycle/api"],
       "port": 3000
+    },
+    {
+      "name": "app",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start", "-w", "@mindcycle/app"],
+      "port": 8081
     }
   ]
 }
