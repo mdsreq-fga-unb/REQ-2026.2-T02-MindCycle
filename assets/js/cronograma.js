@@ -81,6 +81,7 @@
         '<h2 style="margin: 2px 0 4px; border: 0; padding: 0">' + esc(it.nome) + '</h2>' +
         '<span class="mono state">' + esc(it.periodo) + ' · ' + esc(it.estado) + '</span></div>' + botaoFechar + '</div>' +
         '<p style="margin: 14px 0 0">' + esc(it.objetivo) + '</p>' +
+        (it.nota ? '<p class="note" style="margin: 10px 0 0">' + esc(it.nota) + '</p>' : '') +
         registro(it) +
         '<h3 style="margin-top: 18px">Evidências</h3>' +
         (it.evidencias.length ? '' : '<p class="ph" style="margin: 0">Sem evidência publicada ainda.</p>') +

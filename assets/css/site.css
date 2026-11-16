@@ -2187,3 +2187,45 @@ summary.foldh::-webkit-details-marker {
 @media (prefers-reduced-motion: reduce) {
   .kb-card { transition: none; }
 }
+
+/* ---------------------------------------------------------------------
+   Status do quadro Kanban na árvore (site.js: chipStatus). O texto diz o
+   status; a cor só reforça, e cada uma passa no contraste dos dois temas.
+   --------------------------------------------------------------------- */
+.qs {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  border-radius: 5px;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  color: var(--mut);
+  background: var(--panel);
+  white-space: nowrap;
+}
+.qs-pronta, .ptag.qs-pronta { border-color: var(--lil); background: var(--lilt); color: var(--lil); }
+.qs-andamento, .ptag.qs-andamento { border-color: var(--cor); background: var(--cort); color: var(--cor); }
+.qs-revisao, .ptag.qs-revisao { border-color: var(--acc); background: var(--soft); color: var(--acct); }
+.qs-concluida, .ptag.qs-concluida { border-color: var(--acc); background: var(--acc); color: var(--on); }
+.qrod {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+}
+.qquem {
+  font-size: 11px;
+  color: var(--mut);
+}
+.leaf.off .qquem { color: var(--dim); }
+.cp .qs {
+  display: table;
+  margin: 6px auto 0;
+}
+.cp.on .qs {
+  border-color: var(--on);
+  background: transparent;
+  color: var(--on);
+}

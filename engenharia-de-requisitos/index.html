@@ -67,8 +67,8 @@
         <div class="card"><span class="dot" style="margin-bottom: 10px">3</span><h3>Calendário da disciplina</h3><p style="margin: 0">Porte de equipe não desempata. O que decide é a aderência: as quatro fases acomodam a engenharia de requisitos nas Releases 1 e 2, antes dos incrementos da Release 3.</p></div>
       </div>
 
-      <h2>Por que não usamos Kanban</h2>
-      <p class="band" style="text-align: left">Com a nova organização da documentação, cada requisito já mostra seu estado na própria árvore. Isso eliminou a necessidade de controlar os requisitos por meio da visualização Kanban.</p>
+      <h2>Por que usamos o quadro Kanban</h2>
+      <p class="band" style="text-align: left">Decidimos acompanhar as histórias de usuário no <a href="https://github.com/orgs/mdsreq-fga-unb/projects/120" target="_blank" rel="noopener">quadro Kanban do GitHub Projects</a>, com uma integração contínua ligada ao quadro. Cada HU é uma issue no quadro, e um fluxo do GitHub Actions publica o site de novo sempre que uma issue é criada, editada, atribuída, fechada ou reaberta, quando um PR é aprovado ou entra na <code>main</code> e cinco vezes por dia, para o que muda só no quadro. A cada publicação, a <a href="../">árvore de requisitos</a> mostra o status de cada HU e quem está atribuída a ela, e o status de cada característica, calculado pelas HUs dela; o <a href="../cronograma/#kanban">quadro da página Entregas e cronograma</a> mostra as colunas. Ninguém atualiza esse estado à mão na documentação.</p>
 
       <h2>A alternativa que comparamos</h2>
       <p>Comparamos o OpenUP com a combinação Scrum + XP.</p>
@@ -133,7 +133,8 @@
           <tr><td>Ajuda no primeiro acesso</td><td>Sugeriu dicas e um guia no primeiro acesso.</td><td><a class="time mono" href="https://www.youtube.com/watch?v=YG6LqnZY8J4&amp;t=763s" target="_blank" rel="noopener" aria-label="Abrir o vídeo do teste em 12:43">▶ 12:43</a></td><td><div class="rfl"><button class="rfb mono" type="button" data-historia="HU02">HU02</button></div></td></tr>
         </tbody>
       </table></div>
-      <p class="note">Telas de alta fidelidade: <a href="https://claude.ai/artifact/1pCy3XxWqcCquR44PAPHfF" target="_blank" rel="noopener" aria-label="Abrir as telas de alta fidelidade no Figma" title="Telas de alta fidelidade" style="display: inline-flex; vertical-align: middle"><svg class="w" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></a></p>
+      <p class="note">Telas de alta fidelidade: <a href="https://claude.ai/artifact/1pCy3XxWqcCquR44PAPHfF" target="_blank" rel="noopener" aria-label="Abrir as telas de alta fidelidade" title="Telas de alta fidelidade" style="display: inline-flex; vertical-align: middle"><svg class="w" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></a>
+        · Telas de baixa fidelidade: <a href="../prototipo/" aria-label="Abrir o protótipo de baixa fidelidade" title="Telas de baixa fidelidade" style="display: inline-flex; vertical-align: middle"><svg class="w" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5" stroke-dasharray="2.5 2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg></a></p>
       <h2>Quem decide quando há conflito</h2>
       <div class="cards">
         <div class="card"><h3>Questão de saúde</h3><p style="margin: 0">Segue a decisão da cliente.</p></div>
@@ -151,9 +152,9 @@
         <div class="tblw"><table>
           <thead><tr><th>ID</th><th>Meta</th><th>Indicador</th><th>Resultado esperado</th><th>Prazo</th><th>OE</th></tr></thead>
           <tbody>
-            <tr><td class="mono"><b>RNEG-01</b></td><td>Melhorar a percepção dos sintomas durante todo o ciclo menstrual</td><td>Usuárias que, sozinhas, registram sintomas e disposição (HU04) e consultam a fase atual (HU05)</td><td>Todas as usuárias representativas da homologação, sem ajuda da equipe</td><td>Iteração 7</td><td>OE1</td></tr>
-            <tr><td class="mono"><b>RNEG-02</b></td><td>Reduzir a sobrecarga executiva causada pelo planejamento que desconsidera a fase do ciclo</td><td>Recomendação do dia (HU13) que muda a ordem das tarefas quando a disposição registrada muda</td><td>A ordem muda em todos os testes de aceitação com disposição alta e baixa</td><td>Iteração 7</td><td>OE2</td></tr>
-            <tr><td class="mono"><b>RNEG-03</b></td><td>Reduzir a sobrecarga na execução das tarefas diárias, ajustando-as à disposição real</td><td>Usuárias que adiam uma tarefa e recebem o dia reajustado (HU18, HU15) sem mensagem de cobrança</td><td>Todas as usuárias representativas da homologação, sem nenhuma mensagem de cobrança</td><td>Iteração 7</td><td>OE3</td></tr>
+            <tr><td class="mono"><b>RNEG-01</b></td><td>Melhorar a percepção dos sintomas durante todo o ciclo menstrual</td><td>Usuárias que, sozinhas, registram sintomas e disposição (HU04) e consultam a fase atual (HU05)</td><td>Todas as usuárias representativas da homologação, sem ajuda da equipe</td><td>Iteração 8</td><td>OE1</td></tr>
+            <tr><td class="mono"><b>RNEG-02</b></td><td>Reduzir a sobrecarga executiva causada pelo planejamento que desconsidera a fase do ciclo</td><td>Recomendação do dia (HU13) que muda a ordem das tarefas quando a disposição registrada muda</td><td>A ordem muda em todos os testes de aceitação com disposição alta e baixa</td><td>Iteração 8</td><td>OE2</td></tr>
+            <tr><td class="mono"><b>RNEG-03</b></td><td>Reduzir a sobrecarga na execução das tarefas diárias, ajustando-as à disposição real</td><td>Usuárias que adiam uma tarefa e recebem o dia reajustado (HU18, HU15) sem mensagem de cobrança</td><td>Todas as usuárias representativas da homologação, sem nenhuma mensagem de cobrança</td><td>Iteração 8</td><td>OE3</td></tr>
             <tr><td class="mono"><b>RNEG-04</b></td><td>Atender à LGPD (Lei nº 13.709/2018) no tratamento de dados pessoais sensíveis de saúde</td><td colspan="3">Restrição externa</td><td>Todos</td></tr>
           </tbody>
         </table></div>
@@ -168,6 +169,7 @@
   </div>
 
   <script defer src="../assets/js/dados.js"></script>
+  <script defer src="../assets/js/kanban.js"></script>
   <script defer src="../assets/js/site.js"></script>
 </body>
 </html>

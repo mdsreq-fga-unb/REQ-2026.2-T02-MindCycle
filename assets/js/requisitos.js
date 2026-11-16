@@ -8,15 +8,6 @@
 (() => {
   const { esc, noMvp } = MC;
   const params = new URLSearchParams(location.search);
-  const proposta = typeof PLANO_ARVORE !== 'undefined' && PLANO_ARVORE;
-  if (proposta) {
-    const estilo = document.createElement('link');
-    estilo.rel = 'stylesheet';
-    estilo.href = 'assets/css/planejamento-arvore.css?v=22';
-    document.head.appendChild(estilo);
-    document.querySelector('.lead').textContent = 'Do problema ao planejamento: características, histórias e tarefas no mesmo lugar.';
-    proposta.montar();
-  }
   const FILTROS = ['all', 'mvp'];
   const estado = {
     cp: DADOS.caracteristicas.some((c) => c.id === params.get('cp')) ? params.get('cp') : 'CP1',
@@ -29,16 +20,25 @@
   const X_OE = { OE1: 150, OE2: 350, OE3: 550 };
   const xCp = (id) => 50 + 100 * DADOS.caracteristicas.findIndex((c) => c.id === id);
 
-  const passa = (h) => (estado.filtro !== 'mvp' || noMvp(h)) && (!proposta || proposta.passa(h));
+  const passa = (h) => estado.filtro !== 'mvp' || noMvp(h);
   const conta = (f) => DADOS.historias.filter(f).length;
 
   const $ = (id) => document.getElementById(id);
   const ferramentas = $('ferramentas');
 
+  // Status da issue no quadro Kanban e quem está atribuída (vêm do CI, em
+  // assets/js/kanban.js). A HU sem issue no quadro fica sem rodapé.
+  function rodapeQuadro(h) {
+    const cartao = MC.noQuadro(h.id);
+    if (!cartao) return '';
+    return '<span class="qrod">' + MC.chipStatus(h.id) +
+      (cartao.responsaveis.length ? '<span class="qquem">' + esc(MC.responsavel(h)) + '</span>' : '') + '</span>';
+  }
+
   function folha(h) {
     const cls = (noMvp(h) ? '' : ' off') + (estado.destaque === h.id ? ' hl' : '');
     return '<button class="leaf' + cls + '" type="button" data-historia="' + h.id + '">' +
-      '<span class="k mono">' + h.id + '</span><span>' + esc(h.nome) + '</span></button>';
+      '<span class="k mono">' + h.id + '</span><span>' + esc(h.nome) + '</span>' + rodapeQuadro(h) + '</button>';
   }
 
   function desenharFiltros() {
@@ -71,7 +71,7 @@
       const on = c.id === estado.cp;
       return '<button class="node cp' + (on ? ' on' : '') + '" type="button" data-cp="' + c.id + '" aria-pressed="' + on + '">' +
         '<span class="k mono">' + c.id + (c.habilitadora ? ' · hab.' : '') + '</span><span>' + esc(c.nome) + '</span>' +
-        '<span class="c">' + todas.filter(passa).length + ' de ' + todas.length + ' HUs</span></button>';
+        '<span class="c">' + todas.filter(passa).length + ' de ' + todas.length + ' HUs</span>' + MC.chipStatus(c.id) + '</button>';
     }).join('');
 
     const linhas = DADOS.historias.filter((h) => h.caracteristica === estado.cp && passa(h));
@@ -118,12 +118,7 @@
   });
   $('busca').addEventListener('input', (e) => { estado.busca = e.target.value; desenharBusca(); });
 
-  document.addEventListener('planejamento-filtro', atualizar);
   atualizar();
-  if (params.get('plano') === estado.destaque) {
-    const alvo = document.querySelector('.leaf.hl');
-    if (alvo) alvo.click();
-  }
   if (estado.destaque) {
     const alvo = document.querySelector('.leaf.hl');
     if (alvo) alvo.scrollIntoView({ block: 'center' });
