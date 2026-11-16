@@ -30,7 +30,7 @@ export class CicloController {
 
   @Get()
   consultar(@CurrentUser() usuaria: UsuariaAutenticada): Promise<Ciclo> {
-    return this.ciclo.consultar(usuaria.id);
+    return this.ciclo.consultar(usuaria);
   }
 
   @Post('inicios')

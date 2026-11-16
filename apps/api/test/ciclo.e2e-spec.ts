@@ -7,7 +7,7 @@ import { TERMOS } from '../src/modules/consent/termos.js';
 import { cadastrar, criarApp } from './app.js';
 import { RelogioFixo } from './relogio-fixo.js';
 
-describe('Ciclo (HU06, HU07)', () => {
+describe('Ciclo (HU05, HU06, HU07)', () => {
   let app: INestApplication<App>;
   // 02:30 UTC de 15/11: ainda 14/11 em São Paulo, onde as contas de teste estão.
   const relogio = new RelogioFixo(new Date('2026-11-15T02:30:00Z'));
@@ -49,7 +49,7 @@ describe('Ciclo (HU06, HU07)', () => {
     it('começa sem nada registrado', async () => {
       const conta = await novaConta();
       const { body } = await conta.consultar().expect(200);
-      expect(body).toEqual({ inicios: [], perfil: null });
+      expect(body).toEqual({ inicios: [], perfil: null, situacao: { estimada: false, motivo: 'sem_inicio', diaDoCiclo: null } });
     });
 
     it('registra e lista, do mais recente para o mais antigo', async () => {
@@ -208,7 +208,7 @@ describe('Ciclo (HU06, HU07)', () => {
     it('a consulta continua disponível sem aceite, vazia', async () => {
       const conta = await novaConta({ aceitar: false });
       const { body } = await conta.consultar().expect(200);
-      expect(body).toEqual({ inicios: [], perfil: null });
+      expect(body).toEqual({ inicios: [], perfil: null, situacao: { estimada: false, motivo: 'sem_inicio', diaDoCiclo: null } });
     });
 
     it('apagar o próprio registro não depende do aceite', async () => {
@@ -238,6 +238,7 @@ describe('Ciclo (HU06, HU07)', () => {
       expect((await outra.consultar()).body).toEqual({
         inicios: [],
         perfil: null,
+        situacao: { estimada: false, motivo: 'sem_inicio', diaDoCiclo: null },
       });
     });
 
@@ -262,6 +263,82 @@ describe('Ciclo (HU06, HU07)', () => {
         .put('/ciclo/perfil')
         .send({ irregular: true })
         .expect(401);
+    });
+  });
+
+  describe('situação do ciclo (HU05)', () => {
+    it('estima a fase com início e duração, contando o início como dia 1', async () => {
+      const conta = await novaConta();
+      await conta.registrar(HOJE).expect(201);
+      await conta.informar({ irregular: false, duracaoMedia: 28 }).expect(200);
+
+      const { body } = await conta.consultar().expect(200);
+      expect(body.situacao).toEqual({
+        estimada: true,
+        diaDoCiclo: 1,
+        fase: 'menstrual',
+        duracao: 28,
+      });
+    });
+
+    // 02:30 UTC de 15/11 ainda é 14/11 em São Paulo: de 10/11 a 14/11 é o dia 5,
+    // não o 6 que daria pelo calendário de UTC.
+    it('conta os dias no calendário do fuso da usuária', async () => {
+      const conta = await novaConta();
+      await conta.registrar('2026-11-10').expect(201);
+      await conta.informar({ irregular: false, duracaoMedia: 28 }).expect(200);
+
+      const { body } = await conta.consultar().expect(200);
+      expect(body.situacao).toMatchObject({ estimada: true, diaDoCiclo: 5 });
+    });
+
+    it('informa o motivo quando não estima, sem atribuir fase', async () => {
+      const conta = await novaConta();
+      await conta.registrar('2026-11-10').expect(201);
+      expect((await conta.consultar()).body.situacao).toEqual({
+        estimada: false,
+        motivo: 'sem_duracao',
+        diaDoCiclo: 5,
+      });
+
+      await conta.informar({ irregular: true }).expect(200);
+      expect((await conta.consultar()).body.situacao).toEqual({
+        estimada: false,
+        motivo: 'irregular',
+        diaDoCiclo: 5,
+      });
+    });
+
+    it('acompanha a mudança das entradas (HU06 e HU07) sem guardar a estimativa antiga', async () => {
+      const conta = await novaConta();
+      await conta.registrar('2026-10-10').expect(201);
+      await conta.informar({ irregular: false, duracaoMedia: 28 }).expect(200);
+      expect((await conta.consultar()).body.situacao).toMatchObject({
+        estimada: false,
+        motivo: 'alem_da_duracao',
+      });
+
+      const recente = await conta.registrar('2026-11-01').expect(201);
+      expect((await conta.consultar()).body.situacao).toMatchObject({
+        estimada: true,
+        diaDoCiclo: 14,
+        fase: 'ovulatoria',
+      });
+
+      await conta.informar({ irregular: false, duracaoMedia: 21 }).expect(200);
+      expect((await conta.consultar()).body.situacao).toMatchObject({
+        estimada: true,
+        diaDoCiclo: 14,
+        fase: 'lutea',
+      });
+
+      // Apagar o início mais recente volta a contar do anterior (10/10).
+      await conta.remover(recente.body.id).expect(204);
+      expect((await conta.consultar()).body.situacao).toEqual({
+        estimada: false,
+        motivo: 'alem_da_duracao',
+        diaDoCiclo: 36,
+      });
     });
   });
 

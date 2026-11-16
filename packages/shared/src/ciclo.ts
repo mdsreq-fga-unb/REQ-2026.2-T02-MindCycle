@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { dataLocalSchema, type DataLocal } from './datas.js';
+import type { SituacaoCiclo } from './estimador-de-fase.js';
 
 // HU06, HU07: entradas do cálculo da fase (HU05). Aqui só se registra e consulta.
 
@@ -41,12 +42,14 @@ export interface Ciclo {
   inicios: InicioMenstruacao[];
   /** Null enquanto a usuária não informou nada (HU07). */
   perfil: PerfilCiclo | null;
+  /** A situação de hoje, calculada pela API no fuso da usuária (HU05). */
+  situacao: SituacaoCiclo;
 }
 
 /**
  * Já há um início (HU06) e as características (HU07): a aba Ciclo troca o
  * formulário pela tela "Seu ciclo". Faltando um dos dois, o formulário volta.
  */
-export function cicloPreenchido(ciclo: Ciclo): boolean {
+export function cicloPreenchido(ciclo: Pick<Ciclo, 'inicios' | 'perfil'>): boolean {
   return ciclo.inicios.length > 0 && ciclo.perfil !== null;
 }

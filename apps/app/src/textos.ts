@@ -1,7 +1,9 @@
 import {
   CodigoErro,
+  MODELO_FASES,
   type Fase,
   type MensagemAcolhimentoId,
+  type MotivoSemFase,
   type PraticaAcolhimento,
   type Sintoma,
 } from '@mindcycle/shared';
@@ -246,6 +248,21 @@ export const textos = {
       remover: 'Remover',
       rotuloRemover: (data: string) => `Remover o início de ${data}`,
     },
+    // HU05. A fase é sempre apresentada como estimativa; o modelo aguarda a Dra. Cláudia.
+    situacao: {
+      dia: (dia: number) => `Dia ${dia} do seu ciclo`,
+      fase: (nome: string) => `Fase ${nome.toLowerCase()}`,
+      estimativa: 'Estimativa a partir do que você informou, não um diagnóstico.',
+      naoEstimada: 'Fase não estimada',
+      motivos: {
+        sem_inicio: 'Registre o início da sua última menstruação para ver a fase estimada.',
+        sem_duracao: 'Informe quantos dias seu ciclo costuma durar para ver a fase estimada.',
+        irregular: 'Com o ciclo irregular, não dá para estimar a fase só pela data.',
+        fora_do_modelo: `A estimativa cobre ciclos de ${MODELO_FASES.duracaoMinima} a ${MODELO_FASES.duracaoMaxima} dias. Com a duração que você informou, ela não é feita.`,
+        alem_da_duracao:
+          'Seu ciclo passou da duração que você informou. Se a menstruação começou, registre o novo início.',
+      } satisfies Record<MotivoSemFase, string>,
+    },
     // HU28. Rascunho da equipe, a revisar com a Dra. Cláudia.
     fases: {
       titulo: 'Fases do ciclo',
@@ -254,6 +271,8 @@ export const textos = {
       dica: 'Toque em uma fase para saber mais.',
       rotuloAcessivel: (nome: string) => `Fase ${nome.toLowerCase()}`,
       tituloModal: (nome: string) => `Fase ${nome.toLowerCase()}`,
+      atual: 'Fase estimada hoje',
+      rotuloAtual: (nome: string) => `Fase ${nome.toLowerCase()}, fase atual estimada`,
       dicaAcessivel: 'Abre a explicação da fase',
       quando: 'Quando acontece',
       corpo: 'O que acontece no corpo',

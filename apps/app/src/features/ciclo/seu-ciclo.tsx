@@ -11,10 +11,11 @@ import { espaco } from '@/ui/tema';
 
 import { chaveCiclo } from './consulta';
 import { FasesDoCiclo } from './fases-do-ciclo';
+import { SituacaoDoCiclo } from './situacao-do-ciclo';
 
 /**
  * A aba Ciclo depois de informado o ciclo, como a tela "Seu ciclo" do protótipo.
- * A situação do ciclo (HU05) e o calendário (HU10) entram aqui, acima das fases.
+ * A situação do ciclo (HU05) fica no topo; o calendário (HU10) entra acima das fases.
  */
 export function SeuCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string }) {
   const queryClient = useQueryClient();
@@ -31,6 +32,7 @@ export function SeuCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string }) {
   return (
     <>
       <Titulo>{t.titulo}</Titulo>
+      <SituacaoDoCiclo situacao={ciclo.situacao} />
       <View style={{ gap: espaco.xs }}>
         {ultimo && <Texto>{t.ultimoInicio(formatarDataBr(ultimo.data))}</Texto>}
         {ciclo.perfil && (
@@ -49,7 +51,7 @@ export function SeuCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string }) {
       <Aviso>{registro.isError && mensagemDeErro(registro.error)}</Aviso>
       {/* Por enquanto as fases ficam no rodapé; HU05 e HU10 vão ocupar o meio. */}
       <View style={{ flexGrow: 1 }} />
-      <FasesDoCiclo />
+      <FasesDoCiclo faseAtual={ciclo.situacao.estimada ? ciclo.situacao.fase : undefined} />
       <Botao titulo={t.editar} variante="link" onPress={() => router.push('/editar-ciclo')} />
     </>
   );

@@ -6,6 +6,7 @@ import {
   type InicioMenstruacao,
   type PerfilCiclo,
   type PerfilCicloDto,
+  situacaoDoCiclo,
 } from '@mindcycle/shared';
 import { erro } from '../../common/erro.js';
 import { Relogio } from '../../common/relogio.js';
@@ -23,21 +24,23 @@ export class CicloService {
     private readonly relogio: Relogio,
   ) {}
 
-  async consultar(usuariaId: string): Promise<Ciclo> {
-    const [inicios, perfil] = await Promise.all([
+  /** As entradas (HU06, HU07) e a situação de hoje no fuso da usuária (HU05). */
+  async consultar(usuaria: UsuariaAutenticada): Promise<Ciclo> {
+    const [registros, registroPerfil] = await Promise.all([
       this.prisma.inicioMenstruacao.findMany({
-        where: { usuariaId },
+        where: { usuariaId: usuaria.id },
         orderBy: { data: 'desc' },
       }),
-      this.prisma.perfilCiclo.findUnique({ where: { usuariaId } }),
+      this.prisma.perfilCiclo.findUnique({ where: { usuariaId: usuaria.id } }),
     ]);
-    return {
-      inicios: inicios.map(({ id, data }) => ({ id, data: deData(data) })),
-      perfil: perfil && {
-        duracaoMedia: perfil.duracaoMedia,
-        irregular: perfil.irregular,
-      },
+    const inicios = registros.map(({ id, data }) => ({ id, data: deData(data) }));
+    const perfil = registroPerfil && {
+      duracaoMedia: registroPerfil.duracaoMedia,
+      irregular: registroPerfil.irregular,
     };
+    // Calculada a cada consulta: mudar a HU06 ou a HU07 já muda a situação.
+    const situacao = situacaoDoCiclo({ inicios, perfil, hoje: this.relogio.hoje(usuaria.fuso) });
+    return { inicios, perfil, situacao };
   }
 
   /** Registrar de novo um dia já registrado devolve o registro que existe. */
