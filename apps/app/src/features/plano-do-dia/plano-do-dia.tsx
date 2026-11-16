@@ -1,9 +1,10 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { AccessibilityInfo, StyleSheet, View } from 'react-native';
 import {
   formatarDataBr,
-  type RecomendacaoDoDia,
+  type RecomendacaoReajustada,
+  type Tarefa,
   type TarefaRecomendada,
 } from '@mindcycle/shared';
 
@@ -13,11 +14,13 @@ import { textos } from '@/textos';
 import { Aviso, Botao, Confirmacao, Texto } from '@/ui/componentes';
 import { cores, espaco, raio } from '@/ui/tema';
 
-import { useRecomendacaoDoDia } from './consulta';
+import { useDesfazerReajuste, useRecomendacaoDoDia } from './consulta';
+import { avisoDoDesfazer, TarefasMovidas } from './tarefas-movidas';
 
 /**
  * HU13: as tarefas do dia na ordem que a API calcula. Tarefa urgente acima da
- * disposição mostra, sem cobrança, que pode ser adiada (HU18).
+ * disposição mostra, sem cobrança, que pode ser adiada (HU18). HU15: a lista já
+ * vem reajustada pela disposição, com as que ficaram para amanhã logo abaixo.
  */
 export function PlanoDoDia() {
   const recomendacao = useRecomendacaoDoDia();
@@ -44,9 +47,34 @@ export function PlanoDoDia() {
 }
 
 /** A lista em si, separada da busca para o teste de tela (plano-do-dia.spec.tsx). */
-export function ListaDoDia({ recomendacao }: { recomendacao: RecomendacaoDoDia }) {
+export function ListaDoDia({ recomendacao }: { recomendacao: RecomendacaoReajustada }) {
   const [adiando, setAdiando] = useState<string>();
   const [confirmacao, setConfirmacao] = useState<string>();
+  // HU15. O pedido mora aqui, e não na seção das movidas: trazer a última de
+  // volta esvazia a seção, e a confirmação ou o aviso ainda precisam aparecer.
+  const desfazer = useDesfazerReajuste();
+  // A mensagem vale para o plano em que foi dada: um novo registro de
+  // disposição ou a virada do dia a apagam.
+  const momento = `${recomendacao.hoje}|${recomendacao.disposicao}`;
+  const [retorno, setRetorno] = useState<{
+    texto: string;
+    falhou: boolean;
+    momento: string;
+  }>();
+  const mensagem = retorno?.momento === momento ? retorno : undefined;
+
+  function trazer(tarefa: Tarefa) {
+    setRetorno(undefined);
+    const avisar = (texto: string, falhou: boolean) => {
+      setRetorno({ texto, falhou, momento });
+      // A região viva da Confirmacao e o alerta do Aviso só falam no Android.
+      AccessibilityInfo.announceForAccessibility(texto);
+    };
+    desfazer.mutate(tarefa.id, {
+      onSuccess: () => avisar(textos.reajuste.trazida(tarefa.titulo), false),
+      onError: (erro) => avisar(avisoDoDesfazer(tarefa.titulo, erro), true),
+    });
+  }
 
   // Se a lista foi refeita e a tarefa em adiamento saiu dela ou perdeu o aviso
   // (um novo registro de disposição, por exemplo), o formulário fecha.
@@ -58,7 +86,7 @@ export function ListaDoDia({ recomendacao }: { recomendacao: RecomendacaoDoDia }
   return (
     <>
       <Confirmacao>{confirmacao}</Confirmacao>
-      {recomendacao.tarefas.length === 0 ? (
+      {recomendacao.tarefas.length === 0 && recomendacao.movidas.length === 0 ? (
         <View style={styles.vazio}>
           <Texto style={styles.destaque}>{textos.hoje.plano.vazio.titulo}</Texto>
           <Texto suave>{textos.hoje.plano.vazio.texto}</Texto>
@@ -78,6 +106,9 @@ export function ListaDoDia({ recomendacao }: { recomendacao: RecomendacaoDoDia }
                   textos.checkin.disposicao.niveis[recomendacao.disposicao],
                 )}
           </Texto>
+          {recomendacao.tarefas.length === 0 && (
+            <Texto suave>{textos.reajuste.diaLivre}</Texto>
+          )}
           <View style={styles.lista}>
             {recomendacao.tarefas.map((tarefa, indice) => (
               <ItemDoDia
@@ -98,6 +129,18 @@ export function ListaDoDia({ recomendacao }: { recomendacao: RecomendacaoDoDia }
               />
             ))}
           </View>
+          {mensagem?.falhou ? (
+            <Aviso>{mensagem.texto}</Aviso>
+          ) : (
+            <Confirmacao>{mensagem?.texto}</Confirmacao>
+          )}
+          {recomendacao.movidas.length > 0 && (
+            <TarefasMovidas
+              movidas={recomendacao.movidas}
+              trazendo={desfazer.isPending ? desfazer.variables : undefined}
+              aoTrazer={trazer}
+            />
+          )}
         </>
       )}
     </>
