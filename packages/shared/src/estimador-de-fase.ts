@@ -25,10 +25,20 @@ export type SituacaoCiclo =
   | { estimada: true; diaDoCiclo: number; fase: Fase; duracao: number }
   | { estimada: false; motivo: MotivoSemFase; diaDoCiclo: number | null };
 
+/** Duração dentro da faixa em que o modelo vale. */
+export function duracaoNoModelo(duracao: number): boolean {
+  return duracao >= MODELO_FASES.duracaoMinima && duracao <= MODELO_FASES.duracaoMaxima;
+}
+
+/** Dá para estimar fases com este perfil: ciclo regular e duração na faixa do modelo. */
+export function podeEstimar(perfil: PerfilCiclo | null): boolean {
+  return !!perfil && !perfil.irregular && perfil.duracaoMedia !== null && duracaoNoModelo(perfil.duracaoMedia);
+}
+
 /** A fase do dia, ou null fora do ciclo ou fora da faixa do modelo. */
 export function faseDoDia(diaDoCiclo: number, duracao: number): Fase | null {
   const m = MODELO_FASES;
-  if (duracao < m.duracaoMinima || duracao > m.duracaoMaxima) {
+  if (!duracaoNoModelo(duracao)) {
     return null;
   }
   if (diaDoCiclo < 1 || diaDoCiclo > duracao) {
@@ -81,7 +91,7 @@ export function situacaoDoCiclo({
     return { estimada: false, motivo: 'sem_duracao', diaDoCiclo };
   }
   const duracao = perfil.duracaoMedia;
-  if (duracao < MODELO_FASES.duracaoMinima || duracao > MODELO_FASES.duracaoMaxima) {
+  if (!duracaoNoModelo(duracao)) {
     return { estimada: false, motivo: 'fora_do_modelo', diaDoCiclo };
   }
   const fase = faseDoDia(diaDoCiclo, duracao);

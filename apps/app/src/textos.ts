@@ -242,6 +242,10 @@ export const textos = {
     // Depois de informado: a tela do protótipo, que HU05 e HU10 completam.
     seuCiclo: {
       titulo: 'Seu ciclo',
+      resumo: (data: string, duracao: number | null) =>
+        duracao === null
+          ? `Último início: ${data} · ciclo irregular`
+          : `Último início: ${data} · ciclo de cerca de ${duracao} dias`,
       comecou: 'Minha menstruação começou',
       registradoHoje: 'Início de hoje registrado.',
       editar: 'Editar meu ciclo',
@@ -271,7 +275,9 @@ export const textos = {
     situacao: {
       dia: (dia: number) => `Você está no dia ${dia} do seu ciclo`,
       rotuloAnel: 'DIA',
-      deDias: (duracao: number) => `de ~${duracao}`,
+      deDias: (duracao: number) => `de ${duracao}`,
+      anelRotulo: (dia: number, duracao: number) => `Dia ${dia} de cerca de ${duracao}`,
+
       fase: (nome: string) => `Fase ${nome.toLowerCase()}`,
       estimativa: 'Estimativa a partir do que você informou, não um diagnóstico.',
       naoEstimada: 'Fase não estimada',
@@ -292,6 +298,8 @@ export const textos = {
       proximoMes: 'Próximo mês',
       diasDaSemana: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
       legendaInicio: 'Início da menstruação',
+      // Pista além da cor em cada dia pintado (WCAG 1.4.1).
+      inicial: { menstrual: 'M', folicular: 'F', ovulatoria: 'O', lutea: 'L' } satisfies Record<Fase, string>,
       semCores: 'As cores das fases aparecem quando a fase puder ser estimada.',
       rotuloDia: ({
         data,

@@ -1,11 +1,11 @@
-import type { Ciclo } from '@mindcycle/shared';
+import { formatarDataBr, type Ciclo } from '@mindcycle/shared';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
 
 import { api } from '@/api/endpoints';
 import { mensagemDeErro } from '@/api/mensagem-de-erro';
 import { textos } from '@/textos';
-import { Aviso, Botao, Confirmacao, Titulo } from '@/ui/componentes';
+import { Aviso, Botao, Confirmacao, Texto, Titulo } from '@/ui/componentes';
 import { fonteTitulo } from '@/ui/tema';
 
 import { CalendarioDoCiclo } from './calendario-do-ciclo';
@@ -32,6 +32,15 @@ export function SeuCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string }) {
     <>
       <Titulo style={{ fontFamily: fonteTitulo, fontWeight: 'normal' }}>{t.titulo}</Titulo>
       <SituacaoDoCiclo situacao={ciclo.situacao} />
+      {/* O que ela informou continua visível, mesmo sem estimativa. */}
+      {ciclo.inicios[0] && (
+        <Texto suave style={{ fontSize: 14, lineHeight: 20 }}>
+          {t.resumo(
+            formatarDataBr(ciclo.inicios[0].data),
+            ciclo.perfil?.irregular ? null : (ciclo.perfil?.duracaoMedia ?? null),
+          )}
+        </Texto>
+      )}
       <CalendarioDoCiclo
         inicios={ciclo.inicios}
         perfil={ciclo.perfil}

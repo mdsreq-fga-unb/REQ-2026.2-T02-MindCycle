@@ -19,13 +19,18 @@ const VOLTA = 2 * Math.PI * RAIO;
 export function SituacaoDoCiclo({ situacao }: { situacao: SituacaoCiclo }) {
   const t = textos.ciclo.situacao;
   const progresso = situacao.estimada ? situacao.diaDoCiclo / situacao.duracao : 0;
-  const corAnel = situacao.estimada ? coresFase[situacao.fase] : cores.inkSoft;
 
   return (
     <View accessibilityRole="summary" style={styles.cartao}>
       <View
         accessible
-        accessibilityLabel={situacao.diaDoCiclo !== null ? t.dia(situacao.diaDoCiclo) : undefined}
+        accessibilityLabel={
+          situacao.estimada
+            ? t.anelRotulo(situacao.diaDoCiclo, situacao.duracao)
+            : situacao.diaDoCiclo !== null
+              ? t.dia(situacao.diaDoCiclo)
+              : undefined
+        }
         style={styles.anel}>
         <Svg width={TAMANHO} height={TAMANHO} style={StyleSheet.absoluteFill}>
           <Circle
@@ -36,12 +41,12 @@ export function SituacaoDoCiclo({ situacao }: { situacao: SituacaoCiclo }) {
             strokeWidth={TRACO}
             fill="none"
           />
-          {progresso > 0 && (
+          {situacao.estimada && (
             <Circle
               cx={TAMANHO / 2}
               cy={TAMANHO / 2}
               r={RAIO}
-              stroke={corAnel}
+              stroke={coresFase[situacao.fase]}
               strokeWidth={TRACO}
               strokeLinecap="round"
               strokeDasharray={`${VOLTA * progresso} ${VOLTA}`}
@@ -51,9 +56,18 @@ export function SituacaoDoCiclo({ situacao }: { situacao: SituacaoCiclo }) {
             />
           )}
         </Svg>
-        <Text style={styles.rotuloDia}>{t.rotuloAnel}</Text>
-        <Text style={styles.numeroDia}>{situacao.diaDoCiclo ?? '–'}</Text>
-        {situacao.estimada && <Text style={styles.deDias}>{t.deDias(situacao.duracao)}</Text>}
+        {/* Fonte limitada: o anel tem tamanho fixo e não pode cortar o texto. */}
+        <Text maxFontSizeMultiplier={1.3} style={styles.rotuloDia}>
+          {t.rotuloAnel}
+        </Text>
+        <Text maxFontSizeMultiplier={1.3} style={styles.numeroDia}>
+          {situacao.diaDoCiclo ?? '–'}
+        </Text>
+        {situacao.estimada && (
+          <Text maxFontSizeMultiplier={1.3} style={styles.deDias}>
+            {t.deDias(situacao.duracao)}
+          </Text>
+        )}
       </View>
 
       <View style={styles.texto}>
@@ -65,7 +79,13 @@ export function SituacaoDoCiclo({ situacao }: { situacao: SituacaoCiclo }) {
                 {t.fase(textos.ciclo.fases.porFase[situacao.fase].nome)}
               </Text>
             </View>
-            <Text style={styles.frase}>{t.dia(situacao.diaDoCiclo)}</Text>
+            {/* O anel já diz o dia para o leitor de tela; a frase não repete. */}
+            <Text
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+              style={styles.frase}>
+              {t.dia(situacao.diaDoCiclo)}
+            </Text>
             <Texto suave style={styles.nota}>
               {t.estimativa}
             </Texto>

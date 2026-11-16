@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    minHeight: 36,
+    minHeight: 44,
     paddingHorizontal: 12,
     borderRadius: raio.botao,
     borderWidth: 1.5,
