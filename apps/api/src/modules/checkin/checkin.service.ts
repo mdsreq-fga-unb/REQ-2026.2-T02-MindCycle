@@ -86,6 +86,23 @@ export class CheckinService {
     return { vigente: registros[0] ?? null, registros };
   }
 
+  /**
+   * A disposição do vigente de hoje (o registro mais recente do dia, como em
+   * `doDia`), ou null sem registro no dia. Lê só a coluna, para a recomendação
+   * do dia sair rápido (RNF06).
+   */
+  async disposicaoVigente(usuaria: UsuariaAutenticada): Promise<Nivel | null> {
+    const vigente = await this.prisma.checkin.findFirst({
+      where: {
+        usuariaId: usuaria.id,
+        dataLocal: paraData(this.relogio.hoje(usuaria.fuso)),
+      },
+      orderBy: { criadoEm: 'desc' },
+      select: { disposicao: true },
+    });
+    return vigente ? (vigente.disposicao as Nivel) : null;
+  }
+
   /** Do mais recente para o mais antigo, os de hoje incluídos. */
   async historico(usuariaId: string, limite: number): Promise<Checkin[]> {
     const checkins = await this.prisma.checkin.findMany({

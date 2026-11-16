@@ -16,6 +16,7 @@ import type {
   PerfilCiclo,
   PerfilCicloDto,
   Pin,
+  RecomendacaoDoDia,
   RegistroCheckinDto,
   SugestoesDoDia,
   Tarefa,
@@ -80,4 +81,5 @@ export const api = {
       metodo: 'PATCH',
       corpo: dados,
     }),
+  recomendacaoDoDia: () => pedir<RecomendacaoDoDia>('/planejamento/hoje'),
 };

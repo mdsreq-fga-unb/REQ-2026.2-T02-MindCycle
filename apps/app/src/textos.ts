@@ -70,7 +70,23 @@ export const textos = {
   },
   hoje: {
     titulo: 'Hoje',
-    emBreve: 'Em breve, suas tarefas do dia aparecem aqui.',
+    // HU13
+    plano: {
+      titulo: 'Suas tarefas de hoje',
+      subtitulo: 'Uma ordem sugerida para o seu dia, pela sua disposição, pelos prazos e pelas prioridades.',
+      carregando: 'Preparando suas tarefas de hoje...',
+      disposicao: (nivel: string) => `Considerando sua disposição ${nivel.toLowerCase()}.`,
+      disposicaoAssumida:
+        'Você ainda não registrou sua disposição hoje, então consideramos média. Se quiser, registre como você está.',
+      vazio: {
+        titulo: 'Nada planejado para hoje',
+        texto: 'As tarefas aparecem aqui no dia planejado para elas.',
+      },
+      posicao: (numero: number) => `${numero}ª`,
+      rotuloItem: (numero: number, titulo: string) => `${numero}ª tarefa sugerida: ${titulo}`,
+      avisoAdiamento:
+        'Esta tarefa pede mais energia do que a sua disposição de hoje. Se precisar, ela pode ser adiada.',
+    },
   },
   // HU04
   checkin: {

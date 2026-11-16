@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { Checkin, CheckinsDoDia } from '@mindcycle/shared';
 
 import { api } from '@/api/endpoints';
+import { chavePlanoDoDia } from '@/features/plano-do-dia/consulta';
 
 export const chaveCheckins = ['checkins'];
 const chaveHoje = [...chaveCheckins, 'hoje'];
@@ -17,7 +18,8 @@ export function useHistoricoCheckins() {
 
 /**
  * Põe na tela o registro que a API acabou de devolver, sem esperar outra ida a
- * ela (RNF08). O mais recente do dia segue sendo o vigente.
+ * ela (RNF08). O mais recente do dia segue sendo o vigente, e a recomendação do
+ * dia (HU13) é refeita com a disposição nova.
  */
 export function useAplicarCheckin() {
   const queryClient = useQueryClient();
@@ -36,6 +38,9 @@ export function useAplicarCheckin() {
         : [checkin, ...atual.registros];
       return { vigente: registros[0] ?? null, registros };
     });
-    return queryClient.invalidateQueries({ queryKey: chaveHistorico });
+    return Promise.all([
+      queryClient.invalidateQueries({ queryKey: chaveHistorico }),
+      queryClient.invalidateQueries({ queryKey: chavePlanoDoDia }),
+    ]);
   };
 }

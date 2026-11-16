@@ -1,14 +1,16 @@
 import { CartaoCheckin } from '@/features/checkin/cartao-checkin';
+import { PlanoDoDia } from '@/features/plano-do-dia/plano-do-dia';
 import { textos } from '@/textos';
-import { Tela, Texto, Titulo } from '@/ui/componentes';
+import { Tela, Titulo } from '@/ui/componentes';
 
-// Ponto de partida da tela "Hoje" (HU13, HU15). O registro rápido é da HU04.
+// A tela "Hoje": o registro rápido da HU04 e as tarefas do dia da HU13. O
+// reajuste pela disposição (HU15) entra nesta mesma lista.
 export default function Hoje() {
   return (
     <Tela naAba>
       <Titulo>{textos.hoje.titulo}</Titulo>
       <CartaoCheckin />
-      <Texto suave>{textos.hoje.emBreve}</Texto>
+      <PlanoDoDia />
     </Tela>
   );
 }
