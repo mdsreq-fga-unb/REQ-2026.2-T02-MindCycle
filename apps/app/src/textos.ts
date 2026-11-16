@@ -332,8 +332,8 @@ export const textos = {
         inchaco_antes: {
           titulo: 'Por que o corpo incha antes da menstruação',
           paragrafos: [
-            'Na fase lútea, as mudanças hormonais fazem o corpo reter mais líquido. Inchaço e seios mais sensíveis são comuns.',
-            'Costuma passar quando a menstruação começa. Beber água e reduzir o sal ajudam algumas pessoas.',
+            'Na fase lútea, as mudanças hormonais podem fazer o corpo reter mais líquido. Inchaço e seios mais sensíveis são comuns.',
+            'Costuma passar quando a menstruação começa.',
           ],
         },
         humor_no_ciclo: {
@@ -367,14 +367,14 @@ export const textos = {
         ovulacao: {
           titulo: 'O que acontece na ovulação',
           paragrafos: [
-            'No meio do ciclo, o ovário libera um óvulo. O estrogênio chega ao ponto mais alto, e a disposição costuma acompanhar.',
+            'Por volta do meio do ciclo, o ovário libera um óvulo. O estrogênio chega ao ponto mais alto, e a disposição costuma acompanhar.',
             'Algumas pessoas sentem uma dor leve em um dos lados da barriga por algumas horas.',
           ],
         },
         foco_no_ciclo: {
           titulo: 'Foco e concentração ao longo do ciclo',
           paragrafos: [
-            'A concentração pode variar com o ciclo: costuma ficar mais fácil na fase folicular e mais difícil perto da menstruação.',
+            'Algumas pessoas percebem o foco variar ao longo do ciclo, com dias em que a concentração vem mais fácil e outros em que ela custa mais.',
             'Dividir tarefas em partes menores ajuda nos dias em que o foco falta.',
           ],
         },

@@ -66,10 +66,14 @@ export function SeuCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string }) {
         />
       )}
       <Aviso>{registro.isError && mensagemDeErro(registro.error)}</Aviso>
-      <ConteudosRecomendados
-        fase={ciclo.situacao.estimada ? ciclo.situacao.fase : null}
-        sintomas={sintomasDeHoje}
-      />
+      {/* Espera o check-in: sem isso, a lista aparece só pela fase e se
+          reorganiza quando os sintomas chegam. No erro, segue só com a fase. */}
+      {!checkins.isPending && (
+        <ConteudosRecomendados
+          fase={ciclo.situacao.estimada ? ciclo.situacao.fase : null}
+          sintomas={sintomasDeHoje}
+        />
+      )}
       <Botao titulo={t.editar} variante="link" onPress={() => router.push('/editar-ciclo')} />
     </>
   );

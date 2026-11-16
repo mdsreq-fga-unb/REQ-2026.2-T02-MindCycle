@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { textos } from '@/textos';
-import { cores, espaco } from '@/ui/tema';
+import { cores, espaco, raio } from '@/ui/tema';
 
 /**
  * HU09: até três conteúdos ligados à fase estimada de hoje ou aos sintomas do
@@ -43,7 +43,7 @@ export function ConteudosRecomendados({
 }
 
 const styles = StyleSheet.create({
-  cartao: { paddingHorizontal: espaco.md, paddingTop: espaco.md, borderRadius: 20, backgroundColor: cores.white },
+  cartao: { paddingHorizontal: espaco.md, paddingTop: espaco.md, borderRadius: raio.cartao, backgroundColor: cores.white },
   titulo: { fontSize: 14, fontWeight: '700', color: cores.inkSoft, marginBottom: espaco.xs },
   linha: { flexDirection: 'row', alignItems: 'center', gap: espaco.sm, minHeight: 52, paddingVertical: espaco.sm },
   divisor: { borderTopWidth: 1, borderTopColor: cores.blush },

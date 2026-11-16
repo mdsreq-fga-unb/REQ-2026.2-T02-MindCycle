@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: espaco.md,
     padding: espaco.md,
-    borderRadius: 20,
+    borderRadius: raio.cartao,
     backgroundColor: cores.white,
   },
   anel: { width: TAMANHO, height: TAMANHO, alignItems: 'center', justifyContent: 'center' },
