@@ -21,7 +21,9 @@ const feita: Tarefa = {
 };
 
 describe('Lista de tarefas concluidas (HU20)', () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('mostra a data da conclusao no fuso da usuaria, nao o dia UTC', async () => {
     await render(
