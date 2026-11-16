@@ -4,7 +4,7 @@
 // Não edite à mão: mude o quadro no GitHub e rode o script de novo.
 
 const KANBAN = {
-  "atualizadoEm": "2026-11-15T08:12",
+  "atualizadoEm": "2026-11-16T20:00",
   "quadro": {
     "titulo": "MindCycle - Kanban Board",
     "url": "https://github.com/orgs/mdsreq-fga-unb/projects/120"
@@ -184,213 +184,118 @@ const KANBAN = {
           }
         },
         {
-          "numero": 69,
-          "titulo": "[RF12 · HU12] Aceitar termos de uso",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/69",
+          "numero": 103,
+          "titulo": "Revisão da documentação: buscar falhas e melhorias",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/103",
           "tipo": "Issue",
-          "responsaveis": [],
-          "marco": {
-            "titulo": "Fechamento R3",
-            "data": "2026-11-23"
-          }
+          "responsaveis": [
+            "Zaclonic"
+          ],
+          "marco": null
         },
         {
-          "numero": 70,
-          "titulo": "[RF11 · HU11] Proteger acesso com PIN",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/70",
+          "numero": 123,
+          "titulo": "[HU03] Receber lembrete de registro",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/123",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Fechamento R3",
-            "data": "2026-11-23"
-          }
+          "marco": null
         },
         {
-          "numero": 71,
-          "titulo": "[RF36 · HU36] Excluir conta e dados",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/71",
+          "numero": 124,
+          "titulo": "[HU30] Gerenciar medicações",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/124",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Fechamento R3",
-            "data": "2026-11-23"
-          }
+          "marco": null
         },
         {
-          "numero": 72,
-          "titulo": "[RF26 · HU26] Recuperar acesso à conta",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/72",
+          "numero": 125,
+          "titulo": "[HU34] Registrar diagnósticos prévios",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/125",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Fechamento R3",
-            "data": "2026-11-23"
-          }
+          "marco": null
         },
         {
-          "numero": 73,
-          "titulo": "[RF17 · HU17] Cadastrar tarefa",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/73",
+          "numero": 126,
+          "titulo": "[HU35] Exportar relatório de sintomas",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/126",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Fechamento R3",
-            "data": "2026-11-23"
-          }
+          "marco": null
         },
         {
-          "numero": 74,
-          "titulo": "[RF04 · HU04] Registrar sintomas e disposição",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/74",
+          "numero": 127,
+          "titulo": "[HU08] Estimar fase do ciclo por sintomas",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/127",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Fechamento R3",
-            "data": "2026-11-23"
-          }
+          "marco": null
         },
         {
-          "numero": 75,
-          "titulo": "[RF06 · RF07] Registrar início da menstruação e características do ciclo",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/75",
+          "numero": 128,
+          "titulo": "[HU14] Receber resumo do dia",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/128",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Fechamento R3",
-            "data": "2026-11-23"
-          }
+          "marco": null
         },
         {
-          "numero": 76,
-          "titulo": "[RF28 · HU28] Consultar funcionamento do ciclo",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/76",
+          "numero": 129,
+          "titulo": "[HU33] Registrar atividades de acolhimento favoritas",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/129",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Fechamento R3",
-            "data": "2026-11-23"
-          }
+          "marco": null
         },
         {
-          "numero": 77,
-          "titulo": "[RF22 · HU22] Receber mensagens de acolhimento",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/77",
+          "numero": 130,
+          "titulo": "[HU23] Gerar retrospectiva mensal",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/130",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Fechamento R3",
-            "data": "2026-11-23"
-          }
+          "marco": null
         },
         {
-          "numero": 78,
-          "titulo": "[RF21 · HU21] Sugerir atividades de acolhimento",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/78",
+          "numero": 131,
+          "titulo": "[HU24] Registrar atividade de acolhimento",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/131",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Fechamento R3",
-            "data": "2026-11-23"
-          }
+          "marco": null
         },
         {
-          "numero": 79,
-          "titulo": "[RF16 · RF19] Editar e excluir tarefa",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/79",
+          "numero": 132,
+          "titulo": "[HU31] Comparar relatórios mensais",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/132",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Homologação",
-            "data": "2026-12-01"
-          }
+          "marco": null
         },
         {
-          "numero": 80,
-          "titulo": "[RF20 · HU20] Concluir tarefa",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/80",
+          "numero": 133,
+          "titulo": "[HU32] Exportar relatório mensal",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/133",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Homologação",
-            "data": "2026-12-01"
-          }
+          "marco": null
         },
         {
-          "numero": 81,
-          "titulo": "[RF18 · HU18] Adiar tarefa",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/81",
+          "numero": 134,
+          "titulo": "[HU27] Conhecer a proposta do sistema",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/134",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Homologação",
-            "data": "2026-12-01"
-          }
+          "marco": null
         },
         {
-          "numero": 82,
-          "titulo": "[RF05 · HU05] Consultar situação atual do ciclo",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/82",
+          "numero": 135,
+          "titulo": "[HU29] Gerenciar notificações",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/135",
           "tipo": "Issue",
           "responsaveis": [],
-          "marco": {
-            "titulo": "Homologação",
-            "data": "2026-12-01"
-          }
-        },
-        {
-          "numero": 83,
-          "titulo": "[RF13 · HU13] Recomendar tarefas do dia",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/83",
-          "tipo": "Issue",
-          "responsaveis": [],
-          "marco": {
-            "titulo": "Homologação",
-            "data": "2026-12-01"
-          }
-        },
-        {
-          "numero": 84,
-          "titulo": "[RF15 · HU15] Reajustar recomendação do dia",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/84",
-          "tipo": "Issue",
-          "responsaveis": [],
-          "marco": {
-            "titulo": "Homologação",
-            "data": "2026-12-01"
-          }
-        },
-        {
-          "numero": 85,
-          "titulo": "[RF02 · HU02] Sinalizar sobrecarga",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/85",
-          "tipo": "Issue",
-          "responsaveis": [],
-          "marco": {
-            "titulo": "Homologação",
-            "data": "2026-12-01"
-          }
-        },
-        {
-          "numero": 86,
-          "titulo": "[RF09 · HU09] Recomendar conteúdos sobre o ciclo",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/86",
-          "tipo": "Issue",
-          "responsaveis": [],
-          "marco": {
-            "titulo": "Homologação",
-            "data": "2026-12-01"
-          }
-        },
-        {
-          "numero": 87,
-          "titulo": "[RF01 · HU01] Consultar sintomas comuns da fase",
-          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/87",
-          "tipo": "Issue",
-          "responsaveis": [],
-          "marco": {
-            "titulo": "Homologação",
-            "data": "2026-12-01"
-          }
+          "marco": null
         }
       ]
     },
@@ -443,6 +348,19 @@ const KANBAN = {
     {
       "nome": "Done",
       "itens": [
+        {
+          "numero": 77,
+          "titulo": "[HU22] Receber mensagens de acolhimento",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/77",
+          "tipo": "Issue",
+          "responsaveis": [
+            "g-srodrigues"
+          ],
+          "marco": {
+            "titulo": "Fechamento R3",
+            "data": "2026-11-23"
+          }
+        },
         {
           "numero": 8,
           "titulo": "Unidade 1 - Processo de ER",
@@ -612,13 +530,260 @@ const KANBAN = {
         },
         {
           "numero": 68,
-          "titulo": "[RF25 · HU25] Criar conta",
+          "titulo": "[HU25] Criar conta",
           "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/68",
           "tipo": "Issue",
           "responsaveis": [],
           "marco": {
             "titulo": "Fechamento R3",
             "data": "2026-11-23"
+          }
+        },
+        {
+          "numero": 69,
+          "titulo": "[HU12] Aceitar termos de uso",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/69",
+          "tipo": "Issue",
+          "responsaveis": [
+            "arthurpalhares1"
+          ],
+          "marco": {
+            "titulo": "Fechamento R3",
+            "data": "2026-11-23"
+          }
+        },
+        {
+          "numero": 70,
+          "titulo": "[HU11] Proteger acesso com PIN",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/70",
+          "tipo": "Issue",
+          "responsaveis": [
+            "TiagoSBittencourt"
+          ],
+          "marco": {
+            "titulo": "Fechamento R3",
+            "data": "2026-11-23"
+          }
+        },
+        {
+          "numero": 71,
+          "titulo": "[HU36] Excluir conta e dados",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/71",
+          "tipo": "Issue",
+          "responsaveis": [
+            "TiagoSBittencourt"
+          ],
+          "marco": {
+            "titulo": "Fechamento R3",
+            "data": "2026-11-23"
+          }
+        },
+        {
+          "numero": 72,
+          "titulo": "[HU26] Recuperar acesso à conta",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/72",
+          "tipo": "Issue",
+          "responsaveis": [
+            "TiagoSBittencourt"
+          ],
+          "marco": {
+            "titulo": "Fechamento R3",
+            "data": "2026-11-23"
+          }
+        },
+        {
+          "numero": 73,
+          "titulo": "[HU17] Cadastrar tarefa",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/73",
+          "tipo": "Issue",
+          "responsaveis": [
+            "TiagoSBittencourt"
+          ],
+          "marco": {
+            "titulo": "Fechamento R3",
+            "data": "2026-11-23"
+          }
+        },
+        {
+          "numero": 74,
+          "titulo": "[HU04] Registrar sintomas e disposição",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/74",
+          "tipo": "Issue",
+          "responsaveis": [
+            "TiagoSBittencourt"
+          ],
+          "marco": {
+            "titulo": "Fechamento R3",
+            "data": "2026-11-23"
+          }
+        },
+        {
+          "numero": 75,
+          "titulo": "[HU06 · HU07] Registrar início da menstruação e características do ciclo",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/75",
+          "tipo": "Issue",
+          "responsaveis": [
+            "TiagoSBittencourt"
+          ],
+          "marco": {
+            "titulo": "Fechamento R3",
+            "data": "2026-11-23"
+          }
+        },
+        {
+          "numero": 76,
+          "titulo": "[HU28] Consultar funcionamento do ciclo",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/76",
+          "tipo": "Issue",
+          "responsaveis": [
+            "pedroiaan"
+          ],
+          "marco": {
+            "titulo": "Fechamento R3",
+            "data": "2026-11-23"
+          }
+        },
+        {
+          "numero": 78,
+          "titulo": "[HU21] Sugerir atividades de acolhimento",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/78",
+          "tipo": "Issue",
+          "responsaveis": [
+            "luanaa2005"
+          ],
+          "marco": {
+            "titulo": "Fechamento R3",
+            "data": "2026-11-23"
+          }
+        },
+        {
+          "numero": 79,
+          "titulo": "[HU16 · HU19] Editar e excluir tarefa",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/79",
+          "tipo": "Issue",
+          "responsaveis": [
+            "arthurpalhares1"
+          ],
+          "marco": {
+            "titulo": "Homologação",
+            "data": "2026-12-01"
+          }
+        },
+        {
+          "numero": 80,
+          "titulo": "[HU20] Concluir tarefa",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/80",
+          "tipo": "Issue",
+          "responsaveis": [
+            "arthurpalhares1"
+          ],
+          "marco": {
+            "titulo": "Homologação",
+            "data": "2026-12-01"
+          }
+        },
+        {
+          "numero": 81,
+          "titulo": "[HU18] Adiar tarefa",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/81",
+          "tipo": "Issue",
+          "responsaveis": [
+            "arthurpalhares1"
+          ],
+          "marco": {
+            "titulo": "Homologação",
+            "data": "2026-12-01"
+          }
+        },
+        {
+          "numero": 82,
+          "titulo": "[HU05] Consultar situação atual do ciclo",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/82",
+          "tipo": "Issue",
+          "responsaveis": [
+            "pedroiaan"
+          ],
+          "marco": {
+            "titulo": "Homologação",
+            "data": "2026-12-01"
+          }
+        },
+        {
+          "numero": 83,
+          "titulo": "[HU13] Recomendar tarefas do dia",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/83",
+          "tipo": "Issue",
+          "responsaveis": [
+            "ananunesv"
+          ],
+          "marco": {
+            "titulo": "Homologação",
+            "data": "2026-12-01"
+          }
+        },
+        {
+          "numero": 84,
+          "titulo": "[HU15] Reajustar recomendação do dia",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/84",
+          "tipo": "Issue",
+          "responsaveis": [
+            "ananunesv"
+          ],
+          "marco": {
+            "titulo": "Homologação",
+            "data": "2026-12-01"
+          }
+        },
+        {
+          "numero": 85,
+          "titulo": "[HU02] Sinalizar sobrecarga",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/85",
+          "tipo": "Issue",
+          "responsaveis": [
+            "ananunesv"
+          ],
+          "marco": {
+            "titulo": "Homologação",
+            "data": "2026-12-01"
+          }
+        },
+        {
+          "numero": 86,
+          "titulo": "[HU09] Recomendar conteúdos sobre o ciclo",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/86",
+          "tipo": "Issue",
+          "responsaveis": [
+            "pedroiaan"
+          ],
+          "marco": {
+            "titulo": "Homologação",
+            "data": "2026-12-01"
+          }
+        },
+        {
+          "numero": 87,
+          "titulo": "[HU01] Consultar sintomas comuns da fase",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/87",
+          "tipo": "Issue",
+          "responsaveis": [
+            "pedroiaan"
+          ],
+          "marco": {
+            "titulo": "Homologação",
+            "data": "2026-12-01"
+          }
+        },
+        {
+          "numero": 121,
+          "titulo": "[HU10] Visualizar calendário do ciclo",
+          "url": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/121",
+          "tipo": "Issue",
+          "responsaveis": [
+            "pedroiaan"
+          ],
+          "marco": {
+            "titulo": "Homologação",
+            "data": "2026-12-01"
           }
         }
       ]
