@@ -37,11 +37,13 @@ npm exec -w @mindcycle/app -- expo export --platform android --max-workers 2 --o
 
 ## Resultado local em 15/11/2026
 
-Base integrada: `main` em `28c15e4` (inclui HU17, HU04, HU18, HU21 e HU12).
+Base integrada: `main` em `82b02b0` (inclui HU17, HU04, HU18, HU21, HU12, HU16 e
+HU19). Com a HU16/HU19, a `Tarefa` ganhou `concluidaEm`; editar, adiar e excluir
+uma tarefa continuam refazendo a lista do dia.
 
-- Testes unitarios: 47 no shared, 39 na API (21 do dominio da HU13) e 12 de tela
-  no app (7 da HU13), todos aprovados.
-- 242 testes e2e aprovados, 8 deles da HU13, com PostgreSQL e Mailpit locais.
+- Testes unitarios: 59 no shared, 47 na API (21 do dominio da HU13) e 18 no app
+  (7 de tela da HU13), todos aprovados.
+- 265 testes e2e aprovados, 8 deles da HU13, com PostgreSQL e Mailpit locais.
 - Tipos, lint e bundle Android aprovados.
 - Build da API aprovado no Node 26.5. No Node 22.14 o `nest build` nao roda (o
   projeto pede 22.18 ou mais novo).

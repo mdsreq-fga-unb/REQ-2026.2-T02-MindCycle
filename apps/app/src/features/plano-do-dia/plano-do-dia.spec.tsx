@@ -25,6 +25,7 @@ function tarefa(dados: Partial<TarefaRecomendada> & { titulo: string }): TarefaR
     duracaoMinutos: null,
     dataPlanejada: HOJE,
     criadaEm: '2026-11-10T12:00:00.000Z',
+    concluidaEm: null,
     grupo: 2,
     avisoAdiamento: false,
     ...dados,
