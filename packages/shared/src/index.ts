@@ -4,6 +4,7 @@ export * from './checkin.js';
 export * from './ciclo.js';
 export * from './datas.js';
 export * from './erros.js';
+export * from './fases.js';
 export * from './pin.js';
 export * from './planejamento.js';
 export * from './tarefas.js';

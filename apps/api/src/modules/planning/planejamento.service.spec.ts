@@ -26,6 +26,7 @@ describe('Reajuste: comandos ao banco por pedido do plano (HU15, RNF07)', () => 
       duracaoMinutos: null,
       dataPlanejada: HOJE,
       criadaEm: '2026-11-10T12:00:00.000Z',
+      concluidaEm: null,
       ...dados,
     }));
   }
