@@ -12,8 +12,8 @@ export default function Hoje() {
   return (
     <Tela naAba>
       <Titulo>{textos.hoje.titulo}</Titulo>
-      <CartaoSobrecarga />
       <CartaoMensagem />
+      <CartaoSobrecarga />
       <CartaoCheckin />
       <PlanoDoDia />
     </Tela>
