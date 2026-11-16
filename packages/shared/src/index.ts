@@ -3,6 +3,7 @@ export * from './auth.js';
 export * from './calendario.js';
 export * from './checkin.js';
 export * from './ciclo.js';
+export * from './conteudos.js';
 export * from './datas.js';
 export * from './erros.js';
 export * from './estimador-de-fase.js';

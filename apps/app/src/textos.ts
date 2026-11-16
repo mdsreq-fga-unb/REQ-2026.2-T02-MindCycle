@@ -1,6 +1,7 @@
 import {
   CodigoErro,
   type Fase,
+  type IdConteudo,
   type MensagemAcolhimentoId,
   type MotivoSemFase,
   type PraticaAcolhimento,
@@ -289,6 +290,79 @@ export const textos = {
       lista: (nomes: string[]) =>
         `Comum nesta fase: ${nomes.map((n, i) => (i === 0 ? n : n.toLowerCase())).join(', ')}.`,
       semSintomas: 'Nesta fase os sintomas costumam ser mais leves.',
+    },
+    // HU09. Rascunho da equipe, a revisar com a Dra. Cláudia: informação geral,
+    // não orientação médica.
+    conteudos: {
+      titulo: 'Para entender o seu momento',
+      dicaAcessivel: 'Abre o conteúdo',
+      fechar: 'Fechar',
+      aviso: 'Informação geral, não substitui uma consulta.',
+      porConteudo: {
+        energia_lutea: {
+          titulo: 'Por que a energia cai na fase lútea',
+          paragrafos: [
+            'Depois da ovulação, a progesterona sobe e o corpo gasta um pouco mais de energia. É comum sentir mais sono e menos disposição, principalmente perto da menstruação.',
+            'Isso não é falta de esforço: é o ritmo do corpo. Dias mais leves e pausas curtas ajudam a atravessar essa fase.',
+          ],
+        },
+        alivio_colica: {
+          titulo: 'Cólica: o que costuma aliviar',
+          paragrafos: [
+            'A cólica vem das contrações do útero para eliminar o revestimento. Ela costuma ser mais forte nos primeiros dias.',
+            'Calor na barriga, movimento leve e descanso ajudam muitas pessoas. Se a dor atrapalha a rotina todo mês, vale conversar com uma profissional de saúde.',
+          ],
+        },
+        inchaco_antes: {
+          titulo: 'Por que o corpo incha antes da menstruação',
+          paragrafos: [
+            'Na fase lútea, as mudanças hormonais fazem o corpo reter mais líquido. Inchaço e seios mais sensíveis são comuns.',
+            'Costuma passar quando a menstruação começa. Beber água e reduzir o sal ajudam algumas pessoas.',
+          ],
+        },
+        humor_no_ciclo: {
+          titulo: 'Humor e emoções ao longo do ciclo',
+          paragrafos: [
+            'A queda dos hormônios no fim da fase lútea pode deixar as emoções mais intensas: irritação, ansiedade ou desânimo.',
+            'Perceber esse padrão ajuda a se cobrar menos. Se os sintomas forem muito fortes, uma profissional de saúde pode ajudar.',
+          ],
+        },
+        sono_e_ciclo: {
+          titulo: 'O ciclo e o sono',
+          paragrafos: [
+            'Perto da menstruação e nos primeiros dias dela, o sono pode ficar mais leve ou agitado por causa das mudanças hormonais e do desconforto.',
+            'Uma rotina mais calma à noite e menos telas antes de dormir costumam ajudar.',
+          ],
+        },
+        dor_de_cabeca: {
+          titulo: 'Dor de cabeça e hormônios',
+          paragrafos: [
+            'A queda do estrogênio antes e durante a menstruação pode trazer dor de cabeça e enjoo para algumas pessoas.',
+            'Anotar quando ela aparece ajuda a perceber se segue o ciclo. Dores fortes ou frequentes merecem atenção de uma profissional.',
+          ],
+        },
+        energia_volta: {
+          titulo: 'A energia que volta depois da menstruação',
+          paragrafos: [
+            'Na fase folicular, o estrogênio sobe aos poucos e muitas pessoas sentem mais disposição e foco.',
+            'Pode ser um bom momento para começar tarefas que pedem mais energia, sem obrigação de render mais.',
+          ],
+        },
+        ovulacao: {
+          titulo: 'O que acontece na ovulação',
+          paragrafos: [
+            'No meio do ciclo, o ovário libera um óvulo. O estrogênio chega ao ponto mais alto, e a disposição costuma acompanhar.',
+            'Algumas pessoas sentem uma dor leve em um dos lados da barriga por algumas horas.',
+          ],
+        },
+        foco_no_ciclo: {
+          titulo: 'Foco e concentração ao longo do ciclo',
+          paragrafos: [
+            'A concentração pode variar com o ciclo: costuma ficar mais fácil na fase folicular e mais difícil perto da menstruação.',
+            'Dividir tarefas em partes menores ajuda nos dias em que o foco falta.',
+          ],
+        },
+      } satisfies Record<IdConteudo, { titulo: string; paragrafos: string[] }>,
     },
     // HU10. As cores seguem o modelo de fases da HU05.
     calendario: {

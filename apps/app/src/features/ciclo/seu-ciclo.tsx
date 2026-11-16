@@ -8,7 +8,10 @@ import { textos } from '@/textos';
 import { Aviso, Botao, Confirmacao, Titulo } from '@/ui/componentes';
 import { fonteTitulo } from '@/ui/tema';
 
+import { useCheckinsDoDia } from '@/features/checkin/consulta';
+
 import { CalendarioDoCiclo } from './calendario-do-ciclo';
+import { ConteudosRecomendados } from './conteudos-recomendados';
 import { chaveCiclo } from './consulta';
 import { SintomasDaFase } from './sintomas-da-fase';
 import { SituacaoDoCiclo } from './situacao-do-ciclo';
@@ -22,6 +25,9 @@ export function SeuCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string }) {
   const queryClient = useQueryClient();
   const t = textos.ciclo.seuCiclo;
   const registradoHoje = ciclo.inicios[0]?.data === hoje;
+  // HU09 cruza a fase com os sintomas do check-in de hoje (HU04).
+  const checkins = useCheckinsDoDia();
+  const sintomasDeHoje = checkins.data?.vigente?.sintomas.map((s) => s.sintoma) ?? [];
 
   // HU06 em um toque: o início de hoje. Outro dia, em "Editar meu ciclo".
   const registro = useMutation({
@@ -51,6 +57,10 @@ export function SeuCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string }) {
         />
       )}
       <Aviso>{registro.isError && mensagemDeErro(registro.error)}</Aviso>
+      <ConteudosRecomendados
+        fase={ciclo.situacao.estimada ? ciclo.situacao.fase : null}
+        sintomas={sintomasDeHoje}
+      />
       <Botao titulo={t.editar} variante="link" onPress={() => router.push('/editar-ciclo')} />
     </>
   );
