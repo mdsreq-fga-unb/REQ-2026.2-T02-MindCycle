@@ -311,14 +311,14 @@ describe('Ciclo (HU05, HU06, HU07)', () => {
 
     it('acompanha a mudança das entradas (HU06 e HU07) sem guardar a estimativa antiga', async () => {
       const conta = await novaConta();
-      const inicio = await conta.registrar('2026-10-10').expect(201);
+      await conta.registrar('2026-10-10').expect(201);
       await conta.informar({ irregular: false, duracaoMedia: 28 }).expect(200);
       expect((await conta.consultar()).body.situacao).toMatchObject({
         estimada: false,
         motivo: 'alem_da_duracao',
       });
 
-      await conta.registrar('2026-11-01').expect(201);
+      const recente = await conta.registrar('2026-11-01').expect(201);
       expect((await conta.consultar()).body.situacao).toMatchObject({
         estimada: true,
         diaDoCiclo: 14,
@@ -332,8 +332,13 @@ describe('Ciclo (HU05, HU06, HU07)', () => {
         fase: 'lutea',
       });
 
-      await conta.remover(inicio.body.id).expect(204);
-      expect((await conta.consultar()).body.situacao).toMatchObject({ diaDoCiclo: 14 });
+      // Apagar o início mais recente volta a contar do anterior (10/10).
+      await conta.remover(recente.body.id).expect(204);
+      expect((await conta.consultar()).body.situacao).toEqual({
+        estimada: false,
+        motivo: 'alem_da_duracao',
+        diaDoCiclo: 36,
+      });
     });
   });
 

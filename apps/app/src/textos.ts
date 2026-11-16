@@ -1,5 +1,6 @@
 import {
   CodigoErro,
+  MODELO_FASES,
   type Fase,
   type MensagemAcolhimentoId,
   type MotivoSemFase,
@@ -277,9 +278,8 @@ export const textos = {
       motivos: {
         sem_inicio: 'Registre o início da sua última menstruação para ver a fase estimada.',
         sem_duracao: 'Informe quantos dias seu ciclo costuma durar para ver a fase estimada.',
-        irregular: 'Com o ciclo irregular, a fase não dá para estimar só pela data.',
-        fora_do_modelo:
-          'A estimativa cobre ciclos de 21 a 35 dias. Com a duração que você informou, ela não é feita.',
+        irregular: 'Com o ciclo irregular, não dá para estimar a fase só pela data.',
+        fora_do_modelo: `A estimativa cobre ciclos de ${MODELO_FASES.duracaoMinima} a ${MODELO_FASES.duracaoMaxima} dias. Com a duração que você informou, ela não é feita.`,
         alem_da_duracao:
           'Seu ciclo passou da duração que você informou. Se a menstruação começou, registre o novo início.',
       } satisfies Record<MotivoSemFase, string>,
@@ -320,7 +320,7 @@ export const textos = {
       dica: 'Toque em uma fase para saber mais.',
       rotuloAcessivel: (nome: string) => `Fase ${nome.toLowerCase()}`,
       tituloModal: (nome: string) => `Fase ${nome.toLowerCase()}`,
-      atual: '· agora',
+      atual: '· estimada',
       rotuloAtual: (nome: string) => `Fase ${nome.toLowerCase()}, fase atual estimada`,
       dicaAcessivel: 'Abre a explicação da fase',
       quando: 'Quando acontece',
