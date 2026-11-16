@@ -8,7 +8,8 @@ export const SINTOMAS_COMUNS_POR_FASE = {
   menstrual: ['colica', 'cansaco', 'dor_nas_costas', 'dor_de_cabeca'],
   folicular: [],
   ovulatoria: ['sensibilidade_nos_seios', 'inchaco'],
-  lutea: ['cansaco', 'inchaco', 'irritabilidade', 'sensibilidade_nos_seios', 'acne'],
+  // Alinhada à explicação da fase (HU28), que fala desses sintomas perto do fim.
+  lutea: ['cansaco', 'inchaco', 'irritabilidade', 'sensibilidade_nos_seios'],
 } as const satisfies Record<Fase, readonly Sintoma[]>;
 
 /** Os sintomas comuns da fase; a folicular costuma não ter sintomas marcantes. */

@@ -16,8 +16,17 @@ describe('SintomasDaFase (HU01)', () => {
     );
 
     expect(
-      screen.getByText(t.lista([nomes.cansaco, nomes.inchaco, nomes.irritabilidade, nomes.sensibilidade_nos_seios, nomes.acne])),
+      screen.getByText(
+        t.listaFimDaFase([nomes.cansaco, nomes.inchaco, nomes.irritabilidade, nomes.sensibilidade_nos_seios]),
+      ),
     ).toBeTruthy();
+  });
+
+  it('monta a frase com "e" antes do último e em minúsculas', () => {
+    expect(t.lista([nomes.colica, nomes.cansaco, nomes.dor_de_cabeca])).toBe(
+      'Nesta fase, algumas pessoas sentem: cólica, cansaço e dor de cabeça.',
+    );
+    expect(t.lista([nomes.colica])).toBe('Nesta fase, algumas pessoas sentem: cólica.');
   });
 
   it('na fase folicular, diz que os sintomas costumam ser leves', async () => {

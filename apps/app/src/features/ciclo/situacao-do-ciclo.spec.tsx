@@ -19,9 +19,22 @@ describe('SituacaoDoCiclo (HU05)', () => {
       />,
     );
 
-    expect(screen.getByText(t.dia(6))).toBeTruthy();
+    // Visível na tela, mas fora do leitor de tela: o anel já anuncia o dia.
+    expect(screen.getByText(t.dia(6), { includeHiddenElements: true })).toBeTruthy();
     expect(screen.getByText(t.fase(nomes.folicular.nome))).toBeTruthy();
     expect(screen.getByText(t.estimativa)).toBeTruthy();
+  });
+
+  // Revisão do PR #118, ponto 4: o anel diz o dia e a duração, e o dia não é lido duas vezes.
+  it('o anel é lido com o dia e a duração', async () => {
+    await render(
+      <SituacaoDoCiclo
+        situacao={{ estimada: true, diaDoCiclo: 9, fase: 'folicular', duracao: 28 }}
+      />,
+    );
+
+    expect(screen.getByLabelText(t.anelRotulo(9, 28))).toBeTruthy();
+    expect(screen.queryAllByLabelText(t.dia(9))).toHaveLength(0);
   });
 
   // Critério 2: sem estimativa, informa o motivo e não atribui fase nenhuma.

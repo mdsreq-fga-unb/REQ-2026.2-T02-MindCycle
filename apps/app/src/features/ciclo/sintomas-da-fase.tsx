@@ -16,9 +16,11 @@ export function SintomasDaFase({ situacao }: { situacao: SituacaoCiclo }) {
   const sintomas = sintomasComunsDaFase(situacao.fase);
   return (
     <Texto suave style={{ fontSize: 14, lineHeight: 20 }}>
-      {sintomas.length > 0
-        ? t.lista(sintomas.map((s) => textos.checkin.sintomas.nomes[s]))
-        : t.semSintomas}
+      {sintomas.length === 0
+        ? t.semSintomas
+        : (situacao.fase === 'lutea' ? t.listaFimDaFase : t.lista)(
+            sintomas.map((s) => textos.checkin.sintomas.nomes[s]),
+          )}
     </Texto>
   );
 }

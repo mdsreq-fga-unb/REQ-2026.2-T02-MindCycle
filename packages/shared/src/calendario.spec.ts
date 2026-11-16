@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { faseNoCalendario, gradeDoMes } from './calendario.js';
+import { podeEstimar } from './estimador-de-fase.js';
 import type { InicioMenstruacao, PerfilCiclo } from './ciclo.js';
 
 const inicio = (data: string): InicioMenstruacao => ({ id: data, data });
@@ -71,5 +72,38 @@ describe('faseNoCalendario (HU10)', () => {
       faseNoCalendario('2026-11-02', { inicios, perfil: { duracaoMedia: null, irregular: true } }),
     ).toBeNull();
     expect(faseNoCalendario('2026-11-02', { inicios, perfil: regular(40) })).toBeNull();
+  });
+});
+
+// Revisão do PR #118, ponto 1: um ciclo que já fechou termina no próximo início.
+describe('faseNoCalendario em ciclos já fechados', () => {
+  it('usa a duração real do ciclo, sem deixar buraco no fim', () => {
+    // 01/10 a 01/11: 32 dias reais, com média informada de 28.
+    const ciclo = { inicios: [inicio('2026-11-02'), inicio('2026-10-01')], perfil: regular(28) };
+    expect(faseNoCalendario('2026-10-29', ciclo)).toBe('lutea');
+    expect(faseNoCalendario('2026-11-01', ciclo)).toBe('lutea');
+  });
+
+  it('põe a ovulatória pela duração real, não pela média', () => {
+    // 04/10 a 27/10: 24 dias reais. A ovulatória fica nos dias 9 a 11 (12 a 14/10).
+    const ciclo = { inicios: [inicio('2026-10-28'), inicio('2026-10-04')], perfil: regular(28) };
+    expect(faseNoCalendario('2026-10-12', ciclo)).toBe('ovulatoria');
+    expect(faseNoCalendario('2026-10-14', ciclo)).toBe('ovulatoria');
+    expect(faseNoCalendario('2026-10-16', ciclo)).toBe('lutea');
+  });
+
+  it('ciclo fechado fora da faixa do modelo fica sem cor', () => {
+    // 01/09 a 15/10: 45 dias.
+    const ciclo = { inicios: [inicio('2026-10-16'), inicio('2026-09-01')], perfil: regular(28) };
+    expect(faseNoCalendario('2026-09-02', ciclo)).toBeNull();
+  });
+});
+
+describe('podeEstimar', () => {
+  it('só com ciclo regular e duração dentro da faixa do modelo', () => {
+    expect(podeEstimar(regular(28))).toBe(true);
+    expect(podeEstimar(regular(40))).toBe(false);
+    expect(podeEstimar({ duracaoMedia: null, irregular: true })).toBe(false);
+    expect(podeEstimar(null)).toBe(false);
   });
 });
