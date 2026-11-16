@@ -193,6 +193,8 @@ model CheckinSintoma {
 }
 
 // HU18/HU15: permite distinguir escolha da usuária de reajuste automático.
+// A volta de uma passagem feita pelo reajuste não ganha linha própria: fica na
+// mesma linha, como desfeita (pela usuária) ou devolvida (pelo reajuste).
 enum OrigemMovimentacaoTarefa {
   usuaria
   reajuste
@@ -207,6 +209,10 @@ model MovimentacaoTarefa {
   dataNova     DateTime                 @map("data_nova") @db.Date
   origem       OrigemMovimentacaoTarefa
   criadaEm     DateTime                 @map("criada_em") @db.Timestamptz
+  /// HU15: a usuária trouxe a tarefa de volta; ela não é movida de novo naquele dia.
+  desfeitaEm   DateTime?                @map("desfeita_em") @db.Timestamptz
+  /// HU15: a disposição subiu e o reajuste trouxe a tarefa de volta.
+  devolvidaEm  DateTime?                @map("devolvida_em") @db.Timestamptz
 
   // A cascata da conta alcança o histórico pela tarefa (HU36).
   tarefa Tarefa @relation(fields: [tarefaId], references: [id], onDelete: Cascade)

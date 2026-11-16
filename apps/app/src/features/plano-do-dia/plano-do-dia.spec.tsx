@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
 import type { ReactNode } from 'react';
-import type { RecomendacaoDoDia, TarefaRecomendada } from '@mindcycle/shared';
+import type { RecomendacaoReajustada, TarefaRecomendada } from '@mindcycle/shared';
 
 import { textos } from '@/textos';
 
@@ -33,9 +33,16 @@ function tarefa(dados: Partial<TarefaRecomendada> & { titulo: string }): TarefaR
 
 function recomendacao(
   tarefas: TarefaRecomendada[],
-  extra: Partial<RecomendacaoDoDia> = {},
-): RecomendacaoDoDia {
-  return { hoje: HOJE, disposicao: 2, disposicaoAssumida: false, tarefas, ...extra };
+  extra: Partial<RecomendacaoReajustada> = {},
+): RecomendacaoReajustada {
+  return {
+    hoje: HOJE,
+    disposicao: 2,
+    disposicaoAssumida: false,
+    tarefas,
+    movidas: [],
+    ...extra,
+  };
 }
 
 // O formulário de adiamento usa o React Query.
@@ -102,7 +109,7 @@ describe('Lista das tarefas do dia (HU13)', () => {
 
   it('não reabre o formulário sozinho quando o aviso sai e depois volta', async () => {
     const cliente = new QueryClient();
-    const lista = (dados: RecomendacaoDoDia) => (
+    const lista = (dados: RecomendacaoReajustada) => (
       <QueryClientProvider client={cliente}>
         <ListaDoDia recomendacao={dados} />
       </QueryClientProvider>

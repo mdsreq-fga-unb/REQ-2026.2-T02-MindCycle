@@ -143,9 +143,8 @@ export class CheckinService {
       },
       include: incluirSintomas,
     });
-    // Pendente (HU15): se este for o vigente de hoje (o mais recente do dia da
-    // usuária) e a disposição mudou, a correção dispara o reajuste do plano.
-    // Corrigir um registro anterior não muda a disposição vigente.
+    // HU15: nada a disparar daqui. O plano do dia se reajusta pela disposição
+    // vigente a cada pedido, e o app pede o plano de novo depois da correção.
     return paraResposta(checkin);
   }
 }

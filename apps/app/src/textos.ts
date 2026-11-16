@@ -88,6 +88,20 @@ export const textos = {
         'Esta tarefa pede mais energia do que a sua disposição de hoje. Se precisar, ela pode ser adiada.',
     },
   },
+  // HU15. O reajuste cuida do dia, sem contador nem cobrança: a tarefa só muda
+  // de dia, com o mesmo prazo, e a usuária decide se traz de volta.
+  reajuste: {
+    titulo: 'Ficaram para amanhã',
+    explicacao:
+      'Pedem mais energia do que a sua disposição de hoje. O prazo continua o mesmo.',
+    diaLivre:
+      'Pela sua disposição de hoje, as tarefas ficaram para amanhã. Se quiser, traga alguma de volta.',
+    trazer: 'Trazer para hoje',
+    rotuloTrazer: (titulo: string) => `Trazer a tarefa ${titulo} para hoje`,
+    trazida: (titulo: string) => `${titulo} voltou para hoje.`,
+    naoTrazida: (titulo: string) =>
+      `${titulo} mudou de lugar enquanto você tocava. Sua lista será atualizada.`,
+  },
   // HU04
   checkin: {
     titulo: 'Como você está agora?',
@@ -395,6 +409,8 @@ export const textos = {
       'Vamos fazer uma pausa. Tente de novo em alguns minutos ou entre com seu e-mail e senha.',
     [CodigoErro.PinNaoDefinido]:
       'Sua conta não tem PIN. Você pode criar um na aba Conta.',
+    [CodigoErro.SemReajusteParaDesfazer]:
+      'Essa tarefa já não está entre as que ficaram para amanhã. Sua lista será atualizada.',
     validacao: 'Confira os campos destacados.',
     generico: 'Algo não saiu como esperado. Tente de novo em instantes.',
   },
