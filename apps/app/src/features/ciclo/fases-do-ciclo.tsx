@@ -9,7 +9,7 @@ import { cores, coresFase, coresFaseSuave, espaco, raio } from '@/ui/tema';
 /**
  * HU28: as quatro fases em etiquetas pequenas, que também servem de legenda do
  * calendário (HU10). Cada uma abre a explicação da fase. A fase estimada de hoje
- * (HU05) ganha borda e o texto "agora", não só destaque de cor.
+ * (HU05) ganha borda e o texto "estimada", não só destaque de cor.
  */
 export function FasesDoCiclo({
   faseAtual,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    minHeight: 36,
+    minHeight: 44,
     paddingHorizontal: 12,
     borderRadius: raio.botao,
     borderWidth: 1.5,
@@ -80,6 +80,6 @@ const styles = StyleSheet.create({
   pressionada: { opacity: 0.8, transform: [{ scale: 0.96 }] },
   ponto: { width: 10, height: 10, borderRadius: 5 },
   nome: { fontSize: 14, fontWeight: '700', color: cores.ink },
-  marcaAtual: { fontSize: 13, fontWeight: '600', color: cores.ink },
+  marcaAtual: { fontSize: 14, fontWeight: '600', color: cores.ink },
   dica: { fontSize: 13, lineHeight: 18 },
 });

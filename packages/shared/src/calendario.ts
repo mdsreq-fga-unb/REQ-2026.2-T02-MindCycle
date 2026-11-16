@@ -1,6 +1,6 @@
 import type { InicioMenstruacao, PerfilCiclo } from './ciclo.js';
 import { diasEntre, somarDias, type DataLocal } from './datas.js';
-import { faseDoDia } from './estimador-de-fase.js';
+import { faseDoDia, podeEstimar } from './estimador-de-fase.js';
 import type { Fase } from './fases.js';
 
 const doisDigitos = (n: number) => String(n).padStart(2, '0');
@@ -24,24 +24,43 @@ export function gradeDoMes(ano: number, mes: number): (DataLocal | null)[][] {
 }
 
 /**
- * HU10: a fase de um dia no calendário, pela fase do ciclo que o contém, contado
- * a partir do início mais recente que não é posterior a ele. Depois do fim da
- * duração informada, ou sem estimativa possível (HU05), o dia fica sem fase.
+ * HU10: a fase de cada dia no calendário. Um dia pertence ao ciclo do início
+ * mais recente que não é posterior a ele. Se esse ciclo já fechou (há um início
+ * depois), vale a duração real dele; no ciclo atual, a duração média informada.
+ * Depois do fim da duração, sem estimativa possível (HU05) ou num ciclo fechado
+ * fora da faixa do modelo, o dia fica sem fase: nunca há previsão do próximo.
+ * Devolve uma função para os inícios serem ordenados uma vez só.
  */
+export function fasesDoCalendario({
+  inicios,
+  perfil,
+}: {
+  inicios: InicioMenstruacao[];
+  perfil: PerfilCiclo | null;
+}): (data: DataLocal) => Fase | null {
+  if (!podeEstimar(perfil) || perfil?.duracaoMedia == null) {
+    return () => null;
+  }
+  const duracaoMedia = perfil.duracaoMedia;
+  const datas = inicios.map((i) => i.data).sort();
+  return (data) => {
+    let i = -1;
+    while (i + 1 < datas.length && datas[i + 1] <= data) {
+      i++;
+    }
+    if (i < 0) {
+      return null;
+    }
+    const proximo = datas[i + 1];
+    const duracao = proximo ? diasEntre(datas[i], proximo) : duracaoMedia;
+    return faseDoDia(diasEntre(datas[i], data) + 1, duracao);
+  };
+}
+
+/** A fase de um único dia; para o mês inteiro, prefira fasesDoCalendario. */
 export function faseNoCalendario(
   data: DataLocal,
-  { inicios, perfil }: { inicios: InicioMenstruacao[]; perfil: PerfilCiclo | null },
+  ciclo: { inicios: InicioMenstruacao[]; perfil: PerfilCiclo | null },
 ): Fase | null {
-  if (!perfil || perfil.irregular || perfil.duracaoMedia === null) {
-    return null;
-  }
-  const inicio = inicios
-    .map((i) => i.data)
-    .filter((d) => d <= data)
-    .sort()
-    .at(-1);
-  if (!inicio) {
-    return null;
-  }
-  return faseDoDia(diasEntre(inicio, data) + 1, perfil.duracaoMedia);
+  return fasesDoCalendario(ciclo)(data);
 }

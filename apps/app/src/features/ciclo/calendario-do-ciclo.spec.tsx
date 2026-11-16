@@ -66,4 +66,12 @@ describe('CalendarioDoCiclo (HU10)', () => {
     await fireEvent.press(screen.getByRole('button', { name: t.proximoMes }));
     expect(screen.getByText(t.mes(2027, 1))).toBeTruthy();
   });
+
+  // Revisão do PR #118, ponto 3: a fase não pode depender só da cor.
+  it('mostra a inicial da fase em cada dia pintado', async () => {
+    await render(<CalendarioDoCiclo inicios={inicios} perfil={regular} hoje={HOJE} />);
+
+    // 15/11 e 16/11 são dias 1 e 2: menstrual.
+    expect(screen.getAllByText(t.inicial.menstrual).length).toBeGreaterThanOrEqual(2);
+  });
 });

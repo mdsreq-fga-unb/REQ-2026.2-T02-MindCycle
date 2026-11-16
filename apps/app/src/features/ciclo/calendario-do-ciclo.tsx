@@ -1,7 +1,7 @@
 import {
-  faseDoDia,
-  faseNoCalendario,
+  fasesDoCalendario,
   gradeDoMes,
+  podeEstimar,
   type DataLocal,
   type Fase,
   type InicioMenstruacao,
@@ -37,11 +37,9 @@ export function CalendarioDoCiclo({
   const [ano, mesHoje] = hoje.split('-').map(Number);
   const [mes, setMes] = useState({ ano, mes: mesHoje });
   const datasDeInicio = new Set(inicios.map((i) => i.data));
-  const comCores =
-    !!perfil &&
-    !perfil.irregular &&
-    perfil.duracaoMedia !== null &&
-    faseDoDia(1, perfil.duracaoMedia) !== null;
+  const comCores = podeEstimar(perfil);
+  // Os inícios são ordenados uma vez; cada célula só consulta.
+  const faseDe = fasesDoCalendario({ inicios, perfil });
 
   const mudarMes = (passo: number) =>
     setMes(({ ano: a, mes: m }) => {
@@ -75,7 +73,7 @@ export function CalendarioDoCiclo({
             if (!data) {
               return <View key={d} style={styles.celula} />;
             }
-            const fase = comCores ? faseNoCalendario(data, { inicios, perfil }) : null;
+            const fase = faseDe(data);
             const inicio = datasDeInicio.has(data);
             const ehHoje = data === hoje;
             const fundo = fase
@@ -97,10 +95,17 @@ export function CalendarioDoCiclo({
                     { backgroundColor: fundo },
                     ehHoje && !fase && styles.hojeSemFase,
                   ]}>
-                  <Text style={[styles.numero, ehHoje && styles.numeroHoje]}>
+                  {inicio && <View style={[styles.pontoInicio, styles.pontoNoCanto]} />}
+                  <Text
+                    maxFontSizeMultiplier={1.4}
+                    style={[styles.numero, ehHoje && styles.numeroHoje]}>
                     {Number(data.slice(8))}
                   </Text>
-                  {inicio && <View style={styles.pontoInicio} />}
+                  {fase && (
+                    <Text maxFontSizeMultiplier={1.4} style={styles.inicial}>
+                      {t.inicial[fase]}
+                    </Text>
+                  )}
                 </View>
               </View>
             );
@@ -156,8 +161,8 @@ const styles = StyleSheet.create({
   mes: { fontFamily: fonteTitulo, fontSize: 20, lineHeight: 26, color: cores.ink },
   setas: { flexDirection: 'row', gap: espaco.xs },
   botaoMes: {
-    width: 36,
-    height: 36,
+    width: 44,
+    height: 44,
     borderRadius: raio.botao,
     backgroundColor: cores.blush,
     alignItems: 'center',
@@ -183,7 +188,9 @@ const styles = StyleSheet.create({
   hojeSemFase: { borderWidth: 2, borderColor: cores.ink },
   numero: { fontSize: 14, fontWeight: '500', color: cores.ink },
   numeroHoje: { fontWeight: '800' },
-  pontoInicio: { width: 5, height: 5, borderRadius: 3, backgroundColor: cores.ink },
+  pontoInicio: { width: 6, height: 6, borderRadius: 3, backgroundColor: cores.ink },
+  pontoNoCanto: { position: 'absolute', top: 5, right: 5 },
+  inicial: { fontSize: 10, lineHeight: 12, fontWeight: '700', color: cores.inkSoft },
   legendaInicio: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   textoPequeno: { fontSize: 13, lineHeight: 18 },
 });
