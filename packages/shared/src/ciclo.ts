@@ -12,6 +12,10 @@ export type InicioMenstruacaoDto = z.infer<typeof inicioMenstruacaoSchema>;
 export const DURACAO_MEDIA_MINIMA = 15;
 export const DURACAO_MEDIA_MAXIMA = 60;
 
+// Onde o seletor de duração do app começa quando a usuária toca nele pela
+// primeira vez. Não é presumido em cálculo nenhum: só vale o que ela salvar (HU05).
+export const DURACAO_MEDIA_REFERENCIA = 28;
+
 // Ciclo irregular não tem duração média: se vier junto, é ignorada.
 export const perfilCicloSchema = z.discriminatedUnion('irregular', [
   z.object({ irregular: z.literal(true) }),
@@ -37,4 +41,12 @@ export interface Ciclo {
   inicios: InicioMenstruacao[];
   /** Null enquanto a usuária não informou nada (HU07). */
   perfil: PerfilCiclo | null;
+}
+
+/**
+ * Já há um início (HU06) e as características (HU07): a aba Ciclo troca o
+ * formulário pela tela "Seu ciclo". Faltando um dos dois, o formulário volta.
+ */
+export function cicloPreenchido(ciclo: Ciclo): boolean {
+  return ciclo.inicios.length > 0 && ciclo.perfil !== null;
 }
