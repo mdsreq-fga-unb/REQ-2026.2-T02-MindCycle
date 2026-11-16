@@ -157,9 +157,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: cores.white,
   },
-  cabecalho: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  mes: { fontFamily: fonteTitulo, fontSize: 20, lineHeight: 26, color: cores.ink },
-  setas: { flexDirection: 'row', gap: espaco.xs },
+  cabecalho: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: espaco.sm,
+  },
+  // Com fonte ampliada, o mês quebra em duas linhas em vez de empurrar as setas.
+  mes: { flexShrink: 1, fontFamily: fonteTitulo, fontSize: 20, lineHeight: 26, color: cores.ink },
+  setas: { flexDirection: 'row', flexShrink: 0, gap: espaco.xs },
   botaoMes: {
     width: 44,
     height: 44,
