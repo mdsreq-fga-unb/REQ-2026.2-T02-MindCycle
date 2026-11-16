@@ -52,11 +52,14 @@ export class PlanejamentoService {
     usuaria: UsuariaAutenticada,
   ): Promise<RecomendacaoReajustada> {
     const hoje = this.relogio.hoje(usuaria.fuso);
-    // As leituras correm juntas: a lista deve aparecer em até 3 s (RNF06).
-    const [disposicao, lido] = await Promise.all([
-      this.checkins.disposicaoVigente(usuaria),
+    // As leituras correm juntas: a lista deve aparecer em até 3 s (RNF06). A
+    // disposição pode ser a baixa da sinalização de sobrecarga (HU02): para o
+    // reajuste ela vale como a de um registro, e a origem só muda o texto.
+    const [vigente, lido] = await Promise.all([
+      this.checkins.disposicaoDoDia(usuaria),
       this.carregar(usuaria, hoje),
     ]);
+    const disposicao = vigente?.disposicao ?? null;
     let estado = lido;
     const mudancas = reajustar(
       estado.tarefas,
@@ -69,7 +72,13 @@ export class PlanejamentoService {
       // Relê em vez de supor: outra requisição pode ter mudado uma tarefa.
       estado = await this.carregar(usuaria, hoje);
     }
-    return planoDoDia(estado.tarefas, disposicao, hoje, estado.movimentacoes);
+    return planoDoDia(
+      estado.tarefas,
+      disposicao,
+      hoje,
+      estado.movimentacoes,
+      vigente?.origem === 'sobrecarga',
+    );
   }
 
   /**

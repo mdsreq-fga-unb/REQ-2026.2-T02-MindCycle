@@ -86,7 +86,10 @@ export const limiteCheckinsSchema = z.coerce
   .max(LIMITE_MAXIMO_CHECKINS)
   .default(LIMITE_PADRAO_CHECKINS);
 
-/** `registro` é o da usuária; `sobrecarga` nasce da sinalização de sobrecarga (HU02). */
+/**
+ * Todo check-in é `registro`. A sinalização de sobrecarga (HU02) ficou numa
+ * tabela própria e não vira check-in: `sobrecarga` não é usado.
+ */
 export type OrigemCheckin = 'registro' | 'sobrecarga';
 
 export interface Checkin {
@@ -104,7 +107,11 @@ export interface Checkin {
 }
 
 export interface CheckinsDoDia {
-  /** O mais recente do dia: vale para a recomendação e o reajuste (HU13, HU15). */
+  /**
+   * O mais recente do dia. A disposição dele vale para a recomendação e o
+   * reajuste (HU13, HU15), a menos que uma sinalização de sobrecarga venha
+   * depois (HU02).
+   */
   vigente: Checkin | null;
   /** Os de hoje, do mais recente para o mais antigo. */
   registros: Checkin[];

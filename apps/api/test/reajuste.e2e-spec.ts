@@ -114,6 +114,7 @@ describe('Reajuste da recomendação do dia pela API (HU15, RNF03, RNF07)', () =
     expect(Object.keys(plano).sort()).toEqual([
       'disposicao',
       'disposicaoAssumida',
+      'disposicaoPorSobrecarga',
       'hoje',
       'movidas',
       'tarefas',

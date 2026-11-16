@@ -59,7 +59,15 @@ function plano(
   movidas: Tarefa[],
   extra: Partial<RecomendacaoReajustada> = {},
 ): RecomendacaoReajustada {
-  return { hoje: HOJE, disposicao: 2, disposicaoAssumida: false, tarefas, movidas, ...extra };
+  return {
+    hoje: HOJE,
+    disposicao: 2,
+    disposicaoAssumida: false,
+    disposicaoPorSobrecarga: false,
+    tarefas,
+    movidas,
+    ...extra,
+  };
 }
 
 /** Uma promessa que o caso resolve quando quiser. */
