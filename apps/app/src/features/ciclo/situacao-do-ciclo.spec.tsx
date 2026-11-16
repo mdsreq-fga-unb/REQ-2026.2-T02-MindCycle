@@ -48,7 +48,7 @@ describe('SituacaoDoCiclo (HU05)', () => {
       <SituacaoDoCiclo situacao={{ estimada: false, motivo: 'irregular', diaDoCiclo: 9 }} />,
     );
 
-    expect(screen.getByText(t.dia(9))).toBeTruthy();
+    expect(screen.getByLabelText(t.dia(9))).toBeTruthy();
   });
 });
 

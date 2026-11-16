@@ -27,6 +27,18 @@ export const coresFase = {
   lutea: cores.lilac,
 } as const satisfies Record<Fase, string>;
 
+// Fundo claro de cada fase, para os dias do calendário e as etiquetas: ink sobre
+// eles passa folgado no AA. A cor cheia (coresFase) marca o dia de hoje e os pontos.
+export const coresFaseSuave = {
+  menstrual: '#FBDDE8',
+  folicular: '#FFE6DD',
+  ovulatoria: '#FCEFD3',
+  lutea: '#ECE4F6',
+} as const satisfies Record<Fase, string>;
+
+/** Fraunces (assets/brand) para títulos; carregada em app/_layout.tsx. */
+export const fonteTitulo = 'Fraunces-SemiBold';
+
 export const espaco = {
   xs: 4,
   sm: 8,

@@ -1,5 +1,6 @@
 import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SplashScreen, Stack } from 'expo-router';
+import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { AppState } from 'react-native';
 
@@ -38,8 +39,13 @@ export default function RootLayout() {
 function Navegacao() {
   const { carregando, autenticada, conta, erroConta, recarregarConta, travada } =
     useSessao();
+  // Fraunces, a fonte do logotipo (assets/brand), nos títulos da aba Ciclo.
+  const [fontesProntas, erroFontes] = useFonts({
+    'Fraunces-SemiBold': require('../../assets/fonts/Fraunces-SemiBold.ttf'),
+  });
 
-  if (carregando) {
+  // Se a fonte falhar, o app segue com a fonte do sistema.
+  if (carregando || (!fontesProntas && !erroFontes)) {
     return null;
   }
   SplashScreen.hide();
