@@ -35,7 +35,14 @@ function recomendacao(
   tarefas: TarefaRecomendada[],
   extra: Partial<RecomendacaoDoDia> = {},
 ): RecomendacaoDoDia {
-  return { hoje: HOJE, disposicao: 2, disposicaoAssumida: false, tarefas, ...extra };
+  return {
+    hoje: HOJE,
+    disposicao: 2,
+    disposicaoAssumida: false,
+    disposicaoPorSobrecarga: false,
+    tarefas,
+    ...extra,
+  };
 }
 
 // O formulário de adiamento usa o React Query.
@@ -74,6 +81,20 @@ describe('Lista das tarefas do dia (HU13)', () => {
     await render(comCache(<ListaDoDia recomendacao={recomendacao([leve], { disposicao: 1 })} />));
 
     expect(screen.getByText(t.disposicao('Baixa'))).toBeTruthy();
+  });
+
+  // HU02: a disposição baixa veio da sinalização, não de um registro.
+  it('diz quando a disposição considerada veio da sinalização de sobrecarga', async () => {
+    await render(
+      comCache(
+        <ListaDoDia
+          recomendacao={recomendacao([leve], { disposicao: 1, disposicaoPorSobrecarga: true })}
+        />,
+      ),
+    );
+
+    expect(screen.getByText(textos.sobrecarga.disposicaoConsiderada)).toBeTruthy();
+    expect(screen.queryByText(t.disposicao('Baixa'))).toBeNull();
   });
 
   it('avisa quando a disposição foi assumida como média, sem registro no dia', async () => {

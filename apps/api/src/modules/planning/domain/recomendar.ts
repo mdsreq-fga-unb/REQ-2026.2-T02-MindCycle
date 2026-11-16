@@ -19,13 +19,16 @@ import {
 /**
  * As tarefas do dia, em ordem de precedência.
  * @param tarefas as tarefas em aberto da usuária
- * @param disposicaoRegistrada a do registro mais recente do dia, ou null sem registro
+ * @param disposicaoRegistrada a que vale no dia (a do registro mais recente ou a
+ *   da sinalização de sobrecarga posterior a ele), ou null sem nenhum dos dois
  * @param hoje o dia no calendário da usuária
+ * @param porSobrecarga a disposição é a baixa da sinalização de sobrecarga (HU02)
  */
 export function recomendar(
   tarefas: readonly Tarefa[],
   disposicaoRegistrada: Nivel | null,
   hoje: DataLocal,
+  porSobrecarga = false,
 ): RecomendacaoDoDia {
   const disposicao = disposicaoRegistrada ?? DISPOSICAO_PADRAO;
   // As datas AAAA-MM-DD e os instantes ISO em UTC se ordenam como texto.
@@ -44,6 +47,8 @@ export function recomendar(
     hoje,
     disposicao,
     disposicaoAssumida: disposicaoRegistrada === null,
+    // A sobrecarga só explica uma disposição que existe.
+    disposicaoPorSobrecarga: disposicaoRegistrada !== null && porSobrecarga,
     tarefas: doDia.sort(precedencia),
   };
 }

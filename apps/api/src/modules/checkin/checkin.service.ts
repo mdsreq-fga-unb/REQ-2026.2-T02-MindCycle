@@ -19,6 +19,10 @@ import type {
 } from '../../generated/prisma/client.js';
 import { PrismaService } from '../../prisma/prisma.service.js';
 import type { UsuariaAutenticada } from '../account/usuaria.js';
+import {
+  disposicaoDoDia,
+  type DisposicaoDoDia,
+} from './domain/disposicao-do-dia.js';
 
 // Colunas DATE chegam como meia-noite UTC: a data local é o prefixo do ISO.
 const paraData = (data: DataLocal) => new Date(`${data}T00:00:00Z`);
@@ -87,20 +91,45 @@ export class CheckinService {
   }
 
   /**
-   * A disposição do vigente de hoje (o registro mais recente do dia, como em
-   * `doDia`), ou null sem registro no dia. Lê só a coluna, para a recomendação
-   * do dia sair rápido (RNF06).
+   * A disposição que vale hoje: a do registro mais recente do dia (o vigente de
+   * `doDia`) ou, se a sinalização de sobrecarga veio depois dele, baixa (HU02).
+   * Null sem nenhum dos dois no dia. Para saber a origem, use `disposicaoDoDia`.
    */
   async disposicaoVigente(usuaria: UsuariaAutenticada): Promise<Nivel | null> {
-    const vigente = await this.prisma.checkin.findFirst({
-      where: {
-        usuariaId: usuaria.id,
-        dataLocal: paraData(this.relogio.hoje(usuaria.fuso)),
+    return (await this.disposicaoDoDia(usuaria))?.disposicao ?? null;
+  }
+
+  /**
+   * A disposição que vale hoje e de onde ela veio, pela regra de
+   * `domain/disposicao-do-dia.ts`. As duas leituras correm juntas e trazem só as
+   * colunas da regra, para a recomendação do dia sair rápido (RNF06).
+   */
+  async disposicaoDoDia(
+    usuaria: UsuariaAutenticada,
+  ): Promise<DisposicaoDoDia | null> {
+    const deHoje = {
+      usuariaId: usuaria.id,
+      dataLocal: paraData(this.relogio.hoje(usuaria.fuso)),
+    };
+    const [checkin, sobrecarga] = await Promise.all([
+      this.prisma.checkin.findFirst({
+        where: deHoje,
+        orderBy: { criadoEm: 'desc' },
+        select: { disposicao: true, criadoEm: true },
+      }),
+      this.prisma.sinalizacaoSobrecarga.findFirst({
+        where: deHoje,
+        orderBy: { criadoEm: 'desc' },
+        select: { criadoEm: true },
+      }),
+    ]);
+    return disposicaoDoDia(
+      checkin && {
+        disposicao: checkin.disposicao as Nivel,
+        criadoEm: checkin.criadoEm,
       },
-      orderBy: { criadoEm: 'desc' },
-      select: { disposicao: true },
-    });
-    return vigente ? (vigente.disposicao as Nivel) : null;
+      sobrecarga,
+    );
   }
 
   /** Do mais recente para o mais antigo, os de hoje incluídos. */
@@ -143,9 +172,10 @@ export class CheckinService {
       },
       include: incluirSintomas,
     });
-    // Pendente (HU15): se este for o vigente de hoje (o mais recente do dia da
-    // usuária) e a disposição mudou, a correção dispara o reajuste do plano.
-    // Corrigir um registro anterior não muda a disposição vigente.
+    // Pendente (HU15): a correção dispara o reajuste do plano só se mudar
+    // `disposicaoDoDia`; compare antes e depois. Corrigir um registro anterior
+    // não muda a disposição vigente, nem corrigir o vigente quando há uma
+    // sinalização de sobrecarga depois dele (HU02).
     return paraResposta(checkin);
   }
 }

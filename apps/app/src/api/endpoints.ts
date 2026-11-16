@@ -17,6 +17,7 @@ import type {
   Pin,
   RecomendacaoDoDia,
   RegistroCheckinDto,
+  SinalizacaoSobrecarga,
   SugestoesDoDia,
   Tarefa,
   Termos,
@@ -71,6 +72,8 @@ export const api = {
   sugestoesAcolhimento: () => pedir<SugestoesDoDia>('/acolhimento/sugestoes'),
   corrigirCheckin: (id: string, dados: RegistroCheckinDto) =>
     pedir<Checkin>(`/checkins/${id}`, { metodo: 'PUT', corpo: dados }),
+  sinalizarSobrecarga: () =>
+    pedir<SinalizacaoSobrecarga>('/sobrecarga', { metodo: 'POST' }),
   adiarTarefa: (id: string, dados: AdiamentoTarefaDto) =>
     pedir<Tarefa>(`/tarefas/${id}/adiamento`, {
       metodo: 'PATCH',

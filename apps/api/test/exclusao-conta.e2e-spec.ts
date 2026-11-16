@@ -58,6 +58,11 @@ const tabelasDaUsuaria: {
       prisma.checkinSintoma.count({ where: { checkin: { usuariaId } } }),
   },
   {
+    tabela: 'sinalizacoes_sobrecarga',
+    contar: (prisma, usuariaId) =>
+      prisma.sinalizacaoSobrecarga.count({ where: { usuariaId } }),
+  },
+  {
     // Sem FK: a cascata não alcança, a exclusão apaga explicitamente.
     tabela: 'refresh_tokens',
     contar: (prisma, userId) =>
@@ -79,7 +84,7 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
     await app.close();
   });
 
-  /** Uma conta com aceite dos termos, uma sessão com refresh token, dados de ciclo, tarefa, check-in e um pedido de recuperação de acesso. */
+  /** Uma conta com aceite dos termos, uma sessão com refresh token, dados de ciclo, tarefa, check-in, sinalização de sobrecarga e um pedido de recuperação de acesso. */
   async function criarContaComDados() {
     const tokens = await cadastrar(app);
     await request(servidor())
@@ -116,6 +121,10 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
         semSintomas: false,
         sintomas: [{ sintoma: 'cansaco', intensidade: 1 }],
       })
+      .expect(201);
+    await request(servidor())
+      .post('/sobrecarga')
+      .auth(tokens.accessToken, { type: 'bearer' })
       .expect(201);
     await request(servidor())
       .patch(`/tarefas/${tarefa.id}/adiamento`)

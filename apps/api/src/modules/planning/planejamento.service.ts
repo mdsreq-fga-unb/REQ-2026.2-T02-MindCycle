@@ -21,10 +21,16 @@ export class PlanejamentoService {
     usuaria: UsuariaAutenticada,
   ): Promise<RecomendacaoDoDia> {
     const hoje = this.relogio.hoje(usuaria.fuso);
-    const [tarefas, disposicao] = await Promise.all([
+    // A disposição pode ser a baixa da sinalização de sobrecarga (HU02).
+    const [tarefas, vigente] = await Promise.all([
       this.tarefas.abertasAte(usuaria.id, hoje),
-      this.checkins.disposicaoVigente(usuaria),
+      this.checkins.disposicaoDoDia(usuaria),
     ]);
-    return recomendar(tarefas, disposicao, hoje);
+    return recomendar(
+      tarefas,
+      vigente?.disposicao ?? null,
+      hoje,
+      vigente?.origem === 'sobrecarga',
+    );
   }
 }

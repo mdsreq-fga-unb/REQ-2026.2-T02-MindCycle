@@ -6,5 +6,6 @@ export * from './datas.js';
 export * from './erros.js';
 export * from './pin.js';
 export * from './planejamento.js';
+export * from './sobrecarga.js';
 export * from './tarefas.js';
 export * from './termos.js';
