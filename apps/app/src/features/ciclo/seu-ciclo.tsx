@@ -10,6 +10,7 @@ import { fonteTitulo } from '@/ui/tema';
 
 import { CalendarioDoCiclo } from './calendario-do-ciclo';
 import { chaveCiclo } from './consulta';
+import { SintomasDaFase } from './sintomas-da-fase';
 import { SituacaoDoCiclo } from './situacao-do-ciclo';
 
 /**
@@ -41,6 +42,7 @@ export function SeuCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string }) {
           )}
         </Texto>
       )}
+      <SintomasDaFase situacao={ciclo.situacao} />
       <CalendarioDoCiclo
         inicios={ciclo.inicios}
         perfil={ciclo.perfil}

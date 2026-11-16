@@ -39,6 +39,13 @@ const NOMES_FASE = {
   lutea: 'Lútea',
 } satisfies Record<Fase, string>;
 
+/** "a, b e c", em minúsculas, para listas no meio da frase. */
+function emLista(nomes: string[]): string {
+  const itens = nomes.map((n) => n.toLowerCase());
+  const ultimo = itens.pop() ?? '';
+  return itens.length ? `${itens.join(', ')} e ${ultimo}` : ultimo;
+}
+
 // Todo texto exibido à usuária mora aqui, para a revisão de linguagem
 // acolhedora do DoD (critério 5): sem cobrança, culpa ou contador de falhas.
 export const textos = {
@@ -290,6 +297,15 @@ export const textos = {
           'Seu ciclo passou da duração que você informou. Se a menstruação começou, registre o novo início.',
       } satisfies Record<MotivoSemFase, string>,
     },
+    // HU01. Rascunho da equipe, a revisar com a Dra. Cláudia.
+    sintomasDaFase: {
+      // Revisão do PR #119: concordância, "e" antes do último e tom de possibilidade.
+      lista: (nomes: string[]) => `Nesta fase, algumas pessoas sentem: ${emLista(nomes)}.`,
+      // Na lútea, os sintomas vêm perto do fim, como diz a explicação da fase (HU28).
+      listaFimDaFase: (nomes: string[]) =>
+        `Perto do fim desta fase, algumas pessoas sentem: ${emLista(nomes)}.`,
+      semSintomas: 'Nesta fase, os sintomas costumam ser mais leves.',
+    },
     // HU10. As cores seguem o modelo de fases da HU05.
     calendario: {
       titulo: 'Calendário do ciclo',
@@ -343,7 +359,7 @@ export const textos = {
           corpo:
             'O revestimento do útero, preparado no ciclo anterior, se desprende e sai como menstruação. Os hormônios estrogênio e progesterona estão no nível mais baixo do ciclo.',
           sentir:
-            'Cólica, cansaço e menos disposição são comuns. Ir com mais calma nesses dias faz parte do ritmo.',
+            'Cólica, cansaço, dor nas costas ou de cabeça e menos disposição são comuns. Ir com mais calma nesses dias faz parte do ritmo.',
         },
         folicular: {
           nome: NOMES_FASE.folicular,
@@ -359,7 +375,7 @@ export const textos = {
           corpo:
             'O ovário libera um óvulo. O estrogênio chega ao ponto mais alto e o hormônio LH tem um pico.',
           sentir:
-            'É comum ter mais disposição e vontade de conversar. Algumas pessoas sentem uma dor leve em um dos lados da barriga.',
+            'É comum ter mais disposição e vontade de conversar. Algumas pessoas sentem os seios mais sensíveis, um leve inchaço ou uma dor leve em um dos lados da barriga.',
         },
         lutea: {
           nome: NOMES_FASE.lutea,
