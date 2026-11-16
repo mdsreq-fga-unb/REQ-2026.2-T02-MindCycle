@@ -822,17 +822,17 @@ const DADOS = {
       esforco: { esforco: 1, complexidade: 1, lacuna: 2, consolidado: '1,3' },
       relacionadas: ['HU06', 'HU07', 'HU08', 'HU13'],
       criterios: [
-        'A consulta apresenta a fase estimada entre menstrual, folicular, ovulatória e lútea somente quando houver entradas suficientes e modelo de cálculo validado, conforme as regras desta história.',
+        'A consulta apresenta a fase estimada entre menstrual, folicular, ovulatória e lútea somente quando houver entradas suficientes, pelo modelo de cálculo proposto pela equipe e sempre identificada como estimativa, conforme as regras desta história.',
         'Quando não for possível estimar, a consulta informa fase não estimada e o motivo, sem atribuir uma fase por padrão.',
         'A alteração das entradas de HU06 ou HU07 deve atualizar a consulta, sem manter uma estimativa baseada nos dados anteriores.'
       ],
       regras: {
-        situacao: 'Proposta da equipe para a issue #38. A regra clínica de estimativa ainda não foi validada pela cliente; a história permanece sem prontidão para implementar esse cálculo.',
+        situacao: 'Modelo proposto pela equipe e implementado por decisão do grupo em 15/11/2026 (PR #117), com validação da cliente pendente.',
         itens: [
           'HU06 fornece a data mais recente de início da menstruação que não esteja no futuro; HU07 fornece a duração média em dias ou a indicação de irregularidade. Essas histórias registram entradas, e o cálculo pertence a HU05.',
           'O dia do ciclo é a diferença em dias de calendário local entre hoje e a data de início, mais um: o início é o dia 1. Não usar horas decorridas para contar dias.',
           'Sem data válida, sem duração média válida ou com indicação de ciclo irregular, informar fase não estimada e a respectiva razão. Não presumir duração de 28 dias nem estimar por sintomas: HU08 continua fora do MVP.',
-          'Para ciclo regular, a conversão do dia do ciclo em fase exige o modelo e os intervalos revisados pela cliente. Enquanto não estiverem definidos e validados, informar fase não estimada por modelo pendente de validação, inclusive quando as entradas estiverem completas.',
+          'Para ciclo regular, a conversão do dia do ciclo em fase usa o modelo proposto pela equipe: menstrual nos dias 1 a 5, ovulatória em três dias em torno de duração menos 14, folicular entre as duas e lútea até o fim, para durações de 21 a 35 dias. Fora dessa faixa, informar fase não estimada e o motivo. A cliente valida o método, os limites e as durações depois, e um ajuste muda só o modelo.',
           'Se o dia calculado ultrapassar a duração informada, não reiniciar o ciclo automaticamente: informar fase não estimada e solicitar atualização dos dados.',
           'Toda apresentação de fase deve identificá-la como estimativa. O uso direto da fase no planejamento não integra a proposta de HU13 do MVP.'
         ],
@@ -936,12 +936,25 @@ const DADOS = {
       rnfs: ['RNF03'],
       valor: 2,
       validadaCliente: true,
-      iteracao: 0,
-      nota: 'Não crítico ao fluxo diário.',
+      iteracao: 7,
+      nota: 'Pedida pela cliente em 05/10/2026 (aos 11:54 da gravação); entrou no MVP por decisão do grupo em 15/11/2026.',
       esforco: { esforco: 2, complexidade: 2, lacuna: 2, consolidado: '2,0' },
       criterios: [
         'O calendário só será considerado correto quando cada dia exibido indicar a fase do ciclo correspondente.'
-      ]
+      ],
+      regras: {
+        situacao: 'Proposta da equipe para a issue #121, implementada no PR #118, com validação da cliente pendente.',
+        itens: [
+          'Um dia é pintado pela fase do ciclo que o contém, contado a partir do início mais recente que não seja posterior a ele, com o modelo de fases de HU05.',
+          'Num ciclo já fechado, isto é, com um início depois, vale a duração real dele; no ciclo atual, a duração média informada em HU07.',
+          'Dias depois do fim da duração, ciclos fechados fora da faixa do modelo, ciclo irregular ou sem duração ficam sem fase. Não há previsão do próximo ciclo, pela mesma regra de HU05.',
+          'A fase nunca depende só da cor: cada dia mostra a inicial da fase, e o leitor de tela lê a fase, o início e o dia de hoje.'
+        ],
+        pendencias: [
+          'A cliente deve decidir o critério de aceite diante da regra de não prever o próximo ciclo, que deixa sem fase os dias depois do fim da duração.',
+          'A cliente deve validar o uso da duração real nos ciclos já fechados.'
+        ]
+      }
     },
     {
       id: 'HU11',
@@ -1652,6 +1665,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
         motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      },
+      {
+        data: '16/11/2026',
+        alteracao: 'Fora do MVP para a Iteração 7, com regras propostas e pendências com a cliente.',
+        motivo: 'Pedido da cliente na reunião de 05/10/2026 (aos 11:54) e decisão do grupo em 15/11/2026. Issue #121.'
       }
     ],
     HU05: [
@@ -1669,6 +1687,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
         motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      },
+      {
+        data: '16/11/2026',
+        alteracao: 'Critério 1 e regra do modelo: a fase passa a ser estimada pelo modelo proposto pela equipe, sempre como estimativa, em vez de modelo pendente.',
+        motivo: 'Decisão do grupo em 15/11/2026, por causa do prazo até a homologação; a cliente valida o modelo depois. Registrada na issue #82.'
       }
     ],
     HU06: [
