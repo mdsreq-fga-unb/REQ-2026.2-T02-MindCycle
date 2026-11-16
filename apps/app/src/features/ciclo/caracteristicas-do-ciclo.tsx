@@ -2,7 +2,6 @@ import {
   DURACAO_MEDIA_MAXIMA,
   DURACAO_MEDIA_MINIMA,
   DURACAO_MEDIA_REFERENCIA,
-  type Ciclo,
   type PerfilCiclo,
 } from '@mindcycle/shared';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -26,8 +25,9 @@ export function CaracteristicasDoCiclo({ perfil }: { perfil: PerfilCiclo | null 
   const [erroLocal, setErroLocal] = useState<string>();
   const salvamento = useMutation({
     mutationFn: api.informarPerfil,
-    onSuccess: (salvo) =>
-      queryClient.setQueryData<Ciclo>(chaveCiclo, (atual) => atual && { ...atual, perfil: salvo }),
+    // Refaz a consulta em vez de só trocar o perfil no cache: a situação (HU05)
+    // é calculada pela API e não pode ficar com a fase da duração antiga.
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: chaveCiclo }),
   });
 
   function editar<T>(definir: (valor: T) => void) {

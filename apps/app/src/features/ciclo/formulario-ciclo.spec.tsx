@@ -17,7 +17,11 @@ jest.mock('@/api/endpoints', () => ({
 }));
 
 const t = textos.ciclo;
-const vazio: Ciclo = { inicios: [], perfil: null };
+const vazio: Ciclo = {
+  inicios: [],
+  perfil: null,
+  situacao: { estimada: false, motivo: 'sem_inicio', diaDoCiclo: null },
+};
 const HOJE = '2026-11-15';
 
 async function abrir(ciclo: Ciclo = vazio) {
