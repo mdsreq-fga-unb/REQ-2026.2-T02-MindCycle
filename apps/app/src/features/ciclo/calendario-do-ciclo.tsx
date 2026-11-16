@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   cartao: {
     gap: espaco.sm,
     padding: espaco.md,
-    borderRadius: 20,
+    borderRadius: raio.cartao,
     backgroundColor: cores.white,
   },
   cabecalho: {

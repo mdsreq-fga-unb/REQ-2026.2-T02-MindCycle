@@ -19,6 +19,15 @@ export default function AppLayout() {
           sheetAllowedDetents: [0.75, 1],
         }}
       />
+      {/* HU09: o conteúdo recomendado também sobe por cima da aba. */}
+      <Stack.Screen
+        name="conteudo/[id]"
+        options={{
+          presentation: 'formSheet',
+          sheetGrabberVisible: true,
+          sheetAllowedDetents: [0.75, 1],
+        }}
+      />
     </Stack>
   );
 }

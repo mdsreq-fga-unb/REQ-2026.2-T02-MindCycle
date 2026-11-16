@@ -50,6 +50,7 @@ export const espaco = {
 export const raio = {
   campo: 12,
   botao: 999,
+  cartao: 20,
 } as const;
 
 /** Largura máxima do conteúdo: em telas largas, como tablets, o formulário não estica. */
