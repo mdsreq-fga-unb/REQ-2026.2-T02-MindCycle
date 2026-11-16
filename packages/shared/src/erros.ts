@@ -15,6 +15,8 @@ export const CodigoErro = {
   PinIncorreto: 'PIN_INCORRETO',
   PinBloqueado: 'PIN_BLOQUEADO',
   PinNaoDefinido: 'PIN_NAO_DEFINIDO',
+  // HU15: a tarefa não está mais entre as que o reajuste de hoje passou para amanhã.
+  SemReajusteParaDesfazer: 'SEM_REAJUSTE_PARA_DESFAZER',
 } as const;
 export type CodigoErro = (typeof CodigoErro)[keyof typeof CodigoErro];
 

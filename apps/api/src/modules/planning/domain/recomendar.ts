@@ -57,8 +57,12 @@ function grupo(urgente: boolean, acima: boolean): GrupoRecomendacao {
 // vencidas, a mais antiga), prioridade maior, energia menor e cadastro mais
 // antigo. O id só desempata o que é igual em tudo, para a ordem não variar.
 function precedencia(a: TarefaRecomendada, b: TarefaRecomendada): number {
+  return a.grupo - b.grupo || desempatar(a, b);
+}
+
+/** A ordem dentro de um grupo; o reajuste (HU15) ordena as movidas por ela. */
+export function desempatar(a: Tarefa, b: Tarefa): number {
   return (
-    a.grupo - b.grupo ||
     comparar(a.prazo, b.prazo) ||
     b.prioridade - a.prioridade ||
     a.energia - b.energia ||

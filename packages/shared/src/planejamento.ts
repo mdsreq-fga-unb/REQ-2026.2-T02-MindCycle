@@ -35,3 +35,12 @@ export interface RecomendacaoDoDia {
   /** As tarefas do dia, na ordem de precedência. */
   tarefas: TarefaRecomendada[];
 }
+
+/** HU15: a recomendação do dia depois do reajuste pela disposição vigente. */
+export interface RecomendacaoReajustada extends RecomendacaoDoDia {
+  /**
+   * As que o reajuste de hoje passou para amanhã, com o prazo intacto. A usuária
+   * pode trazer cada uma de volta no mesmo dia.
+   */
+  movidas: Tarefa[];
+}
