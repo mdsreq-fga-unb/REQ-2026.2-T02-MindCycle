@@ -451,6 +451,7 @@ describe('Reajuste da recomendação do dia (HU15)', () => {
       expect(Object.keys(dia.plano(1)).sort()).toEqual([
         'disposicao',
         'disposicaoAssumida',
+        'disposicaoPorSobrecarga',
         'hoje',
         'movidas',
         'tarefas',

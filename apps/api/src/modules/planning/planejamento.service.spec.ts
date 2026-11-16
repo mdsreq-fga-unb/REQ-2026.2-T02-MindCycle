@@ -62,7 +62,7 @@ describe('Reajuste: comandos ao banco por pedido do plano (HU15, RNF07)', () => 
     };
     const service = new PlanejamentoService(
       { abertasAte: vi.fn().mockResolvedValue(lista) } as unknown as TarefasService,
-      { disposicaoVigente: vi.fn().mockResolvedValue(disposicao) } as unknown as CheckinService,
+      { disposicaoDoDia: vi.fn().mockResolvedValue({ disposicao, origem: 'checkin' as const }) } as unknown as CheckinService,
       prisma as unknown as PrismaService,
       relogio,
     );

@@ -102,6 +102,8 @@ export function ListaDoDia({ recomendacao }: { recomendacao: RecomendacaoReajust
           <Texto suave>
             {recomendacao.disposicaoAssumida
               ? textos.hoje.plano.disposicaoAssumida
+              : recomendacao.disposicaoPorSobrecarga
+              ? textos.sobrecarga.disposicaoConsiderada
               : textos.hoje.plano.disposicao(
                   textos.checkin.disposicao.niveis[recomendacao.disposicao],
                 )}

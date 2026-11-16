@@ -172,6 +172,22 @@ export const textos = {
       voltar: 'Voltar',
     },
   },
+  // HU02. A sinalização conta como disposição baixa até o próximo registro.
+  sobrecarga: {
+    titulo: 'O dia está pesado?',
+    convite: 'Você pode avisar a qualquer hora.',
+    abrir: 'Estou sobrecarregada ou indisposta',
+    pergunta:
+      'Suas tarefas de hoje passam a considerar uma disposição baixa até você fazer um novo registro. Quer avisar?',
+    confirmar: 'Sim, avisar',
+    cancelar: 'Agora não',
+    // Confirma o aviso sem afirmar a disposição atual: um registro novo pode
+    // mudá-la depois, e quem a mostra é a lista do dia.
+    sinalizado: 'Tudo bem, anotado. Vá no seu ritmo.',
+    // Na lista do dia (HU13), no lugar de "Considerando sua disposição...".
+    disposicaoConsiderada:
+      'Considerando uma disposição baixa, porque você avisou que está sobrecarregada ou indisposta. Quando se sentir diferente, é só fazer um novo registro.',
+  },
   ciclo: {
     carregando: 'Carregando seu ciclo...',
     dataInvalida: 'Confira a data: use o formato dia/mês/ano, como 15/11/2026.',

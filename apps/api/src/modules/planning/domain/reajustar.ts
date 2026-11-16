@@ -117,15 +117,20 @@ export function passagemDeHoje(
 /**
  * O plano do dia depois do reajuste: a recomendação da HU13 e as tarefas que o
  * reajuste passou para amanhã, que a usuária pode trazer de volta.
+ * @param porSobrecarga a disposição é a baixa da sinalização de sobrecarga (HU02)
  */
 export function planoDoDia(
   tarefas: readonly Tarefa[],
   disposicao: Nivel | null,
   hoje: DataLocal,
   movimentacoes: readonly MovimentacaoReajuste[],
+  porSobrecarga = false,
 ): RecomendacaoReajustada {
   const movidas = tarefas
     .filter((tarefa) => passagemDeHoje(tarefa, movimentacoes, hoje))
     .sort(desempatar);
-  return { ...recomendar(tarefas, disposicao, hoje), movidas };
+  return {
+    ...recomendar(tarefas, disposicao, hoje, porSobrecarga),
+    movidas,
+  };
 }

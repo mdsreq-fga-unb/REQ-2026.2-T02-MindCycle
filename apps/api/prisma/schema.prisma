@@ -33,6 +33,7 @@ model Usuaria {
   recuperacoes   RecuperacaoAcesso[]
   tarefas        Tarefa[]
   checkins       Checkin[]
+  sobrecargas    SinalizacaoSobrecarga[]
 
   @@map("usuarias")
 }
@@ -167,7 +168,8 @@ model Checkin {
   disposicao   Int
   /// Indicação explícita de ausência de sintomas: nunca junto com sintomas.
   semSintomas  Boolean       @map("sem_sintomas")
-  /// `sobrecarga` é do registro de sobrecarga (HU02); aqui só nasce `registro`.
+  /// Só nasce `registro`: a sinalização de sobrecarga (HU02) ficou numa tabela
+  /// própria, `sinalizacoes_sobrecarga`, e o valor `sobrecarga` não é usado.
   origem       OrigemCheckin @default(registro)
 
   usuaria  Usuaria          @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
@@ -190,6 +192,24 @@ model CheckinSintoma {
 
   @@unique([checkinId, sintoma])
   @@map("checkin_sintomas")
+}
+
+// HU02. Uma linha por sinalização de sobrecarga, várias por dia. A mais recente
+// do dia vale como disposição baixa enquanto não houver check-in depois dela
+// (HU15); sem sintomas, ela não cabe nas regras de `Checkin`.
+model SinalizacaoSobrecarga {
+  id        String   @id @default(uuid()) @db.Uuid
+  usuariaId String   @map("usuaria_id") @db.Uuid
+  /// O dia no calendário da usuária, calculado pelo Relogio na criação.
+  dataLocal DateTime @map("data_local") @db.Date
+  /// Como o de `Checkin`, o Prisma preenche com o relógio do processo da API: os
+  /// dois instantes se comparam, numa instância só (ver disposicao-do-dia.ts).
+  criadoEm  DateTime @default(now()) @map("criado_em") @db.Timestamptz
+
+  usuaria Usuaria @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
+
+  @@index([usuariaId, dataLocal, criadoEm])
+  @@map("sinalizacoes_sobrecarga")
 }
 
 // HU18/HU15: permite distinguir escolha da usuária de reajuste automático.

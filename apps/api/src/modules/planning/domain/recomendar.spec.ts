@@ -72,6 +72,36 @@ describe('Recomendação das tarefas do dia (HU13)', () => {
         [alta.id, 3],
       ]);
     });
+
+    // HU02: quem decide a disposição do dia é CheckinService.disposicaoDoDia;
+    // aqui só se confere que a origem chega à resposta.
+    it('informa quando a disposição é a da sinalização de sobrecarga', () => {
+      const media = tarefa({ energia: 2 });
+
+      const recomendacao = recomendar([media], 1, HOJE, true);
+
+      expect(recomendacao).toMatchObject({
+        disposicao: 1,
+        disposicaoAssumida: false,
+        disposicaoPorSobrecarga: true,
+      });
+      expect(recomendacao.tarefas[0]?.grupo).toBe(3);
+    });
+
+    it('a disposição de um registro não é marcada como sobrecarga', () => {
+      expect(recomendar([], 1, HOJE).disposicaoPorSobrecarga).toBe(false);
+      expect(recomendar([], 1, HOJE, false).disposicaoPorSobrecarga).toBe(
+        false,
+      );
+    });
+
+    it('a média assumida nunca é marcada como sobrecarga', () => {
+      expect(recomendar([], null, HOJE, true)).toMatchObject({
+        disposicao: 2,
+        disposicaoAssumida: true,
+        disposicaoPorSobrecarga: false,
+      });
+    });
   });
 
   describe('grupos', () => {
