@@ -8,7 +8,7 @@ import { cores, coresFase, espaco, raio } from '@/ui/tema';
 
 /**
  * HU28: as quatro fases, cada uma abre a explicação dela. Com a fase estimada
- * de hoje (HU05), ela ganha borda e o texto "Fase atual", não só destaque de cor.
+ * de hoje (HU05), ela ganha borda e o texto "Fase estimada hoje", não só destaque de cor.
  */
 export function FasesDoCiclo({ faseAtual }: { faseAtual?: Fase }) {
   const t = textos.ciclo.fases;
@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
   pressionada: { borderWidth: 2, borderColor: cores.plum, transform: [{ scale: 0.96 }] },
   nome: { fontSize: 16, fontWeight: '700', color: cores.ink },
   atual: { borderWidth: 3, borderColor: cores.ink },
-  marcaAtual: { fontSize: 13, fontWeight: '600', color: cores.ink },
+  marcaAtual: { fontSize: 14, fontWeight: '600', color: cores.ink },
   dica: { fontSize: 14, lineHeight: 20 },
 });
