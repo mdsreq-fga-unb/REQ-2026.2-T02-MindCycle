@@ -125,54 +125,58 @@ export function Interruptor({
 }
 
 /**
- * Número que se ajusta com "−" e "+", como os dias do ciclo. Para o leitor de
- * tela é um controle ajustável: deslizar para cima ou para baixo muda o valor.
+ * Número que se ajusta com "−" e "+", como os dias do ciclo. Pode começar sem
+ * valor: o primeiro toque, em qualquer botão, põe o `inicial`, e só então o
+ * número passa a valer. Para o leitor de tela, "−" e "+" são botões comuns e o
+ * valor novo é anunciado a cada toque.
  */
 export function Contador({
   rotulo,
   valor,
-  texto,
+  inicial,
   minimo,
   maximo,
   aoMudar,
+  formatar,
+  textoVazio,
   rotuloDiminuir,
   rotuloAumentar,
 }: {
   rotulo: string;
-  valor: number;
-  /** Como o valor aparece e é lido, como "28 dias". */
-  texto: string;
+  /** Null enquanto a usuária não escolheu. */
+  valor: number | null;
+  /** O que o primeiro toque põe, quando ainda não há valor. */
+  inicial: number;
   minimo: number;
   maximo: number;
   aoMudar: (valor: number) => void;
+  /** Como o valor aparece e é lido, como "28 dias". */
+  formatar: (valor: number) => string;
+  textoVazio: string;
   rotuloDiminuir: string;
   rotuloAumentar: string;
 }) {
-  const mudar = (passo: number) => aoMudar(Math.min(maximo, Math.max(minimo, valor + passo)));
+  const mudar = (passo: number) =>
+    aoMudar(valor === null ? inicial : Math.min(maximo, Math.max(minimo, valor + passo)));
   return (
     <View style={styles.campo}>
       <Text style={styles.rotulo}>{rotulo}</Text>
-      <View
-        accessible
-        accessibilityRole="adjustable"
-        accessibilityLabel={rotulo}
-        accessibilityValue={{ min: minimo, max: maximo, now: valor, text: texto }}
-        accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
-        onAccessibilityAction={({ nativeEvent }) =>
-          mudar(nativeEvent.actionName === 'increment' ? 1 : -1)
-        }
-        style={styles.contador}>
+      <View style={styles.contador}>
         <PassoContador
           simbolo="−"
           rotulo={rotuloDiminuir}
-          desativado={valor <= minimo}
+          desativado={valor !== null && valor <= minimo}
           onPress={() => mudar(-1)}
         />
-        <Text style={styles.contadorValor}>{texto}</Text>
+        <Text
+          accessibilityLiveRegion="polite"
+          style={[styles.contadorValor, valor === null && styles.contadorVazio]}>
+          {valor === null ? textoVazio : formatar(valor)}
+        </Text>
         <PassoContador
           simbolo="+"
           rotulo={rotuloAumentar}
-          desativado={valor >= maximo}
+          desativado={valor !== null && valor >= maximo}
           onPress={() => mudar(1)}
         />
       </View>
@@ -365,6 +369,7 @@ const styles = StyleSheet.create({
     backgroundColor: cores.white,
   },
   contadorValor: { fontSize: 20, fontWeight: '700', color: cores.ink },
+  contadorVazio: { fontSize: 16, fontWeight: '600', color: cores.inkSoft },
   passo: {
     width: 48,
     height: 48,

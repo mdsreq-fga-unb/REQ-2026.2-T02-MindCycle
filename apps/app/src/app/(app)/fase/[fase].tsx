@@ -1,5 +1,6 @@
 import { faseSchema } from '@mindcycle/shared';
-import { Redirect, router, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useEffect } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -10,8 +11,19 @@ import { cores, coresFase, espaco, larguraMaxima, raio } from '@/ui/tema';
 // HU28: explicação de uma fase, aberta por cima da aba Ciclo.
 export default function ExplicacaoDaFase() {
   const parametro = faseSchema.safeParse(useLocalSearchParams<{ fase: string }>().fase);
+  // Fase que não existe (endereço digitado errado): fecha a folha em vez de
+  // abrir a aba dentro dela; sem tela anterior, vai para a aba Ciclo.
+  useEffect(() => {
+    if (!parametro.success) {
+      if (router.canGoBack()) {
+        router.back();
+      } else {
+        router.replace('/ciclo');
+      }
+    }
+  }, [parametro.success]);
   if (!parametro.success) {
-    return <Redirect href="/ciclo" />;
+    return null;
   }
   const fase = parametro.data;
   const t = textos.ciclo.fases;
@@ -27,7 +39,7 @@ export default function ExplicacaoDaFase() {
               importantForAccessibility="no-hide-descendants"
               style={[styles.marcador, { backgroundColor: coresFase[fase] }]}
             />
-            <Titulo>{t.rotuloAcessivel(conteudo.nome)}</Titulo>
+            <Titulo>{t.tituloModal(conteudo.nome)}</Titulo>
           </View>
           <Secao titulo={t.quando} texto={conteudo.quando} />
           <Secao titulo={t.corpo} texto={conteudo.corpo} />

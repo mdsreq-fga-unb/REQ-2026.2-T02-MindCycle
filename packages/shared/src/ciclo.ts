@@ -12,10 +12,9 @@ export type InicioMenstruacaoDto = z.infer<typeof inicioMenstruacaoSchema>;
 export const DURACAO_MEDIA_MINIMA = 15;
 export const DURACAO_MEDIA_MAXIMA = 60;
 
-/** Mantém a duração dentro da faixa aceita, como no seletor de "−" e "+" do app. */
-export function limitarDuracao(dias: number): number {
-  return Math.min(DURACAO_MEDIA_MAXIMA, Math.max(DURACAO_MEDIA_MINIMA, dias));
-}
+// Onde o seletor de duração do app começa quando a usuária toca nele pela
+// primeira vez. Não é presumido em cálculo nenhum: só vale o que ela salvar (HU05).
+export const DURACAO_MEDIA_REFERENCIA = 28;
 
 // Ciclo irregular não tem duração média: se vier junto, é ignorada.
 export const perfilCicloSchema = z.discriminatedUnion('irregular', [

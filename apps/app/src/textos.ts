@@ -149,6 +149,7 @@ export const textos = {
     duracao: {
       rotulo: 'Quantos dias seu ciclo costuma durar',
       dias: (dias: number) => `${dias} dias`,
+      vazio: 'Toque em − ou + para escolher',
       diminuir: 'Diminuir um dia',
       aumentar: 'Aumentar um dia',
       irregular: 'Meu ciclo é irregular',
@@ -159,6 +160,8 @@ export const textos = {
       subtitulo: 'Essas informações ficam só com você e ajudam a entender o seu ritmo.',
       inicio: 'Quando começou sua última menstruação?',
       botao: 'Salvar meu ciclo',
+      faltaData: 'Informe quando começou sua última menstruação, no formato dia/mês/ano.',
+      faltaDuracao: 'Escolha quantos dias seu ciclo costuma durar, ou marque que ele é irregular.',
     },
     // Depois de informado: a tela do protótipo, que HU05 e HU10 completam.
     seuCiclo: {
@@ -198,6 +201,7 @@ export const textos = {
         'O ciclo vai do primeiro dia de uma menstruação até a véspera da próxima. Costuma durar de 21 a 35 dias e passa por quatro fases.',
       dica: 'Toque em uma fase para saber mais.',
       rotuloAcessivel: (nome: string) => `Fase ${nome.toLowerCase()}`,
+      tituloModal: (nome: string) => `Fase ${nome.toLowerCase()}`,
       dicaAcessivel: 'Abre a explicação da fase',
       quando: 'Quando acontece',
       corpo: 'O que acontece no corpo',
