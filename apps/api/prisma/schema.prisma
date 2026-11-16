@@ -33,6 +33,7 @@ model Usuaria {
   recuperacoes   RecuperacaoAcesso[]
   tarefas        Tarefa[]
   checkins       Checkin[]
+  sobrecargas    SinalizacaoSobrecarga[]
 
   @@map("usuarias")
 }
@@ -167,7 +168,8 @@ model Checkin {
   disposicao   Int
   /// Indicação explícita de ausência de sintomas: nunca junto com sintomas.
   semSintomas  Boolean       @map("sem_sintomas")
-  /// `sobrecarga` é do registro de sobrecarga (HU02); aqui só nasce `registro`.
+  /// Só nasce `registro`: a sinalização de sobrecarga (HU02) ficou numa tabela
+  /// própria, `sinalizacoes_sobrecarga`, e o valor `sobrecarga` não é usado.
   origem       OrigemCheckin @default(registro)
 
   usuaria  Usuaria          @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
@@ -192,7 +194,27 @@ model CheckinSintoma {
   @@map("checkin_sintomas")
 }
 
+// HU02. Uma linha por sinalização de sobrecarga, várias por dia. A mais recente
+// do dia vale como disposição baixa enquanto não houver check-in depois dela
+// (HU15); sem sintomas, ela não cabe nas regras de `Checkin`.
+model SinalizacaoSobrecarga {
+  id        String   @id @default(uuid()) @db.Uuid
+  usuariaId String   @map("usuaria_id") @db.Uuid
+  /// O dia no calendário da usuária, calculado pelo Relogio na criação.
+  dataLocal DateTime @map("data_local") @db.Date
+  /// Como o de `Checkin`, o Prisma preenche com o relógio do processo da API: os
+  /// dois instantes se comparam, numa instância só (ver disposicao-do-dia.ts).
+  criadoEm  DateTime @default(now()) @map("criado_em") @db.Timestamptz
+
+  usuaria Usuaria @relation(fields: [usuariaId], references: [id], onDelete: Cascade)
+
+  @@index([usuariaId, dataLocal, criadoEm])
+  @@map("sinalizacoes_sobrecarga")
+}
+
 // HU18/HU15: permite distinguir escolha da usuária de reajuste automático.
+// A volta de uma passagem feita pelo reajuste não ganha linha própria: fica na
+// mesma linha, como desfeita (pela usuária) ou devolvida (pelo reajuste).
 enum OrigemMovimentacaoTarefa {
   usuaria
   reajuste
@@ -207,6 +229,10 @@ model MovimentacaoTarefa {
   dataNova     DateTime                 @map("data_nova") @db.Date
   origem       OrigemMovimentacaoTarefa
   criadaEm     DateTime                 @map("criada_em") @db.Timestamptz
+  /// HU15: a usuária trouxe a tarefa de volta; ela não é movida de novo naquele dia.
+  desfeitaEm   DateTime?                @map("desfeita_em") @db.Timestamptz
+  /// HU15: a disposição subiu e o reajuste trouxe a tarefa de volta.
+  devolvidaEm  DateTime?                @map("devolvida_em") @db.Timestamptz
 
   // A cascata da conta alcança o histórico pela tarefa (HU36).
   tarefa Tarefa @relation(fields: [tarefaId], references: [id], onDelete: Cascade)

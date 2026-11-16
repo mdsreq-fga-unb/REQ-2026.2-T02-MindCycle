@@ -69,11 +69,16 @@ docker-compose.yml
 - `InicioMenstruacao` (usuariaId, data) · `PerfilCiclo` (usuariaId, duracaoMedia?, irregular)
 - `Checkin` (usuariaId, dataLocal, criadoEm, disposicao 1-3, semSintomas, origem `registro|sobrecarga`)
 - `CheckinSintoma` (checkinId, sintoma, intensidade 1-3)
+- `SinalizacaoSobrecarga` (usuariaId, dataLocal, criadoEm)
 - `Tarefa` (usuariaId, titulo, prazo, prioridade 1-3, energia 1-3, dataPlanejada, criadaEm, concluidaEm?)
 - `MovimentacaoTarefa` (tarefaId, de, para, origem `usuaria|reajuste`, em, desfeitaEm?)
 
-A sobrecarga (HU02) vira um `Checkin` de origem `sobrecarga` com disposição baixa, e
-assim "vale até o próximo registro" sai da mesma regra do "registro mais recente do dia".
+A sobrecarga (HU02) ficou numa tabela própria, `SinalizacaoSobrecarga`, e não num
+`Checkin` de origem `sobrecarga`, como este rascunho previa: ela não tem sintomas, e
+como check-in apareceria no histórico e poderia ser corrigida como um registro.
+`CheckinService.disposicaoDoDia` compara o registro e a sinalização mais recentes do
+dia: vale o que veio por último, e a sinalização conta como disposição baixa. Assim
+"vale até o próximo registro" (HU15) continua sendo uma regra só.
 `MovimentacaoTarefa` permite desfazer (HU15), distinguir o adiamento manual (HU18) do
 automático e aplicar a regra de retorno quando a disposição sobe.
 
@@ -86,14 +91,20 @@ Exclusão de conta (HU36): `onDelete: Cascade` a partir de `Usuaria`, numa trans
 - `recomendar(tarefas, disposicao, hoje) → Tarefa[]`: grupos (1) prazo hoje ou vencido,
   (2) energia ≤ disposição, (3) energia > disposição; desempate por prazo, prioridade,
   energia e cadastro. Sem check-in no dia, a disposição é média.
-- `reajustar(tarefas, movimentacoesDeHoje, disposicao, hoje) → Movimentacao[]`: move para
-  amanhã o que excede a disposição e tem prazo depois de hoje; nunca move o que tem prazo
-  hoje ou vencido; não move de novo o que foi desfeito; devolve as movidas por reajuste
-  que voltaram a caber.
+- `reajustar(tarefas, disposicao, hoje, passagens) → Mudanca[]`: move para amanhã o que
+  excede a disposição e tem prazo depois de hoje; nunca move o que tem prazo hoje ou
+  vencido; não move de novo o que foi desfeito hoje; devolve à data anterior as movidas
+  hoje pelo reajuste que voltaram a caber. Sem registro de disposição no dia, nada muda.
+- `planoDoDia(...)`: a recomendação de `recomendar` mais as `movidas` de hoje.
 
-O service carrega os dados, chama o domínio e grava as movimentações numa transação.
-O reajuste roda de forma síncrona na gravação do check-in, e a resposta já traz a lista
-nova (RNF07, até 2 s).
+O service carrega os dados, chama o domínio e grava as mudanças numa transação. A volta
+de uma passagem fica na própria linha de `MovimentacaoTarefa` (`desfeitaEm` quando a
+usuária desfaz, `devolvidaEm` quando a disposição sobe).
+
+Decisão da HU15 (15/11/2026): o reajuste não roda na gravação do check-in. Ele é aplicado
+de forma idempotente a cada `GET /planejamento/hoje`, a partir da disposição vigente, e o
+app pede o plano logo depois de cada registro, correção ou sinalização de sobrecarga.
+Assim nenhuma origem da disposição chama código do planejamento (RNF07, até 2 s).
 
 ## Ciclo (HU05)
 

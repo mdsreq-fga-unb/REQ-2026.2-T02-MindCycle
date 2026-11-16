@@ -28,10 +28,24 @@ export interface TarefaRecomendada extends Tarefa {
 export interface RecomendacaoDoDia {
   /** O dia da recomendação, no calendário da usuária. */
   hoje: DataLocal;
-  /** A disposição usada no cálculo: a do registro mais recente do dia (HU04). */
+  /**
+   * A disposição usada no cálculo: a do registro mais recente do dia (HU04) ou,
+   * se ela veio depois, a da sinalização de sobrecarga (HU02).
+   */
   disposicao: Nivel;
   /** Sem registro no dia: a disposição é a média assumida. */
   disposicaoAssumida: boolean;
+  /** A disposição é a baixa da sinalização de sobrecarga (HU02), não a de um registro. */
+  disposicaoPorSobrecarga: boolean;
   /** As tarefas do dia, na ordem de precedência. */
   tarefas: TarefaRecomendada[];
+}
+
+/** HU15: a recomendação do dia depois do reajuste pela disposição vigente. */
+export interface RecomendacaoReajustada extends RecomendacaoDoDia {
+  /**
+   * As que o reajuste de hoje passou para amanhã, com o prazo intacto. A usuária
+   * pode trazer cada uma de volta no mesmo dia.
+   */
+  movidas: Tarefa[];
 }

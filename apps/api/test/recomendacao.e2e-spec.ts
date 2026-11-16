@@ -1,7 +1,7 @@
 import type { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import type { App } from 'supertest/types.js';
-import type { RecomendacaoDoDia } from '@mindcycle/shared';
+import type { RecomendacaoReajustada } from '@mindcycle/shared';
 import { TERMOS } from '../src/modules/consent/termos.js';
 import { PrismaService } from '../src/prisma/prisma.service.js';
 import { cadastrar, criarApp } from './app.js';
@@ -58,13 +58,15 @@ describe('Recomendação das tarefas do dia pela API (HU13, RNF03)', () => {
         const { body } = await auth(
           request(servidor()).get('/planejamento/hoje'),
         ).expect(200);
-        return body as RecomendacaoDoDia;
+        return body as RecomendacaoReajustada;
       },
     };
   }
 
-  const ids = (r: RecomendacaoDoDia) => r.tarefas.map((t) => t.id);
+  const ids = (r: RecomendacaoReajustada) => r.tarefas.map((t) => t.id);
 
+  // Com registro no dia, a tarefa do grupo 3 passa para amanhã (HU15, em
+  // reajuste.e2e-spec.ts); o grupo 3 na lista aparece no caso sem registro.
   it('ordena pelos grupos e pelos desempates, com a disposição do dia', async () => {
     const conta = await novaConta();
     await conta.registrar(2);
@@ -111,8 +113,8 @@ describe('Recomendação das tarefas do dia pela API (HU13, RNF03)', () => {
       [urgente.id, 1, true],
       [grupo2Antes.id, 2, false],
       [grupo2Depois.id, 2, false],
-      [grupo3.id, 3, false],
     ]);
+    expect(recomendacao.movidas.map((t) => t.id)).toEqual([grupo3.id]);
     // Cada item é a tarefa inteira, com o grupo e o aviso.
     expect(recomendacao.tarefas[1]).toEqual({
       ...urgente,
@@ -143,12 +145,15 @@ describe('Recomendação das tarefas do dia pela API (HU13, RNF03)', () => {
     const conta = await novaConta();
     await conta.registrar(3);
     await conta.registrar(1);
-    const media = await conta.cadastrar({ energia: 2 });
+    // Prazo hoje: fica no dia (HU15), e o aviso mostra a disposição usada.
+    const media = await conta.cadastrar({ energia: 2, prazo: HOJE });
 
     const recomendacao = await conta.recomendacao();
 
     expect(recomendacao.disposicao).toBe(1);
-    expect(recomendacao.tarefas).toMatchObject([{ id: media.id, grupo: 3 }]);
+    expect(recomendacao.tarefas).toMatchObject([
+      { id: media.id, grupo: 1, avisoAdiamento: true },
+    ]);
   });
 
   it('não usa o registro de outro dia', async () => {

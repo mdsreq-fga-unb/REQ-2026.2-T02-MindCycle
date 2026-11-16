@@ -49,6 +49,18 @@ const tabelasDaUsuaria: {
       prisma.movimentacaoTarefa.count({ where: { tarefa: { usuariaId } } }),
   },
   {
+    // HU15: a passagem feita pelo reajuste, desfeita pela usuária.
+    tabela: 'movimentacoes_tarefa (reajuste)',
+    contar: (prisma, usuariaId) =>
+      prisma.movimentacaoTarefa.count({
+        where: {
+          origem: 'reajuste',
+          desfeitaEm: { not: null },
+          tarefa: { usuariaId },
+        },
+      }),
+  },
+  {
     tabela: 'checkins',
     contar: (prisma, usuariaId) => prisma.checkin.count({ where: { usuariaId } }),
   },
@@ -56,6 +68,11 @@ const tabelasDaUsuaria: {
     tabela: 'checkin_sintomas',
     contar: (prisma, usuariaId) =>
       prisma.checkinSintoma.count({ where: { checkin: { usuariaId } } }),
+  },
+  {
+    tabela: 'sinalizacoes_sobrecarga',
+    contar: (prisma, usuariaId) =>
+      prisma.sinalizacaoSobrecarga.count({ where: { usuariaId } }),
   },
   {
     // Sem FK: a cascata não alcança, a exclusão apaga explicitamente.
@@ -79,7 +96,7 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
     await app.close();
   });
 
-  /** Uma conta com aceite dos termos, uma sessão com refresh token, dados de ciclo, tarefa, check-in e um pedido de recuperação de acesso. */
+  /** Uma conta com aceite dos termos, uma sessão com refresh token, dados de ciclo, tarefa, check-in, sinalização de sobrecarga e um pedido de recuperação de acesso. */
   async function criarContaComDados() {
     const tokens = await cadastrar(app);
     await request(servidor())
@@ -118,9 +135,38 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
       })
       .expect(201);
     await request(servidor())
+      .post('/sobrecarga')
+      .auth(tokens.accessToken, { type: 'bearer' })
+      .expect(201);
+    await request(servidor())
       .patch(`/tarefas/${tarefa.id}/adiamento`)
       .auth(tokens.accessToken, { type: 'bearer' })
       .send({ dataPlanejada: '2099-12-31' })
+      .expect(200);
+    // HU15: com a disposição média do check-in acima, o plano do dia passa a
+    // tarefa de energia alta para amanhã; a usuária desfaz a passagem.
+    const { body: pesada } = await request(servidor())
+      .post('/tarefas')
+      .auth(tokens.accessToken, { type: 'bearer' })
+      .send({
+        titulo: 'Arrumar o armário',
+        prazo: '2099-12-31',
+        prioridade: 2,
+        energia: 3,
+      })
+      .expect(201);
+    await request(servidor())
+      .get('/planejamento/hoje')
+      .auth(tokens.accessToken, { type: 'bearer' })
+      .expect(200);
+    await request(servidor())
+      .post(`/planejamento/hoje/movidas/${pesada.id}/desfazimento`)
+      .auth(tokens.accessToken, { type: 'bearer' })
+      .expect(200);
+    await request(servidor())
+      .post(`/tarefas/${tarefa.id}/conclusao`)
+      .auth(tokens.accessToken, { type: 'bearer' })
+      .send({})
       .expect(200);
     await request(servidor())
       .post('/auth/recuperacao')

@@ -17,8 +17,9 @@ import type {
   PerfilCiclo,
   PerfilCicloDto,
   Pin,
-  RecomendacaoDoDia,
+  RecomendacaoReajustada,
   RegistroCheckinDto,
+  SinalizacaoSobrecarga,
   SugestoesDoDia,
   Tarefa,
   Termos,
@@ -64,10 +65,15 @@ export const api = {
   informarPerfil: (dados: PerfilCicloDto) =>
     pedir<PerfilCiclo>('/ciclo/perfil', { metodo: 'PUT', corpo: dados }),
   tarefas: () => pedir<Tarefa[]>('/tarefas'),
+  tarefasConcluidas: () => pedir<Tarefa[]>('/tarefas/concluidas'),
   tarefa: (id: string) => pedir<Tarefa>(`/tarefas/${id}`),
   editarTarefa: (id: string, dados: AtualizacaoTarefaDto) =>
     pedir<Tarefa>(`/tarefas/${id}`, { metodo: 'PUT', corpo: dados }),
   excluirTarefa: (id: string) => pedir<void>(`/tarefas/${id}`, { metodo: 'DELETE' }),
+  concluirTarefa: (id: string) =>
+    pedir<Tarefa>(`/tarefas/${id}/conclusao`, { metodo: 'POST', corpo: {} }),
+  reabrirTarefa: (id: string) =>
+    pedir<Tarefa>(`/tarefas/${id}/conclusao`, { metodo: 'DELETE' }),
   cadastrarTarefa: (dados: CadastroTarefaDto) =>
     pedir<Tarefa>('/tarefas', { metodo: 'POST', corpo: dados }),
   checkinsDeHoje: () => pedir<CheckinsDoDia>('/checkins/hoje'),
@@ -78,10 +84,17 @@ export const api = {
   mensagemAcolhimento: () => pedir<MensagemAcolhimentoDoDia>('/acolhimento/mensagem'),
   corrigirCheckin: (id: string, dados: RegistroCheckinDto) =>
     pedir<Checkin>(`/checkins/${id}`, { metodo: 'PUT', corpo: dados }),
+  sinalizarSobrecarga: () =>
+    pedir<SinalizacaoSobrecarga>('/sobrecarga', { metodo: 'POST' }),
   adiarTarefa: (id: string, dados: AdiamentoTarefaDto) =>
     pedir<Tarefa>(`/tarefas/${id}/adiamento`, {
       metodo: 'PATCH',
       corpo: dados,
     }),
-  recomendacaoDoDia: () => pedir<RecomendacaoDoDia>('/planejamento/hoje'),
+  recomendacaoDoDia: () => pedir<RecomendacaoReajustada>('/planejamento/hoje'),
+  desfazerReajuste: (tarefaId: string) =>
+    pedir<RecomendacaoReajustada>(
+      `/planejamento/hoje/movidas/${tarefaId}/desfazimento`,
+      { metodo: 'POST' },
+    ),
 };

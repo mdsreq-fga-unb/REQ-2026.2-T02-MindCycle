@@ -94,6 +94,20 @@ export const textos = {
         'Esta tarefa pede mais energia do que a sua disposição de hoje. Se precisar, ela pode ser adiada.',
     },
   },
+  // HU15. O reajuste cuida do dia, sem contador nem cobrança: a tarefa só muda
+  // de dia, com o mesmo prazo, e a usuária decide se traz de volta.
+  reajuste: {
+    titulo: 'Ficaram para amanhã',
+    explicacao:
+      'Pedem mais energia do que a sua disposição de hoje. O prazo continua o mesmo.',
+    diaLivre:
+      'Pela sua disposição de hoje, as tarefas ficaram para amanhã. Se quiser, traga alguma de volta.',
+    trazer: 'Trazer para hoje',
+    rotuloTrazer: (titulo: string) => `Trazer a tarefa ${titulo} para hoje`,
+    trazida: (titulo: string) => `${titulo} voltou para hoje.`,
+    naoTrazida: (titulo: string) =>
+      `${titulo} mudou de lugar enquanto você tocava. Sua lista será atualizada.`,
+  },
   // HU04
   checkin: {
     titulo: 'Como você está agora?',
@@ -163,6 +177,22 @@ export const textos = {
       rotuloCorrigir: (data: string, hora: string) => `Corrigir o registro de ${data} às ${hora}`,
       voltar: 'Voltar',
     },
+  },
+  // HU02. A sinalização conta como disposição baixa até o próximo registro.
+  sobrecarga: {
+    titulo: 'O dia está pesado?',
+    convite: 'Você pode avisar a qualquer hora.',
+    abrir: 'Estou sobrecarregada ou indisposta',
+    pergunta:
+      'Suas tarefas de hoje passam a considerar uma disposição baixa até você fazer um novo registro. Quer avisar?',
+    confirmar: 'Sim, avisar',
+    cancelar: 'Agora não',
+    // Confirma o aviso sem afirmar a disposição atual: um registro novo pode
+    // mudá-la depois, e quem a mostra é a lista do dia.
+    sinalizado: 'Tudo bem, anotado. Vá no seu ritmo.',
+    // Na lista do dia (HU13), no lugar de "Considerando sua disposição...".
+    disposicaoConsiderada:
+      'Considerando uma disposição baixa, porque você avisou que está sobrecarregada ou indisposta. Quando se sentir diferente, é só fazer um novo registro.',
   },
   ciclo: {
     carregando: 'Carregando seu ciclo...',
@@ -268,6 +298,10 @@ export const textos = {
   },
   tarefas: {
     titulo: 'Tarefas',
+    abertas: 'Em aberto',
+    concluidas: 'Concluídas',
+    concluidaEm: (data: string) => `Concluída em ${data}`,
+    concluidasVazias: 'Nenhuma tarefa concluída por enquanto.',
     detalhe: {
       titulo: 'Sua tarefa',
       abrir: 'Ver tarefa',
@@ -275,6 +309,12 @@ export const textos = {
       editar: 'Editar',
       salvar: 'Salvar alterações',
       salvo: 'Alterações salvas.',
+      concluir: 'Concluir tarefa',
+      confirmarConclusao: 'Confirmar conclusão',
+      avisoConclusao: 'Marcar esta tarefa como concluída?',
+      concluida: 'Tarefa concluída.',
+      reabrir: 'Reabrir tarefa',
+      reaberta: 'Tarefa reaberta.',
       excluir: 'Excluir tarefa',
       confirmarExclusao: 'Confirmar exclusão',
       avisoExclusao: 'Excluir esta tarefa e seu histórico? Não é possível desfazer.',
@@ -502,6 +542,8 @@ export const textos = {
       'Vamos fazer uma pausa. Tente de novo em alguns minutos ou entre com seu e-mail e senha.',
     [CodigoErro.PinNaoDefinido]:
       'Sua conta não tem PIN. Você pode criar um na aba Conta.',
+    [CodigoErro.SemReajusteParaDesfazer]:
+      'Essa tarefa já não está entre as que ficaram para amanhã. Sua lista será atualizada.',
     validacao: 'Confira os campos destacados.',
     generico: 'Algo não saiu como esperado. Tente de novo em instantes.',
   },
