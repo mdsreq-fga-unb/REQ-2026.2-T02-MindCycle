@@ -135,10 +135,28 @@ const MC = (() => {
     return lista;
   }
 
-  function etiquetas(h) {
+  // Selo colorido de progresso (DoR, DoD, verificação de RNF). A cor nunca vai
+  // sozinha: o símbolo (círculo cheio, meio ou vazio, desenhado em CSS) muda de
+  // forma e o texto traz a contagem.
+  const NOME_NIVEL = { ok: 'completo', parcial: 'em parte', pendente: 'pendente', nd: 'não se aplica' };
+  function pilula(rotulo, p, texto, botao) {
+    const conteudo = '<span class="pill-s" aria-hidden="true"></span>' +
+      '<span>' + esc(texto || (rotulo + (p.total ? ' ' + p.feitos + '/' + p.total : ''))) + '</span>' +
+      '<span class="sr">: ' + NOME_NIVEL[p.nivel] + '. ' + esc(p.detalhe) + '</span>';
+    return botao
+      ? '<button class="pill ' + p.nivel + ' ptag" type="button" title="' + esc(p.detalhe) + '" ' + botao + '>' + conteudo + '</button>'
+      : '<span class="pill ' + p.nivel + '" title="' + esc(p.detalhe) + '">' + conteudo + '</span>';
+  }
+
+  function etiquetas(h, opcoes) {
     const link = (texto, caminho, classe) => '<a class="ptag ' + classe + '" href="' + esc(url(caminho)) + '">' + esc(texto) + '</a>';
     const tags = [];
-    if (noBacklog(h)) tags.push(link('DoR atendido', 'dor-e-dod/', 't-bk'));
+    // DoR e DoD: abrem o pop-up da história na aba "DoR e DoD".
+    if (noMvp(h)) {
+      const alvo = 'data-historia="' + h.id + '" data-dor';
+      tags.push(pilula('DoR', DADOS.progressoDor(h), null, alvo));
+      tags.push(pilula('DoD', DADOS.progressoDod(h), null, alvo));
+    }
     if (naIteracaoAtual(h)) tags.push(link('Iteração atual', 'cronograma/', 't-cur'));
     if (itemBacklog(h).situacao) tags.push(link(itemBacklog(h).situacao,
       '?' + new URLSearchParams({ cp: h.caracteristica, hl: h.id, plano: h.id }), 't-out'));
@@ -151,10 +169,12 @@ const MC = (() => {
     tags.push(link('Esforço ' + h.esforco.consolidado, 'priorizacao/', 't-rel'));
     tags.push(h.validadaCliente ? link('Prioridade confirmada pela cliente', 'reunioes/#PKoWLngGSRg', 't-val')
       : '<span class="ptag plain">Hipótese da equipe</span>');
-    if (h.rnfs.length) {
-      h.rnfs.forEach((r) => tags.push('<button class="ptag t-rnf" type="button" data-rnf="' + r + '">' + r + '</button>'));
-    } else {
-      tags.push('<button class="ptag t-rnf" type="button" data-rnf="RNF10">RNFs transversais</button>');
+    if (!(opcoes && opcoes.semRnf)) {
+      if (h.rnfs.length) {
+        h.rnfs.forEach((r) => tags.push('<button class="ptag t-rnf" type="button" data-rnf="' + r + '">' + r + '</button>'));
+      } else {
+        tags.push('<button class="ptag t-rnf" type="button" data-rnf="RNF10">RNFs transversais</button>');
+      }
     }
     return tags.join('');
   }
@@ -414,6 +434,6 @@ const MC = (() => {
   return {
     RAIZ, pagina, esc, url, tempo, video, historia, rnf, caracteristica, noMvp, noBacklog, naIteracaoAtual,
     responsavel,
-    MOSCOW, abrirDialogo, fecharDialogo, abrirHistoria, abrirRnf, chipHistoria, botaoFechar
+    MOSCOW, abrirDialogo, fecharDialogo, abrirHistoria, abrirRnf, chipHistoria, botaoFechar, etiquetas, pilula
   };
 })();

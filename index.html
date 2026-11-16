@@ -83,11 +83,13 @@
             </svg>
             <div class="g7" id="caracteristicas"></div>
             <div id="folhas"></div>
-            <div class="rail"><span class="stem2" aria-hidden="true"></span><b>Valem para todas as histórias</b><button class="rnfc mono" type="button" data-rnf="RNF10">RNF10</button><button class="rnfc mono" type="button" data-rnf="RNF11">RNF11</button></div>
+            <div class="rail" id="rail-transversais"><span class="stem2" aria-hidden="true"></span><b>Valem para todas as histórias</b><button class="rnfc mono" type="button" data-rnf="RNF10">RNF10</button><button class="rnfc mono" type="button" data-rnf="RNF11">RNF11</button></div>
             <p id="sem-folhas" hidden style="text-align: center; padding: 28px 0 8px; color: var(--mut)">Nenhuma história desta característica nesta visão.</p>
           </div>
         </div>
-        <div class="legend"><span>Borda tracejada: fora do MVP</span><span><i class="rnfc mono" style="font-style: normal">RNF</i> Requisito não funcional ligado à história</span><span>hab.: característica habilitadora, que sustenta as demais</span></div>
+        <div id="requisitos-hu"></div>
+        <div class="legend"><span>Borda tracejada: fora do MVP</span><span>Clique numa história para ver os requisitos não funcionais dela</span><span>hab.: característica habilitadora, que sustenta as demais</span></div>
+        <div class="legend" aria-label="Legenda das cores de DoR, DoD e verificação"><span><span class="pill ok"><span class="pill-s" aria-hidden="true"></span>Verde</span> tudo atendido</span><span><span class="pill parcial"><span class="pill-s" aria-hidden="true"></span>Amarelo</span> metade ou mais atendida</span><span><span class="pill pendente"><span class="pill-s" aria-hidden="true"></span>Vermelho</span> menos da metade</span><span><span class="pill nd"><span class="pill-s" aria-hidden="true"></span>Cinza</span> não se aplica</span></div>
       </div>
     </main>
 
@@ -98,9 +100,9 @@
     </footer>
   </div>
 
-  <script defer src="assets/js/dados.js?v=28"></script>
-  <script defer src="assets/js/planejamento-arvore.js?v=28"></script>
-  <script defer src="assets/js/site.js?v=28"></script>
-  <script defer src="assets/js/requisitos.js?v=28"></script>
+  <script defer src="assets/js/dados.js?v=29"></script>
+  <script defer src="assets/js/planejamento-arvore.js?v=29"></script>
+  <script defer src="assets/js/site.js?v=29"></script>
+  <script defer src="assets/js/requisitos.js?v=29"></script>
 </body>
 </html>

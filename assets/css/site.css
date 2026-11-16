@@ -46,6 +46,12 @@ a:where(:not([class])):hover, a.time:hover, a.vid:hover {
   --cort: #ffece5;
   --dim: #7a5e71;
   --head: #6e4a5f;
+  --ok: #1f6f45;
+  --okt: #e3f3ea;
+  --warn: #7d5200;
+  --warnt: #fff0c7;
+  --bad: #a8261d;
+  --badt: #fde6e3;
   --mono: ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
   --disp: Fraunces,Georgia,"Times New Roman",serif;
 }
@@ -79,6 +85,12 @@ body {
   --cort: #3c2320;
   --dim: #c2a8b7;
   --head: #e6cdda;
+  --ok: #86e0a6;
+  --okt: #15301f;
+  --warn: #f3ca62;
+  --warnt: #36290a;
+  --bad: #ff9d95;
+  --badt: #3b1815;
 }
 *, *::before, *::after {
   box-sizing: border-box;
@@ -2186,4 +2198,196 @@ summary.foldh::-webkit-details-marker {
 .kb-ponto.documentacao { background: var(--wire); }
 @media (prefers-reduced-motion: reduce) {
   .kb-card { transition: none; }
+}
+
+/* ===== Árvore de requisitos: história escolhida, cartões dos RNFs e selos de progresso ===== */
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+/* Selo de progresso: cor + símbolo + contagem. Verde completo, amarelo em parte,
+   vermelho pendente, cinza não se aplica. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 1px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--mut);
+  background: var(--panel);
+}
+.pill.ok { color: var(--ok); background: var(--okt); border-color: var(--ok); }
+.pill.parcial { color: var(--warn); background: var(--warnt); border-color: var(--warn); }
+.pill.pendente { color: var(--bad); background: var(--badt); border-color: var(--bad); }
+.pill.nd { border-style: dashed; }
+/* Símbolo do selo: círculo cheio (completo), meio cheio (em parte), vazio (pendente), traço (n/a). */
+.pill-s {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+.pill.ok .pill-s { background: currentColor; }
+.pill.parcial .pill-s { background: linear-gradient(90deg, currentColor 50%, transparent 50%); }
+.pill.nd .pill-s { height: 2px; border-width: 0; border-radius: 0; background: currentColor; }
+.rail[hidden], #requisitos-hu:empty { display: none; }
+#requisitos-hu .dica-hu { margin: 14px 0 0; }
+.ptag.pill { min-height: 32px; padding: 0 11px; font-size: 13px; gap: 6px; position: relative; }
+.leaf .pills { display: flex; flex-wrap: wrap; gap: 3px; margin-top: auto; }
+.leaf .pill { font-size: 10.5px; padding: 0 6px; gap: 3px; }
+
+.hu-bloco {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid var(--acc);
+  border-radius: 12px;
+  background: var(--panel);
+  animation: mcRise .26s ease both;
+}
+.hu-cab {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px 16px;
+}
+.hu-cab h3 {
+  margin: 2px 0 0;
+  font-size: 19px;
+  line-height: 1.25;
+}
+.hu-cab .k {
+  font-size: 12px;
+  color: var(--acct);
+}
+.hu-bloco .ptags {
+  margin-top: 12px;
+}
+.hu-sub {
+  margin: 18px 0 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--lil);
+  letter-spacing: .01em;
+}
+.rgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(236px, 1fr));
+  gap: 10px;
+}
+.rcard {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-height: 150px;
+  padding: 12px 13px;
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  background: var(--lilt);
+  border: 1px solid var(--lil);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+.rcard:hover {
+  transform: translateY(-2px);
+  border-color: var(--acc);
+  box-shadow: 0 6px 16px rgba(95, 67, 145, .18);
+}
+.rcard:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+.rcard .k {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--lil);
+}
+.rcard-topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.rcard-nome {
+  font-family: var(--disp);
+  font-size: 15.5px;
+  line-height: 1.25;
+  color: var(--head);
+}
+.rcard-crit {
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--mut);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rcard .rtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: auto;
+}
+.rtag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--head);
+}
+.rcard .more {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--acct);
+}
+.hu-vazio {
+  margin: 0 0 4px;
+  padding: 10px 12px;
+  border: 1px dashed var(--wire);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--mut);
+}
+.dica-hu {
+  margin: 14px 3px 0;
+  padding: 11px 14px;
+  border: 1px dashed var(--wire);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--mut);
+}
+.legend .pill { font-size: 11px; }
+@media (max-width: 640px) {
+  .hu-bloco { padding: 12px; }
+  .rgrid { grid-template-columns: 1fr; }
+  .rcard { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hu-bloco { animation: none; }
+  .rcard { transition: none; }
 }

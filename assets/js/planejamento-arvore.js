@@ -2,6 +2,7 @@
 const PLANO_ARVORE = (() => {
   const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   let iteracao = 'todas';
+  let painel = null;
   function render(h) {
     const b = DADOS.backlog, item = b.itens[h.id] || {};
     const dor = typeof DADOS.situacaoDor === 'function' ? DADOS.situacaoDor(h.id) : DADOS.dorAtendido.includes(h.id) ? 'Atendido' : 'Não conferido';
@@ -69,27 +70,32 @@ const PLANO_ARVORE = (() => {
       }
       document.dispatchEvent(new Event('planejamento-filtro'));
     });
-    const painel = document.createElement('section');
+    painel = document.createElement('section');
     painel.id = 'plano-historia';
     painel.className = 'plano-integrado';
     painel.hidden = true;
     document.getElementById('arvore').after(painel);
-    document.addEventListener('click', (e) => {
-      const botao = e.target.closest('#folhas [data-historia], #resultados [data-historia]');
-      if (!botao) return;
-      e.stopImmediatePropagation();
-      const h = DADOS.historias.find((x) => x.id === botao.dataset.historia);
-      painel.hidden = false;
-      painel.innerHTML = '<div class="plano-titulo"><h2><span class="mono">' + h.id + '</span> · ' + esc(h.nome) + '</h2><div class="tools"><button class="btn plano-voltar" type="button">Voltar à árvore</button><button class="btn" type="button" data-historia="' + h.id + '">Ver requisito</button></div></div>' + render(h);
-      painel.querySelector('.plano-voltar').addEventListener('click', () => {
-        const origem = document.contains(botao) ? botao : document.getElementById('busca');
-        origem.focus({ preventScroll: true });
-        origem.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
-      });
-      painel.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
-      document.querySelectorAll('.leaf').forEach((el) => el.classList.toggle('hl', el.dataset.historia === h.id));
-    }, true);
-    document.addEventListener('planejamento-filtro', () => { painel.hidden = true; });
   }
-  return { render, montar, passa: (h) => iteracao === 'todas' || (iteracao === 'proximas' ? !(h.iteracao > 0) : h.iteracao === Number(iteracao)) };
+  // A árvore (requisitos.js) decide qual história está escolhida; aqui só se
+  // desenha o planejamento dela, abaixo da árvore.
+  const reduzMovimento = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function mostrar(h) {
+    if (!painel) return;
+    painel.hidden = false;
+    painel.innerHTML = '<div class="plano-titulo"><h2><span class="mono">' + h.id + '</span> · ' + esc(h.nome) +
+      '</h2><div class="tools"><button class="btn plano-voltar" type="button">Voltar à árvore</button>' +
+      '<button class="btn" type="button" data-historia="' + h.id + '">Ver HU</button></div></div>' + render(h);
+    painel.querySelector('.plano-voltar').addEventListener('click', () => {
+      const origem = document.querySelector('.leaf.hl') || document.getElementById('busca');
+      origem.focus({ preventScroll: true });
+      origem.scrollIntoView({ block: 'center', behavior: reduzMovimento() ? 'instant' : 'smooth' });
+    });
+  }
+  function ocultar() {
+    if (painel) { painel.hidden = true; painel.innerHTML = ''; }
+  }
+  function irParaPlano() {
+    if (painel && !painel.hidden) painel.scrollIntoView({ block: 'start', behavior: reduzMovimento() ? 'instant' : 'smooth' });
+  }
+  return { render, montar, mostrar, ocultar, irParaPlano, passa: (h) => iteracao === 'todas' || (iteracao === 'proximas' ? !(h.iteracao > 0) : h.iteracao === Number(iteracao)) };
 })();

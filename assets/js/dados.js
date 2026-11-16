@@ -2533,3 +2533,59 @@ DADOS.situacaoDor = function (id) {
 DADOS.dorAtendido = DADOS.historias
   .filter((h) => ['Pronta', 'Pronta com exceção'].includes(DADOS.situacaoDor(h.id)))
   .map((h) => h.id);
+
+// ---------------------------------------------------------------------
+// Progresso colorido: DoR e DoD de cada história, verificação de cada RNF.
+// Tudo é calculado a partir de aplicacaoDor, aplicacaoDod e rnfs; nada é
+// digitado à mão. A cor segue uma regra só, nos três casos:
+//   ok        verde     tudo atendido;
+//   parcial   amarelo   metade ou mais atendida (ou pronta com exceção);
+//   pendente  vermelho  menos da metade atendida;
+//   nd        cinza     não se aplica (história fora do MVP).
+// Para endurecer ou afrouxar a regra, mude só LIMITE_PARCIAL.
+// ---------------------------------------------------------------------
+DADOS.LIMITE_PARCIAL = 0.5;
+
+DADOS.nivelPorProporcao = function (feitos, total) {
+  if (total > 0 && feitos >= total) return 'ok';
+  return total > 0 && feitos / total >= DADOS.LIMITE_PARCIAL ? 'parcial' : 'pendente';
+};
+
+// DoR: conta os critérios em SIM ou N/A. "Pronta com exceção" vale amarelo.
+DADOS.progressoDor = function (h) {
+  if (!(h.iteracao > 0)) return { nivel: 'nd', feitos: 0, total: 0, detalhe: 'Fora do MVP: sem conferência de DoR.' };
+  const criterios = (DADOS.aplicacaoDor[h.id] || {}).criterios || {};
+  const total = DADOS.dorCriterios.length;
+  const feitos = DADOS.dorCriterios.filter((c) => ['SIM', 'N/A'].includes((criterios[c.id] || {}).resultado)).length;
+  const situacao = DADOS.situacaoDor(h.id);
+  const nivel = situacao === 'Pronta' ? 'ok' : situacao === 'Pronta com exceção' ? 'parcial' : DADOS.nivelPorProporcao(feitos, total);
+  return { nivel, feitos, total, detalhe: 'DoR: ' + feitos + ' de ' + total + ' critérios atendidos. Situação: ' + situacao + '.' };
+};
+
+// DoD: conta os critérios Aprovado ou N/A registrados em aplicacaoDod.
+DADOS.progressoDod = function (h) {
+  if (!(h.iteracao > 0)) return { nivel: 'nd', feitos: 0, total: 0, detalhe: 'Fora do MVP: sem verificação de DoD.' };
+  const criterios = (DADOS.aplicacaoDod[h.id] || {}).criterios || {};
+  const total = DADOS.dodCriterios.length;
+  const feitos = DADOS.dodCriterios.filter((c) => ['Aprovado', 'N/A'].includes((criterios[c.id] || {}).resultado)).length;
+  return { nivel: DADOS.nivelPorProporcao(feitos, total), feitos, total,
+    detalhe: 'DoD: ' + feitos + ' de ' + total + ' critérios aprovados.' };
+};
+
+// RNF: vermelho sem protocolo de verificação; amarelo com protocolo, ainda
+// sem execução completa; verde quando o critério 2 do DoD (requisitos não
+// funcionais) está aprovado em todas as histórias do MVP ligadas a ele.
+DADOS.estadoRnf = function (r) {
+  const ligadas = DADOS.historias.filter((h) => h.iteracao > 0 && (r.todasAsHistorias || h.rnfs.includes(r.id)));
+  const aprovadas = ligadas.filter((h) =>
+    ['Aprovado', 'N/A'].includes((((DADOS.aplicacaoDod[h.id] || {}).criterios || {})['2'] || {}).resultado)).length;
+  if (!r.verificacao) {
+    return { nivel: 'pendente', rotulo: 'Sem protocolo', detalhe: 'Ainda não há protocolo de verificação para este requisito.' };
+  }
+  if (ligadas.length && aprovadas === ligadas.length) {
+    return { nivel: 'ok', rotulo: 'Verificado', detalhe: 'Verificado em todas as histórias do MVP ligadas a ele.' };
+  }
+  return { nivel: 'parcial', rotulo: aprovadas ? 'Verificado em ' + aprovadas + ' de ' + ligadas.length : 'Protocolo definido',
+    detalhe: aprovadas ? 'Verificado em ' + aprovadas + ' de ' + ligadas.length + ' histórias do MVP ligadas a ele.'
+      : 'Há protocolo de verificação, mas nenhuma execução foi registrada no DoD.' };
+};
