@@ -6,6 +6,7 @@ import { MailModule, SmtpTransport } from '@nestjs/mail';
 import { TerminusModule } from '@nestjs/terminus';
 import { RelogioModule } from './common/relogio.js';
 import { type Ambiente, validarAmbiente } from './common/ambiente.js';
+import { AcolhimentoModule } from './modules/acolhimento/acolhimento.module.js';
 import { AccountModule } from './modules/account/account.module.js';
 import { AuthModule } from './modules/auth/auth.module.js';
 import { CheckinModule } from './modules/checkin/checkin.module.js';
@@ -52,6 +53,7 @@ import { SaudeController } from './saude.controller.js';
     CycleModule,
     CheckinModule,
     TasksModule,
+    AcolhimentoModule,
   ],
   controllers: [SaudeController],
   providers: [{ provide: APP_PIPE, useClass: StandardSchemaValidationPipe }],

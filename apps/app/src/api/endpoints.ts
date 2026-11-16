@@ -16,6 +16,7 @@ import type {
   PerfilCicloDto,
   Pin,
   RegistroCheckinDto,
+  SugestoesDoDia,
   Tarefa,
   Termos,
   Tokens,
@@ -66,6 +67,7 @@ export const api = {
   historicoCheckins: () => pedir<Checkin[]>('/checkins'),
   registrarCheckin: (dados: RegistroCheckinDto) =>
     pedir<Checkin>('/checkins', { metodo: 'POST', corpo: dados }),
+  sugestoesAcolhimento: () => pedir<SugestoesDoDia>('/acolhimento/sugestoes'),
   corrigirCheckin: (id: string, dados: RegistroCheckinDto) =>
     pedir<Checkin>(`/checkins/${id}`, { metodo: 'PUT', corpo: dados }),
   adiarTarefa: (id: string, dados: AdiamentoTarefaDto) =>
