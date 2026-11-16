@@ -11,7 +11,9 @@ O arquivo gerado nunca é editado à mão: para mudar o quadro, mude o Project
 no GitHub e rode o script de novo.
 """
 import json
+import os
 import subprocess
+import sys
 from datetime import datetime, timezone, timedelta
 
 DONO = 'mdsreq-fga-unb'
@@ -19,8 +21,31 @@ PROJETO = '120'
 SAIDA = 'assets/js/kanban.js'
 
 
+def uma_linha(texto):
+    return ' '.join((texto or '').split())
+
+
+def motivo_da_api():
+    # "gh project" troca o erro da API por "unknown owner type"; a consulta
+    # direta mostra o motivo de verdade (token inválido, sem permissão...).
+    consulta = 'query{organization(login:"%s"){projectV2(number:%s){title}}}' % (DONO, PROJETO)
+    r = subprocess.run(['gh', 'api', 'graphql', '-f', 'query=' + consulta], capture_output=True, text=True)
+    return '' if r.returncode == 0 else uma_linha(r.stderr or r.stdout)
+
+
 def gh(*args):
-    r = subprocess.run(['gh', *args, '--format', 'json'], capture_output=True, text=True, check=True)
+    r = subprocess.run(['gh', *args, '--format', 'json'], capture_output=True, text=True)
+    if r.returncode != 0:
+        # Mostra o motivo (token sem permissão, Project inexistente...). No
+        # GitHub Actions, o aviso aparece no resumo da execução.
+        motivo = uma_linha(r.stderr or r.stdout) or 'sem mensagem'
+        api = motivo_da_api()
+        if api:
+            motivo += ' | API: ' + api
+        print('Falhou: gh %s\n%s' % (' '.join(args), motivo), file=sys.stderr)
+        if os.environ.get('GITHUB_ACTIONS') == 'true':
+            print('::warning title=Quadro kanban não atualizado::gh %s: %s' % (' '.join(args), motivo))
+        sys.exit(1)
     return json.loads(r.stdout)
 
 
