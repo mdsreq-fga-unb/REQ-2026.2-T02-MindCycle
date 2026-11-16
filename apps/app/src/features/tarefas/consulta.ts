@@ -5,10 +5,10 @@ import { chaveTarefa, chaveTarefas } from './cache';
 
 export { chaveTarefa, chaveTarefas } from './cache';
 
-export function useTarefas() {
+export function useTarefas(concluidas = false) {
   return useQuery({
-    queryKey: [...chaveTarefas, 'abertas'],
-    queryFn: api.tarefas,
+    queryKey: [...chaveTarefas, concluidas ? 'concluidas' : 'abertas'],
+    queryFn: concluidas ? api.tarefasConcluidas : api.tarefas,
   });
 }
 

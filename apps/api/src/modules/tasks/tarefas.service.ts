@@ -94,6 +94,14 @@ export class TarefasService {
     return paraResposta(tarefa);
   }
 
+  async listarConcluidas(usuariaId: string): Promise<Tarefa[]> {
+    const tarefas = await this.prisma.tarefa.findMany({
+      where: { usuariaId, concluidaEm: { not: null } },
+      orderBy: [{ concluidaEm: 'desc' }, { criadaEm: 'desc' }],
+    });
+    return tarefas.map(paraResposta);
+  }
+
   async editar(
     usuariaId: string,
     id: string,
@@ -127,6 +135,38 @@ export class TarefasService {
       });
       if (count !== 1)
         throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+    });
+  }
+
+  /** HU20: repetir a requisição preserva o primeiro instante de conclusão. */
+  async concluir(usuariaId: string, id: string): Promise<Tarefa> {
+    return this.prisma.$transaction(async (tx) => {
+      const atual = await tx.tarefa.findUnique({ where: { id } });
+      this.exigirDona(atual, usuariaId);
+      await tx.tarefa.updateMany({
+        where: { id, usuariaId, concluidaEm: null },
+        data: { concluidaEm: this.relogio.agora() },
+      });
+      const concluida = await tx.tarefa.findUnique({ where: { id } });
+      if (!concluida)
+        throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+      return paraResposta(concluida);
+    });
+  }
+
+  async reabrir(usuariaId: string, id: string): Promise<Tarefa> {
+    return this.prisma.$transaction(async (tx) => {
+      const atual = await tx.tarefa.findUnique({ where: { id } });
+      this.exigirDona(atual, usuariaId);
+      const { count } = await tx.tarefa.updateMany({
+        where: { id, usuariaId },
+        data: { concluidaEm: null },
+      });
+      if (count !== 1)
+        throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+      const aberta = await tx.tarefa.findUnique({ where: { id } });
+      if (!aberta) throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+      return paraResposta(aberta);
     });
   }
 

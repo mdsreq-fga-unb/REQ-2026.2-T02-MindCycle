@@ -155,6 +155,11 @@ describe('Exclusão de conta e dados (HU36, RNF02, RNF03)', () => {
       .auth(tokens.accessToken, { type: 'bearer' })
       .expect(200);
     await request(servidor())
+      .post(`/tarefas/${tarefa.id}/conclusao`)
+      .auth(tokens.accessToken, { type: 'bearer' })
+      .send({})
+      .expect(200);
+    await request(servidor())
       .post('/auth/recuperacao')
       .send({ email: tokens.email })
       .expect(202);

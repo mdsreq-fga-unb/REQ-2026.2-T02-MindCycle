@@ -41,6 +41,13 @@ export class TarefasController {
     return this.tarefas.listar(usuaria.id);
   }
 
+  @Get('concluidas')
+  listarConcluidas(
+    @CurrentUser() usuaria: UsuariaAutenticada,
+  ): Promise<Tarefa[]> {
+    return this.tarefas.listarConcluidas(usuaria.id);
+  }
+
   @Get(':id')
   consultar(
     @CurrentUser() usuaria: UsuariaAutenticada,
@@ -65,6 +72,26 @@ export class TarefasController {
     @Param('id', { schema: z.uuid() }) id: string,
   ): Promise<void> {
     return this.tarefas.excluir(usuaria.id, id);
+  }
+
+  @Post(':id/conclusao')
+  @HttpCode(200)
+  concluir(
+    @CurrentUser() usuaria: UsuariaAutenticada,
+    @Param('id', { schema: z.uuid() }) id: string,
+    @Body({ schema: z.object({}).strict().default({}) })
+    _dados: Record<string, never>,
+  ): Promise<Tarefa> {
+    return this.tarefas.concluir(usuaria.id, id);
+  }
+
+  @Delete(':id/conclusao')
+  @HttpCode(200)
+  reabrir(
+    @CurrentUser() usuaria: UsuariaAutenticada,
+    @Param('id', { schema: z.uuid() }) id: string,
+  ): Promise<Tarefa> {
+    return this.tarefas.reabrir(usuaria.id, id);
   }
 
   @Patch(':id/adiamento')

@@ -4,6 +4,7 @@ import { afterEach, beforeEach, describe, expect, it } from '@jest/globals';
 import { aplicarTarefa, chaveTarefa, chaveTarefas, removerTarefa } from './cache';
 
 const abertas = [...chaveTarefas, 'abertas'];
+const concluidas = [...chaveTarefas, 'concluidas'];
 const criar = (id: string, alteracao: Partial<Tarefa> = {}): Tarefa => ({
   id,
   titulo: id,
@@ -93,5 +94,65 @@ describe('Listas depois da confirmação da API', () => {
     responder([original]);
     await consulta;
     expect(client.getQueryData(abertas)).toEqual([salva]);
+  });
+
+  it('move a tarefa confirmada de abertas para concluídas', async () => {
+    client.setQueryData(abertas, [criar('a'), criar('b')]);
+    client.setQueryData(concluidas, []);
+    const feita = criar('a', { concluidaEm: '2026-11-15T14:00:00Z' });
+    await aplicarTarefa(client, feita);
+    expect(client.getQueryData(abertas)).toEqual([criar('b')]);
+    expect(client.getQueryData(concluidas)).toEqual([feita]);
+    expect(client.getQueryData(chaveTarefa('a'))).toEqual(feita);
+  });
+
+  it('a mesma conclusão repetida não duplica o histórico', async () => {
+    client.setQueryData(concluidas, []);
+    const feita = criar('a', { concluidaEm: '2026-11-15T14:00:00Z' });
+    await aplicarTarefa(client, feita);
+    await aplicarTarefa(client, feita);
+    expect(client.getQueryData(concluidas)).toEqual([feita]);
+  });
+
+  it('reabrir move de concluídas para abertas sem duplicar em respostas repetidas', async () => {
+    const feita = criar('a', { concluidaEm: '2026-11-15T14:00:00Z' });
+    const outra = criar('b', { criadaEm: '2026-11-15T13:00:00Z' });
+    client.setQueryData(concluidas, [feita]);
+    client.setQueryData(abertas, [outra]);
+    const reaberta = { ...feita, concluidaEm: null };
+    await aplicarTarefa(client, reaberta);
+    await aplicarTarefa(client, reaberta);
+    expect(client.getQueryData(concluidas)).toEqual([]);
+    expect(client.getQueryData(abertas)).toEqual([reaberta, outra]);
+    expect(client.getQueryData(chaveTarefa('a'))).toEqual(reaberta);
+  });
+
+  it('ordena concluídas da mais recente para a antiga', async () => {
+    const antiga = criar('a', { concluidaEm: '2026-11-14T14:00:00Z' });
+    const nova = criar('b', { concluidaEm: '2026-11-15T14:00:00Z' });
+    client.setQueryData(concluidas, [antiga]);
+    await aplicarTarefa(client, nova);
+    expect(client.getQueryData(concluidas)).toEqual([nova, antiga]);
+  });
+
+  it('editar uma concluída mantém a data e não a reabre', async () => {
+    client.setQueryData(abertas, []);
+    const feita = criar('a', { concluidaEm: '2026-11-15T14:00:00Z' });
+    client.setQueryData(concluidas, [feita]);
+    await aplicarTarefa(client, { ...feita, titulo: 'Corrigida' });
+    expect(client.getQueryData(abertas)).toEqual([]);
+    expect(client.getQueryData<Tarefa[]>(concluidas)?.[0]).toEqual({
+      ...feita,
+      titulo: 'Corrigida',
+    });
+  });
+
+  it('excluir uma concluída remove também do histórico e do detalhe', async () => {
+    const feita = criar('a', { concluidaEm: '2026-11-15T14:00:00Z' });
+    client.setQueryData(concluidas, [feita]);
+    client.setQueryData(chaveTarefa('a'), feita);
+    await removerTarefa(client, 'a');
+    expect(client.getQueryData(concluidas)).toEqual([]);
+    expect(client.getQueryData(chaveTarefa('a'))).toBeUndefined();
   });
 });
