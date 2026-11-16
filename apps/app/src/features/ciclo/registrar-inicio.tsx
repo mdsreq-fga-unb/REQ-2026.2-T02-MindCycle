@@ -11,7 +11,7 @@ import { espaco } from '@/ui/tema';
 
 import { chaveCiclo } from './consulta';
 
-/** HU06. O padrão é hoje; para outro dia, a usuária digita a data. */
+/** HU06, em "Editar meu ciclo": registrar um início em outro dia que não hoje. */
 export function RegistrarInicio({ hoje }: { hoje: string }) {
   const queryClient = useQueryClient();
   const [texto, setTexto] = useState(formatarDataBr(hoje));
@@ -27,7 +27,7 @@ export function RegistrarInicio({ hoje }: { hoje: string }) {
   function registrar() {
     const data = lerDataBr(texto);
     if (!data) {
-      setErroLocal(textos.ciclo.inicio.dataInvalida);
+      setErroLocal(textos.ciclo.dataInvalida);
     } else if (data > hoje) {
       // A API também recusa; conferir aqui poupa a ida e volta.
       setErroLocal(textos.erros[CodigoErro.DataNoFuturo]);
@@ -52,7 +52,7 @@ export function RegistrarInicio({ hoje }: { hoje: string }) {
         }}
         keyboardType="number-pad"
         maxLength={10}
-        placeholder={textos.ciclo.inicio.formato}
+        placeholder={textos.ciclo.formatoData}
       />
       <Aviso>{erroLocal ?? (registro.isError && mensagemDeErro(registro.error))}</Aviso>
       <Confirmacao>

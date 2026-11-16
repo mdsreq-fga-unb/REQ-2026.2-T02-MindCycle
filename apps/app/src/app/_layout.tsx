@@ -1,6 +1,7 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { focusManager, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SplashScreen, Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { AppState } from 'react-native';
 
 import { SessaoProvider, useSessao } from '@/sessao/sessao';
 import { textos } from '@/textos';
@@ -11,6 +12,14 @@ SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1 } },
+});
+
+// No React Native não existe o evento de foco do navegador: sem isto, voltar ao
+// app (no dia seguinte, por exemplo) não refaz nenhuma consulta, e a lista de
+// tarefas do dia (HU13) ficaria com o "hoje" de quando foi buscada.
+focusManager.setEventListener((aoMudarFoco) => {
+  const ouvinte = AppState.addEventListener('change', (estado) => aoMudarFoco(estado === 'active'));
+  return () => ouvinte.remove();
 });
 
 export default function RootLayout() {

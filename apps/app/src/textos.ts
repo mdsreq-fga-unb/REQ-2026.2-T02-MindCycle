@@ -1,5 +1,6 @@
 import {
   CodigoErro,
+  type Fase,
   type MensagemAcolhimentoId,
   type PraticaAcolhimento,
   type Sintoma,
@@ -75,7 +76,23 @@ export const textos = {
   },
   hoje: {
     titulo: 'Hoje',
-    emBreve: 'Em breve, suas tarefas do dia aparecem aqui.',
+    // HU13
+    plano: {
+      titulo: 'Suas tarefas de hoje',
+      subtitulo: 'Uma ordem sugerida para o seu dia, pela sua disposição, pelos prazos e pelas prioridades.',
+      carregando: 'Preparando suas tarefas de hoje...',
+      disposicao: (nivel: string) => `Considerando sua disposição ${nivel.toLowerCase()}.`,
+      disposicaoAssumida:
+        'Você ainda não registrou sua disposição hoje, então consideramos média. Se quiser, registre como você está.',
+      vazio: {
+        titulo: 'Nada planejado para hoje',
+        texto: 'As tarefas aparecem aqui no dia planejado para elas.',
+      },
+      posicao: (numero: number) => `${numero}ª`,
+      rotuloItem: (numero: number, titulo: string) => `${numero}ª tarefa sugerida: ${titulo}`,
+      avisoAdiamento:
+        'Esta tarefa pede mais energia do que a sua disposição de hoje. Se precisar, ela pode ser adiada.',
+    },
   },
   // HU04
   checkin: {
@@ -148,15 +165,49 @@ export const textos = {
     },
   },
   ciclo: {
-    titulo: 'Meu ciclo',
-    subtitulo: 'Essas informações ficam só com você e ajudam a entender o seu ritmo.',
     carregando: 'Carregando seu ciclo...',
+    dataInvalida: 'Confira a data: use o formato dia/mês/ano, como 15/11/2026.',
+    formatoData: 'DD/MM/AAAA',
+    duracao: {
+      rotulo: 'Quantos dias seu ciclo costuma durar',
+      dias: (dias: number) => `${dias} dias`,
+      vazio: 'Toque em − ou + para escolher',
+      diminuir: 'Diminuir um dia',
+      aumentar: 'Aumentar um dia',
+      irregular: 'Meu ciclo é irregular',
+    },
+    // HU06 e HU07 juntas: aparece enquanto o ciclo não foi informado.
+    formulario: {
+      titulo: 'Sobre o seu ciclo',
+      subtitulo: 'Essas informações ficam só com você e ajudam a entender o seu ritmo.',
+      inicio: 'Quando começou sua última menstruação?',
+      botao: 'Salvar meu ciclo',
+      faltaData: 'Informe quando começou sua última menstruação, no formato dia/mês/ano.',
+      faltaDuracao: 'Escolha quantos dias seu ciclo costuma durar, ou marque que ele é irregular.',
+    },
+    // Depois de informado: a tela do protótipo, que HU05 e HU10 completam.
+    seuCiclo: {
+      titulo: 'Seu ciclo',
+      ultimoInicio: (data: string) => `Sua última menstruação começou em ${data}.`,
+      duracao: (dias: number) => `Seu ciclo costuma durar cerca de ${dias} dias.`,
+      irregular: 'Você indicou que seu ciclo é irregular.',
+      comecou: 'Minha menstruação começou',
+      registradoHoje: 'Início de hoje registrado.',
+      editar: 'Editar meu ciclo',
+    },
+    editar: {
+      titulo: 'Editar meu ciclo',
+      voltar: 'Voltar',
+    },
+    caracteristicas: {
+      titulo: 'Duração do ciclo',
+      botao: 'Salvar duração',
+      salvo: 'Duração salva.',
+    },
     inicio: {
-      titulo: 'Início da menstruação',
+      titulo: 'Registrar outro início',
       rotulo: 'Data de início (dia/mês/ano)',
-      formato: 'DD/MM/AAAA',
       botao: 'Registrar início',
-      dataInvalida: 'Confira a data: use o formato dia/mês/ano, como 15/11/2026.',
       registrado: (data: string) => `Início de ${data} registrado.`,
     },
     historico: {
@@ -165,18 +216,72 @@ export const textos = {
       remover: 'Remover',
       rotuloRemover: (data: string) => `Remover o início de ${data}`,
     },
-    caracteristicas: {
-      titulo: 'Características do ciclo',
-      duracao: 'Duração média do ciclo (em dias)',
-      irregular: 'Meu ciclo é irregular',
-      botao: 'Salvar',
-      duracaoInvalida: (minimo: number, maximo: number) =>
-        `Informe a duração em dias, entre ${minimo} e ${maximo}.`,
-      salvo: 'Informação salva.',
+    // HU28. Rascunho da equipe, a revisar com a Dra. Cláudia.
+    fases: {
+      titulo: 'Fases do ciclo',
+      introducao:
+        'O ciclo vai do primeiro dia de uma menstruação até a véspera da próxima. Costuma durar de 21 a 35 dias e passa por quatro fases.',
+      dica: 'Toque em uma fase para saber mais.',
+      rotuloAcessivel: (nome: string) => `Fase ${nome.toLowerCase()}`,
+      tituloModal: (nome: string) => `Fase ${nome.toLowerCase()}`,
+      dicaAcessivel: 'Abre a explicação da fase',
+      quando: 'Quando acontece',
+      corpo: 'O que acontece no corpo',
+      sentir: 'Como costuma ser',
+      nota: 'Cada corpo tem o seu ritmo: as durações são aproximadas e podem mudar de um ciclo para outro.',
+      fechar: 'Fechar',
+      porFase: {
+        menstrual: {
+          nome: 'Menstrual',
+          quando: 'Do primeiro dia da menstruação até ela terminar, em geral de 3 a 7 dias.',
+          corpo:
+            'O revestimento do útero, preparado no ciclo anterior, se desprende e sai como menstruação. Os hormônios estrogênio e progesterona estão no nível mais baixo do ciclo.',
+          sentir:
+            'Cólica, cansaço e menos disposição são comuns. Ir com mais calma nesses dias faz parte do ritmo.',
+        },
+        folicular: {
+          nome: 'Folicular',
+          quando:
+            'Do fim da menstruação até a ovulação. Num ciclo de 28 dias, vai até por volta do 13º dia.',
+          corpo:
+            'O estrogênio sobe aos poucos enquanto um folículo amadurece no ovário, e o útero volta a se preparar.',
+          sentir: 'Muitas pessoas sentem a energia e a concentração voltando.',
+        },
+        ovulatoria: {
+          nome: 'Ovulatória',
+          quando: 'Poucos dias no meio do ciclo. Num ciclo de 28 dias, por volta do 14º dia.',
+          corpo:
+            'O ovário libera um óvulo. O estrogênio chega ao ponto mais alto e o hormônio LH tem um pico.',
+          sentir:
+            'É comum ter mais disposição e vontade de conversar. Algumas pessoas sentem uma dor leve em um dos lados da barriga.',
+        },
+        lutea: {
+          nome: 'Lútea',
+          quando: 'Da ovulação até a próxima menstruação, em geral por cerca de 14 dias.',
+          corpo:
+            'A progesterona sobe para manter o útero preparado. Sem gravidez, os hormônios caem no fim da fase e a menstruação começa.',
+          sentir:
+            'Perto do fim da fase podem aparecer cansaço, inchaço, sensibilidade nos seios e irritabilidade. Tudo bem precisar de mais pausas.',
+        },
+      } satisfies Record<Fase, { nome: string; quando: string; corpo: string; sentir: string }>,
     },
   },
   tarefas: {
     titulo: 'Tarefas',
+    detalhe: {
+      titulo: 'Sua tarefa',
+      abrir: 'Ver tarefa',
+      rotuloAbrir: (titulo: string) => `Ver a tarefa ${titulo}`,
+      editar: 'Editar',
+      salvar: 'Salvar alterações',
+      salvo: 'Alterações salvas.',
+      excluir: 'Excluir tarefa',
+      confirmarExclusao: 'Confirmar exclusão',
+      avisoExclusao: 'Excluir esta tarefa e seu histórico? Não é possível desfazer.',
+      cancelar: 'Cancelar',
+      voltar: 'Voltar às tarefas',
+      idInvalido: 'Não foi possível identificar a tarefa.',
+    },
     carregando: 'Carregando suas tarefas...',
     novaTarefa: 'Nova tarefa',
     vazio: {

@@ -1,27 +1,28 @@
+import {
+  DURACAO_MEDIA_MAXIMA,
+  DURACAO_MEDIA_MINIMA,
+  DURACAO_MEDIA_REFERENCIA,
+  type Ciclo,
+  type PerfilCiclo,
+} from '@mindcycle/shared';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { View } from 'react-native';
-import {
-  type Ciclo,
-  DURACAO_MEDIA_MAXIMA,
-  DURACAO_MEDIA_MINIMA,
-  type PerfilCiclo,
-  type PerfilCicloDto,
-} from '@mindcycle/shared';
 
 import { api } from '@/api/endpoints';
 import { mensagemDeErro } from '@/api/mensagem-de-erro';
 import { textos } from '@/textos';
-import { Aviso, Botao, Campo, Confirmacao, Interruptor, Texto } from '@/ui/componentes';
+import { Aviso, Botao, Confirmacao, Contador, Interruptor, Texto } from '@/ui/componentes';
 import { espaco } from '@/ui/tema';
 
 import { chaveCiclo } from './consulta';
 
-/** HU07: a duração média ou a indicação de ciclo irregular. */
+/** HU07: a duração média ou a indicação de ciclo irregular, em "Editar meu ciclo". */
 export function CaracteristicasDoCiclo({ perfil }: { perfil: PerfilCiclo | null }) {
   const queryClient = useQueryClient();
+  const t = textos.ciclo;
   const [irregular, setIrregular] = useState(perfil?.irregular ?? false);
-  const [duracao, setDuracao] = useState(perfil?.duracaoMedia?.toString() ?? '');
+  const [duracao, setDuracao] = useState<number | null>(perfil?.duracaoMedia ?? null);
   const [erroLocal, setErroLocal] = useState<string>();
   const salvamento = useMutation({
     mutationFn: api.informarPerfil,
@@ -37,47 +38,41 @@ export function CaracteristicasDoCiclo({ perfil }: { perfil: PerfilCiclo | null 
     };
   }
 
+  // Sem duração escolhida, só "irregular" pode ser salvo (HU07).
   function salvar() {
-    let dados: PerfilCicloDto;
     if (irregular) {
-      dados = { irregular: true };
+      salvamento.mutate({ irregular: true });
+    } else if (duracao === null) {
+      setErroLocal(t.formulario.faltaDuracao);
     } else {
-      const duracaoMedia = /^\d+$/.test(duracao) ? Number(duracao) : NaN;
-      if (!(duracaoMedia >= DURACAO_MEDIA_MINIMA && duracaoMedia <= DURACAO_MEDIA_MAXIMA)) {
-        setErroLocal(
-          textos.ciclo.caracteristicas.duracaoInvalida(DURACAO_MEDIA_MINIMA, DURACAO_MEDIA_MAXIMA),
-        );
-        return;
-      }
-      dados = { irregular: false, duracaoMedia };
+      salvamento.mutate({ irregular: false, duracaoMedia: duracao });
     }
-    setErroLocal(undefined);
-    salvamento.mutate(dados);
   }
 
   return (
     <View style={{ gap: espaco.md }}>
       <Texto accessibilityRole="header" style={{ fontWeight: '700' }}>
-        {textos.ciclo.caracteristicas.titulo}
+        {t.caracteristicas.titulo}
       </Texto>
-      <Interruptor
-        rotulo={textos.ciclo.caracteristicas.irregular}
-        valor={irregular}
-        aoMudar={editar(setIrregular)}
-      />
+      <Interruptor rotulo={t.duracao.irregular} valor={irregular} aoMudar={editar(setIrregular)} />
       {!irregular && (
-        <Campo
-          rotulo={textos.ciclo.caracteristicas.duracao}
-          value={duracao}
-          onChangeText={editar((novo: string) => setDuracao(novo.replace(/\D/g, '')))}
-          keyboardType="number-pad"
-          maxLength={2}
+        <Contador
+          rotulo={t.duracao.rotulo}
+          valor={duracao}
+          inicial={DURACAO_MEDIA_REFERENCIA}
+          minimo={DURACAO_MEDIA_MINIMA}
+          maximo={DURACAO_MEDIA_MAXIMA}
+          aoMudar={editar(setDuracao)}
+          formatar={t.duracao.dias}
+          textoVazio={t.duracao.vazio}
+          rotuloDiminuir={t.duracao.diminuir}
+          rotuloAumentar={t.duracao.aumentar}
         />
       )}
       <Aviso>{erroLocal ?? (salvamento.isError && mensagemDeErro(salvamento.error))}</Aviso>
-      <Confirmacao>{salvamento.isSuccess && textos.ciclo.caracteristicas.salvo}</Confirmacao>
+      <Confirmacao>{salvamento.isSuccess && t.caracteristicas.salvo}</Confirmacao>
       <Botao
-        titulo={textos.ciclo.caracteristicas.botao}
+        titulo={t.caracteristicas.botao}
         carregando={salvamento.isPending}
         onPress={salvar}
       />

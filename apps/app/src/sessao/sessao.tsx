@@ -16,6 +16,8 @@ import type {
 } from '@mindcycle/shared';
 
 import { api } from '@/api/endpoints';
+import { chaveCheckins } from '@/features/checkin/consulta';
+import { chaveTarefas } from '@/features/tarefas/consulta';
 import { aoMudarTokens, carregarTokens, salvarTokens, tokensAtuais } from './tokens';
 
 // HU11. Pendência: o tempo em segundo plano que reativa a trava do PIN ainda
@@ -104,7 +106,13 @@ export function SessaoProvider({ children }: PropsWithChildren) {
     if (conta.data && conta.data.fuso !== fuso) {
       api
         .atualizarConta({ fuso })
-        .then((atualizada) => queryClient.setQueryData(['conta'], atualizada))
+        .then((atualizada) => {
+          queryClient.setQueryData(['conta'], atualizada);
+          // O "hoje" pode ter mudado: refaz o que foi calculado no fuso antigo,
+          // como as tarefas do dia (HU13) e o registro de hoje (HU04).
+          void queryClient.invalidateQueries({ queryKey: chaveTarefas });
+          void queryClient.invalidateQueries({ queryKey: chaveCheckins });
+        })
         .catch(() => {});
     }
   }, [conta.data, queryClient]);

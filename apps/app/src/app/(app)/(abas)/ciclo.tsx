@@ -1,24 +1,24 @@
+import { cicloPreenchido } from '@mindcycle/shared';
 import { View } from 'react-native';
 
 import { mensagemDeErro } from '@/api/mensagem-de-erro';
-import { CaracteristicasDoCiclo } from '@/features/ciclo/caracteristicas-do-ciclo';
 import { useCiclo } from '@/features/ciclo/consulta';
-import { HistoricoInicios } from '@/features/ciclo/historico-inicios';
-import { RegistrarInicio } from '@/features/ciclo/registrar-inicio';
+import { FormularioCiclo } from '@/features/ciclo/formulario-ciclo';
+import { SeuCiclo } from '@/features/ciclo/seu-ciclo';
 import { useSessao } from '@/sessao/sessao';
 import { textos } from '@/textos';
-import { Aviso, Botao, Tela, Texto, Titulo } from '@/ui/componentes';
+import { Aviso, Botao, Tela, Texto } from '@/ui/componentes';
 import { espaco } from '@/ui/tema';
 
-// HU06, HU07. A fase estimada (HU05), HU28 e HU09 entram nesta aba depois.
+// Enquanto o ciclo não foi informado, o formulário (HU06 e HU07); depois,
+// "Seu ciclo" com as fases (HU28). HU05 e HU10 completam "Seu ciclo".
 export default function Ciclo() {
   const { conta } = useSessao();
   const ciclo = useCiclo();
+  const preenchido = ciclo.data !== undefined && cicloPreenchido(ciclo.data);
 
   return (
-    <Tela naAba>
-      <Titulo>{textos.ciclo.titulo}</Titulo>
-      <Texto suave>{textos.ciclo.subtitulo}</Texto>
+    <Tela naAba noTopo={preenchido}>
       {ciclo.isPending && <Texto suave>{textos.ciclo.carregando}</Texto>}
       {ciclo.isError && (
         <View style={{ gap: espaco.sm }}>
@@ -30,13 +30,13 @@ export default function Ciclo() {
           />
         </View>
       )}
-      {ciclo.data && conta && (
-        <>
-          <RegistrarInicio hoje={conta.hoje} />
-          <HistoricoInicios inicios={ciclo.data.inicios} />
-          <CaracteristicasDoCiclo perfil={ciclo.data.perfil} />
-        </>
-      )}
+      {ciclo.data &&
+        conta &&
+        (preenchido ? (
+          <SeuCiclo ciclo={ciclo.data} hoje={conta.hoje} />
+        ) : (
+          <FormularioCiclo ciclo={ciclo.data} hoje={conta.hoje} />
+        ))}
     </Tela>
   );
 }
