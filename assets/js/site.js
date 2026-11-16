@@ -28,8 +28,63 @@ const MC = (() => {
   const noBacklog = (h) => noMvp(h) && DADOS.dorAtendido.includes(h.id);
   const naIteracaoAtual = (h) => noMvp(h) && h.iteracao === DADOS.iteracaoAtual;
   const itemBacklog = (h) => ((DADOS.backlog || {}).itens || {})[h.id] || {};
-  const responsavel = (h) => ((DADOS.backlog || {}).responsaveis || {})[h.id] ||
-    (DADOS.backlog || {}).responsavelPadrao || 'Não atribuído';
+
+  // Status no quadro Kanban (GitHub Projects). O CI grava o retrato do quadro
+  // em assets/js/kanban.js a cada publicação; aqui cada issue é ligada à HU ou à
+  // característica pelo código do título: "[RF04 · HU04] …" é a HU04,
+  // "[RF06 · RF07] …" são a HU06 e a HU07, "[CP1] …" é a CP1.
+  const STATUS_QUADRO = {
+    'Backlog': ['Backlog', 'backlog'],
+    'Ready': ['Pronta', 'pronta'],
+    'In progress': ['Em andamento', 'andamento'],
+    'In review': ['Em revisão', 'revisao'],
+    'Done': ['Concluída', 'concluida']
+  };
+  const cartoes = {};
+  if (typeof KANBAN !== 'undefined') {
+    KANBAN.colunas.forEach((coluna) => coluna.itens.forEach((item) => {
+      const codigo = item.tipo === 'Issue' && (item.titulo || '').match(/^\[([^\]]+)\]/);
+      if (!codigo) return;
+      const [rotulo, classe] = STATUS_QUADRO[coluna.nome] || [coluna.nome, 'outro'];
+      const cartao = { status: coluna.nome, rotulo, classe, numero: item.numero, url: item.url,
+        responsaveis: item.responsaveis || [] };
+      const ids = [...codigo[1].matchAll(/\b(?:HU|RF)(\d{2})\b/g)].map((m) => 'HU' + m[1])
+        .concat([...codigo[1].matchAll(/\bCP(\d+)\b/g)].map((m) => 'CP' + m[1]));
+      ids.forEach((id) => { if (!cartoes[id]) cartoes[id] = cartao; });
+    }));
+  }
+  const noQuadro = (id) => cartoes[id] || null;
+  // A característica segue as HUs do MVP dela no quadro, para não depender de
+  // alguém mover o cartão da CP: concluída quando todas estão em Done, em
+  // andamento quando alguma já começou. Sem HU no quadro, vale o cartão da CP.
+  function statusCp(id) {
+    const hus = DADOS.historias.filter((h) => h.caracteristica === id && noMvp(h));
+    const das = hus.map((h) => cartoes[h.id]).filter(Boolean);
+    if (!das.length) return cartoes[id] || null;
+    const feitas = das.filter((c) => c.status === 'Done').length;
+    const status = feitas === hus.length ? 'Done'
+      : das.some((c) => c.status === 'In progress' || c.status === 'In review' || c.status === 'Done') ? 'In progress'
+      : das.some((c) => c.status === 'Ready') ? 'Ready' : 'Backlog';
+    const [rotulo, classe] = STATUS_QUADRO[status];
+    return { status, rotulo, classe, derivado: true, feitas, total: hus.length };
+  }
+  function chipStatus(id) {
+    const c = /^CP/.test(id) ? statusCp(id) : noQuadro(id);
+    // Backlog é o estado de partida: a etiqueta só aparece depois que o trabalho anda.
+    if (!c || c.status === 'Backlog') return '';
+    const titulo = c.derivado ? 'Pelas HUs do MVP no quadro Kanban: ' + c.feitas + ' de ' + c.total + ' concluídas'
+      : 'Status no quadro Kanban (issue #' + c.numero + ')';
+    return '<span class="qs qs-' + c.classe + '" title="' + esc(titulo) + '">' + esc(c.rotulo) + '</span>';
+  }
+
+  // Quem faz a HU: quem está atribuída à issue no quadro; sem ninguém lá, o
+  // planejamento de dados.js; sem nenhum dos dois, "Não atribuído".
+  const nomePessoa = (login) => (DADOS.pessoas || {})[login] || '@' + login;
+  const responsavel = (h) => {
+    const c = cartoes[h.id];
+    if (c && c.responsaveis.length) return c.responsaveis.map(nomePessoa).join(', ');
+    return ((DADOS.backlog || {}).responsaveis || {})[h.id] || (DADOS.backlog || {}).responsavelPadrao || 'Não atribuído';
+  };
   const MOSCOW = { 4: 'Must have', 3: 'Should have', 2: 'Could have', 1: "Won't have now" };
 
   const criteriosDod = document.getElementById('criterios-dod');
@@ -138,10 +193,15 @@ const MC = (() => {
   function etiquetas(h) {
     const link = (texto, caminho, classe) => '<a class="ptag ' + classe + '" href="' + esc(url(caminho)) + '">' + esc(texto) + '</a>';
     const tags = [];
+    const cartao = noQuadro(h.id);
+    if (cartao && cartao.status !== 'Backlog') {
+      tags.push('<a class="ptag qs-tag qs-' + cartao.classe + '" href="' + esc(cartao.url) + '" target="_blank" rel="noopener" ' +
+        'title="Abrir a issue no GitHub">Quadro: ' + esc(cartao.rotulo) + ' · #' + cartao.numero + '</a>');
+    }
     if (noBacklog(h)) tags.push(link('DoR atendido', 'dor-e-dod/', 't-bk'));
     if (naIteracaoAtual(h)) tags.push(link('Iteração atual', 'cronograma/', 't-cur'));
     if (itemBacklog(h).situacao) tags.push(link(itemBacklog(h).situacao,
-      '?' + new URLSearchParams({ cp: h.caracteristica, hl: h.id, plano: h.id }), 't-out'));
+      '?' + new URLSearchParams({ cp: h.caracteristica, hl: h.id }), 't-out'));
     tags.push(noMvp(h) ? link('MVP', 'mvp/', 't-mvp') : link('Fora do MVP', 'mvp/', 't-out'));
     if (noMvp(h)) {
       tags.push(link('Planejada: Iteração ' + h.iteracao, 'cronograma/', 't-rel'));
@@ -161,7 +221,7 @@ const MC = (() => {
 
   // Resultado de um critério do DoR como etiqueta colorida.
   const CLASSE_DOR = { 'SIM': 'r-sim', 'NÃO': 'r-nao', 'N/A': 'r-na', 'Pronta': 'r-sim',
-    'Pronta com exceção': 'r-exc', 'Não pronta': 'r-nao' };
+    'Pronta com exceção': 'r-exc', 'Não pronta': 'r-nao', 'Verificada': 'r-sim', 'Reprovada': 'r-nao' };
   function resultadoDor(texto) {
     return '<span class="rdor ' + (CLASSE_DOR[texto] || 'r-nc') + '">' + esc(texto) + '</span>';
   }
@@ -210,7 +270,9 @@ const MC = (() => {
 
     const aplicacao = registro || {};
     const transversais = DADOS.rnfs.filter((r) => r.todasAsHistorias).map((r) => r.id);
-    const rnfs = [...new Set([...h.rnfs, ...transversais])];
+    // Ficam fora do DoD, por enquanto, os RNFs de tempo de resposta (sem ferramenta
+    // de medição escolhida) e o ensaio em aparelho físico do RNF10.
+    const rnfs = [...new Set([...h.rnfs, ...transversais])].filter((r) => !['RNF06', 'RNF07', 'RNF08', 'RNF10'].includes(r));
     const itens = DADOS.dodCriterios.map((definicao) => {
       const numero = definicao.id;
       const criterio = (aplicacao.criterios || {})[numero] || {};
@@ -224,11 +286,9 @@ const MC = (() => {
         '<p class="ph">DOD-' + esc(h.id) + '-' + numero + '</p>' +
         '<p>' + esc(protocolo) + '</p>' +
         '<dl class="dl">' +
-          '<div class="dlr"><dt>Executor</dt><dd>' + esc(criterio.executor || 'Não informado') + '</dd></div>' +
-          '<div class="dlr"><dt>Revisor</dt><dd>' + esc(criterio.revisor || 'Não informado') + '</dd></div>' +
           '<div class="dlr"><dt>Data</dt><dd>' + esc(criterio.data || 'Não informada') + '</dd></div>' +
           '<div class="dlr"><dt>Evidência ou justificativa N/A</dt><dd>' +
-            esc(criterio.evidencia || 'Não informada') + '</dd></div>' +
+            esc((criterio.evidencia || 'Não informada') + (criterio.revisor ? ' Aprovado por ' + criterio.revisor + '.' : '')) + '</dd></div>' +
         '</dl></div></details>';
     });
     return '<h3 style="margin: 24px 0 12px">Aplicação do DoD</h3>' +
@@ -243,7 +303,6 @@ const MC = (() => {
     if (!h) return;
     const ev = decisoes(h);
     const ABAS = [['res', 'História de usuário'], ['pro', 'DoR e DoD'], ['his', 'Decisões']];
-    const planoArvore = pagina === 'requisitos' && typeof PLANO_ARVORE !== 'undefined' && PLANO_ARVORE;
     aba = aba || 'res';
     const conteudo =
       '<div class="dh"><div><div class="crumbs"><span class="mono">' + h.id + '</span></div>' +
@@ -294,7 +353,6 @@ const MC = (() => {
         '<a class="lnk" href="' + url('reunioes/') + '">Ver em Reuniões</a></div>' +
       '</div>' +
       '<div class="tools" style="margin-top: 18px; justify-content: flex-end">' +
-        '<a class="go" href="' + esc(url('?cp=' + h.caracteristica + '&hl=' + h.id + '&plano=' + h.id)) + '">Ver planejamento</a>' +
         (pagina === 'requisitos' ? '' : '<a class="go" href="' +
           esc(url('?cp=' + h.caracteristica + '&hl=' + h.id)) + '">Ver na árvore</a>') + '</div>';
 
@@ -389,6 +447,43 @@ const MC = (() => {
     '<p class="state" style="margin-top: 10px">S sim · N não · E não, com exceção autorizada · N/A não se aplica · ? não conferido. Os números das colunas seguem a ordem dos critérios acima.</p>';
   }
 
+  // Situação de uma história no DoD: Verificada com todos os critérios aprovados
+  // (ou N/A), Reprovada com algum reprovado, Em verificação no resto.
+  function situacaoDod(id) {
+    const criterios = (DADOS.aplicacaoDod[id] || {}).criterios || {};
+    const resultados = DADOS.dodCriterios.map((c) => (criterios[c.id] || {}).resultado);
+    if (resultados.includes('Reprovado')) return 'Reprovada';
+    return resultados.every((r) => r === 'Aprovado' || r === 'N/A') ? 'Verificada' : 'Em verificação';
+  }
+
+  const quadroDod = document.getElementById('quadro-dod');
+  if (quadroDod) {
+    const SIGLA = { 'Aprovado': 'S', 'Reprovado': 'N', 'N/A': 'N/A' };
+    const iteracoes = [...new Set(DADOS.historias.filter(noMvp).map((h) => h.iteracao))].sort((a, b) => a - b);
+    quadroDod.innerHTML = iteracoes.map((n) => {
+      const hs = DADOS.historias.filter((h) => h.iteracao === n);
+      const verificadas = hs.filter((h) => situacaoDod(h.id) === 'Verificada').length;
+      const linhas = hs.map((h) => {
+        const criterios = (DADOS.aplicacaoDod[h.id] || {}).criterios || {};
+        return '<tr><th scope="row">' + chipHistoria(h) + '</th>' +
+          DADOS.dodCriterios.map((c) => {
+            const r = criterios[c.id] || {};
+            const texto = SIGLA[r.resultado] || '?';
+            const classe = { S: 'r-sim', N: 'r-nao', 'N/A': 'r-na' }[texto] || 'r-nc';
+            return '<td><span class="rdor ' + classe + '" title="' + esc(c.titulo + ': ' + (r.resultado || 'Não verificado')) + '">' + texto + '</span></td>';
+          }).join('') +
+          '<td>' + resultadoDor(situacaoDod(h.id)) + '</td></tr>';
+      }).join('');
+      return '<h4 style="margin: 18px 0 6px">Iteração ' + n + '</h4>' +
+        '<p class="state" style="margin: 0 0 8px">' + verificadas + ' de ' + hs.length + ' histórias verificadas</p>' +
+        '<div class="tblw" tabindex="0" role="region" aria-label="Aplicação do DoD na Iteração ' + n + '"><table class="qdor">' +
+        '<thead><tr><th scope="col">HU</th>' + DADOS.dodCriterios.map((c) =>
+          '<th scope="col" title="' + esc(c.titulo) + '">' + c.id + '</th>').join('') +
+        '<th scope="col">Situação</th></tr></thead><tbody>' + linhas + '</tbody></table></div>';
+    }).join('') +
+    '<p class="state" style="margin-top: 10px">S aprovado · N reprovado · N/A não se aplica · ? não verificado. Os números das colunas seguem a ordem dos critérios acima.</p>';
+  }
+
   // ---------------------------------------------------------------------
   // Cliques e endereço
   // ---------------------------------------------------------------------
@@ -413,7 +508,7 @@ const MC = (() => {
 
   return {
     RAIZ, pagina, esc, url, tempo, video, historia, rnf, caracteristica, noMvp, noBacklog, naIteracaoAtual,
-    responsavel,
+    responsavel, noQuadro, statusCp, chipStatus,
     MOSCOW, abrirDialogo, fecharDialogo, abrirHistoria, abrirRnf, chipHistoria, botaoFechar
   };
 })();
