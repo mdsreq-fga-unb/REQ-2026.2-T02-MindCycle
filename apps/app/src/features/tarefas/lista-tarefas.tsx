@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { useState } from 'react';
 import { router } from 'expo-router';
-import { formatarDataBr, type Tarefa } from '@mindcycle/shared';
+import { dataLocal, formatarDataBr, type Tarefa } from '@mindcycle/shared';
 
 import { textos } from '@/textos';
 import { Botao, Confirmacao, Texto } from '@/ui/componentes';
@@ -9,13 +9,24 @@ import { cores, espaco, raio } from '@/ui/tema';
 import { FormularioAdiamento } from './formulario-adiamento';
 
 /** HU17. A ordem é a da API; a recomendação do dia (HU13) vem depois. */
-export function ListaTarefas({ tarefas, hoje }: { tarefas: Tarefa[]; hoje: string }) {
+export function ListaTarefas({
+  tarefas,
+  hoje,
+  fuso,
+  concluidas = false,
+}: {
+  tarefas: Tarefa[];
+  hoje: string;
+  fuso: string;
+  concluidas?: boolean;
+}) {
   const [adiando, setAdiando] = useState<string>();
   const [confirmacao, setConfirmacao] = useState<{
     id: string;
     texto: string;
   }>();
   if (tarefas.length === 0) {
+    if (concluidas) return <Texto suave>{textos.tarefas.concluidasVazias}</Texto>;
     return (
       <View style={styles.vazio}>
         <Texto accessibilityRole="header" style={styles.destaque}>
@@ -30,6 +41,13 @@ export function ListaTarefas({ tarefas, hoje }: { tarefas: Tarefa[]; hoje: strin
       {tarefas.map((tarefa) => (
         <View key={tarefa.id} style={styles.cartao}>
           <Texto style={styles.destaque}>{tarefa.titulo}</Texto>
+          {tarefa.concluidaEm && (
+            <Confirmacao>
+              {textos.tarefas.concluidaEm(
+                formatarDataBr(dataLocal(new Date(tarefa.concluidaEm), fuso)),
+              )}
+            </Confirmacao>
+          )}
           <Texto suave>
             {textos.tarefas.item.dataPlanejada(formatarDataBr(tarefa.dataPlanejada))}
           </Texto>
@@ -50,32 +68,33 @@ export function ListaTarefas({ tarefas, hoje }: { tarefas: Tarefa[]; hoje: strin
             variante="link"
             onPress={() => router.push({ pathname: '/tarefa-detalhe', params: { id: tarefa.id } })}
           />
-          {adiando === tarefa.id ? (
-            <FormularioAdiamento
-              tarefa={tarefa}
-              hoje={hoje}
-              aoCancelar={() => setAdiando(undefined)}
-              aoConcluir={(atualizada) => {
-                setAdiando((atual) => (atual === tarefa.id ? undefined : atual));
-                setConfirmacao({
-                  id: tarefa.id,
-                  texto: textos.tarefas.adiamento.confirmado(
-                    formatarDataBr(atualizada.dataPlanejada),
-                  ),
-                });
-              }}
-            />
-          ) : (
-            <Botao
-              titulo={textos.tarefas.adiamento.abrir}
-              rotuloAcessivel={textos.tarefas.adiamento.rotuloAbrir(tarefa.titulo)}
-              variante="link"
-              onPress={() => {
-                setConfirmacao(undefined);
-                setAdiando(tarefa.id);
-              }}
-            />
-          )}
+          {!tarefa.concluidaEm &&
+            (adiando === tarefa.id ? (
+              <FormularioAdiamento
+                tarefa={tarefa}
+                hoje={hoje}
+                aoCancelar={() => setAdiando(undefined)}
+                aoConcluir={(atualizada) => {
+                  setAdiando((atual) => (atual === tarefa.id ? undefined : atual));
+                  setConfirmacao({
+                    id: tarefa.id,
+                    texto: textos.tarefas.adiamento.confirmado(
+                      formatarDataBr(atualizada.dataPlanejada),
+                    ),
+                  });
+                }}
+              />
+            ) : (
+              <Botao
+                titulo={textos.tarefas.adiamento.abrir}
+                rotuloAcessivel={textos.tarefas.adiamento.rotuloAbrir(tarefa.titulo)}
+                variante="link"
+                onPress={() => {
+                  setConfirmacao(undefined);
+                  setAdiando(tarefa.id);
+                }}
+              />
+            ))}
         </View>
       ))}
     </View>

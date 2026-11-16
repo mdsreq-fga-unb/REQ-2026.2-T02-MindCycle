@@ -172,6 +172,10 @@ export const textos = {
   },
   tarefas: {
     titulo: 'Tarefas',
+    abertas: 'Em aberto',
+    concluidas: 'Concluídas',
+    concluidaEm: (data: string) => `Concluída em ${data}`,
+    concluidasVazias: 'Nenhuma tarefa concluída por enquanto.',
     detalhe: {
       titulo: 'Sua tarefa',
       abrir: 'Ver tarefa',
@@ -179,6 +183,8 @@ export const textos = {
       editar: 'Editar',
       salvar: 'Salvar alterações',
       salvo: 'Alterações salvas.',
+      concluir: 'Concluir tarefa',
+      concluida: 'Tarefa concluída.',
       excluir: 'Excluir tarefa',
       confirmarExclusao: 'Confirmar exclusão',
       avisoExclusao: 'Excluir esta tarefa e seu histórico? Não é possível desfazer.',

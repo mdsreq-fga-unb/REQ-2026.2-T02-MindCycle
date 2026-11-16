@@ -1,4 +1,4 @@
-import { formatarDataBr } from '@mindcycle/shared';
+import { dataLocal, formatarDataBr } from '@mindcycle/shared';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
@@ -7,13 +7,13 @@ import { api } from '@/api/endpoints';
 import { ErroApi } from '@/api/cliente';
 import { mensagemDeErro } from '@/api/mensagem-de-erro';
 import { chaveTarefas, useTarefa } from '@/features/tarefas/consulta';
-import { removerTarefa } from '@/features/tarefas/cache';
+import { aplicarTarefa, removerTarefa } from '@/features/tarefas/cache';
 import { FormularioTarefa } from '@/features/tarefas/formulario-tarefa';
 import { useSessao } from '@/sessao/sessao';
 import { textos } from '@/textos';
 import { Aviso, Botao, Confirmacao, Tela, Texto, Titulo } from '@/ui/componentes';
 
-// HU16/HU19: consultar, editar e excluir a mesma tarefa.
+// HU16/HU19 compartilham o detalhe; HU20 preserva a conclusão nesta mesma tarefa.
 export default function TarefaDetalhe() {
   const params = useLocalSearchParams<{ id?: string | string[] }>();
   const id = typeof params.id === 'string' ? params.id : undefined;
@@ -28,6 +28,15 @@ export default function TarefaDetalhe() {
       await removerTarefa(queryClient, id);
     }
   }
+  const concluir = useMutation({
+    mutationFn: () => api.concluirTarefa(id!),
+    onSuccess: async (atualizada) => {
+      await aplicarTarefa(queryClient, atualizada);
+      setConfirmacao(textos.tarefas.detalhe.concluida);
+      await queryClient.invalidateQueries({ queryKey: chaveTarefas });
+    },
+    onError: tratarIndisponivel,
+  });
   const excluir = useMutation({
     mutationFn: () => api.excluirTarefa(id!),
     onSuccess: async () => {
@@ -38,8 +47,8 @@ export default function TarefaDetalhe() {
     onError: tratarIndisponivel,
   });
   const tarefa = consulta.data;
-  const ocupada = excluir.isPending;
-  const erroDaAcao = excluir.error;
+  const ocupada = concluir.isPending || excluir.isPending;
+  const erroDaAcao = excluir.error ?? concluir.error;
   const indisponivel = [consulta.error, erroDaAcao].some(
     (erro) => erro instanceof ErroApi && (erro.status === 404 || erro.status === 403),
   );
@@ -90,6 +99,13 @@ export default function TarefaDetalhe() {
               {tarefa.duracaoMinutos !== null && (
                 <Texto suave>{textos.tarefas.item.duracao(tarefa.duracaoMinutos)}</Texto>
               )}
+              {tarefa.concluidaEm && (
+                <Texto>
+                  {textos.tarefas.concluidaEm(
+                    formatarDataBr(dataLocal(new Date(tarefa.concluidaEm), conta.fuso)),
+                  )}
+                </Texto>
+              )}
               {confirmandoExclusao ? (
                 <>
                   <Texto>{textos.tarefas.detalhe.avisoExclusao}</Texto>
@@ -117,17 +133,29 @@ export default function TarefaDetalhe() {
                     onPress={() => {
                       if (!ocupada) {
                         setConfirmacao(undefined);
+                        concluir.reset();
                         excluir.reset();
                         setEditando(true);
                       }
                     }}
                   />
+                  {!tarefa.concluidaEm && (
+                    <Botao
+                      titulo={textos.tarefas.detalhe.concluir}
+                      carregando={concluir.isPending}
+                      onPress={() => {
+                        excluir.reset();
+                        concluir.mutate();
+                      }}
+                    />
+                  )}
                   <Botao
                     titulo={textos.tarefas.detalhe.excluir}
                     variante="link"
                     desabilitado={ocupada}
                     onPress={() => {
                       if (!ocupada) {
+                        concluir.reset();
                         excluir.reset();
                         setConfirmandoExclusao(true);
                       }
