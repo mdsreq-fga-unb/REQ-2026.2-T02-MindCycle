@@ -331,17 +331,16 @@ export const textos = {
     // provisória aguardando validação final da cliente (#77).
     mensagem: {
       rotulo: 'Para hoje',
-      carregando: 'Buscando uma palavra de cuidado para hoje...',
       rotuloAcessivel: (texto: string) => `Mensagem de acolhimento: ${texto}`,
       textos: {
         ritmo_proprio: 'Cada dia tem um ritmo diferente, e o seu de hoje é suficiente.',
-        descanso_legitimo: 'Descansar também faz parte do cuidado com o que você constrói.',
+        descanso_legitimo: 'Descansar também é uma forma de cuidar de você.',
         dia_de_cada_vez: 'Você pode olhar só para o que cabe no dia de hoje, sem pressa.',
         gentileza_consigo: 'Se hoje estiver mais pesado, acolha seus limites com gentileza.',
-        pausa_permitida: 'Fazer uma pausa agora é um gesto de cuidado, não um atraso.',
+        pausa_permitida: 'Fazer uma pausa agora é um gesto de cuidado com você.',
         seu_tempo_basta: 'Não há corrida aqui: siga no passo que fizer bem para você.',
         acolher_o_corpo: 'Ouça os sinais do seu corpo hoje; eles merecem atenção e respeito.',
-        sem_comparacoes: 'Seu caminho pertence só ao seu ritmo, sem comparações.',
+        sem_comparacoes: 'Seu caminho tem o seu próprio ritmo, sem comparações.',
       } satisfies Record<MensagemAcolhimentoId, string>,
     },
     // HU21. Convite, nunca cobrança: a usuária não "deve" nada à aba. O convite

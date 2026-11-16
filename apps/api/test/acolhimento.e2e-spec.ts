@@ -174,10 +174,11 @@ describe('Acolhimento: mensagens de acolhimento (HU22)', () => {
     const conta = await novaConta();
     const hoje = await conta.mensagem().expect(200);
 
-    relogio.ajustar(new Date('2026-11-16T03:30:00Z'));
+    // 00:30 de 15/11 em São Paulo, após a meia-noite do dia seguinte.
+    relogio.ajustar(new Date('2026-11-15T03:30:00Z'));
     const amanha = await conta.mensagem().expect(200);
 
-    expect(amanha.body.dataLocal).not.toBe(hoje.body.dataLocal);
+    expect(amanha.body.dataLocal).toBe('2026-11-15');
     expect(amanha.body.id).not.toBe(hoje.body.id);
   });
 

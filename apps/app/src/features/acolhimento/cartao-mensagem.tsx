@@ -1,9 +1,8 @@
 import { StyleSheet, View } from 'react-native';
 import type { MensagemAcolhimentoId } from '@mindcycle/shared';
 
-import { mensagemDeErro } from '@/api/mensagem-de-erro';
 import { textos } from '@/textos';
-import { Aviso, Botao, Texto } from '@/ui/componentes';
+import { Texto } from '@/ui/componentes';
 import { cores, espaco, raio } from '@/ui/tema';
 
 import { useMensagemAcolhimento } from './consulta';
@@ -16,6 +15,8 @@ const t = textos.acolhimento.mensagem;
  */
 export function CartaoMensagemConteudo({ id }: { id: MensagemAcolhimentoId }) {
   const texto = t.textos[id];
+  if (!texto) return null;
+
   return (
     <View
       accessible
@@ -31,26 +32,7 @@ export function CartaoMensagemConteudo({ id }: { id: MensagemAcolhimentoId }) {
 export function CartaoMensagem() {
   const mensagem = useMensagemAcolhimento();
 
-  if (mensagem.isPending) {
-    return (
-      <View style={styles.cartao}>
-        <Texto suave>{t.carregando}</Texto>
-      </View>
-    );
-  }
-
-  if (mensagem.isError) {
-    return (
-      <View style={styles.erro}>
-        <Aviso>{mensagemDeErro(mensagem.error)}</Aviso>
-        <Botao
-          titulo={textos.conexao.tentarDeNovo}
-          variante="link"
-          onPress={() => void mensagem.refetch()}
-        />
-      </View>
-    );
-  }
+  if (mensagem.isPending || mensagem.isError) return null;
 
   return <CartaoMensagemConteudo id={mensagem.data.id} />;
 }
@@ -65,14 +47,11 @@ const styles = StyleSheet.create({
     borderColor: cores.lilac,
   },
   rotulo: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: '700',
     color: cores.plum,
   },
   texto: {
     color: cores.ink,
-  },
-  erro: {
-    gap: espaco.sm,
   },
 });

@@ -16,8 +16,8 @@ export function useSugestoesAcolhimento() {
 }
 
 /**
- * HU22: a mensagem de acolhimento de hoje. Também sem staleTime para acompanhar
- * a virada do dia no aparelho.
+ * HU22: a mensagem de acolhimento de hoje. Sem staleTime para buscar o dia
+ * atual ao reabrir ou voltar ao app; não há atualização automática à meia-noite.
  */
 export function useMensagemAcolhimento() {
   return useQuery({ queryKey: chaveMensagem, queryFn: api.mensagemAcolhimento });

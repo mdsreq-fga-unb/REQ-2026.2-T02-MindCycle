@@ -1,6 +1,6 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import { fireEvent, render, screen } from '@testing-library/react-native';
-import { MENSAGENS_ACOLHIMENTO, mensagemDoDia } from '@mindcycle/shared';
+import { render, screen } from '@testing-library/react-native';
+import { MENSAGENS_ACOLHIMENTO, mensagemDoDia, type MensagemAcolhimentoId } from '@mindcycle/shared';
 
 import { textos } from '@/textos';
 
@@ -16,9 +16,9 @@ const mockConsulta = useMensagemAcolhimento as jest.MockedFunction<
 >;
 const t = textos.acolhimento.mensagem;
 
-// Padrões de cobrança ou culpa proibidos pelo critério de aceite da HU22.
+// Rede de segurança da HU22; a revisão humana dos textos continua necessária (DoD 5).
 const LINGUAGEM_DE_COBRANCA_OU_CULPA =
-  /\b(deve|precisa|obrigad[ao]|obrigação|culpa|falhou|falha|atrasad[ao]|rendimento|desempenho|meta)\b/i;
+  /\b(deve(r(ia)?)?|obrigad[ao]|obrigação|culpa(d[ao])?|falhou|falha|atrasad[ao]|atras[oa]|rendimento|desempenho|metas?|tem que)\b|\b(cobran|produtiv)/i;
 
 describe('CartaoMensagem (HU22)', () => {
   it('exibe a mensagem de acolhimento e o rótulo acessível', async () => {
@@ -32,7 +32,7 @@ describe('CartaoMensagem (HU22)', () => {
     expect(screen.getByLabelText(t.rotuloAcessivel(esperado))).toBeTruthy();
   });
 
-  it('mostra estado de carregamento enquanto busca a mensagem', async () => {
+  it('não exibe cartão enquanto busca a mensagem', async () => {
     mockConsulta.mockReturnValue({
       isPending: true,
       isError: false,
@@ -40,24 +40,59 @@ describe('CartaoMensagem (HU22)', () => {
 
     await render(<CartaoMensagem />);
 
-    expect(screen.getByText(t.carregando)).toBeTruthy();
+    expect(screen.toJSON()).toBeNull();
   });
 
-  it('mostra aviso e permite tentar de novo em caso de erro', async () => {
-    const refetch = jest.fn(async () => undefined);
+  it('não exibe cartão nem alerta em caso de erro', async () => {
     mockConsulta.mockReturnValue({
       isPending: false,
       isError: true,
       error: new Error('falha de rede'),
-      refetch,
     } as unknown as ReturnType<typeof useMensagemAcolhimento>);
 
     await render(<CartaoMensagem />);
 
-    const tentarDeNovo = screen.getByText(textos.conexao.tentarDeNovo);
-    expect(tentarDeNovo).toBeTruthy();
-    fireEvent.press(tentarDeNovo);
-    expect(refetch).toHaveBeenCalledTimes(1);
+    expect(screen.toJSON()).toBeNull();
+  });
+
+  it('exibe a mensagem recebida quando a consulta tem sucesso', async () => {
+    const id = MENSAGENS_ACOLHIMENTO[0];
+    mockConsulta.mockReturnValue({
+      isPending: false,
+      isError: false,
+      data: { id, dataLocal: '2026-11-15' },
+    } as ReturnType<typeof useMensagemAcolhimento>);
+
+    await render(<CartaoMensagem />);
+
+    expect(screen.getByText(t.textos[id])).toBeTruthy();
+  });
+
+  it('não exibe cartão nem rótulo acessível para um id desconhecido', async () => {
+    // Simula uma API mais nova que a lista de textos do APK instalado.
+    await render(<CartaoMensagemConteudo id={'mensagem_nova' as MensagemAcolhimentoId} />);
+
+    expect(screen.toJSON()).toBeNull();
+  });
+
+  it.each([
+    'Você deve continuar.',
+    'Você deveria fazer mais.',
+    'Você tem que terminar.',
+    'Sem cobranças.',
+    'Você é culpada.',
+    'Isso é um atraso.',
+    'Cumpra suas metas.',
+    'Seja produtiva.',
+  ])('detecta linguagem que exige revisão humana: %s', (mensagem) => {
+    expect(mensagem).toMatch(LINGUAGEM_DE_COBRANCA_OU_CULPA);
+  });
+
+  it.each([
+    'Seu caminho não precisa seguir o ritmo de ninguém.',
+    'Você não precisa dar conta de tudo.',
+  ])('permite linguagem de acolhimento: %s', (mensagem) => {
+    expect(mensagem).not.toMatch(LINGUAGEM_DE_COBRANCA_OU_CULPA);
   });
 
   // Critério de aceite da HU22: nenhuma mensagem pode conter cobrança ou culpa.
