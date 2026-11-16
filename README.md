@@ -144,6 +144,8 @@ coletiva. Regra documentada não significa regra validada nem história pronta.
 
 | O que | Onde |
 |---|---|
+| **Registro das Iterações 5 e 6** | `registro` de cada iteração em `fases`, em `assets/js/dados.js`. Faltam compromissos, responsáveis, resultados e impedimentos. |
+| **Riscos sem investigação** | Página Entregas e cronograma: isolamento dos dados e arquitetura ainda não têm investigação técnica registrada. |
 | **Validação do MVP consolidado com a cliente** | Páginas MVP e Priorização. A reunião de 05/10/2026 com a Dra. Cláudia Araújo Bottino tratou requisitos individuais; o conjunto do MVP e as notas ainda em hipótese aguardam a reunião de acompanhamento. |
 | **Atribuições ainda incompletas** | Atribuir cada HU do MVP no Project: quem estiver atribuída à issue aparece na árvore e no detalhe da história. |
 | **Conferência do DoR** | Verificação de 16/11/2026 no DoR revisado: 21 das 22 HUs do MVP estão prontas. Falta a HU36, que não tem critérios de aceitação. |
@@ -168,7 +170,9 @@ páginas.
 | Uma reunião nova ou uma decisão | `reunioes` em `assets/js/dados.js` (código do vídeo no YouTube e o segundo de cada decisão) |
 | Uma alteração no histórico | `historico` em `assets/js/dados.js` |
 | A iteração atual ou as histórias prontas pelo DoR | `iteracaoAtual` e `dorAtendido` em `assets/js/dados.js` |
-| Iterações, evidências e técnicas de cada fase | `fases` em `assets/js/dados.js` |
+| Iterações, planejado e realizado, evidências e técnicas de cada fase | `fases` em `assets/js/dados.js` |
+| Um risco investigado ou ainda aberto | `riscos` em `assets/js/dados.js` |
+| Riscos investigados | Tabela no `index.html` de `cronograma/` |
 | O quadro kanban da página Entregas e cronograma | Nada à mão: mude o [Project](https://github.com/orgs/mdsreq-fga-unb/projects/120). O site refaz o retrato sozinho (veja [Quadro kanban automático](#quadro-kanban-automático)); para ver localmente, rode `python3 .github/scripts/atualizar_kanban.py` (com o `gh` autenticado com o escopo `project`), que regrava `assets/js/kanban.js` |
 | Uma tela do protótipo de baixa fidelidade | `TELAS` em `assets/js/prototipo.js` |
 | Cores e espaçamentos | As variáveis no topo de `assets/css/site.css` |
