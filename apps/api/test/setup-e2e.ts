@@ -1,4 +1,4 @@
-import { execFileSync } from 'node:child_process';
+import { execSync } from 'node:child_process';
 import type { TestProject } from 'vitest/node';
 import pg from 'pg';
 
@@ -23,7 +23,9 @@ export default async function setup(project: TestProject) {
     await cliente.end();
   }
 
-  execFileSync('npx', ['prisma', 'migrate', 'deploy'], {
+  // execSync passa pelo shell do sistema: no Windows o npx é npx.cmd, que o
+  // execFileSync não acha sem shell (spawnSync npx ENOENT).
+  execSync('npx prisma migrate deploy', {
     env: { ...process.env, DATABASE_URL: url.toString() },
     stdio: 'inherit',
   });
