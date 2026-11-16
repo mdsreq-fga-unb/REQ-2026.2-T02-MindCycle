@@ -154,6 +154,22 @@ export class TarefasService {
     });
   }
 
+  async reabrir(usuariaId: string, id: string): Promise<Tarefa> {
+    return this.prisma.$transaction(async (tx) => {
+      const atual = await tx.tarefa.findUnique({ where: { id } });
+      this.exigirDona(atual, usuariaId);
+      const { count } = await tx.tarefa.updateMany({
+        where: { id, usuariaId },
+        data: { concluidaEm: null },
+      });
+      if (count !== 1)
+        throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+      const aberta = await tx.tarefa.findUnique({ where: { id } });
+      if (!aberta) throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+      return paraResposta(aberta);
+    });
+  }
+
   private exigirDona(tarefa: LinhaTarefa | null, usuariaId: string): void {
     if (!tarefa) throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
     if (tarefa.usuariaId !== usuariaId) {

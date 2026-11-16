@@ -114,6 +114,18 @@ describe('Listas depois da confirmação da API', () => {
     expect(client.getQueryData(concluidas)).toEqual([feita]);
   });
 
+  it('reabrir move de concluídas para abertas sem duplicar em respostas repetidas', async () => {
+    const feita = criar('a', { concluidaEm: '2026-11-15T14:00:00Z' });
+    client.setQueryData(concluidas, [feita]);
+    client.setQueryData(abertas, [criar('b')]);
+    const reaberta = { ...feita, concluidaEm: null };
+    await aplicarTarefa(client, reaberta);
+    await aplicarTarefa(client, reaberta);
+    expect(client.getQueryData(concluidas)).toEqual([]);
+    expect(client.getQueryData(abertas)).toEqual([reaberta, criar('b')]);
+    expect(client.getQueryData(chaveTarefa('a'))).toEqual(reaberta);
+  });
+
   it('ordena concluídas da mais recente para a antiga', async () => {
     const antiga = criar('a', { concluidaEm: '2026-11-14T14:00:00Z' });
     const nova = criar('b', { concluidaEm: '2026-11-15T14:00:00Z' });

@@ -70,6 +70,8 @@ export const api = {
   excluirTarefa: (id: string) => pedir<void>(`/tarefas/${id}`, { metodo: 'DELETE' }),
   concluirTarefa: (id: string) =>
     pedir<Tarefa>(`/tarefas/${id}/conclusao`, { metodo: 'POST', corpo: {} }),
+  reabrirTarefa: (id: string) =>
+    pedir<Tarefa>(`/tarefas/${id}/conclusao`, { metodo: 'DELETE' }),
   cadastrarTarefa: (dados: CadastroTarefaDto) =>
     pedir<Tarefa>('/tarefas', { metodo: 'POST', corpo: dados }),
   checkinsDeHoje: () => pedir<CheckinsDoDia>('/checkins/hoje'),

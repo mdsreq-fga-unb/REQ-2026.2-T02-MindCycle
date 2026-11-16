@@ -85,6 +85,15 @@ export class TarefasController {
     return this.tarefas.concluir(usuaria.id, id);
   }
 
+  @Delete(':id/conclusao')
+  @HttpCode(200)
+  reabrir(
+    @CurrentUser() usuaria: UsuariaAutenticada,
+    @Param('id', { schema: z.uuid() }) id: string,
+  ): Promise<Tarefa> {
+    return this.tarefas.reabrir(usuaria.id, id);
+  }
+
   @Patch(':id/adiamento')
   adiar(
     @CurrentUser() usuaria: UsuariaAutenticada,

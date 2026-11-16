@@ -91,18 +91,14 @@ describe('Conclusão de tarefa: caminhos do serviço (HU20)', () => {
   });
 
   it('trata exclusão concorrente como não encontrado', async () => {
-    tx.tarefa.findUnique
-      .mockResolvedValueOnce(original)
-      .mockResolvedValueOnce(null);
+    tx.tarefa.findUnique.mockResolvedValueOnce(original).mockResolvedValueOnce(null);
     await expect(service.concluir('dona', 'tarefa')).rejects.toMatchObject({
       response: { codigo: CodigoErro.NaoEncontrado },
     });
   });
 
   it('consulta somente as concluídas da própria conta, da mais recente para a antiga', async () => {
-    const findMany = vi
-      .fn()
-      .mockResolvedValue([{ ...original, concluidaEm: instante }]);
+    const findMany = vi.fn().mockResolvedValue([{ ...original, concluidaEm: instante }]);
     const consulta = new TarefasService(
       { tarefa: { findMany } } as unknown as PrismaService,
       new RelogioFixo(instante),
@@ -113,6 +109,47 @@ describe('Conclusão de tarefa: caminhos do serviço (HU20)', () => {
     expect(findMany).toHaveBeenCalledWith({
       where: { usuariaId: 'dona', concluidaEm: { not: null } },
       orderBy: [{ concluidaEm: 'desc' }, { criadaEm: 'desc' }],
+    });
+  });
+
+  it('reabrir altera somente a conclusão, com escrita restrita à dona', async () => {
+    tx.tarefa.findUnique
+      .mockResolvedValueOnce({ ...original, concluidaEm: instante })
+      .mockResolvedValueOnce(original);
+    expect((await service.reabrir('dona', 'tarefa')).concluidaEm).toBeNull();
+    expect(tx.tarefa.updateMany).toHaveBeenCalledWith({
+      where: { id: 'tarefa', usuariaId: 'dona' },
+      data: { concluidaEm: null },
+    });
+  });
+
+  it('reabrir recusa outra conta antes de escrever', async () => {
+    tx.tarefa.findUnique.mockResolvedValue({ ...original, usuariaId: 'outra' });
+    await expect(service.reabrir('dona', 'tarefa')).rejects.toMatchObject({
+      response: { codigo: CodigoErro.AcessoNegado },
+    });
+    expect(tx.tarefa.updateMany).not.toHaveBeenCalled();
+  });
+
+  it('reabrir recusa tarefa ausente antes de escrever', async () => {
+    tx.tarefa.findUnique.mockResolvedValue(null);
+    await expect(service.reabrir('dona', 'tarefa')).rejects.toMatchObject({
+      response: { codigo: CodigoErro.NaoEncontrado },
+    });
+    expect(tx.tarefa.updateMany).not.toHaveBeenCalled();
+  });
+
+  it('reabrir trata remoção concorrente na escrita', async () => {
+    tx.tarefa.updateMany.mockResolvedValue({ count: 0 });
+    await expect(service.reabrir('dona', 'tarefa')).rejects.toMatchObject({
+      response: { codigo: CodigoErro.NaoEncontrado },
+    });
+  });
+
+  it('reabrir trata remoção concorrente na releitura', async () => {
+    tx.tarefa.findUnique.mockResolvedValueOnce(original).mockResolvedValueOnce(null);
+    await expect(service.reabrir('dona', 'tarefa')).rejects.toMatchObject({
+      response: { codigo: CodigoErro.NaoEncontrado },
     });
   });
 });

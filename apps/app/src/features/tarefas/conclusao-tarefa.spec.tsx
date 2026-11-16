@@ -22,7 +22,9 @@ jest.mock('@/sessao/sessao', () => ({
   }),
 }));
 jest.mock('./formulario-tarefa', () => ({ FormularioTarefa: () => null }));
-jest.mock('@/api/endpoints', () => ({ api: { concluirTarefa: jest.fn() } }));
+jest.mock('@/api/endpoints', () => ({
+  api: { concluirTarefa: jest.fn(), reabrirTarefa: jest.fn() },
+}));
 
 const tarefa: Tarefa = {
   id: 'tarefa',
@@ -92,5 +94,20 @@ describe('Confirmacao da conclusao (HU20)', () => {
       ).not.toBe(true);
     });
     expect(screen.queryByText(textos.tarefas.detalhe.avisoConclusao)).toBeNull();
+  });
+
+  it('oferece reabertura apenas na concluida e envia a tarefa correta', async () => {
+    jest.mocked(useTarefa).mockReturnValue({
+      data: { ...tarefa, concluidaEm: '2026-11-15T12:00:00.000Z' },
+      isPending: false,
+      isError: false,
+    } as ReturnType<typeof useTarefa>);
+    const reabrir = jest.spyOn(api, 'reabrirTarefa').mockResolvedValue(tarefa);
+    await abrir();
+    expect(screen.queryByText(textos.tarefas.detalhe.concluir)).toBeNull();
+    await fireEvent.press(screen.getByText(textos.tarefas.detalhe.reabrir));
+    expect(await screen.findByText(textos.tarefas.detalhe.reaberta)).toBeTruthy();
+    expect(reabrir).toHaveBeenCalledTimes(1);
+    expect(reabrir).toHaveBeenCalledWith(tarefa.id);
   });
 });

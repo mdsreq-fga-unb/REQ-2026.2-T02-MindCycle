@@ -29,8 +29,7 @@ describe('Conclusão de tarefas pela API (HU20, RNF03)', () => {
 
   async function preparar() {
     const { accessToken } = await cadastrar(app);
-    const auth = (req: request.Test) =>
-      req.auth(accessToken, { type: 'bearer' });
+    const auth = (req: request.Test) => req.auth(accessToken, { type: 'bearer' });
     const { body: tarefa } = await auth(request(servidor()).post('/tarefas'))
       .send(dados)
       .expect(201);
@@ -39,6 +38,8 @@ describe('Conclusão de tarefas pela API (HU20, RNF03)', () => {
       tarefa,
       concluir: (id = tarefa.id as string, corpo: object = {}) =>
         auth(request(servidor()).post(`/tarefas/${id}/conclusao`)).send(corpo),
+      reabrir: (id = tarefa.id as string) =>
+        auth(request(servidor()).delete(`/tarefas/${id}/conclusao`)),
       concluidas: () => auth(request(servidor()).get('/tarefas/concluidas')),
       consultar: () => auth(request(servidor()).get(`/tarefas/${tarefa.id}`)),
     };
@@ -49,9 +50,9 @@ describe('Conclusão de tarefas pela API (HU20, RNF03)', () => {
     const { body } = await c.concluir().expect(200);
     expect(body).toEqual({ ...c.tarefa, concluidaEm: instante.toISOString() });
     expect((await c.consultar().expect(200)).body).toEqual(body);
-    expect(
-      (await c.auth(request(servidor()).get('/tarefas')).expect(200)).body,
-    ).toEqual([]);
+    expect((await c.auth(request(servidor()).get('/tarefas')).expect(200)).body).toEqual(
+      [],
+    );
     expect((await c.concluidas().expect(200)).body).toEqual([body]);
   });
 
@@ -65,10 +66,63 @@ describe('Conclusão de tarefas pela API (HU20, RNF03)', () => {
     relogio.ajustar(new Date('2026-11-16T02:30:00Z'));
     await c.concluir(segunda.id).expect(200);
     const { body } = await c.concluidas().expect(200);
-    expect(body.map((t: { id: string }) => t.id)).toEqual([
-      segunda.id,
-      c.tarefa.id,
+    expect(body.map((t: { id: string }) => t.id)).toEqual([segunda.id, c.tarefa.id]);
+  });
+
+  it('reabre sem alterar os dados e devolve a tarefa às abertas e à recomendação', async () => {
+    const c = await preparar();
+    await c.concluir().expect(200);
+    const { body } = await c.reabrir().expect(200);
+    expect(body).toEqual(c.tarefa);
+    expect((await c.consultar().expect(200)).body).toEqual(body);
+    expect((await c.concluidas().expect(200)).body).toEqual([]);
+    expect((await c.auth(request(servidor()).get('/tarefas')).expect(200)).body).toEqual([
+      body,
     ]);
+    const plano = await c.auth(request(servidor()).get('/planejamento/hoje')).expect(200);
+    expect(plano.body.tarefas.map((t: { id: string }) => t.id)).toContain(c.tarefa.id);
+  });
+
+  it('reabrir novamente é idempotente e uma nova conclusão recebe a nova data', async () => {
+    const c = await preparar();
+    await c.concluir().expect(200);
+    await c.reabrir().expect(200);
+    expect((await c.reabrir().expect(200)).body).toEqual(c.tarefa);
+    const depois = new Date('2026-11-16T12:00:00Z');
+    relogio.ajustar(depois);
+    expect((await c.concluir().expect(200)).body.concluidaEm).toBe(depois.toISOString());
+  });
+
+  it('reabrir preserva o adiamento e permite adiar novamente', async () => {
+    const c = await preparar();
+    const adiar = (dataPlanejada: string) =>
+      c
+        .auth(request(servidor()).patch(`/tarefas/${c.tarefa.id}/adiamento`))
+        .send({ dataPlanejada });
+    await adiar('2026-11-19').expect(200);
+    await c.concluir().expect(200);
+    expect((await c.reabrir().expect(200)).body.dataPlanejada).toBe('2026-11-19');
+    await adiar('2026-11-20').expect(200);
+  });
+
+  it('não permite reabrir a tarefa de outra conta', async () => {
+    const dona = await preparar();
+    const outra = await preparar();
+    const { body } = await dona.concluir().expect(200);
+    await outra.reabrir(dona.tarefa.id).expect(403);
+    expect((await dona.consultar().expect(200)).body).toEqual(body);
+  });
+
+  it.each([
+    [randomUUID(), 404],
+    ['invalido', 400],
+  ] as const)('reabrir %s retorna %s', async (id, status) => {
+    const c = await preparar();
+    await c.reabrir(id).expect(status);
+  });
+
+  it('reabrir exige sessão', async () => {
+    await request(servidor()).delete(`/tarefas/${randomUUID()}/conclusao`).expect(401);
   });
 
   it('repetir a conclusão preserva a primeira data', async () => {
@@ -119,9 +173,7 @@ describe('Conclusão de tarefas pela API (HU20, RNF03)', () => {
   it('excluir remove a tarefa também da lista de concluídas', async () => {
     const c = await preparar();
     await c.concluir().expect(200);
-    await c
-      .auth(request(servidor()).delete(`/tarefas/${c.tarefa.id}`))
-      .expect(204);
+    await c.auth(request(servidor()).delete(`/tarefas/${c.tarefa.id}`)).expect(204);
     expect((await c.concluidas().expect(200)).body).toEqual([]);
     await c.consultar().expect(404);
   });

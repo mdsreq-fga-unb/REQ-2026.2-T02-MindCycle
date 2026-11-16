@@ -48,9 +48,18 @@ export default function TarefaDetalhe() {
     },
     onError: tratarIndisponivel,
   });
+  const reabrir = useMutation({
+    mutationFn: () => api.reabrirTarefa(id!),
+    onSuccess: async (atualizada) => {
+      await aplicarTarefa(queryClient, atualizada);
+      setConfirmacao(textos.tarefas.detalhe.reaberta);
+      void queryClient.invalidateQueries({ queryKey: chaveTarefas });
+    },
+    onError: tratarIndisponivel,
+  });
   const tarefa = consulta.data;
-  const ocupada = concluir.isPending || excluir.isPending;
-  const erroDaAcao = excluir.error ?? concluir.error;
+  const ocupada = concluir.isPending || excluir.isPending || reabrir.isPending;
+  const erroDaAcao = excluir.error ?? concluir.error ?? reabrir.error;
   const indisponivel = [consulta.error, erroDaAcao].some(
     (erro) => erro instanceof ErroApi && (erro.status === 404 || erro.status === 403),
   );
@@ -157,6 +166,7 @@ export default function TarefaDetalhe() {
                         setConfirmacao(undefined);
                         concluir.reset();
                         excluir.reset();
+                        reabrir.reset();
                         setEditando(true);
                       }
                     }}
@@ -170,7 +180,23 @@ export default function TarefaDetalhe() {
                           setConfirmacao(undefined);
                           excluir.reset();
                           concluir.reset();
+                          reabrir.reset();
                           setConfirmandoConclusao(true);
+                        }
+                      }}
+                    />
+                  )}
+                  {tarefa.concluidaEm && (
+                    <Botao
+                      titulo={textos.tarefas.detalhe.reabrir}
+                      carregando={reabrir.isPending}
+                      desabilitado={ocupada}
+                      onPress={() => {
+                        if (!ocupada) {
+                          setConfirmacao(undefined);
+                          concluir.reset();
+                          excluir.reset();
+                          reabrir.mutate();
                         }
                       }}
                     />
@@ -183,6 +209,7 @@ export default function TarefaDetalhe() {
                       if (!ocupada) {
                         concluir.reset();
                         excluir.reset();
+                        reabrir.reset();
                         setConfirmandoExclusao(true);
                       }
                     }}

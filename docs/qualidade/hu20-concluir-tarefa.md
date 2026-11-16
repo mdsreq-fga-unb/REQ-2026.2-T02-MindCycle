@@ -18,12 +18,17 @@ integrada depois, sem conflito. Este PR acrescenta apenas a conclusao de tarefas
   negado; a lista nao expoe registros de outra usuaria (RNF03).
 - O detalhe oferece `Concluir tarefa`; apos a resposta confirmada, mostra a
   data no fuso da usuaria. O app separa `Em aberto` e `Concluidas`.
-- Antes de enviar a conclusao, o app pede confirmacao e avisa que nao e possivel
-  reabrir. Cancelar nao envia a operacao. A reconsulta ocorre em segundo plano
+- Antes de enviar a conclusao, o app pede confirmacao. Cancelar nao envia a
+  operacao. A reconsulta ocorre em segundo plano
   depois de atualizar o cache, sem manter os botoes bloqueados ate terminar.
 - Na lista, a data e texto informativo, sem regiao viva nem estilo de sucesso.
 - A tarefa concluida continua consultavel, editavel e excluivel, sem perder a
-  data de conclusao. Adiar continua bloqueado. Reabertura nao faz parte da HU20.
+  data de conclusao. Adiar fica bloqueado enquanto ela estiver concluida.
+- A pedido da equipe, `Reabrir tarefa` desfaz a conclusao pela rota autenticada
+  `DELETE /tarefas/:id/conclusao`. Limpa somente `concluidaEm`, sem alterar prazo,
+  planejamento, cadastro ou historico de adiamento. Repetir a reabertura e seguro.
+- A tarefa reaberta volta a `Em aberto` e pode ser adiada. Se planejada ate hoje,
+  volta tambem a recomendacao da HU13. Uma nova conclusao recebe uma nova data.
 - O cache move a resposta confirmada entre as listas, sem duplicar, e remove
   uma exclusao tambem do historico de concluidas.
 
@@ -90,9 +95,10 @@ npm exec -w @mindcycle/app -- expo export --platform android --max-workers 1 --o
 - [ ] Conferir a data perto da meia-noite no fuso do aparelho.
 - [ ] Editar uma concluida e verificar que a data foi preservada.
 - [ ] Excluir uma concluida e verificar sua remocao do historico.
+- [ ] Reabrir uma concluida e conferir a lista, persistencia e recomendacao do dia.
 - [ ] Conferir fonte ampliada, carregamento, rede indisponivel e envios repetidos.
 - [x] Ana revisou os textos originais da HU20 na revisao do PR #115.
-- [ ] Outro integrante revisar o novo aviso e botao de confirmacao da conclusao.
+- [ ] Outro integrante revisar o aviso de confirmacao e os textos de reabertura.
 - [ ] Ensaiar no APK de release e registrar evidencias na matriz Android.
 
 Bundle e testes HTTP nao substituem a verificacao da interface no aparelho.
@@ -104,8 +110,9 @@ recomendacao do dia; sua fonte de tarefas abertas ja filtra `concluidaEm: null`.
 
 ## Ajustes da revisao do PR #115
 
-- A confirmacao evita concluir por um toque acidental, sem ampliar o escopo com
-  reabertura. O fluxo de cancelar/confirmar deve ser conferido tambem no aparelho.
+- A confirmacao evita concluir por um toque acidental. A equipe solicitou depois
+  a reabertura, adicionada como complemento; os dois fluxos exigem conferencia
+  no aparelho. A data de conclusao anterior nao e mantida apos reabrir.
 - O teste HTTP simultaneo verifica sucesso das respostas e ausencia de duplicacao;
   nao comprova sozinho a preservacao do primeiro instante. Essa garantia e coberta
   pelo teste de repeticao com relogio alterado e pelo unitario da escrita condicional.
@@ -115,3 +122,15 @@ recomendacao do dia; sua fonte de tarefas abertas ja filtra `concluidaEm: null`.
 - Nesta revisao, os 12 testes HTTP da HU20 passaram novamente no banco local,
   assim como tipos e lint do codigo de producao do app. Os novos testes Jest
   aguardam o CI: as dependencias de teste seguem ausentes no ambiente local.
+
+## Complemento: reabrir tarefa (16/11/2026)
+
+- 58 testes unitarios da API aprovados, incluindo cinco caminhos de reabertura.
+- 27 testes HTTP de conclusao, reabertura e recomendacao aprovados no PostgreSQL
+  local `mindcycle_test`. Incluem isolamento de conta, sessao obrigatoria, IDs
+  invalidos, repeticao, nova conclusao, adiamento e retorno a recomendacao.
+- Tipos da API e do codigo de producao do app aprovados; lint da API aprovado.
+- Testes Jest acrescentados para o botao de reabertura e o retorno ao cache de
+  abertas sem duplicacao. Execucao pendente no CI, sem instalar dependencias aqui.
+- A reabertura complementa a HU20 por solicitacao da equipe. A mudanca precisa
+  ser refletida nos criterios publicados e validada com a cliente.
