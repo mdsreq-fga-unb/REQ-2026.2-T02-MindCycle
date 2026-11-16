@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   DURACAO_MAXIMA_PRATICA_MINUTOS,
+  MENSAGENS_ACOLHIMENTO,
   PRATICAS_ACOLHIMENTO,
   SUGESTOES_POR_DIA,
+  mensagemDoDia,
   sugestoesDoDia,
 } from './acolhimento.js';
 import { somarDias } from './datas.js';
@@ -70,5 +72,40 @@ describe('sugestoesDoDia', () => {
   it('nunca pede mais sugestões do que a lista tem', () => {
     expect(sugestoesDoDia('2026-11-15', 99)).toHaveLength(PRATICAS_ACOLHIMENTO.length);
     expect(sugestoesDoDia('2026-11-15', 0)).toEqual([]);
+  });
+});
+
+describe('mensagens de acolhimento (HU22)', () => {
+  it('não repete id na lista', () => {
+    expect(new Set(MENSAGENS_ACOLHIMENTO).size).toBe(MENSAGENS_ACOLHIMENTO.length);
+  });
+
+  it('devolve sempre um id válido da lista', () => {
+    expect(MENSAGENS_ACOLHIMENTO).toContain(mensagemDoDia('2026-11-15'));
+  });
+
+  it('dá sempre a mesma mensagem para a mesma data', () => {
+    expect(mensagemDoDia('2026-11-15')).toBe(mensagemDoDia('2026-11-15'));
+  });
+
+  it('troca a mensagem de um dia para o outro', () => {
+    const hoje = mensagemDoDia('2026-11-15');
+    const amanha = mensagemDoDia('2026-11-16');
+    expect(amanha).not.toBe(hoje);
+  });
+
+  it('funciona antes da data de referência da rotação', () => {
+    const antes = mensagemDoDia('2025-03-07');
+    expect(MENSAGENS_ACOLHIMENTO).toContain(antes);
+  });
+
+  it('percorre toda a lista ao longo dos dias', () => {
+    const vistas = new Set<string>();
+    let data = '2026-11-15';
+    for (let i = 0; i < MENSAGENS_ACOLHIMENTO.length; i++) {
+      vistas.add(mensagemDoDia(data));
+      data = somarDias(data, 1);
+    }
+    expect(vistas.size).toBe(MENSAGENS_ACOLHIMENTO.length);
   });
 });

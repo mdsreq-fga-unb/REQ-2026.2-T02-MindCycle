@@ -72,3 +72,37 @@ export function sugestoesDoDia(
     (_, i) => PRATICAS_ACOLHIMENTO[(inicio + i) % total]!,
   );
 }
+
+// HU22. Lista provisória de mensagens de acolhimento (pendência da #77 com a
+// cliente). Os ids são estáveis e os textos moram em textos.ts do app, onde um
+// teste de tela garante que nenhuma mensagem usa linguagem de cobrança ou culpa.
+export const MENSAGENS_ACOLHIMENTO = [
+  'ritmo_proprio',
+  'descanso_legitimo',
+  'dia_de_cada_vez',
+  'gentileza_consigo',
+  'pausa_permitida',
+  'seu_tempo_basta',
+  'acolher_o_corpo',
+  'sem_comparacoes',
+] as const;
+
+export type MensagemAcolhimentoId = (typeof MENSAGENS_ACOLHIMENTO)[number];
+
+export interface MensagemAcolhimentoDoDia {
+  /** O dia da usuária a que esta mensagem pertence. */
+  dataLocal: DataLocal;
+  id: MensagemAcolhimentoId;
+}
+
+/**
+ * HU22: a mensagem de acolhimento do dia, determinística para a mesma data
+ * local (reabrir o app no mesmo dia mantém a mesma mensagem) e diferente em
+ * dias seguidos.
+ */
+export function mensagemDoDia(data: DataLocal): MensagemAcolhimentoId {
+  const total = MENSAGENS_ACOLHIMENTO.length;
+  const passo = diasEntre(EPOCA, data);
+  const indice = ((passo % total) + total) % total;
+  return MENSAGENS_ACOLHIMENTO[indice]!;
+}
