@@ -1,27 +1,26 @@
 import { formatarDataBr, type Ciclo } from '@mindcycle/shared';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { router } from 'expo-router';
-import { View } from 'react-native';
 
 import { api } from '@/api/endpoints';
 import { mensagemDeErro } from '@/api/mensagem-de-erro';
 import { textos } from '@/textos';
 import { Aviso, Botao, Confirmacao, Texto, Titulo } from '@/ui/componentes';
-import { espaco } from '@/ui/tema';
+import { fonteTitulo } from '@/ui/tema';
 
+import { CalendarioDoCiclo } from './calendario-do-ciclo';
 import { chaveCiclo } from './consulta';
-import { FasesDoCiclo } from './fases-do-ciclo';
 import { SituacaoDoCiclo } from './situacao-do-ciclo';
 
 /**
- * A aba Ciclo depois de informado o ciclo, como a tela "Seu ciclo" do protótipo.
- * A situação do ciclo (HU05) fica no topo; o calendário (HU10) entra acima das fases.
+ * A aba Ciclo depois de informado o ciclo, como a tela "Seu ciclo" do protótipo:
+ * a situação (HU05), o calendário (HU10) com as fases como legenda (HU28) e o
+ * registro do início em um toque (HU06).
  */
 export function SeuCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string }) {
   const queryClient = useQueryClient();
   const t = textos.ciclo.seuCiclo;
-  const ultimo = ciclo.inicios[0];
-  const registradoHoje = ultimo?.data === hoje;
+  const registradoHoje = ciclo.inicios[0]?.data === hoje;
 
   // HU06 em um toque: o início de hoje. Outro dia, em "Editar meu ciclo".
   const registro = useMutation({
@@ -31,27 +30,34 @@ export function SeuCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string }) {
 
   return (
     <>
-      <Titulo>{t.titulo}</Titulo>
+      <Titulo style={{ fontFamily: fonteTitulo, fontWeight: 'normal' }}>{t.titulo}</Titulo>
       <SituacaoDoCiclo situacao={ciclo.situacao} />
-      <View style={{ gap: espaco.xs }}>
-        {ultimo && <Texto>{t.ultimoInicio(formatarDataBr(ultimo.data))}</Texto>}
-        {ciclo.perfil && (
-          <Texto suave>
-            {ciclo.perfil.irregular || ciclo.perfil.duracaoMedia === null
-              ? t.irregular
-              : t.duracao(ciclo.perfil.duracaoMedia)}
-          </Texto>
-        )}
-      </View>
+      {/* O que ela informou continua visível, mesmo sem estimativa. */}
+      {ciclo.inicios[0] && (
+        <Texto suave style={{ fontSize: 14, lineHeight: 20 }}>
+          {t.resumo(
+            formatarDataBr(ciclo.inicios[0].data),
+            ciclo.perfil?.irregular ? null : (ciclo.perfil?.duracaoMedia ?? null),
+          )}
+        </Texto>
+      )}
+      <CalendarioDoCiclo
+        inicios={ciclo.inicios}
+        perfil={ciclo.perfil}
+        hoje={hoje}
+        faseAtual={ciclo.situacao.estimada ? ciclo.situacao.fase : undefined}
+      />
       {registradoHoje ? (
         <Confirmacao>{t.registradoHoje}</Confirmacao>
       ) : (
-        <Botao titulo={t.comecou} carregando={registro.isPending} onPress={() => registro.mutate()} />
+        <Botao
+          titulo={t.comecou}
+          variante="secundario"
+          carregando={registro.isPending}
+          onPress={() => registro.mutate()}
+        />
       )}
       <Aviso>{registro.isError && mensagemDeErro(registro.error)}</Aviso>
-      {/* Por enquanto as fases ficam no rodapé; HU05 e HU10 vão ocupar o meio. */}
-      <View style={{ flexGrow: 1 }} />
-      <FasesDoCiclo faseAtual={ciclo.situacao.estimada ? ciclo.situacao.fase : undefined} />
       <Botao titulo={t.editar} variante="link" onPress={() => router.push('/editar-ciclo')} />
     </>
   );

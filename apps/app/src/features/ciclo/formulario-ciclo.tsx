@@ -112,7 +112,7 @@ export function FormularioCiclo({ ciclo, hoje }: { ciclo: Ciclo; hoje: string })
       <Aviso>{erroLocal ?? (salvamento.isError && mensagemDeErro(salvamento.error))}</Aviso>
       <Botao titulo={t.formulario.botao} carregando={salvamento.isPending} onPress={salvar} />
       {/* As fases não dependem dos dados dela: quem ainda não sabe o próprio ciclo também vê. */}
-      <FasesDoCiclo />
+      <FasesDoCiclo comIntroducao />
     </>
   );
 }

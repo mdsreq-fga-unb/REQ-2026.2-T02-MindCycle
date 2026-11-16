@@ -1,5 +1,6 @@
 export * from './acolhimento.js';
 export * from './auth.js';
+export * from './calendario.js';
 export * from './checkin.js';
 export * from './ciclo.js';
 export * from './datas.js';

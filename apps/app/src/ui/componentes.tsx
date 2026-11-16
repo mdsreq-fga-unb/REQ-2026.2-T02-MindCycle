@@ -75,11 +75,12 @@ export function Botao({
   onPress: () => void;
   carregando?: boolean;
   desabilitado?: boolean;
-  variante?: 'primario' | 'link';
+  variante?: 'primario' | 'secundario' | 'link';
   /** Quando só o título não diz a que o botão se refere, como "Remover" numa lista. */
   rotuloAcessivel?: string;
 }) {
   const primario = variante === 'primario';
+  const secundario = variante === 'secundario';
   return (
     <Pressable
       accessibilityRole="button"
@@ -88,14 +89,14 @@ export function Botao({
       disabled={carregando || desabilitado}
       onPress={onPress}
       style={({ pressed }) => [
-        primario ? styles.botao : styles.link,
+        primario ? styles.botao : secundario ? styles.botaoSecundario : styles.link,
         pressed && styles.pressionado,
         desabilitado && styles.desabilitado,
       ]}>
       {carregando ? (
         <ActivityIndicator color={cores.ink} />
       ) : (
-        <Text style={primario ? styles.botaoTexto : styles.linkTexto}>{titulo}</Text>
+        <Text style={primario || secundario ? styles.botaoTexto : styles.linkTexto}>{titulo}</Text>
       )}
     </Pressable>
   );
@@ -356,6 +357,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   botaoTexto: { fontSize: 16, fontWeight: '700', color: cores.ink },
+  // Ação de apoio: contorno em plum sobre branco, para não competir com a principal.
+  botaoSecundario: {
+    minHeight: 48,
+    paddingHorizontal: espaco.lg,
+    borderRadius: raio.botao,
+    borderWidth: 1.5,
+    borderColor: cores.plum,
+    backgroundColor: cores.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   link: { minHeight: 44, alignItems: 'center', justifyContent: 'center' },
   linkTexto: { fontSize: 16, fontWeight: '600', color: cores.plum },
   interruptor: { flexDirection: 'row', alignItems: 'center', gap: espaco.md },

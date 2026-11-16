@@ -17,6 +17,28 @@ function duracaoPorExtenso(minutos: number): string {
   return resto === 0 ? `${horas} h` : `${horas} h ${resto} min`;
 }
 
+const MESES = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+];
+
+const NOMES_FASE = {
+  menstrual: 'Menstrual',
+  folicular: 'Folicular',
+  ovulatoria: 'Ovulatória',
+  lutea: 'Lútea',
+} satisfies Record<Fase, string>;
+
 // Todo texto exibido à usuária mora aqui, para a revisão de linguagem
 // acolhedora do DoD (critério 5): sem cobrança, culpa ou contador de falhas.
 export const textos = {
@@ -220,9 +242,10 @@ export const textos = {
     // Depois de informado: a tela do protótipo, que HU05 e HU10 completam.
     seuCiclo: {
       titulo: 'Seu ciclo',
-      ultimoInicio: (data: string) => `Sua última menstruação começou em ${data}.`,
-      duracao: (dias: number) => `Seu ciclo costuma durar cerca de ${dias} dias.`,
-      irregular: 'Você indicou que seu ciclo é irregular.',
+      resumo: (data: string, duracao: number | null) =>
+        duracao === null
+          ? `Último início: ${data} · ciclo irregular`
+          : `Último início: ${data} · ciclo de cerca de ${duracao} dias`,
       comecou: 'Minha menstruação começou',
       registradoHoje: 'Início de hoje registrado.',
       editar: 'Editar meu ciclo',
@@ -250,7 +273,11 @@ export const textos = {
     },
     // HU05. A fase é sempre apresentada como estimativa; o modelo aguarda a Dra. Cláudia.
     situacao: {
-      dia: (dia: number) => `Dia ${dia} do seu ciclo`,
+      dia: (dia: number) => `Você está no dia ${dia} do seu ciclo`,
+      rotuloAnel: 'DIA',
+      deDias: (duracao: number) => `de ${duracao}`,
+      anelRotulo: (dia: number, duracao: number) => `Dia ${dia} de cerca de ${duracao}`,
+
       fase: (nome: string) => `Fase ${nome.toLowerCase()}`,
       estimativa: 'Estimativa a partir do que você informou, não um diagnóstico.',
       naoEstimada: 'Fase não estimada',
@@ -263,6 +290,36 @@ export const textos = {
           'Seu ciclo passou da duração que você informou. Se a menstruação começou, registre o novo início.',
       } satisfies Record<MotivoSemFase, string>,
     },
+    // HU10. As cores seguem o modelo de fases da HU05.
+    calendario: {
+      titulo: 'Calendário do ciclo',
+      mes: (ano: number, mes: number) => `${MESES[mes - 1]} de ${ano}`,
+      mesAnterior: 'Mês anterior',
+      proximoMes: 'Próximo mês',
+      diasDaSemana: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+      legendaInicio: 'Início da menstruação',
+      // Pista além da cor em cada dia pintado (WCAG 1.4.1).
+      inicial: { menstrual: 'M', folicular: 'F', ovulatoria: 'O', lutea: 'L' } satisfies Record<Fase, string>,
+      semCores: 'As cores das fases aparecem quando a fase puder ser estimada.',
+      rotuloDia: ({
+        data,
+        fase,
+        inicio,
+        hoje,
+      }: {
+        data: string;
+        fase: Fase | null;
+        inicio: boolean;
+        hoje: boolean;
+      }) => {
+        const [, mes, dia] = data.split('-').map(Number);
+        const partes = [`${dia} de ${MESES[mes - 1].toLowerCase()}`];
+        if (hoje) partes.push('hoje');
+        if (inicio) partes.push('início da menstruação');
+        if (fase) partes.push(`fase ${NOMES_FASE[fase].toLowerCase()} estimada`);
+        return partes.join(', ');
+      },
+    },
     // HU28. Rascunho da equipe, a revisar com a Dra. Cláudia.
     fases: {
       titulo: 'Fases do ciclo',
@@ -271,7 +328,7 @@ export const textos = {
       dica: 'Toque em uma fase para saber mais.',
       rotuloAcessivel: (nome: string) => `Fase ${nome.toLowerCase()}`,
       tituloModal: (nome: string) => `Fase ${nome.toLowerCase()}`,
-      atual: 'Fase estimada hoje',
+      atual: '· estimada',
       rotuloAtual: (nome: string) => `Fase ${nome.toLowerCase()}, fase atual estimada`,
       dicaAcessivel: 'Abre a explicação da fase',
       quando: 'Quando acontece',
@@ -281,7 +338,7 @@ export const textos = {
       fechar: 'Fechar',
       porFase: {
         menstrual: {
-          nome: 'Menstrual',
+          nome: NOMES_FASE.menstrual,
           quando: 'Do primeiro dia da menstruação até ela terminar, em geral de 3 a 7 dias.',
           corpo:
             'O revestimento do útero, preparado no ciclo anterior, se desprende e sai como menstruação. Os hormônios estrogênio e progesterona estão no nível mais baixo do ciclo.',
@@ -289,7 +346,7 @@ export const textos = {
             'Cólica, cansaço e menos disposição são comuns. Ir com mais calma nesses dias faz parte do ritmo.',
         },
         folicular: {
-          nome: 'Folicular',
+          nome: NOMES_FASE.folicular,
           quando:
             'Do fim da menstruação até a ovulação. Num ciclo de 28 dias, vai até por volta do 13º dia.',
           corpo:
@@ -297,7 +354,7 @@ export const textos = {
           sentir: 'Muitas pessoas sentem a energia e a concentração voltando.',
         },
         ovulatoria: {
-          nome: 'Ovulatória',
+          nome: NOMES_FASE.ovulatoria,
           quando: 'Poucos dias no meio do ciclo. Num ciclo de 28 dias, por volta do 14º dia.',
           corpo:
             'O ovário libera um óvulo. O estrogênio chega ao ponto mais alto e o hormônio LH tem um pico.',
@@ -305,7 +362,7 @@ export const textos = {
             'É comum ter mais disposição e vontade de conversar. Algumas pessoas sentem uma dor leve em um dos lados da barriga.',
         },
         lutea: {
-          nome: 'Lútea',
+          nome: NOMES_FASE.lutea,
           quando: 'Da ovulação até a próxima menstruação, em geral por cerca de 14 dias.',
           corpo:
             'A progesterona sobe para manter o útero preparado. Sem gravidez, os hormônios caem no fim da fase e a menstruação começa.',
