@@ -341,7 +341,7 @@ export const textos = {
         pausa_permitida: 'Fazer uma pausa agora é um gesto de cuidado, não um atraso.',
         seu_tempo_basta: 'Não há corrida aqui: siga no passo que fizer bem para você.',
         acolher_o_corpo: 'Ouça os sinais do seu corpo hoje; eles merecem atenção e respeito.',
-        sem_comparacoes: 'Seu caminho não precisa caber no ritmo de ninguém além do seu.',
+        sem_comparacoes: 'Seu caminho pertence só ao seu ritmo, sem comparações.',
       } satisfies Record<MensagemAcolhimentoId, string>,
     },
     // HU21. Convite, nunca cobrança: a usuária não "deve" nada à aba. O convite
