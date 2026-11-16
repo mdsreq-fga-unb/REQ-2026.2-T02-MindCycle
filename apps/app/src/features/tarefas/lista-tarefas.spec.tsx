@@ -45,7 +45,8 @@ describe('Lista de tarefas concluidas (HU20)', () => {
     );
     await fireEvent.press(screen.getByLabelText(textos.tarefas.detalhe.rotuloAbrir(feita.titulo)));
     expect(router.push).toHaveBeenCalledWith({
-      pathname: '/tarefa-detalhe', params: { id: feita.id },
+      pathname: '/tarefa-detalhe',
+      params: { id: feita.id },
     });
   });
 
