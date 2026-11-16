@@ -172,6 +172,20 @@ export const textos = {
   },
   tarefas: {
     titulo: 'Tarefas',
+    detalhe: {
+      titulo: 'Sua tarefa',
+      abrir: 'Ver tarefa',
+      rotuloAbrir: (titulo: string) => `Ver a tarefa ${titulo}`,
+      editar: 'Editar',
+      salvar: 'Salvar alterações',
+      salvo: 'Alterações salvas.',
+      excluir: 'Excluir tarefa',
+      confirmarExclusao: 'Confirmar exclusão',
+      avisoExclusao: 'Excluir esta tarefa e seu histórico? Não é possível desfazer.',
+      cancelar: 'Cancelar',
+      voltar: 'Voltar às tarefas',
+      idInvalido: 'Não foi possível identificar a tarefa.',
+    },
     carregando: 'Carregando suas tarefas...',
     novaTarefa: 'Nova tarefa',
     vazio: {

@@ -136,11 +136,13 @@ export function SeletorNivel({
   rotulos,
   valor,
   aoMudar,
+  desabilitado = false,
 }: {
   rotulo: string;
   rotulos: Record<Nivel, string>;
   valor?: Nivel;
   aoMudar: (valor: Nivel) => void;
+  desabilitado?: boolean;
 }) {
   return (
     <View style={styles.campo}>
@@ -153,12 +155,14 @@ export function SeletorNivel({
               key={nivel}
               accessibilityRole="radio"
               accessibilityLabel={rotulos[nivel]}
-              accessibilityState={{ checked: marcado }}
+              accessibilityState={{ checked: marcado, disabled: desabilitado }}
+              disabled={desabilitado}
               onPress={() => aoMudar(nivel)}
               style={({ pressed }) => [
                 styles.opcao,
                 marcado && styles.opcaoMarcada,
                 pressed && styles.pressionado,
+                desabilitado && styles.desabilitado,
               ]}>
               <Text style={[styles.opcaoTexto, marcado && styles.opcaoTextoMarcado]}>
                 {rotulos[nivel]}

@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import {
   CodigoErro,
   type AdiamentoTarefaDto,
+  type AtualizacaoTarefaDto,
   type CadastroTarefaDto,
   type DataLocal,
   type Nivel,
@@ -27,6 +28,7 @@ function paraResposta(tarefa: LinhaTarefa): Tarefa {
     duracaoMinutos: tarefa.duracaoMinutos,
     dataPlanejada: deData(tarefa.dataPlanejada),
     criadaEm: tarefa.criadaEm.toISOString(),
+    concluidaEm: tarefa.concluidaEm?.toISOString() ?? null,
   };
 }
 
@@ -78,6 +80,49 @@ export class TarefasService {
       throw erro(HttpStatus.FORBIDDEN, CodigoErro.AcessoNegado);
     }
     return paraResposta(tarefa);
+  }
+
+  async editar(
+    usuariaId: string,
+    id: string,
+    dados: AtualizacaoTarefaDto,
+  ): Promise<Tarefa> {
+    return this.prisma.$transaction(async (tx) => {
+      const atual = await tx.tarefa.findUnique({ where: { id } });
+      this.exigirDona(atual, usuariaId);
+      const { count } = await tx.tarefa.updateMany({
+        where: { id, usuariaId },
+        data: {
+          titulo: dados.titulo,
+          prazo: paraData(dados.prazo),
+          prioridade: dados.prioridade,
+          energia: dados.energia,
+          duracaoMinutos: dados.duracaoMinutos ?? null,
+        },
+      });
+      if (count !== 1)
+        throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+      return paraResposta(await tx.tarefa.findUniqueOrThrow({ where: { id } }));
+    });
+  }
+
+  async excluir(usuariaId: string, id: string): Promise<void> {
+    await this.prisma.$transaction(async (tx) => {
+      const atual = await tx.tarefa.findUnique({ where: { id } });
+      this.exigirDona(atual, usuariaId);
+      const { count } = await tx.tarefa.deleteMany({
+        where: { id, usuariaId },
+      });
+      if (count !== 1)
+        throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+    });
+  }
+
+  private exigirDona(tarefa: LinhaTarefa | null, usuariaId: string): void {
+    if (!tarefa) throw erro(HttpStatus.NOT_FOUND, CodigoErro.NaoEncontrado);
+    if (tarefa.usuariaId !== usuariaId) {
+      throw erro(HttpStatus.FORBIDDEN, CodigoErro.AcessoNegado);
+    }
   }
 
   /** HU18. Data e origem são gravadas juntas; o prazo final não é atualizado. */

@@ -16,6 +16,7 @@ import { textos } from '@/textos';
 import { Aviso, Botao, Campo } from '@/ui/componentes';
 
 import { chaveTarefas } from './consulta';
+import { aplicarTarefa } from './cache';
 
 export function FormularioAdiamento({
   tarefa,
@@ -36,6 +37,7 @@ export function FormularioAdiamento({
   const adiamento = useMutation({
     mutationFn: (dados: AdiamentoTarefaDto) => api.adiarTarefa(tarefa.id, dados),
     onSuccess: async (atualizada) => {
+      await aplicarTarefa(queryClient, atualizada);
       await queryClient.invalidateQueries({ queryKey: chaveTarefas });
       aoConcluir(atualizada);
     },
@@ -45,6 +47,7 @@ export function FormularioAdiamento({
   });
 
   function salvar() {
+    if (adiamento.isPending) return;
     const novaData = lerDataBr(data);
     if (!novaData) {
       setErroLocal(textos.tarefas.adiamento.dataInvalida);
@@ -82,6 +85,7 @@ export function FormularioAdiamento({
       <Botao
         titulo={textos.tarefas.adiamento.cancelar}
         variante="link"
+        desabilitado={adiamento.isPending}
         onPress={() => {
           if (!adiamento.isPending) aoCancelar();
         }}
