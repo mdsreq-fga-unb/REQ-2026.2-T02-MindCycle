@@ -5,5 +5,6 @@ import { TarefasService } from './tarefas.service.js';
 @Module({
   controllers: [TarefasController],
   providers: [TarefasService],
+  exports: [TarefasService],
 })
 export class TasksModule {}

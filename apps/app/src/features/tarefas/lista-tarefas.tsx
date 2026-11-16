@@ -7,7 +7,7 @@ import { Botao, Confirmacao, Texto } from '@/ui/componentes';
 import { cores, espaco, raio } from '@/ui/tema';
 import { FormularioAdiamento } from './formulario-adiamento';
 
-/** HU17. A ordem é a da API; a recomendação do dia (HU13) vem depois. */
+/** HU17. A ordem é a da API; a recomendação do dia (HU13) fica na aba Hoje. */
 export function ListaTarefas({ tarefas, hoje }: { tarefas: Tarefa[]; hoje: string }) {
   const [adiando, setAdiando] = useState<string>();
   const [confirmacao, setConfirmacao] = useState<{

@@ -69,6 +69,18 @@ export class TarefasService {
     return tarefas.map(paraResposta);
   }
 
+  /** As não concluídas planejadas até a data, inclusive: as candidatas do dia (HU13). */
+  async abertasAte(usuariaId: string, data: DataLocal): Promise<Tarefa[]> {
+    const tarefas = await this.prisma.tarefa.findMany({
+      where: {
+        usuariaId,
+        concluidaEm: null,
+        dataPlanejada: { lte: paraData(data) },
+      },
+    });
+    return tarefas.map(paraResposta);
+  }
+
   async consultar(usuariaId: string, id: string): Promise<Tarefa> {
     const tarefa = await this.prisma.tarefa.findUnique({ where: { id } });
     if (!tarefa) {

@@ -7,5 +7,6 @@ import { CheckinService } from './checkin.service.js';
   imports: [ConsentModule],
   controllers: [CheckinController],
   providers: [CheckinService],
+  exports: [CheckinService],
 })
 export class CheckinModule {}
