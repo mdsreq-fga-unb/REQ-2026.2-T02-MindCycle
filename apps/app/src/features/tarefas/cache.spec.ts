@@ -116,13 +116,14 @@ describe('Listas depois da confirmação da API', () => {
 
   it('reabrir move de concluídas para abertas sem duplicar em respostas repetidas', async () => {
     const feita = criar('a', { concluidaEm: '2026-11-15T14:00:00Z' });
+    const outra = criar('b', { criadaEm: '2026-11-15T13:00:00Z' });
     client.setQueryData(concluidas, [feita]);
-    client.setQueryData(abertas, [criar('b')]);
+    client.setQueryData(abertas, [outra]);
     const reaberta = { ...feita, concluidaEm: null };
     await aplicarTarefa(client, reaberta);
     await aplicarTarefa(client, reaberta);
     expect(client.getQueryData(concluidas)).toEqual([]);
-    expect(client.getQueryData(abertas)).toEqual([reaberta, criar('b')]);
+    expect(client.getQueryData(abertas)).toEqual([reaberta, outra]);
     expect(client.getQueryData(chaveTarefa('a'))).toEqual(reaberta);
   });
 
