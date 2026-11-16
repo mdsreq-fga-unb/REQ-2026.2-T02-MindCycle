@@ -4,7 +4,7 @@ import type { App } from 'supertest/types.js';
 import {
   CodigoErro,
   type CheckinsDoDia,
-  type RecomendacaoDoDia,
+  type RecomendacaoReajustada,
   type SinalizacaoSobrecarga,
 } from '@mindcycle/shared';
 import { CheckinService } from '../src/modules/checkin/checkin.service.js';
@@ -79,7 +79,7 @@ describe('Sinalização de sobrecarga pela API (HU02, RNF02, RNF03)', () => {
         const { body } = await auth(
           request(servidor()).get('/planejamento/hoje'),
         ).expect(200);
-        return body as RecomendacaoDoDia;
+        return body as RecomendacaoReajustada;
       },
       sinalizacoes: () =>
         prisma.sinalizacaoSobrecarga.count({ where: { usuariaId: conta.id } }),
