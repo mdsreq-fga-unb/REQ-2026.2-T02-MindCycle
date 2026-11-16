@@ -81,7 +81,7 @@ describe('Conclusão de tarefas pela API (HU20, RNF03)', () => {
     expect((await c.concluidas().expect(200)).body).toHaveLength(1);
   });
 
-  it('duas conclusões simultâneas mantêm o mesmo registro e instante', async () => {
+  it('aceita duas conclusões simultâneas sem duplicar o registro', async () => {
     const c = await preparar();
     const respostas = await Promise.all([c.concluir(), c.concluir()]);
     expect(respostas.map((r) => r.status)).toEqual([200, 200]);

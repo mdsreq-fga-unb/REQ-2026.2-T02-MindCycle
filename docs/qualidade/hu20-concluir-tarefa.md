@@ -18,6 +18,10 @@ integrada depois, sem conflito. Este PR acrescenta apenas a conclusao de tarefas
   negado; a lista nao expoe registros de outra usuaria (RNF03).
 - O detalhe oferece `Concluir tarefa`; apos a resposta confirmada, mostra a
   data no fuso da usuaria. O app separa `Em aberto` e `Concluidas`.
+- Antes de enviar a conclusao, o app pede confirmacao e avisa que nao e possivel
+  reabrir. Cancelar nao envia a operacao. A reconsulta ocorre em segundo plano
+  depois de atualizar o cache, sem manter os botoes bloqueados ate terminar.
+- Na lista, a data e texto informativo, sem regiao viva nem estilo de sucesso.
 - A tarefa concluida continua consultavel, editavel e excluivel, sem perder a
   data de conclusao. Adiar continua bloqueado. Reabertura nao faz parte da HU20.
 - O cache move a resposta confirmada entre as listas, sem duplicar, e remove
@@ -39,6 +43,8 @@ no banco e no contrato compartilhado integrado pela #79.
   repeticao, ordenacao, edicao de concluida e exclusao do historico.
 - Testes de tela verificam a data no fuso da usuaria, o detalhe da concluida,
   a mensagem de lista vazia e a disponibilidade de adiamento apenas nas abertas.
+- Os testes de confirmacao verificam cancelamento sem envio e envio somente
+  apos confirmar, sem bloquear os controles por uma reconsulta lenta.
 
 Executar os comandos um por vez, com PostgreSQL e Mailpit locais:
 
@@ -85,7 +91,8 @@ npm exec -w @mindcycle/app -- expo export --platform android --max-workers 1 --o
 - [ ] Editar uma concluida e verificar que a data foi preservada.
 - [ ] Excluir uma concluida e verificar sua remocao do historico.
 - [ ] Conferir fonte ampliada, carregamento, rede indisponivel e envios repetidos.
-- [ ] Outro integrante revisar os textos novos.
+- [x] Ana revisou os textos originais da HU20 na revisao do PR #115.
+- [ ] Outro integrante revisar o novo aviso e botao de confirmacao da conclusao.
 - [ ] Ensaiar no APK de release e registrar evidencias na matriz Android.
 
 Bundle e testes HTTP nao substituem a verificacao da interface no aparelho.
@@ -94,3 +101,17 @@ a HU20. O merge publica a imagem; o deploy no Render e manual, conforme
 [deploy](../deploy.md). O ensaio pelo Expo Go pode usar a API local desta branch.
 Quando a HU13 for integrada, verificar tambem a retirada da tarefa concluida da
 recomendacao do dia; sua fonte de tarefas abertas ja filtra `concluidaEm: null`.
+
+## Ajustes da revisao do PR #115
+
+- A confirmacao evita concluir por um toque acidental, sem ampliar o escopo com
+  reabertura. O fluxo de cancelar/confirmar deve ser conferido tambem no aparelho.
+- O teste HTTP simultaneo verifica sucesso das respostas e ausencia de duplicacao;
+  nao comprova sozinho a preservacao do primeiro instante. Essa garantia e coberta
+  pelo teste de repeticao com relogio alterado e pelo unitario da escrita condicional.
+- Paginacao do historico de concluidas fica como melhoria futura do MVP.
+- Conferencia no celular e APK continuam pendentes; validacoes anteriores no CI
+  nao substituem os checks do novo commit.
+- Nesta revisao, os 12 testes HTTP da HU20 passaram novamente no banco local,
+  assim como tipos e lint do codigo de producao do app. Os novos testes Jest
+  aguardam o CI: as dependencias de teste seguem ausentes no ambiente local.

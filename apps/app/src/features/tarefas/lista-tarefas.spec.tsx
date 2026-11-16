@@ -32,6 +32,9 @@ describe('Lista de tarefas concluidas (HU20)', () => {
     expect(screen.getByText(feita.titulo)).toBeTruthy();
     expect(screen.getByText(textos.tarefas.concluidaEm('14/11/2026'))).toBeTruthy();
     expect(screen.queryByText(textos.tarefas.concluidaEm('15/11/2026'))).toBeNull();
+    expect(
+      screen.getByText(textos.tarefas.concluidaEm('14/11/2026')).props.accessibilityLiveRegion,
+    ).not.toBe('polite');
   });
 
   it('nao oferece adiamento para uma tarefa concluida', async () => {

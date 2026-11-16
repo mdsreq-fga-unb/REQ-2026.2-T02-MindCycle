@@ -22,6 +22,7 @@ export default function TarefaDetalhe() {
   const queryClient = useQueryClient();
   const [editando, setEditando] = useState(false);
   const [confirmandoExclusao, setConfirmandoExclusao] = useState(false);
+  const [confirmandoConclusao, setConfirmandoConclusao] = useState(false);
   const [confirmacao, setConfirmacao] = useState<string>();
   async function tratarIndisponivel(erro: Error) {
     if (id && erro instanceof ErroApi && (erro.status === 404 || erro.status === 403)) {
@@ -32,8 +33,9 @@ export default function TarefaDetalhe() {
     mutationFn: () => api.concluirTarefa(id!),
     onSuccess: async (atualizada) => {
       await aplicarTarefa(queryClient, atualizada);
+      setConfirmandoConclusao(false);
       setConfirmacao(textos.tarefas.detalhe.concluida);
-      await queryClient.invalidateQueries({ queryKey: chaveTarefas });
+      void queryClient.invalidateQueries({ queryKey: chaveTarefas });
     },
     onError: tratarIndisponivel,
   });
@@ -106,7 +108,27 @@ export default function TarefaDetalhe() {
                   )}
                 </Texto>
               )}
-              {confirmandoExclusao ? (
+              {confirmandoConclusao && !tarefa.concluidaEm ? (
+                <>
+                  <Texto>{textos.tarefas.detalhe.avisoConclusao}</Texto>
+                  <Botao
+                    titulo={textos.tarefas.detalhe.confirmarConclusao}
+                    carregando={concluir.isPending}
+                    onPress={() => {
+                      if (!ocupada) concluir.mutate();
+                    }}
+                  />
+                  <Botao
+                    titulo={textos.tarefas.detalhe.cancelar}
+                    variante="link"
+                    desabilitado={ocupada}
+                    onPress={() => {
+                      concluir.reset();
+                      setConfirmandoConclusao(false);
+                    }}
+                  />
+                </>
+              ) : confirmandoExclusao ? (
                 <>
                   <Texto>{textos.tarefas.detalhe.avisoExclusao}</Texto>
                   <Botao
@@ -142,10 +164,14 @@ export default function TarefaDetalhe() {
                   {!tarefa.concluidaEm && (
                     <Botao
                       titulo={textos.tarefas.detalhe.concluir}
-                      carregando={concluir.isPending}
+                      desabilitado={ocupada}
                       onPress={() => {
-                        excluir.reset();
-                        concluir.mutate();
+                        if (!ocupada) {
+                          setConfirmacao(undefined);
+                          excluir.reset();
+                          concluir.reset();
+                          setConfirmandoConclusao(true);
+                        }
                       }}
                     />
                   )}

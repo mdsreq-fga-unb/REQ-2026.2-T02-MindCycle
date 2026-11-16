@@ -42,11 +42,11 @@ export function ListaTarefas({
         <View key={tarefa.id} style={styles.cartao}>
           <Texto style={styles.destaque}>{tarefa.titulo}</Texto>
           {tarefa.concluidaEm && (
-            <Confirmacao>
+            <Texto suave>
               {textos.tarefas.concluidaEm(
                 formatarDataBr(dataLocal(new Date(tarefa.concluidaEm), fuso)),
               )}
-            </Confirmacao>
+            </Texto>
           )}
           <Texto suave>
             {textos.tarefas.item.dataPlanejada(formatarDataBr(tarefa.dataPlanejada))}

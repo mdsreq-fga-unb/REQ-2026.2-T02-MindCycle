@@ -274,6 +274,8 @@ export const textos = {
       salvar: 'Salvar alterações',
       salvo: 'Alterações salvas.',
       concluir: 'Concluir tarefa',
+      confirmarConclusao: 'Confirmar conclusão',
+      avisoConclusao: 'Marcar esta tarefa como concluída? Não será possível reabri-la.',
       concluida: 'Tarefa concluída.',
       excluir: 'Excluir tarefa',
       confirmarExclusao: 'Confirmar exclusão',
