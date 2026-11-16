@@ -1668,7 +1668,7 @@ const DADOS = {
       },
       {
         data: '16/11/2026',
-        alteracao: 'Fora do MVP para a Iteração 7, com regras propostas e pendências com a cliente.',
+        alteracao: 'Incluída no MVP, na Iteração 7, com regras propostas e pendências com a cliente.',
         motivo: 'Pedido da cliente na reunião de 05/10/2026 (aos 11:54) e decisão do grupo em 15/11/2026. Issue #121.'
       }
     ],
@@ -2486,8 +2486,8 @@ const DADOS = {
     {
       quadrante: 'Entrega futura',
       posicao: 'Valor 2, esforço 2 ou 3',
-      entraram: '0 de 6',
-      decisao: 'Ficam fora: adiáveis sem comprometer o fluxo central.',
+      entraram: '1 de 6',
+      decisao: 'Só HU10 entra, na Iteração 7, por pedido da cliente em 05/10/2026 (aos 11:54) e decisão do grupo em 15/11/2026. As demais ficam fora: adiáveis sem comprometer o fluxo central.',
       historias: ['HU03', 'HU08', 'HU10', 'HU23', 'HU31', 'HU32']
     }
   ],
