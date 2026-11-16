@@ -284,6 +284,12 @@ export const textos = {
           'Seu ciclo passou da duração que você informou. Se a menstruação começou, registre o novo início.',
       } satisfies Record<MotivoSemFase, string>,
     },
+    // HU01. Rascunho da equipe, a revisar com a Dra. Cláudia.
+    sintomasDaFase: {
+      lista: (nomes: string[]) =>
+        `Comum nesta fase: ${nomes.map((n, i) => (i === 0 ? n : n.toLowerCase())).join(', ')}.`,
+      semSintomas: 'Nesta fase os sintomas costumam ser mais leves.',
+    },
     // HU10. As cores seguem o modelo de fases da HU05.
     calendario: {
       titulo: 'Calendário do ciclo',
