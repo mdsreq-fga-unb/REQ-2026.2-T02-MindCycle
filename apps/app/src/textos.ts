@@ -1,4 +1,10 @@
-import { CodigoErro, type Fase, type PraticaAcolhimento, type Sintoma } from '@mindcycle/shared';
+import {
+  CodigoErro,
+  type Fase,
+  type MensagemAcolhimentoId,
+  type PraticaAcolhimento,
+  type Sintoma,
+} from '@mindcycle/shared';
 
 function duracaoPorExtenso(minutos: number): string {
   const horas = Math.floor(minutos / 60);
@@ -361,9 +367,22 @@ export const textos = {
   },
   acolhimento: {
     titulo: 'Acolhimento',
-    // Sobrou para a HU22, que ainda não entrou. Fica no rodapé: anunciar no topo
-    // o que ainda não existe empurra para baixo o que já funciona.
-    emBreve: 'Em breve, mensagens de cuidado aparecem aqui.',
+    // HU22. Mensagens de apoio sem linguagem de cobrança ou de culpa. Lista
+    // provisória aguardando validação final da cliente (#77).
+    mensagem: {
+      rotulo: 'Para hoje',
+      rotuloAcessivel: (texto: string) => `Mensagem de acolhimento: ${texto}`,
+      textos: {
+        ritmo_proprio: 'Cada dia tem um ritmo diferente, e o seu de hoje é suficiente.',
+        descanso_legitimo: 'Descansar também é uma forma de cuidar de você.',
+        dia_de_cada_vez: 'Você pode olhar só para o que cabe no dia de hoje, sem pressa.',
+        gentileza_consigo: 'Se hoje estiver mais pesado, acolha seus limites com gentileza.',
+        pausa_permitida: 'Fazer uma pausa agora é um gesto de cuidado com você.',
+        seu_tempo_basta: 'Não há corrida aqui: siga no passo que fizer bem para você.',
+        acolher_o_corpo: 'Ouça os sinais do seu corpo hoje; eles merecem atenção e respeito.',
+        sem_comparacoes: 'Seu caminho tem o seu próprio ritmo, sem comparações.',
+      } satisfies Record<MensagemAcolhimentoId, string>,
+    },
     // HU21. Convite, nunca cobrança: a usuária não "deve" nada à aba. O convite
     // nomeia a seção e abre a tela numa linha só, para as práticas virem logo;
     // o que é contexto, e não conteúdo, desceu para o rodapé.

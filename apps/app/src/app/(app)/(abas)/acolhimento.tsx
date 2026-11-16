@@ -8,8 +8,7 @@ import { Aviso, Botao, Tela, Texto, Titulo } from '@/ui/componentes';
 import { espaco } from '@/ui/tema';
 
 // HU21: as sugestões do dia. Título, uma linha de convite e já as práticas; o
-// que é contexto fica embaixo delas. As mensagens de acolhimento (HU22) entram
-// entre o convite e a lista.
+// que é contexto fica embaixo delas.
 export default function Acolhimento() {
   const sugestoes = useSugestoesAcolhimento();
   const t = textos.acolhimento.sugestoes;
@@ -36,8 +35,6 @@ export default function Acolhimento() {
           <Texto suave>{t.rodape}</Texto>
         </>
       )}
-
-      <Texto suave>{textos.acolhimento.emBreve}</Texto>
     </Tela>
   );
 }

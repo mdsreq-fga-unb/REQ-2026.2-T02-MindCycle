@@ -3,6 +3,7 @@ import request from 'supertest';
 import type { App } from 'supertest/types.js';
 import {
   DURACAO_MAXIMA_PRATICA_MINUTOS,
+  MENSAGENS_ACOLHIMENTO,
   PRATICAS_ACOLHIMENTO,
   SUGESTOES_POR_DIA,
   type SugestaoAcolhimento,
@@ -116,5 +117,86 @@ describe('Acolhimento: sugestões de atividades (HU21)', () => {
 
   it('recusa quem não está autenticada', async () => {
     await request(servidor()).get('/acolhimento/sugestoes').expect(401);
+  });
+});
+
+describe('Acolhimento: mensagens de acolhimento (HU22)', () => {
+  let app: INestApplication<App>;
+  // 02:30 UTC de 15/11: ainda 14/11 em São Paulo, já 15/11 em Tóquio.
+  const INSTANTE = new Date('2026-11-15T02:30:00Z');
+  const relogio = new RelogioFixo(INSTANTE);
+  const HOJE = '2026-11-14';
+  const IDS = MENSAGENS_ACOLHIMENTO as readonly string[];
+
+  beforeAll(async () => {
+    app = await criarApp({ relogio });
+  });
+
+  afterEach(() => {
+    relogio.ajustar(INSTANTE);
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+
+  const servidor = () => app.getHttpServer();
+
+  async function novaConta() {
+    const { accessToken } = await cadastrar(app);
+    const auth = (req: request.Test) => req.auth(accessToken, { type: 'bearer' });
+    return {
+      mensagem: () => auth(request(servidor()).get('/acolhimento/mensagem')),
+      mudarFuso: (fuso: string) =>
+        auth(request(servidor()).patch('/conta')).send({ fuso }).expect(200),
+    };
+  }
+
+  it('devolve a mensagem do dia da usuária', async () => {
+    const conta = await novaConta();
+
+    const { body } = await conta.mensagem().expect(200);
+
+    expect(body.dataLocal).toBe(HOJE);
+    expect(IDS).toContain(body.id);
+  });
+
+  it('mantém a mesma mensagem quando a usuária consulta de novo no mesmo dia', async () => {
+    const conta = await novaConta();
+
+    const primeira = await conta.mensagem().expect(200);
+    const segunda = await conta.mensagem().expect(200);
+
+    expect(segunda.body).toEqual(primeira.body);
+  });
+
+  it('troca a mensagem quando o dia da usuária vira', async () => {
+    const conta = await novaConta();
+    const hoje = await conta.mensagem().expect(200);
+
+    // 00:30 de 15/11 em São Paulo, após a meia-noite do dia seguinte.
+    relogio.ajustar(new Date('2026-11-15T03:30:00Z'));
+    const amanha = await conta.mensagem().expect(200);
+
+    expect(amanha.body.dataLocal).toBe('2026-11-15');
+    expect(amanha.body.id).not.toBe(hoje.body.id);
+  });
+
+  // RNF/T2: o "hoje" é o do calendário da usuária, não o do servidor.
+  it('dá a cada usuária a mensagem do fuso dela', async () => {
+    const saoPaulo = await novaConta();
+    const tokyo = await novaConta();
+    await tokyo.mudarFuso('Asia/Tokyo');
+
+    const daqui = (await saoPaulo.mensagem().expect(200)).body;
+    const deLa = (await tokyo.mensagem().expect(200)).body;
+
+    expect(daqui.dataLocal).toBe(HOJE);
+    expect(deLa.dataLocal).toBe('2026-11-15');
+    expect(deLa.id).not.toBe(daqui.id);
+  });
+
+  it('recusa quem não está autenticada', async () => {
+    await request(servidor()).get('/acolhimento/mensagem').expect(401);
   });
 });

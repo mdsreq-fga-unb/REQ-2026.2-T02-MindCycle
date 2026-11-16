@@ -12,6 +12,7 @@ import type {
   EntradaDto,
   ExclusaoContaDto,
   InicioMenstruacao,
+  MensagemAcolhimentoDoDia,
   PedidoRecuperacaoDto,
   PerfilCiclo,
   PerfilCicloDto,
@@ -80,6 +81,7 @@ export const api = {
   registrarCheckin: (dados: RegistroCheckinDto) =>
     pedir<Checkin>('/checkins', { metodo: 'POST', corpo: dados }),
   sugestoesAcolhimento: () => pedir<SugestoesDoDia>('/acolhimento/sugestoes'),
+  mensagemAcolhimento: () => pedir<MensagemAcolhimentoDoDia>('/acolhimento/mensagem'),
   corrigirCheckin: (id: string, dados: RegistroCheckinDto) =>
     pedir<Checkin>(`/checkins/${id}`, { metodo: 'PUT', corpo: dados }),
   sinalizarSobrecarga: () =>
