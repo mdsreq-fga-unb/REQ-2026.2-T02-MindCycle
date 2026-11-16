@@ -246,10 +246,12 @@ sob demanda (*Run workflow*).
 O quadro da página Entregas e cronograma é um retrato do
 [Project](https://github.com/orgs/mdsreq-fga-unb/projects/120). Como o Project é privado, a
 publicação lê o quadro com um token guardado no segredo `KANBAN_TOKEN` e refaz o retrato antes
-de publicar. Isso acontece a cada publicação e, pelo workflow
-`.github/workflows/atualizar-quadro-kanban.yml` da branch `main`, às 8h, 11h, 14h, 17h e 20h
-(o GitHub só roda agendamentos a partir da branch padrão). Sem o segredo, ou se a leitura falhar,
-o site sai com o retrato que está no repositório.
+de publicar. Isso acontece a cada publicação, e o workflow
+`.github/workflows/atualizar-quadro-kanban.yml` dispara uma publicação quando um PR é aprovado,
+quando um PR entra na `main`, quando uma issue muda (aberta, fechada, atribuída...) e às 8h, 11h,
+14h, 17h e 20h, para o que muda só no Project. Esse workflow fica igual na `main` e na `gh-pages`:
+mude os dois juntos. Sem o segredo, ou se a leitura falhar, o site sai com o retrato que está no
+repositório, e a execução da publicação mostra o aviso **Quadro kanban não atualizado** com o motivo.
 
 > **Configuração necessária uma única vez:** criar um token *classic* em
 > **Settings → Developer settings → Personal access tokens** só com o escopo `read:project` e
