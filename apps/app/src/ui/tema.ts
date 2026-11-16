@@ -1,3 +1,5 @@
+import type { Fase } from '@mindcycle/shared';
+
 // Tokens de assets/brand/colors. Combinações de texto e fundo usadas aqui
 // passam no WCAG 2.1 AA (RNF11): ink sobre rose 4,87; plum sobre ground 4,90;
 // inkSoft sobre ground 5,18. Branco sobre rose (2,87) não passa: não use.
@@ -13,6 +15,17 @@ export const cores = {
   ink: '#3E2338',
   inkSoft: '#7A5E71',
 } as const;
+
+// Cor de fundo de cada fase do ciclo (HU28; o calendário da HU10 usa as mesmas).
+// O texto vai sempre em ink e passa no AA: rose 4,87; coral 6,98; dourado 8,52;
+// lilac 4,86. A cor nunca é a única pista: o nome da fase aparece junto.
+// O dourado não é da marca: entrou porque são quatro fases e a marca tem três matizes.
+export const coresFase = {
+  menstrual: cores.rose,
+  folicular: cores.coral,
+  ovulatoria: '#F2C36B',
+  lutea: cores.lilac,
+} as const satisfies Record<Fase, string>;
 
 export const espaco = {
   xs: 4,

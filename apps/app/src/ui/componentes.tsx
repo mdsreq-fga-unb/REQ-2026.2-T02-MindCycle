@@ -17,15 +17,21 @@ import type { Nivel } from '@mindcycle/shared';
 import { cores, espaco, larguraMaxima, raio } from './tema';
 
 // Numa aba, a barra de abas já ocupa a margem inferior do aparelho.
-export function Tela({ children, naAba }: PropsWithChildren<{ naAba?: boolean }>) {
+// noTopo: o conteúdo começa no alto e ocupa a altura toda, para um bloco poder
+// ir ao rodapé (com um espaçador flex: 1); sem ele, o conteúdo fica centralizado.
+export function Tela({
+  children,
+  naAba,
+  noTopo,
+}: PropsWithChildren<{ naAba?: boolean; noTopo?: boolean }>) {
   return (
     <SafeAreaView
       style={styles.tela}
       edges={naAba ? ['top', 'left', 'right'] : undefined}>
       <ScrollView
-        contentContainerStyle={styles.rolagem}
+        contentContainerStyle={[styles.rolagem, noTopo && styles.rolagemNoTopo]}
         keyboardShouldPersistTaps="handled">
-        <View style={styles.conteudo}>{children}</View>
+        <View style={[styles.conteudo, noTopo && styles.conteudoNoTopo]}>{children}</View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -118,6 +124,95 @@ export function Interruptor({
   );
 }
 
+/**
+ * Número que se ajusta com "−" e "+", como os dias do ciclo. Pode começar sem
+ * valor: o primeiro toque, em qualquer botão, põe o `inicial`, e só então o
+ * número passa a valer. Para o leitor de tela, "−" e "+" são botões comuns e o
+ * valor novo é anunciado a cada toque.
+ */
+export function Contador({
+  rotulo,
+  valor,
+  inicial,
+  minimo,
+  maximo,
+  aoMudar,
+  formatar,
+  textoVazio,
+  rotuloDiminuir,
+  rotuloAumentar,
+}: {
+  rotulo: string;
+  /** Null enquanto a usuária não escolheu. */
+  valor: number | null;
+  /** O que o primeiro toque põe, quando ainda não há valor. */
+  inicial: number;
+  minimo: number;
+  maximo: number;
+  aoMudar: (valor: number) => void;
+  /** Como o valor aparece e é lido, como "28 dias". */
+  formatar: (valor: number) => string;
+  textoVazio: string;
+  rotuloDiminuir: string;
+  rotuloAumentar: string;
+}) {
+  const mudar = (passo: number) =>
+    aoMudar(valor === null ? inicial : Math.min(maximo, Math.max(minimo, valor + passo)));
+  return (
+    <View style={styles.campo}>
+      <Text style={styles.rotulo}>{rotulo}</Text>
+      <View style={styles.contador}>
+        <PassoContador
+          simbolo="−"
+          rotulo={rotuloDiminuir}
+          desativado={valor !== null && valor <= minimo}
+          onPress={() => mudar(-1)}
+        />
+        <Text
+          accessibilityLiveRegion="polite"
+          style={[styles.contadorValor, valor === null && styles.contadorVazio]}>
+          {valor === null ? textoVazio : formatar(valor)}
+        </Text>
+        <PassoContador
+          simbolo="+"
+          rotulo={rotuloAumentar}
+          desativado={valor !== null && valor >= maximo}
+          onPress={() => mudar(1)}
+        />
+      </View>
+    </View>
+  );
+}
+
+function PassoContador({
+  simbolo,
+  rotulo,
+  desativado,
+  onPress,
+}: {
+  simbolo: string;
+  rotulo: string;
+  desativado: boolean;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={rotulo}
+      accessibilityState={{ disabled: desativado }}
+      disabled={desativado}
+      onPress={onPress}
+      hitSlop={espaco.xs}
+      style={({ pressed }) => [
+        styles.passo,
+        desativado && styles.passoDesativado,
+        pressed && styles.pressionado,
+      ]}>
+      <Text style={styles.passoSimbolo}>{simbolo}</Text>
+    </Pressable>
+  );
+}
+
 /** Confirmação de uma ação que deu certo: em plum, sem alarde, e lida pelo leitor de tela. */
 export function Confirmacao({ children }: PropsWithChildren) {
   if (!children) {
@@ -136,11 +231,13 @@ export function SeletorNivel({
   rotulos,
   valor,
   aoMudar,
+  desabilitado = false,
 }: {
   rotulo: string;
   rotulos: Record<Nivel, string>;
   valor?: Nivel;
   aoMudar: (valor: Nivel) => void;
+  desabilitado?: boolean;
 }) {
   return (
     <View style={styles.campo}>
@@ -153,12 +250,14 @@ export function SeletorNivel({
               key={nivel}
               accessibilityRole="radio"
               accessibilityLabel={rotulos[nivel]}
-              accessibilityState={{ checked: marcado }}
+              accessibilityState={{ checked: marcado, disabled: desabilitado }}
+              disabled={desabilitado}
               onPress={() => aoMudar(nivel)}
               style={({ pressed }) => [
                 styles.opcao,
                 marcado && styles.opcaoMarcada,
                 pressed && styles.pressionado,
+                desabilitado && styles.desabilitado,
               ]}>
               <Text style={[styles.opcaoTexto, marcado && styles.opcaoTextoMarcado]}>
                 {rotulos[nivel]}
@@ -225,6 +324,8 @@ export function Aviso({ children }: PropsWithChildren) {
 const styles = StyleSheet.create({
   tela: { flex: 1, backgroundColor: cores.ground },
   rolagem: { flexGrow: 1, justifyContent: 'center', padding: espaco.lg },
+  rolagemNoTopo: { justifyContent: 'flex-start' },
+  conteudoNoTopo: { flexGrow: 1 },
   conteudo: {
     width: '100%',
     maxWidth: larguraMaxima,
@@ -260,6 +361,30 @@ const styles = StyleSheet.create({
   interruptor: { flexDirection: 'row', alignItems: 'center', gap: espaco.md },
   interruptorRotulo: { flex: 1 },
   confirmacao: { fontSize: 16, lineHeight: 24, fontWeight: '600', color: cores.plum },
+  contador: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minHeight: 64,
+    paddingHorizontal: espaco.sm,
+    borderRadius: raio.campo,
+    borderWidth: 1,
+    borderColor: cores.inkSoft,
+    backgroundColor: cores.white,
+  },
+  contadorValor: { fontSize: 20, fontWeight: '700', color: cores.ink },
+  contadorVazio: { fontSize: 16, fontWeight: '600', color: cores.inkSoft },
+  passo: {
+    width: 48,
+    height: 48,
+    borderRadius: raio.botao,
+    backgroundColor: cores.blush,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  // No limite o botão some pela metade, e o leitor de tela anuncia "desativado".
+  passoDesativado: { opacity: 0.4 },
+  passoSimbolo: { fontSize: 24, lineHeight: 28, fontWeight: '700', color: cores.ink },
   opcoes: { flexDirection: 'row', gap: espaco.sm },
   opcao: {
     flex: 1,

@@ -16,6 +16,7 @@ function tarefa(dados: Partial<Tarefa> = {}): Tarefa {
     duracaoMinutos: null,
     dataPlanejada: HOJE,
     criadaEm: '2026-11-10T12:00:00.000Z',
+    concluidaEm: null,
     ...dados,
   };
 }

@@ -59,6 +59,7 @@ describe('Tarefas (HU17)', () => {
         duracaoMinutos: 90,
         dataPlanejada: HOJE,
         criadaEm: expect.any(String),
+        concluidaEm: null,
       });
     });
 
