@@ -758,6 +758,7 @@ tr:last-child td {
 .mxh:hover {
   border-color: var(--acc);
 }
+
 .mxh.on {
   background: var(--acc);
   border-color: var(--acc);
@@ -846,6 +847,7 @@ tr:last-child td {
     grid-template-columns: minmax(0,1fr);
   }
 }
+
 .story {
   margin: 0;
   padding: 10px 14px;
@@ -1634,6 +1636,8 @@ button.rnfc:hover {
   max-width: 100%;
   max-height: calc(100vh - 32px);
   overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mut) var(--panel);
   padding: 24px;
 }
 .dlg h2 {
@@ -1805,4 +1809,381 @@ summary.foldh::-webkit-details-marker {
   background: var(--soft);
   color: var(--head);
   font-size: 14px;
+}
+
+/* Resultado dos critérios e situação do DoR */
+.rdor {
+  align-self: flex-start;
+  display: inline-block;
+  padding: 1px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--mut);
+  background: var(--panel);
+  white-space: nowrap;
+}
+.rdor.r-sim { background: var(--lilt); border-color: var(--lil); color: var(--lil); }
+.rdor.r-nao { background: var(--cort); border-color: var(--cor); color: var(--cor); }
+.rdor.r-exc { background: var(--soft); border-color: var(--acc); color: var(--acct); }
+.rdor.r-na { border-style: dashed; }
+.rdor.r-nc { border-style: dotted; }
+.qdor th, .qdor td { text-align: center; padding: 6px 4px; }
+.qdor th:first-child, .qdor td:last-child { text-align: left; }
+.qdor .rdor { min-width: 26px; padding: 1px 6px; text-align: center; }
+
+/* Diagrama da página Arquitetura: SVG inline que segue as variáveis do tema.
+   Abaixo de 760 px o quadro rola para os lados, sem rolar a página. */
+.arq {
+  margin: 16px 0 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  overflow-x: auto;
+}
+.arq svg {
+  display: block;
+  width: 100%;
+  min-width: 760px;
+  height: auto;
+}
+.arq figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--mut);
+}
+.arq text {
+  fill: var(--ink);
+  font-size: 13px;
+}
+.arq .t {
+  fill: var(--head);
+  font-family: var(--disp);
+  font-size: 16px;
+  font-weight: 600;
+}
+.arq .n {
+  font-weight: 700;
+}
+.arq .m {
+  fill: var(--mut);
+  font-size: 12px;
+}
+.arq .c {
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+.arq .g {
+  fill: var(--soft);
+  stroke: var(--line);
+}
+.arq .b {
+  fill: var(--panel);
+  stroke: var(--wire);
+}
+.arq .on {
+  fill: var(--lilt);
+  stroke: var(--lil);
+}
+.arq .bx {
+  fill: var(--panel);
+  stroke: var(--wire);
+  stroke-dasharray: 4 4;
+}
+.arq .db {
+  fill: var(--cort);
+  stroke: var(--cor);
+}
+.arq .seta {
+  stroke: var(--acc);
+  stroke-width: 2;
+  marker-end: url(#arqSeta);
+}
+.arq .ponta {
+  fill: var(--acc);
+}
+.arq .tr {
+  stroke: var(--wire);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+}
+
+/* Partes do diagrama que abrem detalhes (assets/js/arquitetura.js). A parte
+   sob o mouse, com foco ou aberta ganha a borda na cor de destaque. */
+.arq .alvo {
+  cursor: pointer;
+  outline: none;
+}
+.arq .alvo :is(.b, .g, .on, .bx, .db, .hit) {
+  transition: stroke .15s ease, fill .15s ease;
+}
+.arq .hit {
+  fill: transparent;
+  stroke: transparent;
+}
+.arq .alvo:is(:hover, :focus-visible, .ativo) :is(.b, .g, .on, .bx, .db) {
+  stroke: var(--acc);
+  stroke-width: 2;
+}
+.arq .alvo:is(:hover, :focus-visible, .ativo) .hit {
+  fill: var(--soft);
+  stroke: var(--acc);
+  stroke-dasharray: 4 4;
+}
+.arq .alvo:focus-visible :is(.b, .g, .on, .bx, .db, .hit) {
+  stroke-width: 3;
+}
+.arq .so-toque {
+  display: none;
+}
+@media (hover: none), (pointer: coarse) {
+  .arq .so-mouse { display: none; }
+  .arq .so-toque { display: inline; }
+}
+
+/* Painel de detalhes: ao lado da parte, com mouse; folha no pé da tela, no
+   toque ou abaixo de 720 px. Fica abaixo dos diálogos (.over, z-index 20). */
+.arq-det {
+  position: fixed;
+  z-index: 15;
+  width: 440px;
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mut) var(--panel);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(62,35,56,.16), 0 2px 6px rgba(62,35,56,.08);
+  padding: 16px 18px 18px;
+  font-size: 14px;
+}
+[data-theme="dark"] .arq-det {
+  box-shadow: 0 12px 32px rgba(0,0,0,.45);
+}
+.arq-det[hidden] {
+  display: none;
+}
+.arq-det.entra {
+  animation: mcPop .2s cubic-bezier(.2,.9,.3,1.1) both;
+}
+.arq-det.folha {
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  top: auto;
+  width: auto;
+  max-height: 70vh;
+}
+.arq-det:focus {
+  outline: none;
+}
+.arq-det:focus-visible {
+  box-shadow: 0 0 0 2px var(--acc);
+}
+.arq-det-h {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.arq-det-h .x {
+  width: 36px;
+  height: 36px;
+}
+.arq-det-k {
+  margin: 0 0 2px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--acct);
+}
+.arq-det h3 {
+  margin: 0;
+  font-family: var(--disp);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--head);
+}
+.arq-det-c > p {
+  margin: 0 0 10px;
+  color: var(--mut);
+}
+.arq-dl {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.arq-dl div {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 10px;
+}
+.arq-dl dt {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--head);
+  padding-top: 2px;
+}
+.arq-dl dd {
+  margin: 0;
+  line-height: 1.5;
+}
+.arq-dl .mono {
+  font-size: 12.5px;
+  overflow-wrap: anywhere;
+}
+.arq-dl .rfb {
+  min-height: 22px;
+  padding: 0 6px;
+  font-size: 11.5px;
+}
+.arq-rotas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12.5px;
+}
+.arq-rotas i {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-style: normal;
+  font-size: 11.5px;
+  color: var(--mut);
+}
+@media (max-width: 480px) {
+  .arq-dl div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .arq-det.entra { animation: none; }
+  .arq .alvo :is(.b, .g, .on, .bx, .db, .hit) { transition: none; }
+}
+
+/* ---------------------------------------------------------------------
+   Quadro kanban (Entregas e cronograma)
+   --------------------------------------------------------------------- */
+.kb-fonte {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  color: var(--mut);
+}
+.kb-rolagem {
+  overflow-x: auto;
+  margin-top: 12px;
+  padding-bottom: 6px;
+}
+.kb {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(200px, 1fr));
+  gap: 10px;
+  min-width: 1040px;
+}
+.kb-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--side);
+}
+.kb-cab {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--disp);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--head);
+}
+.kb-qtd {
+  padding: 1px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mut);
+}
+.kb-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding: 8px;
+}
+.kb-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.3;
+  text-decoration: none;
+  transition: border-color .16s ease, transform .16s ease;
+}
+.kb-card:hover {
+  border-color: var(--acc);
+  transform: translateY(-1px);
+}
+.kb-topo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--mut);
+}
+.kb-cod {
+  font-weight: 600;
+  color: var(--acct);
+}
+.kb-num {
+  margin-left: auto;
+}
+.kb-rodape {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+  font-size: 11.5px;
+  color: var(--mut);
+}
+.kb-rodape .tag {
+  margin: 0;
+  padding: 0 5px;
+  font-size: 10.5px;
+}
+.kb-vazio {
+  margin: 0;
+  padding: 14px 4px;
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--mut);
+}
+.kb-ponto {
+  display: inline-block;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+.kb-ponto.historia { background: var(--acc); }
+.kb-ponto.tecnica { background: var(--lil); }
+.kb-ponto.caracteristica { background: var(--head); }
+.kb-ponto.documentacao { background: var(--wire); }
+@media (prefers-reduced-motion: reduce) {
+  .kb-card { transition: none; }
 }

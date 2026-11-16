@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arquitetura | MindCycle</title>
+  <meta name="description" content="Como o MindCycle é construído: tecnologias, comunicação entre os sistemas e as decisões por trás de cada escolha.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <script>
+    // Antes da primeira pintura: o tema escolhido antes ou, sem escolha, o do sistema.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('tema'); } catch (e) {}
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/fraunces-semibold-latin.woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body data-pagina="arquitetura">
+  <a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+  <aside class="side">
+    <a class="brand" href="../" aria-label="Ir para a página principal">
+      <svg width="36" height="36" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="mcLua" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F08CB0"></stop><stop offset="1" stop-color="#A98BD1"></stop></linearGradient></defs><rect x="4" y="4" width="112" height="112" rx="30" fill="url(#mcLua)"></rect><path fill-rule="evenodd" fill="#FFF4EC" d="M58 30 a30 30 0 1 0 0 60 30 30 0 1 0 0 -60 z M74 22 a28 28 0 1 1 0 56 28 28 0 1 1 0 -56 z"></path><circle cx="82" cy="40" r="4.6" fill="#FF9E86"></circle><circle cx="70" cy="26" r="2.4" fill="#FFF4EC"></circle></svg>
+      <span><b style="font-family: var(--disp); font-size: 20px; font-weight: 650; display: block; line-height: 1.2"><span style="color: var(--head)">Mind</span><span style="color: var(--acc)">Cycle</span></b><span class="mono" style="font-size: 11px; color: var(--mut)">// REQ 2026.2 · T02</span></span>
+    </a>
+    <nav class="menu" aria-label="Páginas do site">
+      <a class="navb" href="../">◈ Requisitos</a>
+      <div class="navh">◇ Como trabalhamos</div>
+      <a class="navb" href="../visao/">Visão de produto</a>
+      <a class="navb on" href="../arquitetura/" aria-current="page">Arquitetura</a>
+      <a class="navb" href="../engenharia-de-requisitos/">Engenharia de requisitos</a>
+      <a class="navb" href="../mvp/">MVP</a>
+      <a class="navb" href="../historico/">Histórico</a>
+      <a class="navb" href="../reunioes/">Reuniões</a>
+      <a class="navb" href="../cronograma/">Entregas e cronograma</a>
+      <a class="navb" href="../dor-e-dod/">DoR e DoD</a>
+      <a class="navb" href="../priorizacao/">Priorização de requisitos</a>
+      <a class="navb" href="../licoes-aprendidas/">Lições aprendidas</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div class="crumb">MindCycle / Arquitetura</div>
+      <div class="tools">
+        <button class="btn" id="tema" type="button">☾ Tema escuro</button>
+      </div>
+    </header>
+
+    <main class="content" id="conteudo">
+      <h1>Arquitetura</h1>
+      <p class="lead">Como o MindCycle é construído: as tecnologias, como os sistemas conversam e por que escolhemos cada uma.</p>
+
+      <h2>Visão geral</h2>
+      <p>O MindCycle é um aplicativo Android que conversa com uma API. Só a API acessa o banco de dados, e é ela que decide, a cada requisição, quem é a usuária e o que ela pode ver.</p>
+
+      <figure class="arq">
+        <svg viewBox="0 0 960 600" role="group" aria-labelledby="arq-titulo arq-desc">
+          <title id="arq-titulo">Diagrama de arquitetura do MindCycle</title>
+          <desc id="arq-desc">O app Expo, no Android, chama a API NestJS por HTTPS com JSON e um token JWT no cabeçalho Authorization, e renova o token em /auth/renovacao. A API usa o Prisma para ler e gravar no PostgreSQL. O pacote compartilhado fornece os schemas ao app e à API. O GitHub Actions verifica cada pull request e o Docker empacota a API. Cada parte do diagrama abre os detalhes técnicos dela.</desc>
+          <defs>
+            <marker id="arqSeta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ponta" d="M0 0L10 5L0 10z"></path></marker>
+          </defs>
+
+          <!-- Clientes. Cada <g class="alvo"> abre o <template id="det-…"> de mesmo nome. -->
+          <g class="alvo" data-det="plataforma" aria-label="App Android, distribuição">
+            <rect class="g" x="16" y="40" width="240" height="300" rx="16"></rect>
+            <text class="t" x="32" y="68">App · Expo SDK 58</text>
+          </g>
+          <g class="alvo" data-det="app" aria-label="App Android, tecnologias">
+            <rect class="b" x="32" y="86" width="208" height="104" rx="10"></rect>
+            <text class="n" x="48" y="112">App Android</text>
+            <text class="m" x="48" y="134">React Native + Expo Router</text>
+            <text class="m" x="48" y="154">TanStack Query</text>
+            <text class="c" x="48" y="176">matriz de suporte (RNF10)</text>
+          </g>
+          <g class="alvo" data-det="sessao" aria-label="Sessão no aparelho">
+            <rect class="b" x="32" y="210" width="208" height="110" rx="10"></rect>
+            <text class="n" x="48" y="236">Sessão no aparelho</text>
+            <text class="m" x="48" y="258">tokens guardados cifrados</text>
+            <text class="m" x="48" y="278">PIN trava a sessão (HU11)</text>
+            <text class="c" x="48" y="300">expo-secure-store</text>
+          </g>
+
+          <!-- Comunicação entre app e API -->
+          <g class="alvo" data-det="http" aria-label="Comunicação entre o app e a API">
+            <rect class="hit" x="266" y="92" width="124" height="180" rx="10"></rect>
+            <text class="m" x="328" y="112" text-anchor="middle">HTTPS + JSON</text>
+            <text class="c" x="328" y="128" text-anchor="middle">Bearer · JWT 15 min</text>
+            <line class="seta" x1="262" y1="140" x2="394" y2="140"></line>
+            <line class="seta" x1="394" y1="176" x2="262" y2="176"></line>
+            <text class="m" x="328" y="196" text-anchor="middle">JSON + código de erro</text>
+            <text class="c" x="328" y="236" text-anchor="middle">POST /auth/renovacao</text>
+            <text class="m" x="328" y="250" text-anchor="middle">refresh token rotativo</text>
+            <line class="seta" x1="262" y1="262" x2="394" y2="262"></line>
+          </g>
+
+          <!-- API -->
+          <g class="alvo" data-det="api" aria-label="API, hospedagem">
+            <rect class="g" x="400" y="40" width="290" height="300" rx="16"></rect>
+            <text class="t" x="416" y="68">API · NestJS 12 · Node 22</text>
+          </g>
+          <g class="alvo" data-det="guard" aria-label="Guard global e validação">
+            <rect class="b" x="416" y="82" width="258" height="50" rx="10"></rect>
+            <text class="n" x="432" y="103">Guard global (JWT bearer)</text>
+            <text class="m" x="432" y="122">ConsentGuard · validação Zod</text>
+          </g>
+          <text class="m" x="416" y="154">Módulos</text>
+          <g class="alvo" data-det="auth" aria-label="Módulo auth"><rect class="on" x="416" y="164" width="122" height="30" rx="8"></rect><text class="c" x="428" y="184">auth</text></g>
+          <g class="alvo" data-det="account" aria-label="Módulo account"><rect class="on" x="544" y="164" width="122" height="30" rx="8"></rect><text class="c" x="556" y="184">account</text></g>
+          <g class="alvo" data-det="consent" aria-label="Módulo consent"><rect class="on" x="416" y="202" width="122" height="30" rx="8"></rect><text class="c" x="428" y="222">consent</text></g>
+          <g class="alvo" data-det="cycle" aria-label="Módulo cycle"><rect class="bx" x="544" y="202" width="122" height="30" rx="8"></rect><text class="c" x="556" y="222">cycle</text></g>
+          <g class="alvo" data-det="checkin" aria-label="Módulo checkin"><rect class="bx" x="416" y="240" width="122" height="30" rx="8"></rect><text class="c" x="428" y="260">checkin</text></g>
+          <g class="alvo" data-det="tasks" aria-label="Módulo tasks"><rect class="bx" x="544" y="240" width="122" height="30" rx="8"></rect><text class="c" x="556" y="260">tasks</text></g>
+          <g class="alvo" data-det="planning" aria-label="Módulo planning"><rect class="bx" x="416" y="278" width="122" height="30" rx="8"></rect><text class="c" x="428" y="298">planning</text></g>
+          <g class="alvo" data-det="content" aria-label="Módulo content"><rect class="bx" x="544" y="278" width="122" height="30" rx="8"></rect><text class="c" x="556" y="298">content</text></g>
+
+          <!-- API e banco -->
+          <g class="alvo" data-det="prisma" aria-label="Prisma, acesso ao banco">
+            <rect class="hit" x="696" y="140" width="80" height="56" rx="10"></rect>
+            <text class="m" x="735" y="156" text-anchor="middle">Prisma 7</text>
+            <text class="c" x="735" y="170" text-anchor="middle">adapter pg</text>
+            <line class="seta" x1="694" y1="182" x2="776" y2="182"></line>
+          </g>
+
+          <!-- Banco -->
+          <g class="alvo" data-det="banco" aria-label="Banco de dados">
+            <rect class="hit" x="772" y="44" width="176" height="232" rx="16"></rect>
+            <text class="t" x="780" y="68">Banco de dados</text>
+            <path class="db" d="M780 120 v110 a80 16 0 0 0 160 0 v-110"></path>
+            <ellipse class="db" cx="860" cy="120" rx="80" ry="16"></ellipse>
+            <text class="n" x="860" y="176" text-anchor="middle">PostgreSQL</text>
+            <text class="m" x="860" y="196" text-anchor="middle">Neon · São Paulo</text>
+            <text class="c" x="860" y="218" text-anchor="middle">migrations versionadas</text>
+          </g>
+
+          <!-- Pacote compartilhado -->
+          <line class="tr" x1="136" y1="340" x2="136" y2="380"></line>
+          <line class="tr" x1="545" y1="340" x2="545" y2="380"></line>
+          <g class="alvo" data-det="shared" aria-label="Pacote compartilhado">
+            <rect class="b" x="16" y="380" width="674" height="64" rx="10"></rect>
+            <text class="c n" x="32" y="406">packages/shared</text>
+            <text class="m" x="32" y="428">schemas Zod e tipos usados pelo app e pela API: a validação de um lado é a mesma do outro</text>
+          </g>
+
+          <!-- Entrega -->
+          <g class="alvo" data-det="ci" aria-label="GitHub Actions">
+            <rect class="g" x="16" y="470" width="430" height="90" rx="16"></rect>
+            <text class="t" x="32" y="496">GitHub Actions, a cada PR</text>
+            <text class="m" x="32" y="520">typecheck · lint · testes unitários · e2e contra PostgreSQL</text>
+            <text class="m" x="32" y="542">build da imagem Docker da API</text>
+          </g>
+          <g class="alvo" data-det="docker" aria-label="Docker">
+            <rect class="g" x="470" y="470" width="474" height="90" rx="16"></rect>
+            <text class="t" x="486" y="496">Docker</text>
+            <text class="m" x="486" y="520">Compose no desenvolvimento: PostgreSQL (e a API no perfil api)</text>
+            <text class="m" x="486" y="542">Imagem da API: aplica as migrations e sobe o servidor</text>
+          </g>
+
+          <!-- Legenda -->
+          <rect class="on" x="16" y="576" width="22" height="14" rx="4"></rect>
+          <text class="m" x="46" y="588">módulo já implementado</text>
+          <rect class="bx" x="240" y="576" width="22" height="14" rx="4"></rect>
+          <text class="m" x="270" y="588">módulo previsto para as próximas iterações</text>
+        </svg>
+        <figcaption>Tecnologias e comunicação entre os sistemas. <span class="so-mouse">Passe o mouse sobre uma parte do diagrama para ver os detalhes técnicos; clique para fixar.</span><span class="so-toque">Toque em uma parte do diagrama para ver os detalhes técnicos. Role o diagrama para os lados.</span></figcaption>
+      </figure>
+
+      <!-- Detalhes de cada parte do diagrama, abertos por assets/js/arquitetura.js.
+           data-k: o tipo da parte; data-titulo: o nome no topo do painel.
+           <span data-ref="HU26"></span> vira o chip que abre a história (ou o RNF). -->
+      <template id="det-plataforma" data-k="Distribuição" data-titulo="App · Expo SDK 58">
+        <p>Como o app chega ao celular de quem testa.</p>
+        <dl class="arq-dl">
+          <div><dt>Plataforma</dt><dd>Só Android nesta entrega <span data-ref="RNF10"></span>. Mínimo API 24 (Android 7.0), alvo API 36. Pacote <span class="mono">br.unb.mindcycle</span>.</dd></div>
+          <div><dt>Build</dt><dd>O workflow <b>APK de teste</b> roda <span class="mono">expo prebuild</span> e compila o APK de release com Gradle e Java 17, só para ARM (<span class="mono">arm64-v8a</span>, <span class="mono">armeabi-v7a</span>), os aparelhos físicos da matriz. O APK fica 30 dias nos artefatos do GitHub.</dd></div>
+          <div><dt>API embutida</dt><dd><span class="mono">EXPO_PUBLIC_API_URL</span> entra no APK no build, vinda da variável <span class="mono">API_URL_TESTE</span> do repositório. O release não aceita HTTP sem TLS: na <span class="mono">main</span>, um endereço sem <span class="mono">https://</span> falha o build.</dd></div>
+          <div><dt>Desenvolvimento</dt><dd>O Expo Go roda o app no celular de quem está testando. No emulador, a API local fica em <span class="mono">http://10.0.2.2:3000</span>.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-app" data-k="Cliente" data-titulo="App Android">
+        <p>O app que a usuária usa. Não guarda dados de saúde: tudo vem da API.</p>
+        <dl class="arq-dl">
+          <div><dt>Tecnologia</dt><dd>React Native 0.88 e React 19.3 pelo Expo SDK 58, com o React Compiler ligado. TypeScript 6.</dd></div>
+          <div><dt>Navegação</dt><dd>Expo Router com rotas tipadas. Telas públicas: entrar, cadastro e termos. A área protegida tem as abas Hoje, Ciclo, Tarefas, Acolhimento e Conta.</dd></div>
+          <div><dt>Dados</dt><dd>O TanStack Query 5 guarda as respostas em cache e refaz as buscas. Um cliente HTTP único (<span class="mono">src/api/cliente.ts</span>) põe o token em cada requisição e renova a sessão.</dd></div>
+          <div><dt>Erros</dt><dd>A API manda só o código, como <span class="mono">CREDENCIAIS_INVALIDAS</span>, e o app escolhe o texto exibido, revisado para não ter tom de cobrança.</dd></div>
+          <div><dt>Qualidade</dt><dd>Typecheck e ESLint em todo PR.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-sessao" data-k="Cliente · segurança" data-titulo="Sessão no aparelho">
+        <p>Onde ficam os tokens e o que acontece quando eles vencem.</p>
+        <dl class="arq-dl">
+          <div><dt>Criptografia</dt><dd>Os tokens ficam no <span class="mono">expo-secure-store</span>, que no Android os cifra com o Keystore do sistema, na chave <span class="mono">mindcycle.tokens</span>.</dd></div>
+          <div><dt>Renovação</dt><dd>Uma requisição que recebe 401 troca o refresh token em <span class="mono">/auth/renovacao</span> e é repetida. Se várias recebem 401 ao mesmo tempo, todas esperam a mesma renovação, porque cada refresh token só vale uma vez.</dd></div>
+          <div><dt>Falhas</dt><dd>Renovação recusada apaga os tokens e leva de volta para a tela de entrar. Sem rede, a sessão continua.</dd></div>
+          <div><dt>PIN · previsto</dt><dd>O PIN de pétalas <span data-ref="HU11"></span> trava a sessão ao reabrir o app. Não substitui a senha: 4 toques em 6 pétalas dão só 1.296 combinações.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-http" data-k="Comunicação" data-titulo="App ↔ API">
+        <p>O contrato entre o app e a API.</p>
+        <dl class="arq-dl">
+          <div><dt>Transporte</dt><dd>HTTPS, com o certificado do Render. Corpo em JSON.</dd></div>
+          <div><dt>Autenticação</dt><dd>Cabeçalho <span class="mono">Authorization: Bearer</span> com um JWT assinado pelo <span class="mono">JWT_SECRET</span> da API (32 caracteres ou mais), emissor <span class="mono">mindcycle-api</span>, público <span class="mono">mindcycle-app</span>, válido por 15 minutos.</dd></div>
+          <div><dt>Renovação</dt><dd><span class="mono">POST /auth/renovacao</span> troca o refresh token por um par novo. O refresh token é rotativo: vale uma vez.</dd></div>
+          <div><dt>Rotas</dt><dd><ul class="arq-rotas mono">
+            <li>POST /auth/cadastro <i>pública</i></li>
+            <li>POST /auth/entrada <i>pública</i></li>
+            <li>POST /auth/renovacao <i>pública</i></li>
+            <li>POST /auth/saida <i>pública</i></li>
+            <li>GET /termos <i>pública</i></li>
+            <li>POST /termos/aceite</li>
+            <li>GET · PATCH /conta</li>
+            <li>GET /saude <i>pública</i></li>
+          </ul></dd></div>
+          <div><dt>Erros</dt><dd><span class="mono">{ statusCode, codigo }</span>. Códigos: <span class="mono">CREDENCIAIS_INVALIDAS</span>, <span class="mono">EMAIL_JA_CADASTRADO</span>, <span class="mono">CONSENTIMENTO_PENDENTE</span> e <span class="mono">VERSAO_TERMOS_DESATUALIZADA</span>.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-api" data-k="Hospedagem" data-titulo="API · NestJS 12 · Node 22">
+        <p>Um monólito modular em NestJS, hospedado para a homologação com a cliente.</p>
+        <dl class="arq-dl">
+          <div><dt>Onde roda</dt><dd>Render, plano Free, em <span class="mono">mindcycle-api-main.onrender.com</span>. Fica nos EUA: o Render não tem região na América do Sul.</dd></div>
+          <div><dt>Deploy</dt><dd>O Render roda a imagem <span class="mono">ghcr.io/mdsreq-fga-unb/mindcycle-api:main</span>. Depois que o GitHub Actions publica uma imagem nova, o deploy é feito no Render (Manual Deploy). Cada versão também tem a tag <span class="mono">sha-&lt;commit&gt;</span>, para voltar atrás.</dd></div>
+          <div><dt>Saúde</dt><dd><span class="mono">GET /saude</span> confere o banco e responde 503 se ele cair. É o Health Check do Render. O UptimeRobot o chama a cada 5 minutos para o serviço não dormir: o plano Free desliga após 15 minutos sem requisições, e acordar leva perto de um minuto.</dd></div>
+          <div><dt>Configuração</dt><dd>As variáveis (<span class="mono">DATABASE_URL</span>, <span class="mono">JWT_SECRET</span>, <span class="mono">SMTP_URL</span>, <span class="mono">EMAIL_REMETENTE</span>) ficam no painel do Render, nunca no repositório. A API as valida com Zod ao subir: com alguma errada, nem inicia, e o log diz qual corrigir.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-guard" data-k="API · segurança" data-titulo="Guard global e validação">
+        <p>O que toda requisição atravessa antes de chegar a um módulo.</p>
+        <dl class="arq-dl">
+          <div><dt>Autenticação</dt><dd>O <span class="mono">@nestjs/authentication</span> registra um guard em toda a API. Só as rotas marcadas com <span class="mono">@Public()</span> passam sem token.</dd></div>
+          <div><dt>A cada requisição</dt><dd>O token é validado e a usuária é buscada no banco. Uma conta excluída perde o acesso na hora, mesmo com um token ainda no prazo.</dd></div>
+          <div><dt>Identidade</dt><dd>Vem sempre do token, nunca de um id enviado pelo app <span data-ref="RNF03"></span>.</dd></div>
+          <div><dt>ConsentGuard</dt><dd>Nas rotas que gravam ciclo, sintomas ou disposição, exige o aceite da versão vigente dos termos. Sem ele, a resposta é 403 <span class="mono">CONSENTIMENTO_PENDENTE</span> <span data-ref="RNF02"></span>.</dd></div>
+          <div><dt>Validação</dt><dd>Cada corpo é validado com os schemas Zod do <span class="mono">packages/shared</span>. Um corpo inválido recebe 400 antes de chegar ao módulo.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-auth" data-k="Módulo · implementado" data-titulo="auth">
+        <p>Cadastro, entrada, renovação e saída <span data-ref="HU25"></span>.</p>
+        <dl class="arq-dl">
+          <div><dt>Rotas</dt><dd><span class="mono">/auth/cadastro</span>, <span class="mono">/auth/entrada</span>, <span class="mono">/auth/renovacao</span> e <span class="mono">/auth/saida</span>.</dd></div>
+          <div><dt>Senha</dt><dd>De 8 a 128 caracteres no cadastro. A API guarda só o hash (scrypt, pelo <span class="mono">PasswordHasher</span> do <span class="mono">@nestjs/authentication</span>). Se os parâmetros do hash mudarem, ele é refeito na próxima entrada.</dd></div>
+          <div><dt>E-mail</dt><dd>Normalizado antes de tudo (espaços, Unicode NFC, minúsculas): <span class="mono">Ana@Exemplo.com</span> e <span class="mono">ana@exemplo.com</span> são a mesma conta.</dd></div>
+          <div><dt>Contra enumeração</dt><dd>Senha errada e e-mail inexistente recebem a mesma resposta. Sem conta, a senha é comparada com um hash falso, então nem o tempo de resposta revela quais e-mails estão cadastrados.</dd></div>
+          <div><dt>Refresh tokens</dt><dd>O banco guarda o SHA-256 de cada um, nunca o token. Cada um vale uma vez, numa escrita condicional; se um token já usado volta, a família inteira é revogada. Sair revoga o token.</dd></div>
+          <div><dt>Recuperar senha</dt><dd>O e-mail de recuperação <span data-ref="HU26"></span> sai de <span class="mono">Suporte MindCycle &lt;suporte.mindcycle@gmail.com&gt;</span>, pelo SMTP do Brevo na porta 2525, com STARTTLS obrigatório. O envio já está configurado e testado; a rota de recuperação entra numa próxima iteração.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-account" data-k="Módulo · implementado" data-titulo="account">
+        <p>Os dados da conta e o "hoje" da usuária.</p>
+        <dl class="arq-dl">
+          <div><dt>Rotas</dt><dd><span class="mono">GET /conta</span> e <span class="mono">PATCH /conta</span>.</dd></div>
+          <div><dt>Dados</dt><dd>Tabela <span class="mono">usuarias</span>: id (UUID), e-mail único, hash da senha, fuso e data de criação. A resposta traz id, e-mail, fuso, a data de hoje e se os termos vigentes foram aceitos; nunca o hash.</dd></div>
+          <div><dt>Fuso</dt><dd>O fuso IANA do aparelho, como <span class="mono">America/Sao_Paulo</span>, vai no cadastro e é atualizado quando muda, numa viagem. Deslocamentos fixos e abreviações como <span class="mono">EST</span> são recusados, porque ignoram o horário de verão.</dd></div>
+          <div><dt>"Hoje"</dt><dd>A API calcula a data local pelo fuso, com um relógio injetável que os testes fixam. Os dias contam pelo calendário, não por 24 horas.</dd></div>
+          <div><dt>Exclusão · prevista</dt><dd>Excluir a conta <span data-ref="HU36"></span> apaga a usuária e, em cascata, tudo o que ela registrou, e revoga as sessões.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-consent" data-k="Módulo · implementado" data-titulo="consent">
+        <p>Os termos de uso e o aceite <span data-ref="HU12"></span>.</p>
+        <dl class="arq-dl">
+          <div><dt>Rotas</dt><dd><span class="mono">GET /termos</span>, pública para ler antes de criar a conta, e <span class="mono">POST /termos/aceite</span>.</dd></div>
+          <div><dt>Versões</dt><dd>A versão vigente é <span class="mono">2026-11-13</span>, com 6 seções, uma por finalidade de dado. Mudar o texto cria uma versão nova, e quem aceitou a anterior aceita de novo.</dd></div>
+          <div><dt>Aceite</dt><dd>Só a versão vigente: outra recebe <span class="mono">VERSAO_TERMOS_DESATUALIZADA</span>. Cada aceite vira um registro em <span class="mono">consentimentos</span>, com a data; revogar preenche <span class="mono">revogado_em</span>.</dd></div>
+          <div><dt>Bloqueio</dt><dd>O <span class="mono">ConsentGuard</span> usa esse registro para barrar a gravação de dados de saúde <span data-ref="RNF02"></span>.</dd></div>
+          <div><dt>Texto</dt><dd>Rascunho da equipe, à espera da revisão da cliente (<a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/55">issue #55</a>).</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-cycle" data-k="Módulo · previsto" data-titulo="cycle">
+        <p>Início da menstruação, características do ciclo e a fase atual.</p>
+        <dl class="arq-dl">
+          <div><dt>Histórias</dt><dd><span data-ref="HU05"></span> <span data-ref="HU06"></span> <span data-ref="HU07"></span> <span data-ref="HU08"></span> <span data-ref="HU10"></span></dd></div>
+          <div><dt>Cálculo da fase</dt><dd>Fica atrás de uma interface. Até a cliente validar o modelo, a resposta é "fase não estimada", com o motivo.</dd></div>
+          <div><dt>Proteção</dt><dd>As gravações passam pelo <span class="mono">ConsentGuard</span>.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-checkin" data-k="Módulo · previsto" data-titulo="checkin">
+        <p>O registro diário de sintomas e disposição.</p>
+        <dl class="arq-dl">
+          <div><dt>Histórias</dt><dd><span data-ref="HU04"></span></dd></div>
+          <div><dt>Data</dt><dd>Cada registro é do dia local da usuária, calculado pelo fuso dela.</dd></div>
+          <div><dt>Proteção</dt><dd>As gravações passam pelo <span class="mono">ConsentGuard</span>: são dados de saúde.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-tasks" data-k="Módulo · previsto" data-titulo="tasks">
+        <p>As tarefas da usuária: título, prazo, prioridade e energia necessária.</p>
+        <dl class="arq-dl">
+          <div><dt>Histórias</dt><dd><span data-ref="HU17"></span> <span data-ref="HU16"></span> <span data-ref="HU18"></span> <span data-ref="HU19"></span> <span data-ref="HU20"></span></dd></div>
+          <div><dt>Acesso</dt><dd>Cada consulta filtra pela usuária do token; um teste vai tentar ler com a sessão de outra conta e esperar acesso negado <span data-ref="RNF03"></span>.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-planning" data-k="Módulo · previsto" data-titulo="planning">
+        <p>A recomendação das tarefas do dia.</p>
+        <dl class="arq-dl">
+          <div><dt>Histórias</dt><dd><span data-ref="HU13"></span> <span data-ref="HU14"></span> <span data-ref="HU15"></span></dd></div>
+          <div><dt>Regras</dt><dd>A ordem das tarefas e o reajuste serão funções puras, testadas regra a regra sem banco nem tela. Recebem as tarefas, o check-in e a fase, e devolvem a lista do dia.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-content" data-k="Módulo · previsto" data-titulo="content">
+        <p>Conteúdos sobre o ciclo e atividades de acolhimento.</p>
+        <dl class="arq-dl">
+          <div><dt>Histórias</dt><dd><span data-ref="HU09"></span> <span data-ref="HU21"></span> <span data-ref="HU22"></span></dd></div>
+          <div><dt>Relação</dt><dd>Os conteúdos dependem da fase estimada pelo módulo <span class="mono">cycle</span>.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-prisma" data-k="Acesso a dados" data-titulo="Prisma 7">
+        <p>A única ponte entre a API e o banco: o app nunca tem credencial do banco.</p>
+        <dl class="arq-dl">
+          <div><dt>Tecnologia</dt><dd>Prisma 7.10 com o driver <span class="mono">pg</span> (<span class="mono">@prisma/adapter-pg</span>). O client é gerado do <span class="mono">schema.prisma</span> a cada <span class="mono">npm install</span>.</dd></div>
+          <div><dt>Conexões</dt><dd>A API usa a URL <i>pooled</i> da Neon. As migrations usam a URL direta (<span class="mono">DATABASE_URL_UNPOOLED</span>), porque o Prisma Migrate falha pelo pooler.</dd></div>
+          <div><dt>Migrations</dt><dd>Versionadas em <span class="mono">apps/api/prisma/migrations</span> e aplicadas com <span class="mono">prisma migrate deploy</span> toda vez que o contêiner sobe.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-banco" data-k="Dados" data-titulo="PostgreSQL">
+        <p>Um banco relacional, com os dados de saúde em São Paulo.</p>
+        <dl class="arq-dl">
+          <div><dt>Deploy</dt><dd>Neon, PostgreSQL 18, região São Paulo (<span class="mono">aws-sa-east-1</span>), projeto <span class="mono">bold-poetry-32138014</span>, branch <span class="mono">production</span>. Sem uso, a Neon suspende o processamento e volta na próxima conexão em menos de um segundo.</dd></div>
+          <div><dt>Local e CI</dt><dd>PostgreSQL 17 (<span class="mono">postgres:17-alpine</span>) no Docker Compose, aberto só em <span class="mono">127.0.0.1</span>. O CI sobe um banco <span class="mono">mindcycle_test</span> limpo a cada execução.</dd></div>
+          <div><dt>Tabelas</dt><dd><span class="mono">usuarias</span>, <span class="mono">consentimentos</span> (apagados em cascata com a usuária) e <span class="mono">refresh_tokens</span>. Ids UUID e datas em <span class="mono">timestamptz</span>.</dd></div>
+          <div><dt>LGPD</dt><dd>Os dados de saúde ficam guardados em São Paulo; a API, que só os processa, roda nos EUA <span data-ref="RNF02"></span>.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-shared" data-k="Código compartilhado" data-titulo="packages/shared">
+        <p>O pacote <span class="mono">@mindcycle/shared</span>, usado pelo app e pela API pelos npm workspaces.</p>
+        <dl class="arq-dl">
+          <div><dt>Conteúdo</dt><dd>Schemas Zod 4 do cadastro, da entrada, da renovação, da conta e do aceite; os tipos das respostas (<span class="mono">Tokens</span>, <span class="mono">Usuaria</span>, <span class="mono">Termos</span>); os códigos de erro; as funções de data local e a validação do fuso.</dd></div>
+          <div><dt>Uso</dt><dd>A API valida os corpos com os schemas. O app usa os mesmos tipos e códigos de erro, então um campo novo não diverge entre os dois lados.</dd></div>
+          <div><dt>Build</dt><dd>Compilado no <span class="mono">postinstall</span> da raiz, antes do app e da API. Testes com Vitest.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-ci" data-k="Entrega contínua" data-titulo="GitHub Actions">
+        <p>Três workflows. O CI verde é o critério 3 do DoD.</p>
+        <dl class="arq-dl">
+          <div><dt>CI · todo PR</dt><dd>Também roda a cada push na <span class="mono">main</span>. Ubuntu, Node 22 e npm 11, com dois serviços ao lado: PostgreSQL 17 e Mailpit. Passos: <span class="mono">npm ci</span> → typecheck → lint (oxlint na API, ESLint no app) → testes unitários (Vitest) → testes e2e → build da imagem Docker. Um push novo no PR cancela a execução anterior.</dd></div>
+          <div><dt>Testes e2e</dt><dd>Sobem a API inteira e fazem requisições HTTP contra o PostgreSQL e o Mailpit do CI: cadastro, entrada, saída e reuso de refresh token <span data-ref="HU25"></span>; termos e bloqueio de dado sensível <span data-ref="HU12"></span>; data local e fuso; <span class="mono">/saude</span> e entrega de e-mail por SMTP; o armazenamento dos refresh tokens. O app ainda não tem testes e2e: no CI, passa por typecheck e lint.</dd></div>
+          <div><dt>Publicar imagem</dt><dd>A cada merge na <span class="mono">main</span> que muda a API ou o <span class="mono">shared</span>, publica a imagem no GitHub Container Registry com as tags <span class="mono">main</span> e <span class="mono">sha-&lt;commit&gt;</span>.</dd></div>
+          <div><dt>APK de teste</dt><dd>A cada PR ou merge que muda o app, gera o APK de release e o guarda como artefato.</dd></div>
+        </dl>
+      </template>
+
+      <template id="det-docker" data-k="Contêineres" data-titulo="Docker">
+        <p>O mesmo empacotamento no desenvolvimento e na hospedagem.</p>
+        <dl class="arq-dl">
+          <div><dt>Compose</dt><dd><span class="mono">postgres</span> (<span class="mono">postgres:17-alpine</span>, com healthcheck e volume), <span class="mono">mailpit</span> (<span class="mono">axllent/mailpit:v1.33</span>: SMTP na 1025, caixa de entrada em <span class="mono">localhost:8025</span>) e <span class="mono">api</span>, só no perfil <span class="mono">api</span>. As portas abrem só em 127.0.0.1. <span class="mono">npm run db:up</span> sobe o banco e o Mailpit.</dd></div>
+          <div><dt>Imagem da API</dt><dd>Multi-stage em <span class="mono">node:22-alpine</span>. O primeiro estágio instala só a API e o <span class="mono">shared</span> e compila com <span class="mono">nest build</span>; a imagem final leva o resultado e roda como o usuário <span class="mono">node</span>, sem root, na porta 3000.</dd></div>
+          <div><dt>Ao subir</dt><dd>Confere as variáveis de ambiente → <span class="mono">prisma migrate deploy</span> → <span class="mono">node dist/main</span>. Com uma variável errada, nada toca no banco.</dd></div>
+          <div><dt>Destino</dt><dd>Publicada no GHCR como <span class="mono">mindcycle-api</span> e puxada pelo Render.</dd></div>
+        </dl>
+      </template>
+
+      <h2>Como os sistemas conversam</h2>
+      <ol>
+        <li><b>Cadastro e entrada.</b> O app envia e-mail e senha para <span class="mono">/auth/cadastro</span> ou <span class="mono">/auth/entrada</span>. A API guarda só o hash da senha (scrypt) e devolve um <i>access token</i> JWT, válido por 15 minutos, e um <i>refresh token</i>.</li>
+        <li><b>Cada requisição.</b> O app manda o access token no cabeçalho <span class="mono">Authorization: Bearer</span>. Um guard global da API valida o token e carrega a usuária. Toda rota exige autenticação, menos as marcadas como públicas, como a leitura dos termos de uso.</li>
+        <li><b>Renovação.</b> Quando o access token vence, a API responde 401 e o app troca o refresh token por um par novo em <span class="mono">/auth/renovacao</span>, sem a usuária perceber. Cada refresh token vale uma vez. Se um token já usado volta, a API trata como roubo e encerra a sessão inteira.</li>
+        <li><b>Termos antes dos dados.</b> As rotas que gravam ciclo, sintomas ou disposição passam pelo <span class="mono">ConsentGuard</span>: sem o aceite da versão vigente dos termos, a API recusa a gravação (RNF02).</li>
+        <li><b>Erros.</b> A API responde só com um código, como <span class="mono">CREDENCIAIS_INVALIDAS</span>. O app escolhe o texto exibido, revisado para não ter tom de cobrança (DoD, critério 5).</li>
+      </ol>
+
+      <h2>Tecnologias</h2>
+      <div class="tblw"><table>
+        <thead><tr><th>Camada</th><th>Tecnologia</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td><b>App</b></td><td>Expo SDK 58 (React Native), Expo Router, TanStack Query</td><td>O React Native entrega o app Android, a plataforma desta entrega (RNF10), com componentes nativos. Durante o desenvolvimento, o Expo Go roda o app direto no celular de quem está testando.</td></tr>
+          <tr><td><b>API</b></td><td>NestJS 12 em Node 22, validação com Zod</td><td>Módulos com fronteiras claras e injeção de dependências, o que facilita testar as regras do planejamento do dia isoladamente.</td></tr>
+          <tr><td><b>Autenticação</b></td><td><span class="mono">@nestjs/authentication</span></td><td>Pacote oficial do Nest: hash de senha, tokens JWT e refresh tokens com detecção de reuso, sem código de segurança escrito à mão.</td></tr>
+          <tr><td><b>Banco</b></td><td>PostgreSQL com Prisma 7: 17 no desenvolvimento e no CI, 18 na Neon</td><td>Banco relacional para dados que se relacionam (usuária, ciclo, registros, tarefas) e migrations versionadas junto do código.</td></tr>
+          <tr><td><b>Código compartilhado</b></td><td><span class="mono">packages/shared</span> com Zod</td><td>O app e a API usam os mesmos schemas e tipos, então um campo novo não diverge entre os dois lados.</td></tr>
+          <tr><td><b>Entrega</b></td><td>GitHub Actions e Docker</td><td>O CI roda os testes exigidos pelo DoD (critério 3). A imagem Docker deixa a API pronta para qualquer hospedagem.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Decisões</h2>
+      <div class="cards">
+        <div class="card"><h3>Monorepo</h3><p style="margin: 0">App, API e pacote compartilhado no mesmo repositório, com npm workspaces. Um PR entrega a fatia vertical inteira de uma história, como o DoD pede.</p></div>
+        <div class="card"><h3>Monólito modular</h3><p style="margin: 0">Uma única API, dividida em um módulo por domínio. Para uma equipe pequena e um MVP, microsserviços só trariam custo de operação.</p></div>
+        <div class="card"><h3>Regras sem banco</h3><p style="margin: 0">A ordem das tarefas (HU13) e o reajuste (HU15) serão funções puras, testadas regra a regra sem depender do banco nem da tela.</p></div>
+        <div class="card"><h3>Conta e PIN</h3><p style="margin: 0">A conta usa e-mail e senha. O PIN de pétalas (HU11) trava a sessão ao reabrir o app: 4 toques em 6 pétalas dão 1.296 combinações, pouco para ser a única credencial.</p></div>
+        <div class="card"><h3>Fase do ciclo</h3><p style="margin: 0">O cálculo da fase (HU05) fica atrás de uma interface. Até a cliente validar o modelo, a resposta é "fase não estimada", com o motivo.</p></div>
+        <div class="card"><h3>Sem serviços terceiros</h3><p style="margin: 0">Nada de backend como serviço: os dados de saúde ficam num banco sob controle do projeto, coerente com a LGPD e com o perfil de software livre do cliente.</p></div>
+      </div>
+
+      <h2>Privacidade na arquitetura</h2>
+      <div class="tblw"><table>
+        <thead><tr><th>Requisito</th><th>Como a arquitetura atende</th></tr></thead>
+        <tbody>
+          <tr><td><b>RNF02</b> · LGPD</td><td>O <span class="mono">ConsentGuard</span> bloqueia qualquer gravação de dado de saúde antes do aceite dos termos vigentes. Mudar o texto dos termos cria uma nova versão, que pede um novo aceite.</td></tr>
+          <tr><td><b>RNF03</b> · acesso exclusivo</td><td>A identidade da usuária vem sempre do token, nunca de um id enviado pelo app. Cada módulo terá um teste que tenta ler dados com a sessão de outra conta e espera acesso negado.</td></tr>
+          <tr><td><b>HU36</b> · excluir conta</td><td>Os dados da usuária ficam ligados à conta com exclusão em cascata: apagar a conta apaga tudo o que ela registrou e encerra as sessões abertas.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Situação</h2>
+      <p>O esqueleto está pronto: estrutura do repositório, CI, Docker, criação de conta (HU25), aceite dos termos (HU12) e as telas de entrar, cadastro, termos e "Hoje", ligadas à API. Os próximos módulos entram na ordem do MVP: PIN, recuperação e exclusão de conta; ciclo e check-in; tarefas; planejamento do dia; conteúdos e acolhimento.</p>
+      <p class="note">O texto dos termos de uso é um rascunho da equipe e precisa da revisão da cliente. O acompanhamento está na <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/issues/55">issue #55</a>.</p>
+    </main>
+
+    <footer class="foot">
+      <span>MindCycle · Requisitos de Software · 2026.2 · Turma 02</span>
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle">GitHub</a>
+      <span>Theme Spectra by JoeYang1412</span>
+    </footer>
+  </div>
+
+  <script defer src="../assets/js/dados.js"></script>
+  <script defer src="../assets/js/site.js"></script>
+  <script defer src="../assets/js/arquitetura.js"></script>
+</body>
+</html>

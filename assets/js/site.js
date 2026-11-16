@@ -26,8 +26,17 @@ const MC = (() => {
   const caracteristica = (id) => DADOS.caracteristicas.find((c) => c.id === id);
   const noMvp = (h) => h.iteracao > 0;
   const noBacklog = (h) => noMvp(h) && DADOS.dorAtendido.includes(h.id);
-  const naIteracaoAtual = (h) => noBacklog(h) && h.iteracao === DADOS.iteracaoAtual;
+  const naIteracaoAtual = (h) => noMvp(h) && h.iteracao === DADOS.iteracaoAtual;
+  const itemBacklog = (h) => ((DADOS.backlog || {}).itens || {})[h.id] || {};
+  const responsavel = (h) => ((DADOS.backlog || {}).responsaveis || {})[h.id] ||
+    (DADOS.backlog || {}).responsavelPadrao || 'Não atribuído';
   const MOSCOW = { 4: 'Must have', 3: 'Should have', 2: 'Could have', 1: "Won't have now" };
+
+  const criteriosDod = document.getElementById('criterios-dod');
+  if (criteriosDod) {
+    criteriosDod.innerHTML = DADOS.dodCriterios.map((criterio) =>
+      '<li>' + esc(criterio.descricao) + '</li>').join('');
+  }
 
   // ---------------------------------------------------------------------
   // Tema
@@ -133,8 +142,10 @@ const MC = (() => {
   function etiquetas(h) {
     const link = (texto, caminho, classe) => '<a class="ptag ' + classe + '" href="' + esc(url(caminho)) + '">' + esc(texto) + '</a>';
     const tags = [];
-    if (noBacklog(h)) tags.push(link('Backlog', 'dor-e-dod/', 't-bk'));
+    if (noBacklog(h)) tags.push(link('DoR atendido', 'dor-e-dod/', 't-bk'));
     if (naIteracaoAtual(h)) tags.push(link('Iteração atual', 'cronograma/', 't-cur'));
+    if (itemBacklog(h).situacao) tags.push(link(itemBacklog(h).situacao,
+      '?' + new URLSearchParams({ cp: h.caracteristica, hl: h.id, plano: h.id }), 't-out'));
     tags.push(noMvp(h) ? link('MVP', 'mvp/', 't-mvp') : link('Fora do MVP', 'mvp/', 't-out'));
     if (noMvp(h)) {
       tags.push(link('Planejada: Iteração ' + h.iteracao, 'cronograma/', 't-rel'));
@@ -142,7 +153,7 @@ const MC = (() => {
     }
     tags.push(link(MOSCOW[h.valor], 'priorizacao/', 't-p' + h.valor));
     tags.push(link('Esforço ' + h.esforco.consolidado, 'priorizacao/', 't-rel'));
-    tags.push(h.validadaCliente ? link('Validada com a cliente', 'reunioes/#PKoWLngGSRg', 't-val')
+    tags.push(h.validadaCliente ? link('Prioridade confirmada pela cliente', 'reunioes/#PKoWLngGSRg', 't-val')
       : '<span class="ptag plain">Hipótese da equipe</span>');
     if (h.rnfs.length) {
       h.rnfs.forEach((r) => tags.push('<button class="ptag t-rnf" type="button" data-rnf="' + r + '">' + r + '</button>'));
@@ -152,11 +163,91 @@ const MC = (() => {
     return tags.join('');
   }
 
+  // Resultado de um critério do DoR como etiqueta colorida.
+  const CLASSE_DOR = { 'SIM': 'r-sim', 'NÃO': 'r-nao', 'N/A': 'r-na', 'Pronta': 'r-sim',
+    'Pronta com exceção': 'r-exc', 'Não pronta': 'r-nao' };
+  function resultadoDor(texto) {
+    return '<span class="rdor ' + (CLASSE_DOR[texto] || 'r-nc') + '">' + esc(texto) + '</span>';
+  }
+
+  function aplicacaoDor(h) {
+    if (!noMvp(h)) {
+      return '<h3 style="margin: 0 0 12px">Aplicação do DoR</h3>' +
+        '<p class="ph">Sem conferência de DoR: a história não foi planejada para nenhuma iteração.</p>';
+    }
+    const registro = DADOS.aplicacaoDor[h.id] || {};
+    const itens = DADOS.dorCriterios.map((definicao) => {
+      const criterio = (registro.criterios || {})[definicao.id] || {};
+      const resultado = criterio.resultado || 'Não conferido';
+      const excecao = criterio.excecao;
+      return '<details class="fold">' +
+        '<summary class="foldh"><span><b>' + definicao.id + '. ' + esc(definicao.titulo) + '</b>' +
+        resultadoDor(excecao && resultado === 'NÃO' ? 'NÃO, com exceção' : resultado) + '</span>' +
+        '<span class="chev" aria-hidden="true"></span></summary>' +
+        '<div class="foldb">' +
+        '<p>' + esc(definicao.descricao) + '</p>' +
+        '<dl class="dl">' +
+          '<div class="dlr"><dt>Como conferir</dt><dd>' + esc(definicao.conferencia) + '</dd></div>' +
+          '<div class="dlr"><dt>Motivo</dt><dd>' + esc(criterio.motivo || (resultado === 'SIM' ? 'Atende ao critério.' : 'Não informado')) + '</dd></div>' +
+          '<div class="dlr"><dt>Exceção</dt><dd>' + (definicao.admiteExcecao ? 'Admite exceção autorizada' : 'Não admite exceção') + '</dd></div>' +
+          (excecao
+            ? '<div class="dlr"><dt>Autorizada por</dt><dd>' + esc(excecao.autorizadaPor || 'Não informado') + '</dd></div>' +
+              '<div class="dlr"><dt>Risco aceito</dt><dd>' + esc(excecao.risco || 'Não informado') + '</dd></div>' +
+              '<div class="dlr"><dt>Prazo</dt><dd>' + esc(excecao.prazo || 'Não informado') + '</dd></div>'
+            : '') +
+        '</dl></div></details>';
+    });
+    return '<h3 style="margin: 0 0 12px">Aplicação do DoR</h3>' +
+      '<dl class="dl">' +
+        '<div class="dlr"><dt>Iteração</dt><dd>Iteração ' + h.iteracao + '</dd></div>' +
+        '<div class="dlr"><dt>Conferência</dt><dd>' + esc(registro.conferencia || 'Ainda não realizada') + '</dd></div>' +
+        (registro.atualizadoEm ? '<div class="dlr"><dt>Atualização dos registros</dt><dd>' + esc(registro.atualizadoEm) + '</dd></div>' : '') +
+        '<div class="dlr"><dt>Situação</dt><dd>' + resultadoDor(DADOS.situacaoDor(h.id)) + '</dd></div>' +
+      '</dl>' + itens.join('');
+  }
+
+  function aplicacaoDod(h) {
+    const registro = DADOS.aplicacaoDod[h.id];
+    if (!registro && !noMvp(h)) {
+      return '<p class="ph">Sem registro de aplicação do DoD para esta história.</p>';
+    }
+
+    const aplicacao = registro || {};
+    const transversais = DADOS.rnfs.filter((r) => r.todasAsHistorias).map((r) => r.id);
+    const rnfs = [...new Set([...h.rnfs, ...transversais])];
+    const itens = DADOS.dodCriterios.map((definicao) => {
+      const numero = definicao.id;
+      const criterio = (aplicacao.criterios || {})[numero] || {};
+      const titulo = definicao.titulo;
+      const protocolo = definicao.protocolo.replace('{rnfs}', rnfs.join(', '));
+      return '<details class="fold">' +
+        '<summary class="foldh"><span><b>' + esc(titulo) + '</b><span class="state">' +
+        esc(criterio.resultado || 'Não verificado') + '</span></span>' +
+        '<span class="chev" aria-hidden="true"></span></summary>' +
+        '<div class="foldb">' +
+        '<p class="ph">DOD-' + esc(h.id) + '-' + numero + '</p>' +
+        '<p>' + esc(protocolo) + '</p>' +
+        '<dl class="dl">' +
+          '<div class="dlr"><dt>Executor</dt><dd>' + esc(criterio.executor || 'Não informado') + '</dd></div>' +
+          '<div class="dlr"><dt>Revisor</dt><dd>' + esc(criterio.revisor || 'Não informado') + '</dd></div>' +
+          '<div class="dlr"><dt>Data</dt><dd>' + esc(criterio.data || 'Não informada') + '</dd></div>' +
+          '<div class="dlr"><dt>Evidência ou justificativa N/A</dt><dd>' +
+            esc(criterio.evidencia || 'Não informada') + '</dd></div>' +
+        '</dl></div></details>';
+    });
+    return '<h3 style="margin: 24px 0 12px">Aplicação do DoD</h3>' +
+      '<dl class="dl">' +
+        '<div class="dlr"><dt>Versão ou commit</dt><dd>' + esc(aplicacao.versao || 'Não informado') + '</dd></div>' +
+        '<div class="dlr"><dt>Avaliação externa</dt><dd>' + esc(aplicacao.avaliacaoExterna || 'Pendente') + '</dd></div>' +
+      '</dl>' + itens.join('');
+  }
+
   function abrirHistoria(id, aba) {
     const h = historia(id);
     if (!h) return;
     const ev = decisoes(h);
     const ABAS = [['res', 'História de usuário'], ['pro', 'DoR e DoD'], ['his', 'Decisões']];
+    const planoArvore = pagina === 'requisitos' && typeof PLANO_ARVORE !== 'undefined' && PLANO_ARVORE;
     aba = aba || 'res';
     const conteudo =
       '<div class="dh"><div><div class="crumbs"><span class="mono">' + h.id + '</span></div>' +
@@ -170,19 +261,32 @@ const MC = (() => {
         '<dl class="dl">' +
           '<div class="dlr"><dt>Benefício</dt><dd><b>' + esc(beneficio(h)) + '</b></dd></div>' +
           '<div class="dlr"><dt>Ator</dt><dd>Usuária</dd></div>' +
-          '<div class="dlr"><dt>Responsável</dt><dd class="ph">[a definir]</dd></div>' +
+          '<div class="dlr"><dt>Responsável</dt><dd' +
+            (responsavel(h) === 'Não atribuído' ? ' class="ph"' : '') + '>' + esc(responsavel(h)) + '</dd></div>' +
           '<div class="dlr"><dt>' + (noMvp(h) ? 'Papel no MVP' : 'Por que ficou fora') + '</dt><dd>' + esc(h.nota) + '</dd></div>' +
         '</dl>' +
         '<h3 style="margin-top: 16px">Critérios de aceitação</h3>' +
         (h.criterios.length
           ? '<ol class="ol">' + h.criterios.map((c) => '<li>' + esc(c) + '</li>').join('') + '</ol>'
           : '<p class="ph" style="margin: 0">Sem critérios registrados no Story Map.</p>') +
+        (h.regras
+          ? '<h3 style="margin-top: 16px">Regras de negócio</h3>' +
+            '<p class="note" style="margin: 0 0 8px">' + esc(h.regras.situacao) + '</p>' +
+            (h.regras.origem ? '<p><a class="lnk" href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/' +
+              esc(h.regras.origem) + '" target="_blank" rel="noopener">Origem: PR #' + esc(h.regras.origem) + '</a></p>' : '') +
+            '<ol class="ol">' + h.regras.itens.map((r) => '<li>' + esc(r) + '</li>').join('') + '</ol>' +
+            (h.regras.pendencias
+              ? '<h3 style="margin-top: 16px">Decisões pendentes</h3><ul class="ol">' +
+                h.regras.pendencias.map((p) => '<li>' + esc(p) + '</li>').join('') + '</ul>' : '')
+          : '') +
+        (h.relacionadas && h.relacionadas.length
+          ? '<h3 style="margin-top: 16px">Histórias relacionadas</h3><div class="rfl">' +
+            h.relacionadas.map(chipHistoria).join('') + '</div>' : '') +
       '</div>' +
       '<div class="pane" data-painel="pro"' + (aba === 'pro' ? '' : ' hidden') + '>' +
-        '<dl class="dl">' +
-          '<div class="dlr"><dt>DoR</dt><dd><a class="lnk" href="' + url('dor-e-dod/') + '">' + (noBacklog(h) ? 'Atendido' : 'Não marcado') + '</a></dd></div>' +
-          '<div class="dlr"><dt>DoD</dt><dd><a class="lnk" href="' + url('dor-e-dod/') + '">Não marcado</a></dd></div>' +
-        '</dl>' +
+        aplicacaoDor(h) +
+        aplicacaoDod(h) +
+        '<p><a class="lnk" href="' + url('dor-e-dod/') + '">Consultar critérios gerais de DoR e DoD</a></p>' +
       '</div>' +
       '<div class="pane" data-painel="his"' + (aba === 'his' ? '' : ' hidden') + '>' +
         (ev.length
@@ -193,10 +297,10 @@ const MC = (() => {
         '<div class="tools" style="margin-top: 10px"><a class="lnk" href="' + url('historico/') + '">Ver no Histórico</a>' +
         '<a class="lnk" href="' + url('reunioes/') + '">Ver em Reuniões</a></div>' +
       '</div>' +
-      // Na árvore, a história já está à vista; nas outras páginas, o botão leva até ela.
-      (pagina === 'requisitos' ? '' :
-        '<div style="margin-top: 18px; display: flex; justify-content: flex-end"><a class="go" href="' +
-        esc(url('?cp=' + h.caracteristica + '&hl=' + h.id)) + '">Ver na árvore</a></div>');
+      '<div class="tools" style="margin-top: 18px; justify-content: flex-end">' +
+        '<a class="go" href="' + esc(url('?cp=' + h.caracteristica + '&hl=' + h.id + '&plano=' + h.id)) + '">Ver planejamento</a>' +
+        (pagina === 'requisitos' ? '' : '<a class="go" href="' +
+          esc(url('?cp=' + h.caracteristica + '&hl=' + h.id)) + '">Ver na árvore</a>') + '</div>';
 
     const dlg = abrirDialogo({ rotulo: 'Detalhes da história de usuário', conteudo, hash: h.id, fecharRotulo: 'Fechar detalhes' });
     dlg.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => {
@@ -222,6 +326,17 @@ const MC = (() => {
       '<p class="story">' + esc(r.descricao) + '</p>' +
       '<dl class="dl"><div class="dlr"><dt>Classificação</dt><dd>' + esc(r.classificacao) + '</dd></div>' +
       '<div class="dlr"><dt>Critério verificável</dt><dd>' + esc(r.criterio) + '</dd></div></dl>' +
+      (r.situacao ? '<h3 style="margin-top: 16px">Situação da verificação</h3><p class="note">' + esc(r.situacao) + '</p>' : '') +
+      (r.condicoes ? '<h3 style="margin-top: 16px">Condições de aceitação</h3><ol class="ol">' +
+        r.condicoes.map((c) => '<li>' + esc(c) + '</li>').join('') + '</ol>' : '') +
+      (r.verificacao ? '<h3 style="margin-top: 16px">Protocolo de verificação</h3><ol class="ol">' +
+        r.verificacao.map((v) => '<li>' + esc(v) + '</li>').join('') + '</ol>' : '') +
+      (r.protocoloComum ? '<h3 style="margin-top: 16px">Protocolo comum de desempenho Android</h3><ol class="ol">' +
+        DADOS.protocolosRnf[r.protocoloComum].map((v) => '<li>' + esc(v) + '</li>').join('') + '</ol>' : '') +
+      (r.fontes ? '<h3 style="margin-top: 16px">Fontes</h3><ul class="ol">' +
+        r.fontes.map((f) => '<li><a class="lnk" href="' + esc(f.url) + '" target="_blank" rel="noopener">' +
+          esc(f.titulo) + '</a></li>').join('') + '</ul>' : '') +
+      (r.verificacao ? '<p><a class="lnk" href="' + url('dor-e-dod/#metodos-de-verificacao') + '">Consultar o registro de evidências do DoD</a></p>' : '') +
       '<h3 style="margin-top: 16px">Histórias ligadas</h3>' +
       (r.todasAsHistorias ? '<p style="margin: 0">Todas as histórias.</p>' : '') +
       '<div class="rfl">' + ligadas.map(chipHistoria).join('') + '</div>';
@@ -236,13 +351,56 @@ const MC = (() => {
   }
 
   // ---------------------------------------------------------------------
+  // Página DoR e DoD: critérios do DoR e quadro de aplicação por iteração
+  // ---------------------------------------------------------------------
+  const criteriosDor = document.getElementById('criterios-dor');
+  if (criteriosDor) {
+    criteriosDor.innerHTML = DADOS.dorCriterios.map((c) =>
+      '<li><b>' + esc(c.titulo) + ':</b> ' + esc(c.descricao.charAt(0).toLowerCase() + c.descricao.slice(1)) +
+      ' <span class="state">' + (c.admiteExcecao ? 'Admite exceção autorizada.' : 'Sem exceção.') + '</span></li>').join('');
+  }
+
+  const quadroDor = document.getElementById('quadro-dor');
+  if (quadroDor) {
+    const SIGLA = { 'SIM': 'S', 'NÃO': 'N', 'N/A': 'N/A' };
+    const iteracoes = [...new Set(DADOS.historias.filter(noMvp).map((h) => h.iteracao))].sort((a, b) => a - b);
+    quadroDor.innerHTML = iteracoes.map((n) => {
+      const hs = DADOS.historias.filter((h) => h.iteracao === n);
+      const prontas = hs.filter((h) => DADOS.dorAtendido.includes(h.id)).length;
+      const conferencias = [...new Set(hs.map((h) => {
+        const registro = DADOS.aplicacaoDor[h.id] || {};
+        return registro.conferencia ? registro.conferencia + (registro.atualizadoEm ? ' · registros atualizados em ' + registro.atualizadoEm : '') : '';
+      }).filter(Boolean))];
+      const linhas = hs.map((h) => {
+        const criterios = (DADOS.aplicacaoDor[h.id] || {}).criterios || {};
+        return '<tr><th scope="row">' + chipHistoria(h) + '</th>' +
+          DADOS.dorCriterios.map((c) => {
+            const r = criterios[c.id] || {};
+            const texto = r.excecao && r.resultado === 'NÃO' ? 'E' : (SIGLA[r.resultado] || '?');
+            const classe = { S: 'r-sim', N: 'r-nao', E: 'r-exc', 'N/A': 'r-na' }[texto] || 'r-nc';
+            return '<td><span class="rdor ' + classe + '" title="' + esc(c.titulo + ': ' + (r.resultado || 'Não conferido')) + '">' + texto + '</span></td>';
+          }).join('') +
+          '<td>' + resultadoDor(DADOS.situacaoDor(h.id)) + '</td></tr>';
+      }).join('');
+      return '<h4 style="margin: 18px 0 6px">Iteração ' + n + '</h4>' +
+        '<p class="state" style="margin: 0 0 8px">' + prontas + ' de ' + hs.length + ' histórias prontas' +
+        (conferencias.length ? ' · ' + esc(conferencias.join('; ')) : ' · conferência ainda não registrada') + '</p>' +
+        '<div class="tblw" tabindex="0" role="region" aria-label="Aplicação do DoR na Iteração ' + n + '"><table class="qdor">' +
+        '<thead><tr><th scope="col">HU</th>' + DADOS.dorCriterios.map((c) =>
+          '<th scope="col" title="' + esc(c.titulo) + '">' + c.id + '</th>').join('') +
+        '<th scope="col">Situação</th></tr></thead><tbody>' + linhas + '</tbody></table></div>';
+    }).join('') +
+    '<p class="state" style="margin-top: 10px">S sim · N não · E não, com exceção autorizada · N/A não se aplica · ? não conferido. Os números das colunas seguem a ordem dos critérios acima.</p>';
+  }
+
+  // ---------------------------------------------------------------------
   // Cliques e endereço
   // ---------------------------------------------------------------------
   document.addEventListener('click', (e) => {
     const alvo = e.target.closest('[data-fechar], [data-historia], [data-rnf], [data-dialogo]');
     if (!alvo) return;
     if ('fechar' in alvo.dataset) fecharDialogo();
-    else if (alvo.dataset.historia) abrirHistoria(alvo.dataset.historia);
+    else if (alvo.dataset.historia) abrirHistoria(alvo.dataset.historia, alvo.hasAttribute('data-dor') ? 'pro' : undefined);
     else if (alvo.dataset.rnf) abrirRnf(alvo.dataset.rnf);
     else if (alvo.dataset.dialogo) abrirTemplate(alvo.dataset.dialogo);
   });
@@ -259,6 +417,7 @@ const MC = (() => {
 
   return {
     RAIZ, pagina, esc, url, tempo, video, historia, rnf, caracteristica, noMvp, noBacklog, naIteracaoAtual,
+    responsavel,
     MOSCOW, abrirDialogo, fecharDialogo, abrirHistoria, abrirRnf, chipHistoria, botaoFechar
   };
 })();

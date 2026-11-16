@@ -1,0 +1,45 @@
+name: Atualizar o quadro kanban do site
+
+# Dispara a publicação do site (gh-pages.yml, na branch gh-pages), que refaz o
+# retrato do quadro kanban antes de publicar.
+#
+# Este MESMO arquivo existe na main e na gh-pages; mude os dois juntos. Cada
+# evento roda uma cópia só: agendamento, issues e push na main usam a da main;
+# a aprovação de um PR usa a da branch de destino do PR.
+on:
+  # PR aprovado (o filtro "approved" fica no job).
+  pull_request_review:
+    types: [submitted]
+  # PR aceito na main. (Um PR aceito na gh-pages já publica o site pelo gh-pages.yml.)
+  push:
+    branches: [main]
+  # Issue aberta, fechada, atribuída... (fechada, o Project a move para Done).
+  issues:
+    types: [opened, edited, closed, reopened, assigned, unassigned, milestoned, demilestoned, deleted, transferred]
+  # Para o que muda só no Project, como arrastar um cartão de coluna:
+  # 8h, 11h, 14h, 17h e 20h de Brasília (UTC-3); o GitHub pode atrasar alguns minutos.
+  schedule:
+    - cron: '0 11,14,17,20,23 * * *'
+  workflow_dispatch:
+
+# Sem "concurrency" aqui de propósito: uma revisão que só comenta cancelaria uma
+# atualização que estava esperando. Várias mudanças seguidas viram poucas
+# publicações pela fila do gh-pages.yml, que guarda só a mais recente.
+
+permissions:
+  actions: write
+
+jobs:
+  disparar:
+    if: github.event_name != 'pull_request_review' || github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      # As automações do Project movem o cartão logo depois do evento.
+      - name: Esperar o Project se atualizar
+        if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
+        run: sleep 90
+
+      - name: Disparar a publicação do site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run gh-pages.yml --ref gh-pages --repo "${{ github.repository }}"
