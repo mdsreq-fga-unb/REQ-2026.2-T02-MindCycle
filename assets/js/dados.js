@@ -2422,7 +2422,8 @@ const DADOS = {
   // Vídeos de apresentação das entregas (código do vídeo no YouTube).
   apresentacoes: [
     { fase: 'Entrega', nome: 'Apresentação da Unidade 1', video: 'NW8RUETjsws' },
-    { fase: 'Entrega', nome: 'Apresentação da Unidade 2', video: 'v2rkFmI8DJ8' }
+    { fase: 'Entrega', nome: 'Apresentação da Unidade 2', video: 'v2rkFmI8DJ8' },
+    { fase: 'Entrega', nome: 'Apresentação da Unidade 3', video: 'gMWrxOmBBQI' }
   ],
 
   // Atividades da engenharia de requisitos: as linhas do painel de fases.
