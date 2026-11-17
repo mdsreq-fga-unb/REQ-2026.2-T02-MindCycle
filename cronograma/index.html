@@ -74,7 +74,7 @@
         </tbody>
       </table></div>
       <h2>Painel de fases</h2>
-      <p>Cada número é a quantidade de técnicas da atividade na fase. Escolha uma fase e abra a iteração para ver as evidências.</p>
+      <p>Cada número é a quantidade de técnicas da atividade na fase. Escolha uma fase e abra a iteração para ver as evidências. As fases foram replanejadas em 16/11/2026; veja a <a class="lnk" href="#mudanca-fases">mudança no planejamento</a>.</p>
       <div style="overflow-x: auto">
         <div class="mx" id="painel-fases"></div>
       </div>
@@ -83,6 +83,21 @@
         <p id="fase-foco" style="color: var(--mut)"></p>
         <div class="cards" id="fase-iteracoes"></div>
       </div>
+      <h2 id="mudanca-fases">Mudança no planejamento das fases</h2>
+      <p>Em 16/11/2026, o cronograma passou de sete para oito iterações, sem mudar as datas das releases. Mudaram duas coisas:</p>
+      <ul>
+        <li><b>A Elaboração ganhou mais uma iteração.</b> A Iteração 5 (20/10 a 02/11) estava prevista como a primeira da Construção e ficou na Elaboração. A documentação precisou ser refatorada antes dos incrementos: o site saiu do Hugo e do Documento de Visão dividido em seções e passou a ser organizado pela árvore de requisitos.</li>
+        <li><b>A última iteração foi dividida em duas.</b> A Transição tinha uma iteração de duas semanas, a antiga Iteração 7. Ela virou duas iterações de uma semana: a nova Iteração 7 (17/11 a 23/11), que passou para a Construção, e a Iteração 8 (24/11 a 30/11), que ficou na Transição. Como a Iteração 5 saiu da Construção, a semana a mais mantém os dois incrementos previstos antes da homologação: as histórias do MVP passaram das Iterações 5 e 6 para as Iterações 6 e 7.</li>
+      </ul>
+      <div class="tblw"><table>
+        <thead><tr><th>Fase</th><th>Antes</th><th>Depois de 16/11/2026</th></tr></thead>
+        <tbody>
+          <tr><td>Concepção</td><td>Iterações 1 e 2</td><td>Iterações 1 e 2, sem mudança</td></tr>
+          <tr><td>Elaboração</td><td>Iterações 3 e 4</td><td>Iterações 3, 4 e 5</td></tr>
+          <tr><td>Construção</td><td>Iterações 5 e 6</td><td>Iterações 6 e 7 (a 7 tem uma semana)</td></tr>
+          <tr><td>Transição</td><td>Iteração 7, de duas semanas</td><td>Iteração 8, de uma semana</td></tr>
+        </tbody>
+      </table></div>
       <h2>Riscos investigados</h2>
       <p>As fases não isolam as disciplinas: as investigações abaixo mudaram requisitos ou escopo. Os riscos ainda sem investigação ficam declarados aqui.</p>
       <div class="tblw"><table style="min-width: 960px">

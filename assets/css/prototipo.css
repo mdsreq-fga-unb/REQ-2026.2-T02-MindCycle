@@ -44,7 +44,6 @@
 .wf-tela figcaption { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
 .wf-tela figcaption b { font-size: 14px; }
 .wf-tela figcaption ul { margin: 0; padding-left: 18px; color: var(--mut); }
-.wf-origem { color: var(--mut); font-size: 12px; }
 
 /* O aparelho: moldura de linha, sem sombra nem cor. */
 .wf-fone {

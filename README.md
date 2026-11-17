@@ -24,7 +24,7 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 
 ```
 .
-├── index.html                     Requisitos: a árvore do problema até as histórias
+├── index.html                     Requisitos: a árvore do problema até as histórias e o glossário com busca
 ├── visao/                         Visão de produto (figuras ampliáveis)
 ├── arquitetura/                   Arquitetura: diagrama, tecnologias e decisões
 ├── engenharia-de-requisitos/      Escolhas de processo e Catálogo de Metas
@@ -41,10 +41,11 @@ seções continuam funcionando: o `404.html` leva cada um à página nova com o 
 │   ├── css/site.css               Todo o visual (cores em variáveis no topo)
 │   ├── css/prototipo.css          Os wireframes do protótipo de baixa fidelidade
 │   ├── js/
-│   │   ├── dados.js               Histórias, RNFs, reuniões, histórico, fases e cronograma
+│   │   ├── dados.js               Histórias, RNFs, glossário, reuniões, histórico, fases e cronograma
 │   │   ├── site.js                Tema, diálogos, o detalhe da história e do RNF e o status do quadro
 │   │   ├── kanban.js              Retrato do quadro kanban, GERADO pelo CI (não edite à mão)
 │   │   ├── prototipo.js           As telas do protótipo de baixa fidelidade
+│   │   ├── glossario.js           A busca de termos do glossário, na página Requisitos
 │   │   └── requisitos.js, mvp.js, priorizacao.js, reunioes.js, historico.js, cronograma.js
 │   │                              O que cada página monta a partir de dados.js
 │   ├── img/                       Figuras (WebP em 480, 800 e 1280 px) e favicon
@@ -175,6 +176,7 @@ páginas.
 | Riscos investigados | Tabela no `index.html` de `cronograma/` |
 | O quadro kanban da página Entregas e cronograma | Nada à mão: mude o [Project](https://github.com/orgs/mdsreq-fga-unb/projects/120). O site refaz o retrato sozinho (veja [Quadro kanban automático](#quadro-kanban-automático)); para ver localmente, rode `python3 .github/scripts/atualizar_kanban.py` (com o `gh` autenticado com o escopo `project`), que regrava `assets/js/kanban.js` |
 | Uma tela do protótipo de baixa fidelidade | `TELAS` em `assets/js/prototipo.js` |
+| Um termo do glossário | `glossario` em `assets/js/dados.js` (termo, definição e os códigos das HUs e RNFs em que aparece) |
 | Cores e espaçamentos | As variáveis no topo de `assets/css/site.css` |
 
 Os comentários no topo de `assets/js/dados.js` explicam cada campo.

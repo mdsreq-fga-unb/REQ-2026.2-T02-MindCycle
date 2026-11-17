@@ -1,9 +1,8 @@
 // ===== Protótipo de baixa fidelidade =====
 //
 // As telas do MindCycle em wireframe: só estrutura, conteúdo e navegação, sem
-// cor nem estilo. Cada tela parte das histórias de usuário (HUs) e do
-// protótipo de alta fidelidade (TELAS_ALTA abaixo). Os botões de uma tela
-// levam à tela seguinte (#tela-…); os códigos HU abrem a história.
+// cor nem estilo. Cada tela parte das histórias de usuário (HUs). Os botões
+// de uma tela levam à tela seguinte (#tela-…); os códigos HU abrem a história.
 //
 // Para mudar uma tela, mude a lista TELAS. Cada tela tem `elementos` (de cima
 // para baixo) e, se for uma folha sobre outra tela, `folha`. Cada elemento é
@@ -15,8 +14,6 @@
   if (!alvo) return;
   const { esc, chipHistoria, noMvp } = MC;
 
-  const TELAS_ALTA = 'https://claude.ai/artifact/1pCy3XxWqcCquR44PAPHfF';
-
   const FLUXOS = [
     ['entrada', 'Entrada e conta', 'Da primeira abertura ao PIN, com os termos aceitos e o ciclo informado uma vez.'],
     ['hoje', 'Hoje', 'O dia recomendado, o registro de como a usuária está e o reajuste quando ela se sente sobrecarregada.'],
@@ -26,13 +23,13 @@
     ['eu', 'Eu', 'Ciclo, notificações, privacidade, retrospectiva e exclusão da conta.']
   ];
 
-  // As abas do app: as quatro da alta fidelidade e a de Acolhimento, que a HU21 pede.
+  // As abas do app: Hoje, Tarefas, Ciclo e Eu, e a de Acolhimento, que a HU21 pede.
   const ABAS = [['Hoje', 'hoje'], ['Tarefas', 'tarefas'], ['Ciclo', 'ciclo'], ['Acolhimento', 'acolhimento'], ['Eu', 'eu']];
 
   const TELAS = [
     // ---------------- Entrada e conta ----------------
     {
-      id: 'boas-vindas', nome: 'Boas-vindas', fluxo: 'entrada', hus: ['HU27'], alta: 'Boas-vindas',
+      id: 'boas-vindas', nome: 'Boas-vindas', fluxo: 'entrada', hus: ['HU27'],
       notas: ['Apresenta a proposta antes do cadastro.'],
       elementos: [
         { t: 'espaco' },
@@ -45,7 +42,7 @@
       ]
     },
     {
-      id: 'conta', nome: 'Criar conta', fluxo: 'entrada', hus: ['HU25', 'HU12'], alta: 'Criar conta',
+      id: 'conta', nome: 'Criar conta', fluxo: 'entrada', hus: ['HU25', 'HU12'],
       notas: ['O aceite dos termos vem antes de qualquer dado do ciclo.'],
       elementos: [
         { t: 'barra', voltar: 'boas-vindas' },
@@ -58,7 +55,7 @@
       ]
     },
     {
-      id: 'termos', nome: 'Termos de uso', fluxo: 'entrada', hus: ['HU12'], alta: 'Termos de uso',
+      id: 'termos', nome: 'Termos de uso', fluxo: 'entrada', hus: ['HU12'],
       notas: ['Resume em três linhas o que é guardado e como apagar.'],
       elementos: [
         { t: 'barra', voltar: 'conta' },
@@ -71,7 +68,7 @@
       ]
     },
     {
-      id: 'config-ciclo', nome: 'Sobre o seu ciclo', fluxo: 'entrada', hus: ['HU06', 'HU07'], alta: 'Configurar ciclo',
+      id: 'config-ciclo', nome: 'Sobre o seu ciclo', fluxo: 'entrada', hus: ['HU06', 'HU07'],
       notas: ['Com o ciclo irregular, a duração fica desativada e a fase não é estimada pela data.'],
       elementos: [
         { t: 'barra', voltar: 'termos', acao: '1 de 2' },
@@ -84,7 +81,7 @@
       ]
     },
     {
-      id: 'pin', nome: 'PIN', fluxo: 'entrada', hus: ['HU11'], alta: 'PIN',
+      id: 'pin', nome: 'PIN', fluxo: 'entrada', hus: ['HU11'],
       notas: ['O PIN protege a abertura do app.'],
       elementos: [
         { t: 'espaco' },
@@ -96,7 +93,7 @@
       ]
     },
     {
-      id: 'recuperar', nome: 'Recuperar acesso', fluxo: 'entrada', hus: ['HU26'], alta: 'Recuperar acesso',
+      id: 'recuperar', nome: 'Recuperar acesso', fluxo: 'entrada', hus: ['HU26'],
       notas: ['O código chega no e-mail da conta.'],
       elementos: [
         { t: 'barra', voltar: 'pin' },
@@ -111,7 +108,7 @@
 
     // ---------------- Hoje ----------------
     {
-      id: 'hoje', nome: 'Hoje', fluxo: 'hoje', hus: ['HU22', 'HU05', 'HU04', 'HU02', 'HU13'], alta: 'Hoje', aba: 'Hoje',
+      id: 'hoje', nome: 'Hoje', fluxo: 'hoje', hus: ['HU22', 'HU05', 'HU04', 'HU02', 'HU13'], aba: 'Hoje',
       notas: ['A mensagem do dia fica no topo, sem cobrança.', 'A ordem das tarefas considera disposição, prazo e prioridade.'],
       elementos: [
         { t: 'cap', x: 'Segunda, 5 de outubro' },
@@ -127,7 +124,7 @@
       ]
     },
     {
-      id: 'registro', nome: 'Registro do dia', fluxo: 'hoje', hus: ['HU04'], alta: 'Registro do dia',
+      id: 'registro', nome: 'Registro do dia', fluxo: 'hoje', hus: ['HU04'],
       notas: ['Com a disposição baixa, o dia se reajusta (HU15).'],
       elementos: [
         { t: 'barra', fechar: 'hoje' },
@@ -140,7 +137,7 @@
       ]
     },
     {
-      id: 'hoje-leve', nome: 'Dia reajustado', fluxo: 'hoje', hus: ['HU02', 'HU15', 'HU22'], alta: 'Dia reajustado', aba: 'Hoje',
+      id: 'hoje-leve', nome: 'Dia reajustado', fluxo: 'hoje', hus: ['HU02', 'HU15', 'HU22'], aba: 'Hoje',
       notas: ['Fica o que tem prazo hoje; o resto vai para os próximos dias, sem mudar o prazo.', 'Desfazer devolve o dia como era.'],
       elementos: [
         { t: 'cap', x: 'Dia mais leve' },
@@ -156,7 +153,7 @@
 
     // ---------------- Tarefas ----------------
     {
-      id: 'tarefas', nome: 'Tarefas', fluxo: 'tarefas', hus: ['HU17', 'HU20'], alta: 'Tarefas', aba: 'Tarefas',
+      id: 'tarefas', nome: 'Tarefas', fluxo: 'tarefas', hus: ['HU17', 'HU20'], aba: 'Tarefas',
       notas: ['O botão + abre o cadastro.', 'Concluídas mostram a data em que foram feitas.'],
       elementos: [
         { t: 'titulo', x: 'Tarefas' },
@@ -168,7 +165,7 @@
       ]
     },
     {
-      id: 'nova-tarefa', nome: 'Nova tarefa', fluxo: 'tarefas', hus: ['HU17', 'HU16'], alta: 'Nova tarefa',
+      id: 'nova-tarefa', nome: 'Nova tarefa', fluxo: 'tarefas', hus: ['HU17', 'HU16'],
       notas: ['A mesma tela, já preenchida, edita a tarefa (HU16).'],
       elementos: [
         { t: 'barra', fechar: 'tarefas' },
@@ -182,7 +179,7 @@
       ]
     },
     {
-      id: 'detalhe-tarefa', nome: 'Detalhe da tarefa', fluxo: 'tarefas', hus: ['HU20', 'HU18', 'HU16', 'HU19'], alta: 'Detalhe da tarefa',
+      id: 'detalhe-tarefa', nome: 'Detalhe da tarefa', fluxo: 'tarefas', hus: ['HU20', 'HU18', 'HU16', 'HU19'],
       notas: ['Concluir, adiar e excluir ficam na própria tarefa.'],
       elementos: [
         { t: 'barra', voltar: 'tarefas', acao: 'Editar', acaoVai: 'nova-tarefa' },
@@ -196,7 +193,7 @@
       ]
     },
     {
-      id: 'adiar', nome: 'Adiar tarefa', fluxo: 'tarefas', hus: ['HU18'], alta: 'Adiar tarefa',
+      id: 'adiar', nome: 'Adiar tarefa', fluxo: 'tarefas', hus: ['HU18'],
       notas: ['Adiar não muda o prazo final nem conta como falha.'],
       elementos: [{ t: 'barra' }, { t: 'titulo', x: 'Revisar requisitos' }, { t: 'linhas', n: 3 }],
       folha: [
@@ -210,7 +207,7 @@
       ]
     },
     {
-      id: 'excluir-tarefa', nome: 'Excluir tarefa', fluxo: 'tarefas', hus: ['HU19'], alta: 'Detalhe da tarefa (confirmação)',
+      id: 'excluir-tarefa', nome: 'Excluir tarefa', fluxo: 'tarefas', hus: ['HU19'],
       notas: ['Lembra que adiar é uma saída, antes de apagar.'],
       elementos: [{ t: 'barra' }, { t: 'titulo', x: 'Revisar requisitos' }, { t: 'linhas', n: 3 }],
       folha: [
@@ -223,7 +220,7 @@
 
     // ---------------- Ciclo ----------------
     {
-      id: 'ciclo', nome: 'Seu ciclo', fluxo: 'ciclo', hus: ['HU05', 'HU01', 'HU10', 'HU06', 'HU09'], alta: 'Ciclo', aba: 'Ciclo',
+      id: 'ciclo', nome: 'Seu ciclo', fluxo: 'ciclo', hus: ['HU05', 'HU01', 'HU10', 'HU06', 'HU09'], aba: 'Ciclo',
       notas: ['A fase aparece sempre como estimativa.', 'No calendário, cada fase tem uma letra, não só um tom.', 'Os conteúdos seguem a fase e os sintomas de hoje.'],
       elementos: [
         { t: 'titulo', x: 'Seu ciclo' },
@@ -238,7 +235,7 @@
       ]
     },
     {
-      id: 'conteudo', nome: 'Conteúdo sobre o ciclo', fluxo: 'ciclo', hus: ['HU28', 'HU09'], alta: null,
+      id: 'conteudo', nome: 'Conteúdo sobre o ciclo', fluxo: 'ciclo', hus: ['HU28', 'HU09'],
       notas: ['Abre pela legenda das fases (HU28) ou por um conteúdo recomendado (HU09).'],
       elementos: [
         { t: 'barra', fechar: 'ciclo' },
@@ -251,7 +248,7 @@
       ]
     },
     {
-      id: 'estimar-fase', nome: 'Estimar fase', fluxo: 'ciclo', hus: ['HU08'], alta: 'Estimar fase',
+      id: 'estimar-fase', nome: 'Estimar fase', fluxo: 'ciclo', hus: ['HU08'],
       notas: ['O resultado é uma estimativa, não um diagnóstico.'],
       elementos: [
         { t: 'barra', voltar: 'ciclo' },
@@ -265,7 +262,7 @@
 
     // ---------------- Acolhimento ----------------
     {
-      id: 'acolhimento', nome: 'Acolhimento', fluxo: 'acolhimento', hus: ['HU21'], alta: null, aba: 'Acolhimento',
+      id: 'acolhimento', nome: 'Acolhimento', fluxo: 'acolhimento', hus: ['HU21'], aba: 'Acolhimento',
       notas: ['Cada prática cabe numa pausa de até 10 minutos.', 'As sugestões mudam a cada dia.'],
       elementos: [
         { t: 'titulo', x: 'Acolhimento' },
@@ -278,7 +275,7 @@
 
     // ---------------- Eu ----------------
     {
-      id: 'eu', nome: 'Eu', fluxo: 'eu', hus: ['HU07', 'HU03', 'HU14', 'HU29', 'HU23', 'HU11', 'HU12', 'HU36'], alta: 'Eu', aba: 'Eu',
+      id: 'eu', nome: 'Eu', fluxo: 'eu', hus: ['HU07', 'HU03', 'HU14', 'HU29', 'HU23', 'HU11', 'HU12', 'HU36'], aba: 'Eu',
       notas: ['Lembrete e resumo do dia dependem das notificações (HU29).'],
       elementos: [
         { t: 'perfil', x: '[nome]' },
@@ -296,7 +293,7 @@
       ]
     },
     {
-      id: 'excluir-conta', nome: 'Excluir conta e dados', fluxo: 'eu', hus: ['HU36'], alta: null,
+      id: 'excluir-conta', nome: 'Excluir conta e dados', fluxo: 'eu', hus: ['HU36'],
       notas: ['Mostra tudo o que é apagado e pede a senha antes.'],
       elementos: [
         { t: 'barra', voltar: 'eu' },
@@ -311,7 +308,7 @@
       ]
     },
     {
-      id: 'retrospectiva', nome: 'Retrospectiva mensal', fluxo: 'eu', hus: ['HU23'], alta: 'Retrospectiva mensal',
+      id: 'retrospectiva', nome: 'Retrospectiva mensal', fluxo: 'eu', hus: ['HU23'],
       notas: ['Reconhece o ritmo do mês, sem meta nem pontuação.'],
       elementos: [
         { t: 'barra', voltar: 'eu' },
@@ -330,8 +327,8 @@
   const SETA = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>';
   const XIS = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>';
 
-  // Calendário de outubro de 2026 (1º de outubro é quinta), com a mesma
-  // distribuição de fases da alta fidelidade: M, F, O e L em cada dia.
+  // Calendário de outubro de 2026 (1º de outubro é quinta), com um ciclo de
+  // 29 dias: M, F, O e L em cada dia.
   function calendario(e) {
     const letra = (d) => { const c = ((d + 15) % 29) + 1; return c <= 5 ? 'M' : c <= 13 ? 'F' : c <= 16 ? 'O' : 'L'; };
     let celulas = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'].map((d) => '<span class="wf-cal-dia">' + d + '</span>').join('');
@@ -445,7 +442,6 @@
         '<span class="wf-ilha" aria-hidden="true"></span>' + corpo + '</div>' +
       '<figcaption><b>' + esc(t.nome) + '</b>' +
         '<span class="rfl">' + t.hus.map((id) => chipHistoria(id)).join('') + '</span>' +
-        '<span class="wf-origem">' + (t.alta ? 'Na alta fidelidade: ' + esc(t.alta) : 'Sem tela na alta fidelidade; vem só da HU') + '</span>' +
         (t.notas && t.notas.length ? '<ul>' + t.notas.map((n) => '<li>' + esc(n) + '</li>').join('') + '</ul>' : '') +
       '</figcaption></figure>';
   }
@@ -457,7 +453,7 @@
       const ts = telasDa(h.id);
       return '<tr><td>' + chipHistoria(h) + '</td><td>' + esc(h.nome) + '</td><td>' + (noMvp(h) ? 'MVP' : 'Fora do MVP') + '</td><td>' +
         (ts.length ? ts.map((t) => '<a href="#tela-' + t.id + '">' + esc(t.nome) + '</a>').join(', ')
-          : '<span class="ph">Sem tela' + (noMvp(h) ? '' : ': fora do MVP e fora da alta fidelidade') + '</span>') + '</td></tr>';
+          : '<span class="ph">Sem tela' + (noMvp(h) ? '' : ': fora do MVP') + '</span>') + '</td></tr>';
     }).join('');
     return '<div class="tblw"><table><thead><tr><th style="width: 72px">HU</th><th>História</th><th style="width: 110px">Escopo</th><th>Telas</th></tr></thead>' +
       '<tbody>' + linhas + '</tbody></table></div>';
@@ -474,9 +470,8 @@
     '<section class="wf-fluxo" aria-labelledby="fluxo-' + id + '"><h2 id="fluxo-' + id + '">' + esc(nome) + '</h2><p>' + esc(descricao) + '</p>' +
     '<div class="wf-grade">' + TELAS.filter((t) => t.fluxo === id).map(tela).join('') + '</div></section>').join('') +
     '<section aria-labelledby="fluxo-cobertura"><h2 id="fluxo-cobertura">Histórias e telas</h2>' +
-    '<p>Cada história de usuário e as telas em que ela aparece. As telas sem par na alta fidelidade vêm só da HU.</p>' + cobertura() + '</section>';
+    '<p>Cada história de usuário e as telas em que ela aparece.</p>' + cobertura() + '</section>';
 
-  document.getElementById('link-alta').href = TELAS_ALTA;
   // Quem chega por #tela-… vê a tela destacada (o :target do CSS) e centralizada.
   const irParaTela = () => {
     const t = location.hash.startsWith('#tela-') && document.getElementById(location.hash.slice(1));

@@ -1758,6 +1758,37 @@ const DADOS = {
 
   // Alterações em cada história ou RNF, com a data e o motivo. `video` aponta o
   // momento da reunião em que a decisão foi tomada.
+  // Glossário do produto (Requisitos > Glossário). Veio da Seção 8 do antigo
+  // Documento de Visão, com os RFs trocados pelas HUs de mesmo número.
+  // historias e rnfs são os códigos onde o termo aparece.
+  glossario: [
+    { termo: 'Usuária', definicao: 'Pessoa que utiliza o MindCycle. Grafia única em todo o material.' },
+    { termo: 'Fase do ciclo', definicao: 'Uma das quatro fases reconhecidas pelo produto: menstrual, folicular, ovulatória e lútea.', historias: ['HU05'] },
+    { termo: 'Menstruação', definicao: 'Intervalo iniciado na data de início do sangramento registrada pela usuária. O termo "período" não é usado, para evitar ambiguidade.', historias: ['HU06'] },
+    { termo: 'Ciclo irregular', definicao: 'Situação em que a usuária declara não ter duração média estável de ciclo.', historias: ['HU07'] },
+    { termo: 'Registro de sintomas e disposição', definicao: 'Registro feito pela usuária com os sintomas sentidos e o seu nível de disposição. É a base da sinalização de sobrecarga, da estimativa de fase, da recomendação do dia, do reajuste e do relatório de sintomas.', historias: ['HU04', 'HU02', 'HU08', 'HU13', 'HU15', 'HU35'] },
+    { termo: 'Disposição', definicao: 'Nível de energia e ânimo informado pela usuária no registro diário.', historias: ['HU04'] },
+    { termo: 'Sobrecarga', definicao: 'Sinalização pontual, feita a qualquer momento do dia, de que a usuária está sobrecarregada ou indisposta e precisa que as tarefas do dia sejam readequadas.', historias: ['HU02'] },
+    { termo: 'Sintoma', definicao: 'Manifestação física ou emocional associada ao ciclo, informada pela usuária no registro.', historias: ['HU04', 'HU01'] },
+    { termo: 'Intensidade do sintoma', definicao: 'Grau com que a usuária sente um sintoma físico, informado no registro de sintomas e disposição.', historias: ['HU04'] },
+    { termo: 'Medicação', definicao: 'Medicamento de uso diário (contínuo) ou esporádico informado pela usuária.', historias: ['HU30'] },
+    { termo: 'Diagnóstico prévio', definicao: 'Condição de saúde já diagnosticada antes do uso do produto, como diabetes, hipertensão ou enxaqueca, informada pela usuária.', historias: ['HU34'] },
+    { termo: 'Atividade de acolhimento favorita', definicao: 'Atividade de acolhimento que a usuária marca como de sua preferência.', historias: ['HU33'] },
+    { termo: 'Prioridade', definicao: 'Importância da tarefa informada pela usuária no cadastro. Diferente da ordem de precedência, que o sistema calcula.', historias: ['HU17'] },
+    { termo: 'Prazo', definicao: 'Data-limite da tarefa informada pela usuária no cadastro. Permanece inalterado quando a tarefa é adiada.', historias: ['HU17', 'HU18'] },
+    { termo: 'Energia necessária', definicao: 'Nível de energia que a usuária estima que a tarefa exige, informado no cadastro e comparado à disposição registrada para compor a ordem de precedência.', historias: ['HU17', 'HU13'] },
+    { termo: 'Tarefas do dia', definicao: 'Tarefas cuja execução está prevista para o dia corrente.', historias: ['HU13'] },
+    { termo: 'Ordem de precedência', definicao: 'Sequência das tarefas do dia calculada pelo sistema a partir da disposição registrada, da energia necessária, do prazo e da prioridade de cada tarefa. Diferente de prioridade, que é informada pela usuária.', historias: ['HU13', 'HU15'] },
+    { termo: 'Recomendação do dia', definicao: 'Lista das tarefas do dia em ordem de precedência, produzida pela recomendação e reajustada quando a usuária sinaliza sobrecarga ou muda a disposição.', historias: ['HU13', 'HU15'] },
+    { termo: 'Atividade de acolhimento', definicao: 'Prática breve de autocuidado sugerida pelo produto e passível de registro pela usuária.', historias: ['HU21', 'HU24'] },
+    { termo: 'Mensagem de acolhimento', definicao: 'Texto de apoio apresentado à usuária, sem linguagem de cobrança ou de culpa.', historias: ['HU22'] },
+    { termo: 'Retrospectiva mensal', definicao: 'Consolidação, ao final de cada mês, das tarefas concluídas e das atividades de acolhimento realizadas no período.', historias: ['HU23'] },
+    { termo: 'Relatório mensal', definicao: 'Consolidação completa do mês da usuária: fases do ciclo e menstruação, sintomas e disposição registrados e a retrospectiva mensal (tarefas concluídas e atividades de acolhimento).', historias: ['HU23', 'HU31', 'HU32'] },
+    { termo: 'Relatório de sintomas', definicao: 'Histórico dos sintomas registrados, com intensidade e frequência, preparado para ser levado a uma consulta médica. Mais restrito que o relatório mensal.', historias: ['HU35'] },
+    { termo: 'PIN', definicao: 'Credencial que protege o acesso à conta. Na primeira versão é numérico; a forma-alvo é a senha de pétalas.', historias: ['HU11'], rnfs: ['RNF09'] },
+    { termo: 'Senha de pétalas', definicao: 'Forma de informar o PIN pela sequência de toques nas pétalas de uma flor exibida na tela, como um desenho de desbloqueio em que as pétalas ocupam o lugar dos pontos.', historias: ['HU11'], rnfs: ['RNF09'] }
+  ],
+
   historico: {
     HU01: [
       {
@@ -2711,6 +2742,7 @@ const DADOS = {
           periodo: '17/11 a 23/11/2026',
           estado: 'Prevista',
           objetivo: 'Entregar o segundo incremento.',
+          nota: 'Esta semana era a primeira metade da antiga Iteração 7, da Transição, que tinha duas semanas. Na mudança de 16/11/2026, ela passou para a Construção para manter o segundo incremento, porque a Iteração 5 ficou na Elaboração.',
           evidencias: []
         }
       ]
@@ -2735,7 +2767,15 @@ const DADOS = {
         }
       ],
       iteracoes: [
-        { nome: 'Iteração 8', numero: 8, periodo: '24/11 a 30/11/2026', estado: 'Prevista', objetivo: 'Publicar o MVP, homologá-lo e fechar a entrega.', evidencias: [] }
+        {
+          nome: 'Iteração 8',
+          numero: 8,
+          periodo: '24/11 a 30/11/2026',
+          estado: 'Prevista',
+          objetivo: 'Publicar o MVP, homologá-lo e fechar a entrega.',
+          nota: 'Esta semana era a segunda metade da antiga Iteração 7, da Transição, dividida em duas na mudança de 16/11/2026.',
+          evidencias: []
+        }
       ]
     }
   ],

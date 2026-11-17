@@ -50,22 +50,21 @@
   // iteração ainda prevista não tem o que registrar. As histórias planejadas e
   // o DoR vêm do catálogo.
   function registro(it) {
-    if (!it.registro && it.estado === 'Prevista') return '';
     const r = it.registro || {};
-    const linha = (rotulo, valor) => '<div class="dlr"><dt>' + rotulo + '</dt><dd>' +
-      (valor || '<span class="ph">Sem registro publicado</span>') + '</dd></div>';
-    const planejadas = DADOS.historias.filter((h) => h.iteracao === it.numero);
-    return '<h3 style="margin-top: 18px">Planejado e realizado</h3><dl class="dl">' +
+    // Só aparece o campo que tem registro.
+    const linha = (rotulo, valor) => valor ? '<div class="dlr"><dt>' + rotulo + '</dt><dd>' + valor + '</dd></div>' : '';
+    // Histórias feitas: as HUs dos PRs de história da iteração (tipo "PR #…") e as planejadas para ela.
+    const ids = new Set(DADOS.historias.filter((h) => h.iteracao === it.numero).map((h) => h.id));
+    it.evidencias.filter((e) => /^PR #/.test(e.tipo)).forEach((e) => (e.titulo.match(/HU\d{2}/g) || []).forEach((id) => ids.add(id)));
+    const feitas = DADOS.historias.filter((h) => ids.has(h.id)).sort((a, b) => a.id.localeCompare(b.id));
+    const corpo =
       linha('Compromisso', r.compromisso && esc(r.compromisso)) +
-      (planejadas.length
-        ? linha('Histórias planejadas', '<div class="rfl">' + planejadas.map(chipHistoria).join('') + '</div>') +
-          linha('DoR marcado', planejadas.filter((h) => DADOS.dorAtendido.includes(h.id)).length + ' de ' + planejadas.length + ' histórias')
-        : '') +
+      linha(it.estado === 'Prevista' ? 'Histórias planejadas' : 'Histórias feitas', feitas.length && '<div class="rfl">' + feitas.map(chipHistoria).join('') + '</div>') +
       linha('Responsáveis', r.responsaveis && esc(r.responsaveis)) +
       linha('Resultado', r.resultado && esc(r.resultado)) +
-      linha('Pendências', r.pendencias && r.pendencias.map(esc).join('<br>')) +
-      linha('Decisão para a próxima', r.decisaoProxima && esc(r.decisaoProxima)) +
-      '</dl>';
+      linha('Pendências', r.pendencias && r.pendencias.length && r.pendencias.map(esc).join('<br>')) +
+      linha('Decisão para a próxima', r.decisaoProxima && esc(r.decisaoProxima));
+    return corpo ? '<h3 style="margin-top: 18px">Planejado e realizado</h3><dl class="dl">' + corpo + '</dl>' : '';
   }
 
   function abrirIteracao(i) {
