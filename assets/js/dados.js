@@ -1032,17 +1032,17 @@ const DADOS = {
       esforco: { esforco: 1, complexidade: 1, lacuna: 2, consolidado: '1,3' },
       relacionadas: ['HU06', 'HU07', 'HU08', 'HU13'],
       criterios: [
-        'A consulta apresenta a fase estimada entre menstrual, folicular, ovulatória e lútea somente quando houver entradas suficientes e modelo de cálculo validado, conforme as regras desta história.',
+        'A consulta apresenta a fase estimada entre menstrual, folicular, ovulatória e lútea somente quando houver entradas suficientes, pelo modelo de cálculo proposto pela equipe e sempre identificada como estimativa, conforme as regras desta história.',
         'Quando não for possível estimar, a consulta informa fase não estimada e o motivo, sem atribuir uma fase por padrão.',
         'A alteração das entradas de HU06 ou HU07 deve atualizar a consulta, sem manter uma estimativa baseada nos dados anteriores.'
       ],
       regras: {
-        situacao: 'Proposta da equipe para a issue #38. A regra clínica de estimativa ainda não foi validada pela cliente; a história permanece sem prontidão para implementar esse cálculo.',
+        situacao: 'Modelo proposto pela equipe e implementado por decisão do grupo em 15/11/2026 (PR #117), com validação da cliente pendente.',
         itens: [
           'HU06 fornece a data mais recente de início da menstruação que não esteja no futuro; HU07 fornece a duração média em dias ou a indicação de irregularidade. Essas histórias registram entradas, e o cálculo pertence a HU05.',
           'O dia do ciclo é a diferença em dias de calendário local entre hoje e a data de início, mais um: o início é o dia 1. Não usar horas decorridas para contar dias.',
           'Sem data válida, sem duração média válida ou com indicação de ciclo irregular, informar fase não estimada e a respectiva razão. Não presumir duração de 28 dias nem estimar por sintomas: HU08 continua fora do MVP.',
-          'Para ciclo regular, a conversão do dia do ciclo em fase exige o modelo e os intervalos revisados pela cliente. Enquanto não estiverem definidos e validados, informar fase não estimada por modelo pendente de validação, inclusive quando as entradas estiverem completas.',
+          'Para ciclo regular, a conversão do dia do ciclo em fase usa o modelo proposto pela equipe: menstrual nos dias 1 a 5, ovulatória em três dias em torno de duração menos 14, folicular entre as duas e lútea até o fim, para durações de 21 a 35 dias. Fora dessa faixa, informar fase não estimada e o motivo. A cliente valida o método, os limites e as durações depois, e um ajuste muda só o modelo.',
           'Se o dia calculado ultrapassar a duração informada, não reiniciar o ciclo automaticamente: informar fase não estimada e solicitar atualização dos dados.',
           'Toda apresentação de fase deve identificá-la como estimativa. O uso direto da fase no planejamento não integra a proposta de HU13 do MVP.'
         ],
@@ -1146,12 +1146,25 @@ const DADOS = {
       rnfs: ['RNF03'],
       valor: 2,
       validadaCliente: true,
-      iteracao: 0,
-      nota: 'Não crítico ao fluxo diário.',
+      iteracao: 7,
+      nota: 'Pedida pela cliente em 05/10/2026 (aos 11:54 da gravação); entrou no MVP por decisão do grupo em 15/11/2026.',
       esforco: { esforco: 2, complexidade: 2, lacuna: 2, consolidado: '2,0' },
       criterios: [
         'O calendário só será considerado correto quando cada dia exibido indicar a fase do ciclo correspondente.'
-      ]
+      ],
+      regras: {
+        situacao: 'Proposta da equipe para a issue #121, implementada no PR #118, com validação da cliente pendente.',
+        itens: [
+          'Um dia é pintado pela fase do ciclo que o contém, contado a partir do início mais recente que não seja posterior a ele, com o modelo de fases de HU05.',
+          'Num ciclo já fechado, isto é, com um início depois, vale a duração real dele; no ciclo atual, a duração média informada em HU07.',
+          'Dias depois do fim da duração, ciclos fechados fora da faixa do modelo, ciclo irregular ou sem duração ficam sem fase. Não há previsão do próximo ciclo, pela mesma regra de HU05.',
+          'A fase nunca depende só da cor: cada dia mostra a inicial da fase, e o leitor de tela lê a fase, o início e o dia de hoje.'
+        ],
+        pendencias: [
+          'A cliente deve decidir o critério de aceite diante da regra de não prever o próximo ciclo, que deixa sem fase os dias depois do fim da duração.',
+          'A cliente deve validar o uso da duração real nos ciclos já fechados.'
+        ]
+      }
     },
     {
       id: 'HU11',
@@ -1745,6 +1758,37 @@ const DADOS = {
 
   // Alterações em cada história ou RNF, com a data e o motivo. `video` aponta o
   // momento da reunião em que a decisão foi tomada.
+  // Glossário do produto (Requisitos > Glossário). Veio da Seção 8 do antigo
+  // Documento de Visão, com os RFs trocados pelas HUs de mesmo número.
+  // historias e rnfs são os códigos onde o termo aparece.
+  glossario: [
+    { termo: 'Usuária', definicao: 'Pessoa que utiliza o MindCycle. Grafia única em todo o material.' },
+    { termo: 'Fase do ciclo', definicao: 'Uma das quatro fases reconhecidas pelo produto: menstrual, folicular, ovulatória e lútea.', historias: ['HU05'] },
+    { termo: 'Menstruação', definicao: 'Intervalo iniciado na data de início do sangramento registrada pela usuária. O termo "período" não é usado, para evitar ambiguidade.', historias: ['HU06'] },
+    { termo: 'Ciclo irregular', definicao: 'Situação em que a usuária declara não ter duração média estável de ciclo.', historias: ['HU07'] },
+    { termo: 'Registro de sintomas e disposição', definicao: 'Registro feito pela usuária com os sintomas sentidos e o seu nível de disposição. É a base da sinalização de sobrecarga, da estimativa de fase, da recomendação do dia, do reajuste e do relatório de sintomas.', historias: ['HU04', 'HU02', 'HU08', 'HU13', 'HU15', 'HU35'] },
+    { termo: 'Disposição', definicao: 'Nível de energia e ânimo informado pela usuária no registro diário.', historias: ['HU04'] },
+    { termo: 'Sobrecarga', definicao: 'Sinalização pontual, feita a qualquer momento do dia, de que a usuária está sobrecarregada ou indisposta e precisa que as tarefas do dia sejam readequadas.', historias: ['HU02'] },
+    { termo: 'Sintoma', definicao: 'Manifestação física ou emocional associada ao ciclo, informada pela usuária no registro.', historias: ['HU04', 'HU01'] },
+    { termo: 'Intensidade do sintoma', definicao: 'Grau com que a usuária sente um sintoma físico, informado no registro de sintomas e disposição.', historias: ['HU04'] },
+    { termo: 'Medicação', definicao: 'Medicamento de uso diário (contínuo) ou esporádico informado pela usuária.', historias: ['HU30'] },
+    { termo: 'Diagnóstico prévio', definicao: 'Condição de saúde já diagnosticada antes do uso do produto, como diabetes, hipertensão ou enxaqueca, informada pela usuária.', historias: ['HU34'] },
+    { termo: 'Atividade de acolhimento favorita', definicao: 'Atividade de acolhimento que a usuária marca como de sua preferência.', historias: ['HU33'] },
+    { termo: 'Prioridade', definicao: 'Importância da tarefa informada pela usuária no cadastro. Diferente da ordem de precedência, que o sistema calcula.', historias: ['HU17'] },
+    { termo: 'Prazo', definicao: 'Data-limite da tarefa informada pela usuária no cadastro. Permanece inalterado quando a tarefa é adiada.', historias: ['HU17', 'HU18'] },
+    { termo: 'Energia necessária', definicao: 'Nível de energia que a usuária estima que a tarefa exige, informado no cadastro e comparado à disposição registrada para compor a ordem de precedência.', historias: ['HU17', 'HU13'] },
+    { termo: 'Tarefas do dia', definicao: 'Tarefas cuja execução está prevista para o dia corrente.', historias: ['HU13'] },
+    { termo: 'Ordem de precedência', definicao: 'Sequência das tarefas do dia calculada pelo sistema a partir da disposição registrada, da energia necessária, do prazo e da prioridade de cada tarefa. Diferente de prioridade, que é informada pela usuária.', historias: ['HU13', 'HU15'] },
+    { termo: 'Recomendação do dia', definicao: 'Lista das tarefas do dia em ordem de precedência, produzida pela recomendação e reajustada quando a usuária sinaliza sobrecarga ou muda a disposição.', historias: ['HU13', 'HU15'] },
+    { termo: 'Atividade de acolhimento', definicao: 'Prática breve de autocuidado sugerida pelo produto e passível de registro pela usuária.', historias: ['HU21', 'HU24'] },
+    { termo: 'Mensagem de acolhimento', definicao: 'Texto de apoio apresentado à usuária, sem linguagem de cobrança ou de culpa.', historias: ['HU22'] },
+    { termo: 'Retrospectiva mensal', definicao: 'Consolidação, ao final de cada mês, das tarefas concluídas e das atividades de acolhimento realizadas no período.', historias: ['HU23'] },
+    { termo: 'Relatório mensal', definicao: 'Consolidação completa do mês da usuária: fases do ciclo e menstruação, sintomas e disposição registrados e a retrospectiva mensal (tarefas concluídas e atividades de acolhimento).', historias: ['HU23', 'HU31', 'HU32'] },
+    { termo: 'Relatório de sintomas', definicao: 'Histórico dos sintomas registrados, com intensidade e frequência, preparado para ser levado a uma consulta médica. Mais restrito que o relatório mensal.', historias: ['HU35'] },
+    { termo: 'PIN', definicao: 'Credencial que protege o acesso à conta. Na primeira versão é numérico; a forma-alvo é a senha de pétalas.', historias: ['HU11'], rnfs: ['RNF09'] },
+    { termo: 'Senha de pétalas', definicao: 'Forma de informar o PIN pela sequência de toques nas pétalas de uma flor exibida na tela, como um desenho de desbloqueio em que as pétalas ocupam o lugar dos pontos.', historias: ['HU11'], rnfs: ['RNF09'] }
+  ],
+
   historico: {
     HU01: [
       {
@@ -1874,6 +1918,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
         motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      },
+      {
+        data: '16/11/2026',
+        alteracao: 'Incluída no MVP, na Iteração 7, com regras propostas e pendências com a cliente.',
+        motivo: 'Pedido da cliente na reunião de 05/10/2026 (aos 11:54) e decisão do grupo em 15/11/2026. Issue #121.'
       }
     ],
     HU05: [
@@ -1891,6 +1940,11 @@ const DADOS = {
         data: '12/11/2026',
         alteracao: 'Incluído vínculo com RNF03 para proteger os fluxos de dados da história.',
         motivo: 'Issue #39, em conjunto com #37: cobertura única no cadastro, sem duplicar critérios nem registrar aprovação do produto.'
+      },
+      {
+        data: '16/11/2026',
+        alteracao: 'Critério 1 e regra do modelo: a fase passa a ser estimada pelo modelo proposto pela equipe, sempre como estimativa, em vez de modelo pendente.',
+        motivo: 'Decisão do grupo em 15/11/2026, por causa do prazo até a homologação; a cliente valida o modelo depois. Registrada na issue #82.'
       }
     ],
     HU06: [
@@ -2399,7 +2453,8 @@ const DADOS = {
   // Vídeos de apresentação das entregas (código do vídeo no YouTube).
   apresentacoes: [
     { fase: 'Entrega', nome: 'Apresentação da Unidade 1', video: 'NW8RUETjsws' },
-    { fase: 'Entrega', nome: 'Apresentação da Unidade 2', video: 'v2rkFmI8DJ8' }
+    { fase: 'Entrega', nome: 'Apresentação da Unidade 2', video: 'v2rkFmI8DJ8' },
+    { fase: 'Entrega', nome: 'Apresentação da Unidade 3', video: 'gMWrxOmBBQI' }
   ],
 
   // Atividades da engenharia de requisitos: as linhas do painel de fases.
@@ -2414,6 +2469,10 @@ const DADOS = {
 
   // Fases do OpenUP. praticas[].atividade é o índice em `atividades`. Os links
   // das evidências são relativos à raiz do site; vídeos, endereços completos.
+  // iteracoes[].numero liga a iteração às histórias (historias[].iteracao) e a
+  // iteracaoAtual; o nome é só o que aparece na página.
+  // iteracoes[].registro: compromisso, responsaveis, resultado, pendencias e
+  // decisaoProxima. Campo sem fonte fica de fora e aparece como sem registro.
   fases: [
     {
       nome: 'Concepção',
@@ -2442,9 +2501,17 @@ const DADOS = {
       iteracoes: [
         {
           nome: 'Iteração 1',
+          numero: 1,
           periodo: '11/08 a 24/08/2026',
           estado: 'Executada',
           objetivo: 'Compreender o negócio e caracterizar o problema.',
+          registro: {
+            compromisso: 'Caracterizar o problema com Rich Picture e Ishikawa e consolidar o PDF da proposta para avaliação do grupo.',
+            responsaveis: 'Equipe, em reunião gravada. Não há autoria individual registrada.',
+            resultado: 'Rich Picture e Diagrama de Ishikawa produzidos em sessões internas, com o escopo focado no mercado de trabalho. Decidido que o problema é o que o app alcança: adaptar a rotina da mulher, e não mudar o mercado.',
+            pendencias: ['As causas levantadas seguem como hipótese da equipe até haver confirmação externa.'],
+            decisaoProxima: 'Declarar a solução e as estratégias a partir desse recorte do problema.'
+          },
           evidencias: [
             { tipo: 'Figura', titulo: 'Rich Picture', link: 'visao/#figura-1' },
             { tipo: 'Figura', titulo: 'Diagrama de Ishikawa', link: 'visao/#figura-2' },
@@ -2454,9 +2521,17 @@ const DADOS = {
         },
         {
           nome: 'Iteração 2',
+          numero: 2,
           periodo: '25/08 a 07/09/2026',
           estado: 'Executada',
           objetivo: 'Declarar a solução e as estratégias de engenharia de software e de requisitos.',
+          registro: {
+            compromisso: 'Publicar o Documento de Visão e fazer cada integrante listar seus requisitos a partir do Figma.',
+            responsaveis: 'Publicação do Documento de Visão: Ana Luisa. Marca: Tiago (PR 2). Comparação dos requisitos: Ana Luisa.',
+            resultado: 'Documento de Visão 1.0 publicado em 07/09/2026, com objetivos, características e estratégias.',
+            pendencias: ['O contato com a cliente só começou na Elaboração.'],
+            decisaoProxima: 'Prototipar em baixa fidelidade no Figma e derivar os requisitos do protótipo.'
+          },
           evidencias: [
             { tipo: 'Documento', titulo: 'Visão de produto', link: 'visao/' },
             { tipo: 'Documento', titulo: 'Estratégias e justificativas', link: 'engenharia-de-requisitos/' },
@@ -2511,31 +2586,58 @@ const DADOS = {
       iteracoes: [
         {
           nome: 'Iteração 3',
+          numero: 3,
           periodo: '15/09 a 28/09/2026',
-          estado: 'Executada',
+          estado: 'Encerrada com pendências',
           objetivo: 'Conversar com a cliente, elicitar e declarar os requisitos nos três níveis.',
+          registro: {
+            compromisso: 'Conversar com a cliente e declarar requisitos, histórias e critérios, com personas e jornadas de usuário.',
+            responsaveis: 'Seção de solução: Gustavo. Seção de ER: Pedro Ian. Seção de estratégias: Luana. Cerimônias e acesso às usuárias: Tiago. Catálogo de requisitos: Ana Luisa. Lições da Unidade 1: Allan Kelvin.',
+            resultado: 'Requisitos e histórias com critérios declarados, e casos de uso dos requisitos de maior risco.',
+            pendencias: [
+              'A conversa com a cliente só aconteceu em 05/10/2026, na Iteração 4, por causa da agenda dela.',
+              'Personas e jornadas não foram publicadas como artefato.'
+            ],
+            decisaoProxima: 'Levar a validação com a cliente para a Iteração 4, junto com a priorização.'
+          },
           evidencias: [
             { tipo: 'Documento', titulo: 'Árvore de requisitos', link: '' },
-            { tipo: 'Documento', titulo: 'Catálogo de Metas', link: 'engenharia-de-requisitos/#metas' },
-            { tipo: 'Decisões', titulo: 'Conversa com a Dra. Cláudia', link: 'reunioes/#PKoWLngGSRg' },
-            { tipo: 'Vídeo', titulo: 'Gravação da conversa', link: 'https://www.youtube.com/watch?v=PKoWLngGSRg' }
+            { tipo: 'Documento', titulo: 'Catálogo de Metas', link: 'engenharia-de-requisitos/#metas' }
           ]
         },
         {
           nome: 'Iteração 4',
+          numero: 4,
           periodo: '29/09 a 12/10/2026',
-          estado: 'Em andamento no site',
+          estado: 'Encerrada com pendências',
           objetivo: 'Analisar, priorizar e acordar o backlog e o escopo do MVP.',
+          registro: {
+            compromisso: 'Priorizar com a cliente, delimitar o MVP, organizar rastreabilidade, DoR e DoD e apresentar as telas do protótipo.',
+            responsaveis: 'Priorização, MVP e rastreabilidade: Tiago (PR 15) e Luana (PR 24). DoR, DoD e ER: Pedro Ian (PRs 17, 20 e 22). Estratégias: Luana (PR 14). Interação com a cliente: Arthur (PR 16). Solução: Gustavo (PR 18). Requisitos: Ana Luisa (PR 21).',
+            resultado: 'MVP de 22 histórias delimitado. Em 05/10/2026, a Dra. Cláudia avaliou 13 requisitos: confirmou 8 notas e ajustou 5, todas para cima.',
+            pendencias: [
+              'O MVP consolidado não foi apresentado à cliente.',
+              'Privacidade e conta não foram pauta da reunião de 05/10/2026.',
+              'As mudanças de alocação e as histórias HU35 e HU36 ficaram por levar ao Notion.'
+            ],
+            decisaoProxima: 'Confirmar no Planejamento da Iteração 5 as prioridades em hipótese e agendar o acompanhamento com a cliente.'
+          },
           evidencias: [
             { tipo: 'Documento', titulo: 'Priorização e cálculos', link: 'priorizacao/' },
             { tipo: 'Documento', titulo: 'Composição do MVP', link: 'mvp/' },
             { tipo: 'Documento', titulo: 'DoR e DoD', link: 'dor-e-dod/' },
+            { tipo: 'Decisões', titulo: 'Conversa com a Dra. Cláudia', link: 'reunioes/#PKoWLngGSRg' },
+            { tipo: 'Vídeo', titulo: 'Gravação da conversa', link: 'https://www.youtube.com/watch?v=PKoWLngGSRg' },
             { tipo: 'Decisões', titulo: 'Reunião de MoSCoW', link: 'reunioes/#Je44KbpoASk' },
-            { tipo: 'Vídeo', titulo: 'Gravação da reunião', link: 'https://www.youtube.com/watch?v=Je44KbpoASk' }
+            { tipo: 'Vídeo', titulo: 'Gravação da reunião', link: 'https://www.youtube.com/watch?v=Je44KbpoASk' },
+            { tipo: 'PR', titulo: 'Priorização, MVP e rastreabilidade', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/15' },
+            { tipo: 'PR', titulo: 'Validação real da cliente', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/24' },
+            { tipo: 'PR', titulo: 'Correção de inconsistências', link: 'https://github.com/mdsreq-fga-unb/REQ-2026.2-T02-MindCycle/pull/30' }
           ]
         },
         {
           nome: 'Iteração 5',
+          numero: 5,
           periodo: '20/10 a 02/11/2026',
           estado: 'Executada',
           objetivo: 'Refatorar a documentação para que o site acompanhe os requisitos durante a construção.',
@@ -2604,6 +2706,7 @@ const DADOS = {
       iteracoes: [
         {
           nome: 'Iteração 6',
+          numero: 6,
           periodo: '03/11 a 16/11/2026',
           estado: 'Iteração atual',
           objetivo: 'Entregar o primeiro incremento.',
@@ -2635,9 +2738,11 @@ const DADOS = {
         },
         {
           nome: 'Iteração 7',
+          numero: 7,
           periodo: '17/11 a 23/11/2026',
           estado: 'Prevista',
           objetivo: 'Entregar o segundo incremento.',
+          nota: 'Esta semana era a primeira metade da antiga Iteração 7, da Transição, que tinha duas semanas. Na mudança de 16/11/2026, ela passou para a Construção para manter o segundo incremento, porque a Iteração 5 ficou na Elaboração.',
           evidencias: []
         }
       ]
@@ -2662,9 +2767,87 @@ const DADOS = {
         }
       ],
       iteracoes: [
-        { nome: 'Iteração 8', periodo: '24/11 a 30/11/2026', estado: 'Prevista', objetivo: 'Publicar o MVP, homologá-lo e fechar a entrega.', evidencias: [] }
+        {
+          nome: 'Iteração 8',
+          numero: 8,
+          periodo: '24/11 a 30/11/2026',
+          estado: 'Prevista',
+          objetivo: 'Publicar o MVP, homologá-lo e fechar a entrega.',
+          nota: 'Esta semana era a segunda metade da antiga Iteração 7, da Transição, dividida em duas na mudança de 16/11/2026.',
+          evidencias: []
+        }
       ]
     }
+  ],
+
+  // Riscos investigados (Entregas e cronograma). As fases não isolam as
+  // disciplinas, então a tabela mostra as investigações que mudaram requisito
+  // ou escopo e os riscos ainda abertos.
+  //   quando      momento e forma da investigação; `video` aponta o trecho.
+  //               Sem `quando`, o risco aparece como sem investigação.
+  //   efeitoEm    história cujas alterações em `historico` são o efeito do
+  //               risco; a tabela lê de lá, para não repetir números.
+  //   efeito      efeito escrito à mão, quando não há história para ler.
+  //   historias, rnfs  o que o risco toca; viram os botões de "Ligados a".
+  riscos: [
+    {
+      risco: 'Senha de pétalas cara demais para o MVP',
+      quando: 'Elaboração: estimativa técnica da equipe na priorização',
+      resultado: 'O gesto de pétalas encarecia a primeira versão',
+      efeitoEm: 'HU11',
+      aberto: false,
+      historias: ['HU11'],
+      rnfs: ['RNF09']
+    },
+    {
+      risco: 'Recuperar o acesso sem violar o acesso exclusivo',
+      quando: 'Elaboração: revisão técnica da equipe',
+      resultado: 'O reset manual pela equipe contrariaria o RNF03',
+      efeitoEm: 'HU26',
+      aberto: false,
+      historias: ['HU26'],
+      rnfs: ['RNF03']
+    },
+    {
+      risco: 'Dado de saúde sem direito de exclusão',
+      quando: 'Iteração 4: conferência entre catálogo, priorização e LGPD',
+      resultado: 'Exigência legal estava fora do catálogo e do backlog',
+      efeitoEm: 'HU36',
+      aberto: false,
+      historias: ['HU36'],
+      rnfs: ['RNF02']
+    },
+    {
+      risco: 'Preferências sem requisito que as sustente',
+      quando: 'Iteração 4: análise de rastreabilidade',
+      resultado: 'O critério do RNF01 pressupunha uma configuração inexistente',
+      efeitoEm: 'HU29',
+      aberto: false,
+      historias: ['HU29'],
+      rnfs: ['RNF01']
+    },
+    {
+      risco: 'Alertas que cruzam sintomas e quadros clínicos',
+      quando: '05/10/2026: conversa com a cliente',
+      video: { id: 'PKoWLngGSRg', tempo: 1102 },
+      resultado: 'Exigem validação clínica e jurídica',
+      efeito: 'Fora do MVP, como tema de pesquisa',
+      aberto: false,
+      historias: [],
+      rnfs: []
+    },
+    {
+      risco: 'Motor de recomendação sem regras definidas',
+      quando: 'Sem investigação técnica na Elaboração. Apontado na Iteração 4 como o maior esforço técnico',
+      video: { id: 'Je44KbpoASk', tempo: 213 },
+      resultado: 'Regras tratadas na Iteração 6 (issue 36)',
+      efeito: 'A definir com a validação das regras',
+      aberto: true,
+      historias: ['HU13', 'HU15'],
+      rnfs: []
+    },
+    { risco: 'Isolamento dos dados de cada usuária', aberto: true, historias: [], rnfs: ['RNF03'] },
+    { risco: 'Escolhas de arquitetura', aberto: true, historias: [], rnfs: [] }
   ],
 
   // Período da linha do tempo do cronograma.
@@ -2727,8 +2910,8 @@ const DADOS = {
     {
       quadrante: 'Entrega futura',
       posicao: 'Valor 2, esforço 2 ou 3',
-      entraram: '0 de 6',
-      decisao: 'Ficam fora: adiáveis sem comprometer o fluxo central.',
+      entraram: '1 de 6',
+      decisao: 'Só HU10 entra, na Iteração 7, por pedido da cliente em 05/10/2026 (aos 11:54) e decisão do grupo em 15/11/2026. As demais ficam fora: adiáveis sem comprometer o fluxo central.',
       historias: ['HU03', 'HU08', 'HU10', 'HU23', 'HU31', 'HU32']
     }
   ],

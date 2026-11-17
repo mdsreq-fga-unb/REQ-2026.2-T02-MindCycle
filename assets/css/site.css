@@ -2229,3 +2229,50 @@ summary.foldh::-webkit-details-marker {
   background: transparent;
   color: var(--on);
 }
+
+/* ---------------------------------------------------------------------
+   Glossário (Requisitos): lista de termos e busca, desenhadas por glossario.js
+   --------------------------------------------------------------------- */
+.gl-busca .inp {
+  width: 320px;
+}
+.gl {
+  margin: 14px 0 0;
+  border-top: 1px solid var(--line);
+}
+.gl-i {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 4px 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px;
+}
+.gl-i dt {
+  font-weight: 600;
+  color: var(--head);
+}
+.gl-i dd {
+  margin: 0;
+}
+.gl-i dd p {
+  margin: 0;
+}
+.gl-i .rfl {
+  margin-top: 8px;
+}
+.gl mark {
+  background: var(--soft);
+  color: var(--acct);
+  border-radius: 3px;
+  padding: 0 1px;
+  font-weight: 600;
+}
+@media (max-width: 640px) {
+  .gl-busca .inp {
+    width: 100%;
+  }
+  .gl-i {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -53,7 +53,7 @@
     <main class="content" id="conteudo">
       <p class="eyebrow">Requisitos de Software · 2026.2 · Turma 02</p>
       <h1>Requisitos do MindCycle</h1>
-      <p class="lead">Produtividade no ritmo do seu ciclo. Do problema à história de usuário: escolha uma característica e abra uma história para ver o detalhe. As mudanças ficam no Histórico.</p>
+      <p class="lead">Produtividade no ritmo do seu ciclo. Do problema à história de usuário: escolha uma característica e abra uma história para ver o detalhe. As mudanças ficam no Histórico, e os termos do produto, no <a class="lnk" href="#glossario">glossário</a>.</p>
       <div class="tools" id="ferramentas" style="margin-top: 18px">
         <input class="inp" id="busca" type="search" aria-label="Buscar história" placeholder="Buscar história (ex.: HU13, PIN)">
       </div>
@@ -89,6 +89,18 @@
         </div>
         <div class="legend"><span>Borda tracejada: fora do MVP</span><span><i class="rnfc mono" style="font-style: normal">RNF</i> Requisito não funcional ligado à história</span><span>hab.: característica habilitadora, que sustenta as demais</span></div>
       </div>
+
+      <section aria-labelledby="glossario">
+        <h2 id="glossario">Glossário</h2>
+        <p>Os termos do produto, na grafia usada nas histórias. Digite para filtrar pelo termo ou pela definição; os códigos abrem a história ou o RNF em que o termo aparece.</p>
+        <div class="tools gl-busca">
+          <input class="inp" id="busca-termo" type="search" aria-label="Buscar termo do glossário" aria-controls="glossario-lista" placeholder="Buscar termo (ex.: disposição, PIN)" autocomplete="off">
+          <span class="state" id="glossario-total" role="status"></span>
+        </div>
+        <noscript><p class="sem-js">A busca de termos é montada por JavaScript.</p></noscript>
+        <dl class="gl" id="glossario-lista"></dl>
+        <p class="ph" id="glossario-vazio" hidden></p>
+      </section>
     </main>
 
     <footer class="foot">
@@ -98,9 +110,10 @@
     </footer>
   </div>
 
-  <script defer src="assets/js/dados.js?v=29"></script>
+  <script defer src="assets/js/dados.js?v=30"></script>
   <script defer src="assets/js/kanban.js"></script>
-  <script defer src="assets/js/site.js?v=29"></script>
-  <script defer src="assets/js/requisitos.js?v=29"></script>
+  <script defer src="assets/js/site.js?v=30"></script>
+  <script defer src="assets/js/requisitos.js?v=30"></script>
+  <script defer src="assets/js/glossario.js?v=30"></script>
 </body>
 </html>
